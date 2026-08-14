@@ -55,6 +55,14 @@
       "destination": "/public/privacy.html"
     },
     {
+      "source": "/robots.txt",
+      "destination": "/public/robots.txt"
+    },
+    {
+      "source": "/sitemap.xml",
+      "destination": "/public/sitemap.xml"
+    },
+    {
       "source": "/api/oauth/start",
       "destination": "/api/oauth/start.py"
     },
