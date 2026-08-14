@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth bg-black antialiased">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JARVIS · The Autonomous AI Agent</title>
+<meta name="description" content="JARVIS - Desktop-native AI Operating System with zero line-drift code editing, proactive HITL, mobile control, and lifelong memory.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://jarvis-agent.vercel.app">
+<meta property="og:title" content="JARVIS · The Autonomous AI Agent">
+<meta property="og:description" content="A locally-hosted AI Operating System with zero line-drift coding, proactive HITL, mobile control, and lifelong memory.">
+<meta property="og:image" content="https://jarvis-agent.vercel.app/og-banner.png">
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'] },
+      colors: { dark: '#000000', surface: '#0a0a0a', border: '#222222', accent: '#ffffff', muted: '#888888' },
+      animation: { 
+        'marquee': 'marquee 30s linear infinite',
+        'grid-flow': 'grid-flow 20s linear infinite',
+        'float': 'float 6s ease-in-out infinite',
+        'pulse-glow': 'pulse-glow 4s cubic-bezier(0.4, 0, 0.6, 1) infinite'
+      },
+      keyframes: {
+        marquee: { '0%': { transform: 'translateX(0%)' }, '100%': { transform: 'translateX(-50%)' } },
+        'grid-flow': { '0%': { transform: 'translateY(0)' }, '100%': { transform: 'translateY(30px)' } },
+        float: { '0%, 100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-10px)' } },
+        'pulse-glow': { '0%, 100%': { opacity: 0.1 }, '50%': { opacity: 0.4 } }
+      }
+    }
+  }
+}
+</script>
+<style>
+body { color: #a1a1aa; overflow-x: hidden; background: #000000; }
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; border: 2px solid #000; }
+::-webkit-scrollbar-thumb:hover { background: #555; }
+
+.enterprise-grid-container { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+.enterprise-grid {
+  position: absolute; inset: -50px;
+  background-size: 30px 30px;
+  background-image: linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px),
+                    linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px);
+  mask-image: linear-gradient(to bottom, black 10%, transparent 90%);
+  -webkit-mask-image: linear-gradient(to bottom, black 10%, transparent 90%);
+}
+
+h1, h2, h3, h4, h5, h6 { color: #ffffff; letter-spacing: -0.02em; }
+a { transition: all 0.2s ease; }
+
+.nav-blur { background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid transparent; transition: all 0.4s ease; }
+.nav-blur.scrolled { border-bottom-color: #222; background: rgba(0, 0, 0, 0.8); box-shadow: 0 4px 30px rgba(0,0,0,0.5); }
+
+.feature-card { 
+  background: #0a0a0a; border: 1px solid #222; border-radius: 12px; padding: 1.5rem; 
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative; overflow: hidden;
+}
+.feature-card::before {
+  content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  background: radial-gradient(circle at top left, rgba(255,255,255,0.03), transparent 70%);
+  opacity: 0; transition: opacity 0.4s ease; pointer-events: none;
+}
+.feature-card:hover { border-color: #444; transform: translateY(-4px); box-shadow: 0 10px 40px -10px rgba(0,0,0,0.5); }
+.feature-card:hover::before { opacity: 1; }
+
+.reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); }
+.reveal.active { opacity: 1; transform: translateY(0); }
+.delay-100 { transition-delay: 100ms; }
+.delay-200 { transition-delay: 200ms; }
+.delay-300 { transition-delay: 300ms; }
+
+.code-wrapper { background: #050505; border: 1px solid #222; border-radius: 12px; overflow: hidden; box-shadow: 0 20px 40px -10px rgba(0,0,0,0.8); transition: transform 0.3s ease; }
+.code-wrapper:hover { border-color: #333; }
+.code-header { display: flex; align-items: center; padding: 0.75rem 1rem; background: #0a0a0a; border-bottom: 1px solid #222; font-size: 0.75rem; color: #888; font-family: 'Plus Jakarta Sans', sans-serif; }
+.code-content { padding: 1rem; font-family: 'JetBrains Mono', monospace; line-height: 1.6; color: #e4e4e7; height: 300px; overflow-y: auto; }
+@media (min-width: 768px) { .code-content { height: 400px; padding: 1.5rem; } }
+
+.terminal-cursor::after { content: '█'; animation: blink 1s step-start infinite; color: #38bdf8; }
+@keyframes blink { 50% { opacity: 0; } }
+
+.video-container { border: 1px solid #222; border-radius: 12px; background: #0a0a0a; padding: 0.5rem; position: relative; transition: border-color 0.4s ease; }
+.video-container:hover { border-color: #444; box-shadow: 0 0 40px -10px rgba(99,102,241,0.1); }
+
+.download-btn { background: #fff; color: #000; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+.download-btn:hover { background: #e5e5e5; transform: scale(1.02); }
+.download-btn-secondary { background: transparent; border: 1px solid #333; color: #fff; transition: all 0.3s ease; }
+.download-btn-secondary:hover { background: #111; border-color: #555; }
+
+.badge { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.35rem 0.85rem; border: 1px solid; border-radius: 99px; font-size: 0.75rem; font-weight: 600; backdrop-filter: blur(4px); transition: all 0.3s; }
+.badge-indigo { border-color: rgba(99, 102, 241, 0.3); background: rgba(99, 102, 241, 0.1); color: #818cf8; }
+.badge-indigo:hover { border-color: rgba(99, 102, 241, 0.5); box-shadow: 0 0 15px rgba(99, 102, 241, 0.2); }
+
+#mobile-overlay { transition: opacity 0.3s ease; }
+#mobile-drawer { transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+
+.ambient-glow-indigo { position: absolute; width: 40vw; height: 40vw; background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 70%); border-radius: 50%; pointer-events: none; z-index: 0; }
+.ambient-glow-cyan { position: absolute; width: 40vw; height: 40vw; background: radial-gradient(circle, rgba(6, 182, 212, 0.08) 0%, transparent 70%); border-radius: 50%; pointer-events: none; z-index: 0; }
+
+.text-gradient-primary { background: linear-gradient(to right, #ffffff, #a1a1aa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.text-gradient-accent { background: linear-gradient(to right, #818cf8, #c084fc, #22d3ee); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+</style>
+</head>
+<body>
+
+<div class="enterprise-grid-container">
+  <div class="enterprise-grid animate-grid-flow"></div>
+</div>
+
+<header id="navbar" class="fixed top-0 w-full z-50 nav-blur">
+  <div class="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8 h-16 flex justify-between items-center">
+    <div class="flex items-center gap-4">
+      <button id="mobile-menu-btn" class="md:hidden text-zinc-400 hover:text-white focus:outline-none transition-colors">
+        <i class="fa-solid fa-bars text-xl"></i>
+      </button>
+      <a href="/" class="flex items-center gap-2">
+        <div class="flex h-7 w-7 items-center justify-center rounded bg-gradient-to-br from-indigo-500 to-cyan-400 text-white transition-transform hover:scale-105 shadow-[0_0_15px_rgba(99,102,241,0.4)]">
+          <i class="fa-solid fa-bolt text-xs"></i>
+        </div>
+        <span class="text-base font-bold text-white tracking-tight">JARVIS</span>
+      </a>
+    </div>
+    
+    <nav class="hidden md:flex items-center space-x-8">
+      <a href="#features" class="text-sm font-medium text-zinc-400 hover:text-white">Features</a>
+      <a href="#engine" class="text-sm font-medium text-zinc-400 hover:text-white">Engine</a>
+      <a href="#demo" class="text-sm font-medium text-zinc-400 hover:text-white">Demo</a>
+    </nav>
+
+    <div class="flex items-center gap-4 sm:gap-6">
+      <a href="/documentation" class="text-sm font-medium text-zinc-400 hover:text-white hidden sm:block">Docs</a>
+      <a href="#download" class="download-btn px-4 py-1.5 rounded-md text-sm font-semibold shadow-[0_0_15px_rgba(255,255,255,0.1)]">Get Jarvis</a>
+    </div>
+  </div>
+</header>
+
+<div id="mobile-overlay" class="fixed inset-0 bg-black/80 z-40 hidden opacity-0 backdrop-blur-sm"></div>
+<div id="mobile-drawer" class="fixed inset-y-0 left-0 w-72 bg-[#050505] border-r border-[#222] z-50 transform -translate-x-full md:hidden flex flex-col h-full">
+  <div class="p-6 border-b border-[#222] flex justify-between items-center">
+    <div class="flex items-center gap-2">
+      <div class="flex h-6 w-6 items-center justify-center rounded bg-gradient-to-br from-indigo-500 to-cyan-400 text-white">
+        <i class="fa-solid fa-bolt text-[10px]"></i>
+      </div>
+      <span class="font-bold text-white tracking-tight">Menu</span>
+    </div>
+    <button id="mobile-close-btn" class="text-zinc-400 hover:text-white transition-colors">
+      <i class="fa-solid fa-xmark text-xl"></i>
+    </button>
+  </div>
+  <div class="flex-1 overflow-y-auto p-6 space-y-6">
+    <a href="#features" class="block text-lg font-medium text-zinc-300 hover:text-white mobile-link">Features</a>
+    <a href="#engine" class="block text-lg font-medium text-zinc-300 hover:text-white mobile-link">Engine</a>
+    <a href="#demo" class="block text-lg font-medium text-zinc-300 hover:text-white mobile-link">Demo</a>
+    <div class="h-px w-full bg-[#222] my-4"></div>
+    <a href="/documentation" class="block text-lg font-medium text-zinc-300 hover:text-white mobile-link">Documentation</a>
+    <a href="https://github.com/thekaifansari01/Jarvis-OS-Agent" target="_blank" class="block text-lg font-medium text-zinc-300 hover:text-white mobile-link">GitHub Repo</a>
+  </div>
+  <div class="p-6 border-t border-[#222]">
+    <a href="#download" class="download-btn w-full py-3 rounded-md font-semibold text-center block mobile-link">Download Now</a>
+  </div>
+</div>
+
+<main class="relative z-10 pt-16">
+  
+  <section class="relative pt-24 pb-20 md:pt-32 md:pb-24 px-4 sm:px-6 lg:px-8 min-h-[85vh] flex flex-col justify-center items-center text-center">
+    <div class="ambient-glow-indigo top-1/4 left-1/4 animate-pulse-glow"></div>
+    <div class="ambient-glow-cyan bottom-1/4 right-1/4 animate-pulse-glow" style="animation-delay: 2s;"></div>
+    
+    <div class="max-w-4xl mx-auto relative z-10">
+      <div class="mb-8 reveal">
+        <span class="badge badge-indigo">
+          <span class="relative flex h-2 w-2 mr-1"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-indigo-400"></span></span>
+          v2.0 · Autonomous AI Agent for Windows
+        </span>
+      </div>
+      
+      <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-[5.5rem] font-bold tracking-tight mb-6 leading-[1.1] reveal delay-100">
+        <span class="text-gradient-primary">Control your</span> <br class="hidden sm:block"> 
+        <span class="text-gradient-accent">Digital Ecosystem.</span>
+      </h1>
+      
+      <p class="text-base sm:text-lg md:text-xl text-zinc-400 mb-10 max-w-2xl mx-auto leading-relaxed reveal delay-200">
+        A locally-hosted AI Operating System with zero line-drift coding, proactive HITL, mobile control, and lifelong memory.<br>
+        <span class="text-sm text-zinc-500 mt-3 block font-medium">Built by an 18-year-old solo developer. No team. No funding.</span>
+      </p>
+      
+      <div class="flex flex-col sm:flex-row justify-center gap-4 reveal delay-300">
+        <a href="#download" class="download-btn px-6 py-3.5 rounded-md font-semibold text-sm flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(255,255,255,0.1)]">
+          <i class="fa-solid fa-download text-indigo-600"></i> Install Now
+        </a>
+        <a href="#engine" class="download-btn-secondary px-6 py-3.5 rounded-md font-semibold text-sm flex items-center justify-center gap-2">
+          <i class="fa-solid fa-terminal text-cyan-400"></i> Explore Engine
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <div class="w-full overflow-hidden border-y border-[#222] bg-[#050505] py-5 relative">
+    <div class="absolute left-0 top-0 w-24 md:w-40 h-full bg-gradient-to-r from-black to-transparent z-10 pointer-events-none"></div>
+    <div class="absolute right-0 top-0 w-24 md:w-40 h-full bg-gradient-to-l from-black to-transparent z-10 pointer-events-none"></div>
+    <div class="flex animate-marquee whitespace-nowrap items-center">
+      <div class="flex gap-12 md:gap-20 px-8 items-center text-xs md:text-sm font-medium text-zinc-500 uppercase tracking-widest">
+        <span class="flex items-center gap-2"><i class="fa-brands fa-google text-blue-400"></i> Gemini-4</span>
+        <span class="flex items-center gap-2"><i class="fa-solid fa-server text-emerald-400"></i> Llama-3.3</span>
+        <span class="flex items-center gap-2"><i class="fa-brands fa-whatsapp text-green-500"></i> Baileys</span>
+        <span class="flex items-center gap-2"><i class="fa-solid fa-microchip text-orange-400"></i> Groq LPU</span>
+        <span class="flex items-center gap-2"><i class="fa-solid fa-network-wired text-indigo-400"></i> Tailscale</span>
+        <span class="flex items-center gap-2"><i class="fa-solid fa-database text-rose-400"></i> ChromaDB</span>
+        <span class="flex items-center gap-2"><i class="fa-brands fa-android text-green-400"></i> ADB Control</span>
+        <span class="flex items-center gap-2"><i class="fa-solid fa-bolt text-yellow-400"></i> Regolo MoE</span>
+        
+        <span class="flex items-center gap-2"><i class="fa-brands fa-google text-blue-400"></i> Gemini-4</span>
+        <span class="flex items-center gap-2"><i class="fa-solid fa-server text-emerald-400"></i> Llama-3.3</span>
+        <span class="flex items-center gap-2"><i class="fa-brands fa-whatsapp text-green-500"></i> Baileys</span>
+        <span class="flex items-center gap-2"><i class="fa-solid fa-microchip text-orange-400"></i> Groq LPU</span>
+        <span class="flex items-center gap-2"><i class="fa-solid fa-network-wired text-indigo-400"></i> Tailscale</span>
+        <span class="flex items-center gap-2"><i class="fa-solid fa-database text-rose-400"></i> ChromaDB</span>
+        <span class="flex items-center gap-2"><i class="fa-brands fa-android text-green-400"></i> ADB Control</span>
+        <span class="flex items-center gap-2"><i class="fa-solid fa-bolt text-yellow-400"></i> Regolo MoE</span>
+      </div>
+    </div>
+  </div>
+
+  <section id="features" class="py-24 md:py-32 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-[90rem] mx-auto">
+      <div class="mb-12 md:mb-16 reveal">
+        <h2 class="text-3xl md:text-4xl font-bold mb-3 text-white">Engineered for perfection.</h2>
+        <p class="text-zinc-400 text-sm md:text-base">Every feature built to solve real problems — not just hype.</p>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+        <div class="feature-card reveal lg:col-span-2 flex flex-col justify-between">
+          <div>
+            <div class="w-10 h-10 rounded border border-indigo-500/30 bg-indigo-500/10 flex items-center justify-center text-indigo-400 mb-5 shadow-[0_0_15px_rgba(99,102,241,0.2)]">
+              <i class="fa-solid fa-code"></i>
+            </div>
+            <h3 class="text-lg md:text-xl font-semibold mb-2 text-white">Line-Drift-Free Code Editing</h3>
+            <p class="text-sm text-zinc-400 max-w-lg leading-relaxed">Exact <code class="bg-indigo-500/10 border border-indigo-500/20 text-indigo-300 px-1.5 py-0.5 rounded text-xs">replace_block</code> diffs instead of fragile line numbers — eliminates the classic "line-drift bug". Automatically catches syntax errors via AST linter and self-corrects.</p>
+          </div>
+        </div>
+
+        <div class="feature-card reveal delay-100 flex flex-col justify-between">
+          <div>
+            <div class="w-10 h-10 rounded border border-emerald-500/30 bg-emerald-500/10 flex items-center justify-center text-emerald-400 mb-5 shadow-[0_0_15px_rgba(16,185,129,0.2)]">
+              <i class="fa-solid fa-envelope"></i>
+            </div>
+            <h3 class="text-lg md:text-xl font-semibold mb-2 text-white">Proactive HITL</h3>
+            <p class="text-sm text-zinc-400 leading-relaxed">Background listeners for Gmail, WhatsApp, Telegram, and Calendar detect events and ask for permission before acting.</p>
+          </div>
+        </div>
+
+        <div class="feature-card reveal flex flex-col justify-between">
+          <div>
+            <div class="w-10 h-10 rounded border border-green-500/30 bg-green-500/10 flex items-center justify-center text-green-400 mb-5 shadow-[0_0_15px_rgba(34,197,94,0.2)]">
+              <i class="fa-brands fa-android"></i>
+            </div>
+            <h3 class="text-lg md:text-xl font-semibold mb-2 text-white">Mobile Phone Control</h3>
+            <p class="text-sm text-zinc-400 leading-relaxed">Control your Android via ADB over Tailscale — lock/unlock, open apps, make calls, read SMS, toggle WiFi/Data, and adjust volume.</p>
+          </div>
+        </div>
+
+        <div class="feature-card reveal delay-100 flex flex-col justify-between">
+          <div>
+            <div class="w-10 h-10 rounded border border-amber-500/30 bg-amber-500/10 flex items-center justify-center text-amber-400 mb-5 shadow-[0_0_15px_rgba(245,158,11,0.2)]">
+              <i class="fa-solid fa-rotate"></i>
+            </div>
+            <h3 class="text-lg md:text-xl font-semibold mb-2 text-white">Multi-LLM Failover</h3>
+            <p class="text-sm text-zinc-400 leading-relaxed">Seamlessly switches between Regolo, Gemini, OpenRouter, or local models (Ollama, LM Studio) if primary hits rate limits.</p>
+          </div>
+        </div>
+
+        <div class="feature-card reveal delay-200 flex flex-col justify-between">
+          <div>
+            <div class="w-10 h-10 rounded border border-purple-500/30 bg-purple-500/10 flex items-center justify-center text-purple-400 mb-5 shadow-[0_0_15px_rgba(168,85,247,0.2)]">
+              <i class="fa-solid fa-brain"></i>
+            </div>
+            <h3 class="text-lg md:text-xl font-semibold mb-2 text-white">Hybrid Routing</h3>
+            <p class="text-sm text-zinc-400 leading-relaxed">Intelligently routes to ultra-fast FastBrain (Groq, &lt;1.5s) or deep-reasoning AgenticBrain for complex multi-step workflows.</p>
+          </div>
+        </div>
+
+        <div class="feature-card reveal lg:col-span-3 flex flex-col justify-between">
+          <div>
+            <div class="w-10 h-10 rounded border border-cyan-500/30 bg-cyan-500/10 flex items-center justify-center text-cyan-400 mb-5 shadow-[0_0_15px_rgba(6,182,212,0.2)]">
+              <i class="fa-solid fa-database"></i>
+            </div>
+            <h3 class="text-lg md:text-xl font-semibold mb-2 text-white">Lifelong Memory & RAG</h3>
+            <p class="text-sm text-zinc-400 max-w-3xl leading-relaxed">ChromaDB-backed persistent memory with daily Groq summarization. Remembers context from months ago. Indexes your local documents for instant semantic search — acting as your personal, continuously updating knowledge base.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="engine" class="py-24 md:py-32 px-4 sm:px-6 border-t border-[#111] relative">
+    <div class="max-w-4xl mx-auto">
+      <div class="mb-10 md:mb-12 reveal text-center">
+        <h2 class="text-3xl md:text-4xl font-bold mb-3 text-white">The Execution Engine</h2>
+        <p class="text-zinc-400 text-sm md:text-base">FastBrain vs AgenticBrain — dual-architecture in action.</p>
+      </div>
+      
+      <div class="code-wrapper reveal animate-float" id="ide-container">
+        <div class="code-header">
+          <div class="flex gap-2">
+            <div class="w-3 h-3 rounded-full bg-[#333] hover:bg-[#ff5f56] transition-colors"></div>
+            <div class="w-3 h-3 rounded-full bg-[#333] hover:bg-[#ffbd2e] transition-colors"></div>
+            <div class="w-3 h-3 rounded-full bg-[#333] hover:bg-[#27c93f] transition-colors"></div>
+          </div>
+          <span class="mx-auto text-zinc-500 font-mono tracking-wide">~/jarvis-core/bin/execute</span>
+          <div class="w-[44px]"></div>
+        </div>
+        
+        <div class="code-content text-[11px] sm:text-xs md:text-sm">
+          <div class="text-zinc-500 mb-6 space-y-1.5">
+            <div class="flex items-center gap-2"><span class="text-green-400">✓</span> FastBrain online <span class="text-zinc-600 hidden sm:inline">(Groq Llama-3.3-70b)</span></div>
+            <div class="flex items-center gap-2"><span class="text-green-400">✓</span> AgenticBrain ready <span class="text-zinc-600 hidden sm:inline">(Regolo MoE + Gemini-4)</span></div>
+            <div class="flex items-center gap-2"><span class="text-green-400">✓</span> ChromaDB memory loaded <span class="text-zinc-600 hidden sm:inline">(15-day rolling + LTM)</span></div>
+            <div class="flex items-center gap-2"><span class="text-green-400">✓</span> Mobile ADB connected <span class="text-zinc-600 hidden sm:inline">(Android phone online)</span></div>
+          </div>
+          
+          <div class="mb-6 break-words text-white">
+            <span class="font-bold text-indigo-400">kaif@local</span>:<span class="text-cyan-400">~/workspace</span>$ 
+            <span class="text-zinc-200">Jarvis, run tests in my project and fix any failing ones.</span>
+          </div>
+          
+          <div class="pl-3 sm:pl-4 border-l-2 border-indigo-500/50 py-2 my-4 break-words bg-[#0a0a0a]/50 rounded-r-md">
+            <div class="text-[9px] sm:text-[10px] uppercase tracking-widest text-indigo-400 font-bold mb-3 flex items-center gap-2">
+              <i class="fa-solid fa-microchip"></i> Agentic Router → AgenticBrain
+            </div>
+            <div id="cli-output" class="text-zinc-300 space-y-2.5"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="demo" class="py-24 md:py-32 px-4 sm:px-6 border-t border-[#111] relative">
+  <div class="ambient-glow-indigo top-1/2 right-0 animate-pulse-glow" style="transform: translate(30%, -50%);"></div>
+  <div class="max-w-4xl mx-auto text-center reveal relative z-10">
+    <div class="mb-10 md:mb-12">
+      <h2 class="text-3xl md:text-4xl font-bold mb-3 text-white">See JARVIS in Action</h2>
+      <p class="text-zinc-400 max-w-2xl mx-auto text-sm md:text-base">Watch the autonomous AI agent build, test, and deploy a complete project — without any human intervention.</p>
+    </div>
+
+    <div class="video-container reveal">
+      <iframe 
+        width="861" 
+        height="657" 
+        src="https://www.youtube.com/embed/fVaFTl44sts" 
+        title="I Gave JARVIS ONE COMMAND… It Built &amp; Tested a Project By Itself 🤯" 
+        frameborder="0" 
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+        referrerpolicy="strict-origin-when-cross-origin" 
+        allowfullscreen
+        class="w-full aspect-video rounded-lg bg-black shadow-[0_0_30px_rgba(99,102,241,0.05)]"
+      >
+      </iframe>
+    </div>
+    <p class="text-zinc-500 text-xs md:text-sm mt-6 px-4">
+      The demo shows Jarvis creating a Flask API, writing tests, detecting a bug, generating a coverage report, and emailing the results autonomously.
+    </p>
+  </div>
+</section>
+
+  <section id="download" class="py-24 md:py-32 px-4 sm:px-6 border-t border-[#111]">
+    <div class="max-w-[90rem] mx-auto text-center reveal">
+      <h2 class="text-3xl md:text-4xl font-bold mb-3 text-white">Get Jarvis Today</h2>
+      <p class="text-zinc-400 max-w-2xl mx-auto mb-10 md:mb-12 text-sm md:text-base">100% free and open source. One-click installer for Windows, Linux, and macOS.</p>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 max-w-4xl mx-auto text-left">
+        <div class="feature-card reveal flex flex-col justify-between hover:border-indigo-500/50">
+          <div>
+            <h3 class="text-lg md:text-xl font-semibold text-white mb-2 flex items-center gap-2"><i class="fa-brands fa-windows text-cyan-400"></i> Windows</h3>
+            <p class="text-xs md:text-sm text-zinc-500 mb-6">.exe installer · 250 MB</p>
+          </div>
+          <a href="https://github.com/thekaifansari01/Jarvis-OS-Agent/releases/latest" class="download-btn px-4 py-2.5 rounded text-sm font-semibold text-center w-full block shadow-[0_0_15px_rgba(255,255,255,0.1)]">Download</a>
+        </div>
+
+        <div class="feature-card reveal delay-100 flex flex-col justify-between opacity-60">
+          <div>
+            <h3 class="text-lg md:text-xl font-semibold text-white mb-2 flex items-center gap-2"><i class="fa-brands fa-linux text-amber-400"></i> Linux</h3>
+            <p class="text-xs md:text-sm text-zinc-500 mb-6">.AppImage · 240 MB</p>
+          </div>
+          <button disabled class="download-btn-secondary px-4 py-2.5 rounded text-sm font-semibold w-full cursor-not-allowed text-zinc-600 border-[#222]">Coming Soon</button>
+        </div>
+
+        <div class="feature-card reveal delay-200 flex flex-col justify-between opacity-60">
+          <div>
+            <h3 class="text-lg md:text-xl font-semibold text-white mb-2 flex items-center gap-2"><i class="fa-brands fa-apple text-zinc-300"></i> macOS</h3>
+            <p class="text-xs md:text-sm text-zinc-500 mb-6">.dmg · 260 MB</p>
+          </div>
+          <button disabled class="download-btn-secondary px-4 py-2.5 rounded text-sm font-semibold w-full cursor-not-allowed text-zinc-600 border-[#222]">Coming Soon</button>
+        </div>
+      </div>
+      
+      <div class="mt-12 flex flex-wrap justify-center gap-6 text-sm">
+        <a href="https://github.com/thekaifansari01/Jarvis-OS-Agent" target="_blank" class="text-zinc-400 hover:text-white transition flex items-center gap-2"><i class="fa-brands fa-github text-lg"></i> Source Code</a>
+        <a href="/documentation" class="text-zinc-400 hover:text-white transition flex items-center gap-2"><i class="fa-solid fa-book text-indigo-400"></i> Documentation</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="border-t border-[#222] bg-[#000] pt-16 pb-8 relative overflow-hidden">
+  <div class="absolute top-0 left-1/2 -translate-x-1/2 w-2/3 h-px bg-gradient-to-r from-transparent via-indigo-500/50 to-transparent"></div>
+
+  <div class="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-12 mb-12">
+      
+      <div class="md:col-span-5 lg:col-span-5 flex flex-col items-center md:items-start text-center md:text-left">
+        <div class="flex items-center gap-2 mb-4">
+          <div class="flex h-6 w-6 items-center justify-center rounded bg-gradient-to-br from-indigo-500 to-cyan-400 text-white shadow-[0_0_15px_rgba(99,102,241,0.4)]">
+            <i class="fa-solid fa-bolt text-[10px]"></i>
+          </div>
+          <span class="text-xl font-bold text-white tracking-tight">JARVIS.</span>
+        </div>
+        <p class="text-sm text-zinc-400 leading-relaxed max-w-sm">
+          Built by an 18-year-old solo developer. No team. No funding. Engineered with absolute passion to give you complete control over your digital ecosystem.
+        </p>
+      </div>
+
+      <div class="md:col-span-7 lg:col-span-7 grid grid-cols-2 sm:grid-cols-3 gap-8 text-center sm:text-left">
+        
+        <div class="flex flex-col gap-3">
+          <span class="text-white font-semibold text-xs tracking-widest uppercase mb-1">Product</span>
+          <a href="/#features" class="text-sm text-zinc-500 hover:text-indigo-400 transition-colors">Features</a>
+          <a href="/#engine" class="text-sm text-zinc-500 hover:text-indigo-400 transition-colors">Engine</a>
+          <a href="/#download" class="text-sm text-zinc-500 hover:text-cyan-400 transition-colors">Download</a>
+        </div>
+        
+        <div class="flex flex-col gap-3">
+          <span class="text-white font-semibold text-xs tracking-widest uppercase mb-1">Resources</span>
+          <a href="/documentation" class="text-sm text-zinc-500 hover:text-indigo-400 transition-colors">Documentation</a>
+          <a href="/faq" class="text-sm text-zinc-500 hover:text-indigo-400 transition-colors">FAQ</a>
+          <a href="/about" class="text-sm text-zinc-500 hover:text-indigo-400 transition-colors">About the Builder</a>
+        </div>
+
+        <div class="flex flex-col gap-3 col-span-2 sm:col-span-1">
+          <span class="text-white font-semibold text-xs tracking-widest uppercase mb-1">Legal</span>
+          <a href="/privacy" class="text-sm text-zinc-500 hover:text-indigo-400 transition-colors">Privacy Policy</a>
+          <a href="https://github.com/thekaifansari01/Jarvis-OS-Agent/blob/main/LICENSE" target="_blank" class="text-sm text-zinc-500 hover:text-indigo-400 transition-colors">GNU GPL v3.0</a>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="pt-8 border-t border-[#111] flex flex-col md:flex-row justify-between items-center gap-6">
+      <div class="text-xs text-zinc-600 font-medium tracking-wide">
+        &copy; 2026 Kaif Ansari. All systems online.
+      </div>
+      <div class="flex gap-3">
+        <a href="https://github.com/thekaifansari01/Jarvis-OS-Agent" target="_blank" class="w-9 h-9 rounded-full bg-[#0a0a0a] border border-[#222] flex items-center justify-center text-zinc-400 hover:text-white hover:border-indigo-500/50 hover:bg-indigo-500/10 hover:shadow-[0_0_15px_rgba(99,102,241,0.2)] transition-all">
+          <i class="fa-brands fa-github text-sm"></i>
+        </a>
+        <a href="https://x.com/thekaifansari01" target="_blank" class="w-9 h-9 rounded-full bg-[#0a0a0a] border border-[#222] flex items-center justify-center text-zinc-400 hover:text-white hover:border-indigo-500/50 hover:bg-indigo-500/10 hover:shadow-[0_0_15px_rgba(99,102,241,0.2)] transition-all">
+          <i class="fa-brands fa-x-twitter text-sm"></i>
+        </a>
+        <a href="https://linkedin.com/in/thekaifansari01" target="_blank" class="w-9 h-9 rounded-full bg-[#0a0a0a] border border-[#222] flex items-center justify-center text-zinc-400 hover:text-white hover:border-indigo-500/50 hover:bg-indigo-500/10 hover:shadow-[0_0_15px_rgba(99,102,241,0.2)] transition-all">
+          <i class="fa-brands fa-linkedin-in text-sm"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+window.addEventListener('scroll', () => {
+  const nav = document.getElementById('navbar');
+  if (window.scrollY > 20) {
+    nav.classList.add('scrolled');
+  } else {
+    nav.classList.remove('scrolled');
+  }
+});
+
+const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+const mobileCloseBtn = document.getElementById('mobile-close-btn');
+const mobileDrawer = document.getElementById('mobile-drawer');
+const mobileOverlay = document.getElementById('mobile-overlay');
+const mobileLinks = document.querySelectorAll('.mobile-link');
+
+function openMobileMenu() {
+  mobileOverlay.classList.remove('hidden');
+  setTimeout(() => { mobileOverlay.classList.remove('opacity-0'); }, 10);
+  mobileDrawer.classList.remove('-translate-x-full');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeMobileMenu() {
+  mobileDrawer.classList.add('-translate-x-full');
+  mobileOverlay.classList.add('opacity-0');
+  setTimeout(() => { mobileOverlay.classList.add('hidden'); }, 300);
+  document.body.style.overflow = '';
+}
+
+mobileMenuBtn.addEventListener('click', openMobileMenu);
+mobileCloseBtn.addEventListener('click', closeMobileMenu);
+mobileOverlay.addEventListener('click', closeMobileMenu);
+mobileLinks.forEach(link => { link.addEventListener('click', closeMobileMenu); });
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+const terminalLines = [
+  { text: "<span class='text-cyan-400'>pytest -v</span> execute ho raha hai...", delay: 600 },
+  { text: "3 failing tests mile. Files ko <span class='text-cyan-400'>view</span> command se padh raha hu...", delay: 1000 },
+  { text: "<span class='text-purple-400'>replace_block</span> fixes apply ho rahe hain (zero line-drift)...", delay: 1200 },
+  { text: "<span class='text-green-400 font-bold'>[SUCCESS]</span> Saare tests pass ho gaye. 3 files update hui.", delay: 800 }
+];
+const cliOutput = document.getElementById('cli-output');
+let lineIndex = 0;
+
+function typeIDE() {
+  if (lineIndex < terminalLines.length) {
+    const div = document.createElement('div');
+    div.innerHTML = `<span class="text-indigo-500 mr-2">></span>` + terminalLines[lineIndex].text;
+    div.className = "terminal-cursor text-zinc-300";
+    
+    const prev = cliOutput.querySelector('.terminal-cursor');
+    if (prev) prev.classList.remove('terminal-cursor');
+    
+    cliOutput.appendChild(div);
+    setTimeout(() => {
+      lineIndex++;
+      typeIDE();
+    }, terminalLines[lineIndex].delay);
+  } else {
+    const prev = cliOutput.querySelector('.terminal-cursor');
+    if (prev) prev.classList.remove('terminal-cursor');
+    const end = document.createElement('div');
+    end.innerHTML = `<span class="text-indigo-500 mr-2">></span><span class="terminal-cursor"></span>`;
+    cliOutput.appendChild(end);
+  }
+}
+
+const ideObserver = new IntersectionObserver((entries) => {
+  if (entries[0].isIntersecting && lineIndex === 0) {
+    setTimeout(typeIDE, 500);
+  }
+}, { threshold: 0.5 });
+ideObserver.observe(document.getElementById('ide-container'));
+</script>
+</body>
+</html>

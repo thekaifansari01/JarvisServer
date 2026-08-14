@@ -1,0 +1,70 @@
+{
+  "builds": [
+    {
+      "src": "public/index.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "public/documentation.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "public/faq.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "public/about.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "public/privacy.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "api/oauth/start.py",
+      "use": "@vercel/python"
+    },
+    {
+      "src": "api/oauth/callback.py",
+      "use": "@vercel/python"
+    },
+    {
+      "src": "api/oauth/exchange.py",
+      "use": "@vercel/python"
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/",
+      "destination": "/public/index.html"
+    },
+    {
+      "source": "/documentation",
+      "destination": "/public/documentation.html"
+    },
+    {
+      "source": "/faq",
+      "destination": "/public/faq.html"
+    },
+    {
+      "source": "/about",
+      "destination": "/public/about.html"
+    },
+    {
+      "source": "/privacy",
+      "destination": "/public/privacy.html"
+    },
+    {
+      "source": "/api/oauth/start",
+      "destination": "/api/oauth/start.py"
+    },
+    {
+      "source": "/api/oauth/callback",
+      "destination": "/api/oauth/callback.py"
+    },
+    {
+      "source": "/api/oauth/exchange",
+      "destination": "/api/oauth/exchange.py"
+    }
+  ]
+}

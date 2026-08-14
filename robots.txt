@@ -1,0 +1,9 @@
+# Allow all crawlers to index the site
+User-agent: *
+Allow: /
+
+# Disallow crawling of API endpoints (they are not meant for indexing)
+Disallow: /api/
+
+# Sitemap location
+Sitemap: https://jarvis-agent.vercel.app/sitemap.xml

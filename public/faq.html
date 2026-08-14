@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth bg-black antialiased">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JARVIS · FAQ</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'] },
+      colors: { dark: '#000000', surface: '#0a0a0a', border: '#222222', accent: '#ffffff', muted: '#888888' },
+      animation: { 'pulse-glow': 'pulse-glow 4s cubic-bezier(0.4, 0, 0.6, 1) infinite' },
+      keyframes: { 'pulse-glow': { '0%, 100%': { opacity: 0.1 }, '50%': { opacity: 0.2 } } }
+    }
+  }
+}
+</script>
+<style>
+body { color: #a1a1aa; overflow-x: hidden; background: #000000; }
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; border: 2px solid #000; }
+::-webkit-scrollbar-thumb:hover { background: #555; }
+.enterprise-grid { background-size: 30px 30px; background-image: linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px); mask-image: linear-gradient(to bottom, black 20%, transparent 80%); -webkit-mask-image: linear-gradient(to bottom, black 20%, transparent 80%); }
+.ambient-glow-indigo { position: fixed; top: 0; left: 50%; transform: translateX(-50%); width: 60vw; height: 40vw; background: radial-gradient(ellipse, rgba(99, 102, 241, 0.08) 0%, transparent 70%); border-radius: 50%; pointer-events: none; z-index: 0; }
+.text-gradient-accent { background: linear-gradient(to right, #818cf8, #22d3ee); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.nav-blur { background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid transparent; transition: all 0.4s ease; }
+.nav-blur.scrolled { border-bottom-color: #222; background: rgba(0, 0, 0, 0.8); box-shadow: 0 4px 30px rgba(0,0,0,0.5); }
+.reveal { opacity: 0; transform: translateY(30px); transition: all 0.6s cubic-bezier(0.2, 0.8, 0.2, 1); }
+.reveal.active { opacity: 1; transform: translateY(0); }
+.faq-card { background: #0a0a0a; border: 1px solid #222; border-radius: 12px; padding: 1.5rem; transition: all 0.3s ease; height: 100%; display: flex; flex-direction: column; }
+.faq-card:hover { border-color: rgba(99, 102, 241, 0.4); box-shadow: 0 10px 30px -10px rgba(99, 102, 241, 0.1); }
+.download-btn { background: #fff; color: #000; transition: all 0.3s ease; }
+.download-btn:hover { background: #e5e5e5; transform: scale(1.02); }
+#mobile-overlay { transition: opacity 0.3s ease; }
+#mobile-drawer { transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+</style>
+</head>
+<body>
+
+<div class="fixed inset-0 enterprise-grid pointer-events-none z-0"></div>
+<div class="ambient-glow-indigo animate-pulse-glow"></div>
+
+<header id="navbar" class="fixed top-0 w-full z-50 nav-blur">
+  <div class="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8 h-16 flex justify-between items-center">
+    <div class="flex items-center gap-4">
+      <button id="mobile-menu-btn" class="md:hidden text-zinc-400 hover:text-white focus:outline-none transition-colors">
+        <i class="fa-solid fa-bars text-xl"></i>
+      </button>
+      <a href="/" class="flex items-center gap-2">
+        <div class="flex h-7 w-7 items-center justify-center rounded bg-gradient-to-br from-indigo-500 to-cyan-400 text-white transition-transform hover:scale-105 shadow-[0_0_15px_rgba(99,102,241,0.4)]">
+          <i class="fa-solid fa-bolt text-xs"></i>
+        </div>
+        <span class="text-base font-bold text-white tracking-tight">JARVIS</span>
+      </a>
+    </div>
+    <nav class="hidden md:flex items-center space-x-8">
+      <a href="/#features" class="text-sm font-medium text-zinc-400 hover:text-white">Features</a>
+      <a href="/documentation" class="text-sm font-medium text-zinc-400 hover:text-white">Docs</a>
+      <a href="/about" class="text-sm font-medium text-zinc-400 hover:text-white">About</a>
+    </nav>
+    <div class="flex items-center gap-4 sm:gap-6">
+      <a href="/#download" class="download-btn px-4 py-1.5 rounded-md text-sm font-semibold shadow-[0_0_15px_rgba(255,255,255,0.1)]">Get Jarvis</a>
+    </div>
+  </div>
+</header>
+
+<div id="mobile-overlay" class="fixed inset-0 bg-black/80 z-40 hidden opacity-0 backdrop-blur-sm"></div>
+<div id="mobile-drawer" class="fixed inset-y-0 left-0 w-72 bg-[#050505] border-r border-[#222] z-50 transform -translate-x-full md:hidden flex flex-col h-full">
+  <div class="p-6 border-b border-[#222] flex justify-between items-center">
+    <div class="flex items-center gap-2">
+      <div class="flex h-6 w-6 items-center justify-center rounded bg-gradient-to-br from-indigo-500 to-cyan-400 text-white">
+        <i class="fa-solid fa-bolt text-[10px]"></i>
+      </div>
+      <span class="font-bold text-white tracking-tight">Menu</span>
+    </div>
+    <button id="mobile-close-btn" class="text-zinc-400 hover:text-white transition-colors">
+      <i class="fa-solid fa-xmark text-xl"></i>
+    </button>
+  </div>
+  <div class="flex-1 overflow-y-auto p-6 space-y-6">
+    <a href="/" class="block text-lg font-medium text-zinc-300 hover:text-white mobile-link">Home</a>
+    <a href="/documentation" class="block text-lg font-medium text-zinc-300 hover:text-white mobile-link">Documentation</a>
+    <a href="/about" class="block text-lg font-medium text-zinc-300 hover:text-white mobile-link">About</a>
+    <a href="/privacy" class="block text-lg font-medium text-zinc-300 hover:text-white mobile-link">Privacy</a>
+  </div>
+</div>
+
+<main class="relative z-10 pt-32 pb-24 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-5xl mx-auto">
+    
+    <div class="reveal mb-16 text-center">
+      <h1 class="text-4xl md:text-5xl font-bold text-white mb-4 tracking-tight">Frequently Asked Questions</h1>
+      <p class="text-lg text-zinc-400 max-w-2xl mx-auto">Everything you need to know about setting up, running, and customizing JARVIS for your workflow.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      
+      <div class="faq-card reveal">
+        <h3 class="text-lg font-bold text-white mb-2 flex items-start gap-2">
+          <i class="fa-solid fa-circle-question text-indigo-400 mt-1"></i> Is JARVIS completely free to use?
+        </h3>
+        <p class="text-sm text-zinc-400 leading-relaxed mt-auto">
+          Yes, the core JARVIS software is 100% free and open-source under the <strong>GNU General Public License v3.0 (GPLv3)</strong>. However, if you use cloud APIs like Groq, Gemini, or Regolo, you may incur standard API usage costs depending on their respective free tiers.
+        </p>
+      </div>
+
+      <div class="faq-card reveal delay-100">
+        <h3 class="text-lg font-bold text-white mb-2 flex items-start gap-2">
+          <i class="fa-solid fa-circle-question text-indigo-400 mt-1"></i> Can I run it completely offline?
+        </h3>
+        <p class="text-sm text-zinc-400 leading-relaxed mt-auto">
+          Absolutely. You can point JARVIS to any local OpenAI-compatible endpoint. By running Ollama or LM Studio locally and updating the <code class="bg-[#222] px-1 rounded text-xs text-white">CUSTOM_BASE_URL</code> in your <code class="bg-[#222] px-1 rounded text-xs text-white">.env</code>, you can achieve 100% local, offline inference.
+        </p>
+      </div>
+
+      <div class="faq-card reveal">
+        <h3 class="text-lg font-bold text-white mb-2 flex items-start gap-2">
+          <i class="fa-solid fa-circle-question text-indigo-400 mt-1"></i> What is the Contributor License Agreement (CLA)?
+        </h3>
+        <p class="text-sm text-zinc-400 leading-relaxed mt-auto">
+          JARVIS uses a <strong>CLA</strong> to ensure the project can remain open-source while allowing commercial licensing for enterprises. By submitting a Pull Request, you agree to transfer copyright of your contribution to Kaif Ansari, enabling the project to be distributed under both GPLv3 and proprietary licenses without seeking further permission.
+        </p>
+      </div>
+
+      <div class="faq-card reveal delay-100">
+        <h3 class="text-lg font-bold text-white mb-2 flex items-start gap-2">
+          <i class="fa-solid fa-circle-question text-indigo-400 mt-1"></i> Does it work on Mac and Linux?
+        </h3>
+        <p class="text-sm text-zinc-400 leading-relaxed mt-auto">
+          Currently, JARVIS is heavily optimized for Windows (native window controls, registry setups). Linux (.AppImage) and macOS (.dmg) versions are in active development and will be released very soon.
+        </p>
+      </div>
+
+      <div class="faq-card reveal delay-100">
+        <h3 class="text-lg font-bold text-white mb-2 flex items-start gap-2">
+          <i class="fa-solid fa-circle-question text-indigo-400 mt-1"></i> How does Mobile ADB control work?
+        </h3>
+        <p class="text-sm text-zinc-400 leading-relaxed mt-auto">
+          It uses ADB (Android Debug Bridge) routed over Tailscale. You need to enable USB Debugging on your phone, run <code class="bg-[#222] px-1 rounded text-xs text-white">adb tcpip 5555</code>, connect via your Tailscale IP, and add that IP to your <code class="bg-[#222] px-1 rounded text-xs text-white">.env</code>.
+        </p>
+      </div>
+
+      <div class="faq-card reveal">
+        <h3 class="text-lg font-bold text-white mb-2 flex items-start gap-2">
+          <i class="fa-solid fa-circle-question text-indigo-400 mt-1"></i> Will it accidentally delete my files?
+        </h3>
+        <p class="text-sm text-zinc-400 leading-relaxed mt-auto">
+          JARVIS employs a strict `shlex` tokenization and path canonicalization layer that auto-blocks highly destructive commands (like <code class="bg-[#222] px-1 rounded text-xs text-rose-400">rm -rf /</code>). Additionally, our Human-in-the-Loop (HITL) system ensures it asks for consent before major actions.
+        </p>
+      </div>
+
+      <div class="faq-card reveal delay-100">
+        <h3 class="text-lg font-bold text-white mb-2 flex items-start gap-2">
+          <i class="fa-solid fa-circle-question text-indigo-400 mt-1"></i> Why are WhatsApp and Telegram separated?
+        </h3>
+        <p class="text-sm text-zinc-400 leading-relaxed mt-auto">
+          WhatsApp uses the Baileys Node.js web socket bridge for stable connections, requiring a QR code scan. Telegram uses the native MTProto API via Telethon for deeper OS integration and remote bot control. Both are managed safely as background services.
+        </p>
+      </div>
+
+    </div>
+
+    <div class="mt-16 text-center reveal delay-200">
+      <p class="text-zinc-400">Still have questions? Check out the full <a href="/documentation" class="text-indigo-400 hover:text-indigo-300 font-medium">Documentation</a> or raise an issue on <a href="https://github.com/thekaifansari01/Jarvis-OS-Agent" target="_blank" class="text-indigo-400 hover:text-indigo-300 font-medium">GitHub</a>.</p>
+    </div>
+
+  </div>
+</main>
+
+<footer class="border-t border-[#222] bg-[#000] pt-16 pb-8 relative overflow-hidden">
+  <div class="absolute top-0 left-1/2 -translate-x-1/2 w-2/3 h-px bg-gradient-to-r from-transparent via-indigo-500/50 to-transparent"></div>
+
+  <div class="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-12 mb-12">
+      
+      <div class="md:col-span-5 lg:col-span-5 flex flex-col items-center md:items-start text-center md:text-left">
+        <div class="flex items-center gap-2 mb-4">
+          <div class="flex h-6 w-6 items-center justify-center rounded bg-gradient-to-br from-indigo-500 to-cyan-400 text-white shadow-[0_0_15px_rgba(99,102,241,0.4)]">
+            <i class="fa-solid fa-bolt text-[10px]"></i>
+          </div>
+          <span class="text-xl font-bold text-white tracking-tight">JARVIS.</span>
+        </div>
+        <p class="text-sm text-zinc-400 leading-relaxed max-w-sm">
+          Built by an 18-year-old solo developer. No team. No funding. Engineered with absolute passion to give you complete control over your digital ecosystem.
+        </p>
+      </div>
+
+      <div class="md:col-span-7 lg:col-span-7 grid grid-cols-2 sm:grid-cols-3 gap-8 text-center sm:text-left">
+        
+        <div class="flex flex-col gap-3">
+          <span class="text-white font-semibold text-xs tracking-widest uppercase mb-1">Product</span>
+          <a href="/#features" class="text-sm text-zinc-500 hover:text-indigo-400 transition-colors">Features</a>
+          <a href="/#engine" class="text-sm text-zinc-500 hover:text-indigo-400 transition-colors">Engine</a>
+          <a href="/#download" class="text-sm text-zinc-500 hover:text-cyan-400 transition-colors">Download</a>
+        </div>
+        
+        <div class="flex flex-col gap-3">
+          <span class="text-white font-semibold text-xs tracking-widest uppercase mb-1">Resources</span>
+          <a href="/documentation" class="text-sm text-zinc-500 hover:text-indigo-400 transition-colors">Documentation</a>
+          <a href="/faq" class="text-sm text-zinc-500 hover:text-indigo-400 transition-colors">FAQ</a>
+          <a href="/about" class="text-sm text-zinc-500 hover:text-indigo-400 transition-colors">About the Builder</a>
+        </div>
+
+        <div class="flex flex-col gap-3 col-span-2 sm:col-span-1">
+          <span class="text-white font-semibold text-xs tracking-widest uppercase mb-1">Legal</span>
+          <a href="/privacy" class="text-sm text-zinc-500 hover:text-indigo-400 transition-colors">Privacy Policy</a>
+          <a href="https://github.com/thekaifansari01/Jarvis-OS-Agent/blob/main/LICENSE" target="_blank" class="text-sm text-zinc-500 hover:text-indigo-400 transition-colors">GNU GPL v3.0</a>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="pt-8 border-t border-[#111] flex flex-col md:flex-row justify-between items-center gap-6">
+      <div class="text-xs text-zinc-600 font-medium tracking-wide">
+        &copy; 2026 Kaif Ansari. All systems online.
+      </div>
+      <div class="flex gap-3">
+        <a href="https://github.com/thekaifansari01/Jarvis-OS-Agent" target="_blank" class="w-9 h-9 rounded-full bg-[#0a0a0a] border border-[#222] flex items-center justify-center text-zinc-400 hover:text-white hover:border-indigo-500/50 hover:bg-indigo-500/10 hover:shadow-[0_0_15px_rgba(99,102,241,0.2)] transition-all">
+          <i class="fa-brands fa-github text-sm"></i>
+        </a>
+        <a href="https://x.com/thekaifansari01" target="_blank" class="w-9 h-9 rounded-full bg-[#0a0a0a] border border-[#222] flex items-center justify-center text-zinc-400 hover:text-white hover:border-indigo-500/50 hover:bg-indigo-500/10 hover:shadow-[0_0_15px_rgba(99,102,241,0.2)] transition-all">
+          <i class="fa-brands fa-x-twitter text-sm"></i>
+        </a>
+        <a href="https://linkedin.com/in/thekaifansari01" target="_blank" class="w-9 h-9 rounded-full bg-[#0a0a0a] border border-[#222] flex items-center justify-center text-zinc-400 hover:text-white hover:border-indigo-500/50 hover:bg-indigo-500/10 hover:shadow-[0_0_15px_rgba(99,102,241,0.2)] transition-all">
+          <i class="fa-brands fa-linkedin-in text-sm"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+window.addEventListener('scroll', () => {
+  const nav = document.getElementById('navbar');
+  if (window.scrollY > 20) { nav.classList.add('scrolled'); } 
+  else { nav.classList.remove('scrolled'); }
+});
+
+const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+const mobileCloseBtn = document.getElementById('mobile-close-btn');
+const mobileDrawer = document.getElementById('mobile-drawer');
+const mobileOverlay = document.getElementById('mobile-overlay');
+const mobileLinks = document.querySelectorAll('.mobile-link');
+
+function openMobileMenu() {
+  mobileOverlay.classList.remove('hidden');
+  setTimeout(() => { mobileOverlay.classList.remove('opacity-0'); }, 10);
+  mobileDrawer.classList.remove('-translate-x-full');
+  document.body.style.overflow = 'hidden';
+}
+function closeMobileMenu() {
+  mobileDrawer.classList.add('-translate-x-full');
+  mobileOverlay.classList.add('opacity-0');
+  setTimeout(() => { mobileOverlay.classList.add('hidden'); }, 300);
+  document.body.style.overflow = '';
+}
+mobileMenuBtn.addEventListener('click', openMobileMenu);
+mobileCloseBtn.addEventListener('click', closeMobileMenu);
+mobileOverlay.addEventListener('click', closeMobileMenu);
+mobileLinks.forEach(link => { link.addEventListener('click', closeMobileMenu); });
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

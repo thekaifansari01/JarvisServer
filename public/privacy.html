@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth bg-black antialiased">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JARVIS · Privacy Policy</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'] },
+      colors: { dark: '#000000', surface: '#0a0a0a', border: '#222222', accent: '#ffffff', muted: '#888888' },
+      animation: { 'pulse-glow': 'pulse-glow 4s cubic-bezier(0.4, 0, 0.6, 1) infinite' },
+      keyframes: { 'pulse-glow': { '0%, 100%': { opacity: 0.1 }, '50%': { opacity: 0.3 } } }
+    }
+  }
+}
+</script>
+<style>
+body { color: #a1a1aa; overflow-x: hidden; background: #000000; }
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; border: 2px solid #000; }
+::-webkit-scrollbar-thumb:hover { background: #555; }
+.enterprise-grid { background-size: 30px 30px; background-image: linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px); mask-image: linear-gradient(to bottom, black 20%, transparent 80%); -webkit-mask-image: linear-gradient(to bottom, black 20%, transparent 80%); }
+.ambient-glow-cyan { position: fixed; top: 0; right: 0; width: 50vw; height: 50vw; background: radial-gradient(circle, rgba(6, 182, 212, 0.08) 0%, transparent 70%); border-radius: 50%; pointer-events: none; z-index: 0; }
+.text-gradient-accent { background: linear-gradient(to right, #22d3ee, #818cf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.nav-blur { background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid transparent; transition: all 0.4s ease; }
+.nav-blur.scrolled { border-bottom-color: #222; background: rgba(0, 0, 0, 0.8); box-shadow: 0 4px 30px rgba(0,0,0,0.5); }
+.reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); }
+.reveal.active { opacity: 1; transform: translateY(0); }
+.privacy-card { background: #0a0a0a; border: 1px solid #222; border-radius: 12px; padding: 2rem; transition: all 0.3s ease; position: relative; overflow: hidden; }
+.privacy-card:hover { border-color: rgba(6, 182, 212, 0.4); box-shadow: 0 10px 30px -10px rgba(6, 182, 212, 0.1); }
+.download-btn { background: #fff; color: #000; transition: all 0.3s ease; }
+.download-btn:hover { background: #e5e5e5; transform: scale(1.02); }
+#mobile-overlay { transition: opacity 0.3s ease; }
+#mobile-drawer { transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+</style>
+</head>
+<body>
+
+<div class="fixed inset-0 enterprise-grid pointer-events-none z-0"></div>
+<div class="ambient-glow-cyan animate-pulse-glow"></div>
+
+<header id="navbar" class="fixed top-0 w-full z-50 nav-blur">
+  <div class="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8 h-16 flex justify-between items-center">
+    <div class="flex items-center gap-4">
+      <button id="mobile-menu-btn" class="md:hidden text-zinc-400 hover:text-white focus:outline-none transition-colors">
+        <i class="fa-solid fa-bars text-xl"></i>
+      </button>
+      <a href="/" class="flex items-center gap-2">
+        <div class="flex h-7 w-7 items-center justify-center rounded bg-gradient-to-br from-indigo-500 to-cyan-400 text-white transition-transform hover:scale-105 shadow-[0_0_15px_rgba(6,182,212,0.4)]">
+          <i class="fa-solid fa-bolt text-xs"></i>
+        </div>
+        <span class="text-base font-bold text-white tracking-tight">JARVIS</span>
+      </a>
+    </div>
+    <nav class="hidden md:flex items-center space-x-8">
+      <a href="/#features" class="text-sm font-medium text-zinc-400 hover:text-white">Features</a>
+      <a href="/documentation" class="text-sm font-medium text-zinc-400 hover:text-white">Docs</a>
+      <a href="/faq" class="text-sm font-medium text-zinc-400 hover:text-white">FAQ</a>
+      <a href="/about" class="text-sm font-medium text-zinc-400 hover:text-white">About</a>
+    </nav>
+    <div class="flex items-center gap-4 sm:gap-6">
+      <a href="/#download" class="download-btn px-4 py-1.5 rounded-md text-sm font-semibold shadow-[0_0_15px_rgba(255,255,255,0.1)]">Get Jarvis</a>
+    </div>
+  </div>
+</header>
+
+<div id="mobile-overlay" class="fixed inset-0 bg-black/80 z-40 hidden opacity-0 backdrop-blur-sm"></div>
+<div id="mobile-drawer" class="fixed inset-y-0 left-0 w-72 bg-[#050505] border-r border-[#222] z-50 transform -translate-x-full md:hidden flex flex-col h-full">
+  <div class="p-6 border-b border-[#222] flex justify-between items-center">
+    <div class="flex items-center gap-2">
+      <div class="flex h-6 w-6 items-center justify-center rounded bg-gradient-to-br from-indigo-500 to-cyan-400 text-white">
+        <i class="fa-solid fa-bolt text-[10px]"></i>
+      </div>
+      <span class="font-bold text-white tracking-tight">Menu</span>
+    </div>
+    <button id="mobile-close-btn" class="text-zinc-400 hover:text-white transition-colors">
+      <i class="fa-solid fa-xmark text-xl"></i>
+    </button>
+  </div>
+  <div class="flex-1 overflow-y-auto p-6 space-y-6">
+    <a href="/" class="block text-lg font-medium text-zinc-300 hover:text-white mobile-link">Home</a>
+    <a href="/documentation" class="block text-lg font-medium text-zinc-300 hover:text-white mobile-link">Documentation</a>
+    <a href="/faq" class="block text-lg font-medium text-zinc-300 hover:text-white mobile-link">FAQ</a>
+    <a href="/about" class="block text-lg font-medium text-zinc-300 hover:text-white mobile-link">About</a>
+  </div>
+</div>
+
+<main class="relative z-10 pt-32 pb-24 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-3xl mx-auto">
+    
+    <div class="reveal mb-12 text-center border-b border-[#222] pb-12">
+      <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 mb-6 shadow-[0_0_20px_rgba(6,182,212,0.2)]">
+        <i class="fa-solid fa-shield-halved text-2xl text-cyan-400"></i>
+      </div>
+      <h1 class="text-4xl md:text-5xl font-bold text-white mb-4 tracking-tight">Privacy First. Always.</h1>
+      <p class="text-lg text-zinc-400 leading-relaxed">
+        We designed JARVIS to control your digital life without compromising your data. Here is exactly how we handle your privacy.
+      </p>
+    </div>
+
+    <div class="space-y-6">
+      
+      <div class="privacy-card reveal">
+        <h2 class="text-xl font-bold text-white mb-3 flex items-center gap-3">
+          <i class="fa-solid fa-hard-drive text-cyan-400"></i> 100% Local Storage
+        </h2>
+        <p class="text-zinc-400 leading-relaxed text-sm md:text-base">
+          Your lifelong episodic memory graph, RAG document vectors (stored in ChromaDB), and rolling JSONL histories are saved exclusively on your local machine. JARVIS does not have a central database in the cloud. Your data never leaves your hard drive unless explicitly sent as a prompt to an LLM provider.
+        </p>
+      </div>
+
+      <div class="privacy-card reveal delay-100">
+        <h2 class="text-xl font-bold text-white mb-3 flex items-center gap-3">
+          <i class="fa-solid fa-cloud-arrow-up text-indigo-400"></i> API & LLM Usage
+        </h2>
+        <p class="text-zinc-400 leading-relaxed text-sm md:text-base">
+          By default, JARVIS routes complex requests to cloud providers like Groq, Gemini, or Regolo. The data sent is limited only to the context required to fulfill your command. If you want true zero-knowledge privacy, you can configure JARVIS to use completely local models via Ollama or LM Studio by setting the <code class="bg-[#222] px-1 py-0.5 rounded text-white text-xs">CUSTOM_BASE_URL</code> in your environment variables.
+        </p>
+      </div>
+
+      <div class="privacy-card reveal delay-200">
+        <h2 class="text-xl font-bold text-white mb-3 flex items-center gap-3">
+          <i class="fa-solid fa-hand-holding-hand text-emerald-400"></i> Human-in-the-Loop (HITL)
+        </h2>
+        <p class="text-zinc-400 leading-relaxed text-sm md:text-base">
+          JARVIS connects deeply to your personal accounts (Gmail, WhatsApp, Telegram, Google Calendar). Our background scout processes monitor these feeds securely. However, JARVIS is strictly restricted by HITL protocols. It will <strong>never</strong> send an email, alter a calendar event, or message a contact without explicitly asking for your permission via a prompt first.
+        </p>
+      </div>
+
+      <div class="privacy-card reveal delay-200">
+        <h2 class="text-xl font-bold text-white mb-3 flex items-center gap-3">
+          <i class="fa-solid fa-ban text-rose-400"></i> Zero Telemetry
+        </h2>
+        <p class="text-zinc-400 leading-relaxed text-sm md:text-base">
+          This project is fully open source. There are no hidden tracking scripts, no usage telemetry, and no analytics injected into the binaries or the Python source code. You are welcome to audit the entire codebase on our GitHub repository.
+        </p>
+      </div>
+
+      <div class="privacy-card reveal delay-300">
+        <h2 class="text-xl font-bold text-white mb-3 flex items-center gap-3">
+          <i class="fa-solid fa-scale-balanced text-indigo-400"></i> Contributor License Agreement (CLA)
+        </h2>
+        <p class="text-zinc-400 leading-relaxed text-sm md:text-base">
+          To protect the project's long-term sustainability, JARVIS requires all contributors to agree to our <strong>Contributor License Agreement (CLA)</strong>. By submitting code, you grant the maintainer (Kaif Ansari) the right to use your contribution in both the open-source GPLv3 version and any future commercial licenses, ensuring the project remains fully funded and maintained without legal friction.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+</main>
+
+<footer class="border-t border-[#222] bg-[#000] pt-16 pb-8 relative overflow-hidden">
+  <div class="absolute top-0 left-1/2 -translate-x-1/2 w-2/3 h-px bg-gradient-to-r from-transparent via-indigo-500/50 to-transparent"></div>
+
+  <div class="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-12 mb-12">
+      
+      <div class="md:col-span-5 lg:col-span-5 flex flex-col items-center md:items-start text-center md:text-left">
+        <div class="flex items-center gap-2 mb-4">
+          <div class="flex h-6 w-6 items-center justify-center rounded bg-gradient-to-br from-indigo-500 to-cyan-400 text-white shadow-[0_0_15px_rgba(99,102,241,0.4)]">
+            <i class="fa-solid fa-bolt text-[10px]"></i>
+          </div>
+          <span class="text-xl font-bold text-white tracking-tight">JARVIS.</span>
+        </div>
+        <p class="text-sm text-zinc-400 leading-relaxed max-w-sm">
+          Built by an 18-year-old solo developer. No team. No funding. Engineered with absolute passion to give you complete control over your digital ecosystem.
+        </p>
+      </div>
+
+      <div class="md:col-span-7 lg:col-span-7 grid grid-cols-2 sm:grid-cols-3 gap-8 text-center sm:text-left">
+        
+        <div class="flex flex-col gap-3">
+          <span class="text-white font-semibold text-xs tracking-widest uppercase mb-1">Product</span>
+          <a href="/#features" class="text-sm text-zinc-500 hover:text-indigo-400 transition-colors">Features</a>
+          <a href="/#engine" class="text-sm text-zinc-500 hover:text-indigo-400 transition-colors">Engine</a>
+          <a href="/#download" class="text-sm text-zinc-500 hover:text-cyan-400 transition-colors">Download</a>
+        </div>
+        
+        <div class="flex flex-col gap-3">
+          <span class="text-white font-semibold text-xs tracking-widest uppercase mb-1">Resources</span>
+          <a href="/documentation" class="text-sm text-zinc-500 hover:text-indigo-400 transition-colors">Documentation</a>
+          <a href="/faq" class="text-sm text-zinc-500 hover:text-indigo-400 transition-colors">FAQ</a>
+          <a href="/about" class="text-sm text-zinc-500 hover:text-indigo-400 transition-colors">About the Builder</a>
+        </div>
+
+        <div class="flex flex-col gap-3 col-span-2 sm:col-span-1">
+          <span class="text-white font-semibold text-xs tracking-widest uppercase mb-1">Legal</span>
+          <a href="/privacy" class="text-sm text-zinc-500 hover:text-indigo-400 transition-colors">Privacy Policy</a>
+          <a href="https://github.com/thekaifansari01/Jarvis-OS-Agent/blob/main/LICENSE" target="_blank" class="text-sm text-zinc-500 hover:text-indigo-400 transition-colors">GNU GPL v3.0</a>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="pt-8 border-t border-[#111] flex flex-col md:flex-row justify-between items-center gap-6">
+      <div class="text-xs text-zinc-600 font-medium tracking-wide">
+        &copy; 2026 Kaif Ansari. All systems online.
+      </div>
+      <div class="flex gap-3">
+        <a href="https://github.com/thekaifansari01/Jarvis-OS-Agent" target="_blank" class="w-9 h-9 rounded-full bg-[#0a0a0a] border border-[#222] flex items-center justify-center text-zinc-400 hover:text-white hover:border-indigo-500/50 hover:bg-indigo-500/10 hover:shadow-[0_0_15px_rgba(99,102,241,0.2)] transition-all">
+          <i class="fa-brands fa-github text-sm"></i>
+        </a>
+        <a href="https://x.com/thekaifansari01" target="_blank" class="w-9 h-9 rounded-full bg-[#0a0a0a] border border-[#222] flex items-center justify-center text-zinc-400 hover:text-white hover:border-indigo-500/50 hover:bg-indigo-500/10 hover:shadow-[0_0_15px_rgba(99,102,241,0.2)] transition-all">
+          <i class="fa-brands fa-x-twitter text-sm"></i>
+        </a>
+        <a href="https://linkedin.com/in/thekaifansari01" target="_blank" class="w-9 h-9 rounded-full bg-[#0a0a0a] border border-[#222] flex items-center justify-center text-zinc-400 hover:text-white hover:border-indigo-500/50 hover:bg-indigo-500/10 hover:shadow-[0_0_15px_rgba(99,102,241,0.2)] transition-all">
+          <i class="fa-brands fa-linkedin-in text-sm"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+window.addEventListener('scroll', () => {
+  const nav = document.getElementById('navbar');
+  if (window.scrollY > 20) { nav.classList.add('scrolled'); } 
+  else { nav.classList.remove('scrolled'); }
+});
+
+const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+const mobileCloseBtn = document.getElementById('mobile-close-btn');
+const mobileDrawer = document.getElementById('mobile-drawer');
+const mobileOverlay = document.getElementById('mobile-overlay');
+const mobileLinks = document.querySelectorAll('.mobile-link');
+
+function openMobileMenu() {
+  mobileOverlay.classList.remove('hidden');
+  setTimeout(() => { mobileOverlay.classList.remove('opacity-0'); }, 10);
+  mobileDrawer.classList.remove('-translate-x-full');
+  document.body.style.overflow = 'hidden';
+}
+function closeMobileMenu() {
+  mobileDrawer.classList.add('-translate-x-full');
+  mobileOverlay.classList.add('opacity-0');
+  setTimeout(() => { mobileOverlay.classList.add('hidden'); }, 300);
+  document.body.style.overflow = '';
+}
+mobileMenuBtn.addEventListener('click', openMobileMenu);
+mobileCloseBtn.addEventListener('click', closeMobileMenu);
+mobileOverlay.addEventListener('click', closeMobileMenu);
+mobileLinks.forEach(link => { link.addEventListener('click', closeMobileMenu); });
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
