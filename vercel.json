@@ -1,6 +1,10 @@
 {
   "builds": [
     {
+      "src": "google6831778c190e4906.html",
+      "use": "@vercel/static"
+    },
+    {
       "src": "public/index.html",
       "use": "@vercel/static"
     },
@@ -21,6 +25,14 @@
       "use": "@vercel/static"
     },
     {
+      "src": "public/robots.txt",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "public/sitemap.xml",
+      "use": "@vercel/static"
+    },
+    {
       "src": "api/oauth/start.py",
       "use": "@vercel/python"
     },
@@ -34,6 +46,10 @@
     }
   ],
   "rewrites": [
+    {
+      "source": "/google6831778c190e4906.html",
+      "destination": "/google6831778c190e4906.html"
+    },
     {
       "source": "/",
       "destination": "/public/index.html"
