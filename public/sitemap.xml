@@ -3,7 +3,7 @@
     <!-- Main landing page -->
     <url>
         <loc>https://jarvis-os-agent.vercel.app/</loc>
-        <lastmod>2026-08-14</lastmod>
+        <lastmod>2026-08-16</lastmod>
         <changefreq>weekly</changefreq>
         <priority>1.0</priority>
     </url>
@@ -11,7 +11,7 @@
     <!-- Documentation -->
     <url>
         <loc>https://jarvis-os-agent.vercel.app/documentation</loc>
-        <lastmod>2026-08-14</lastmod>
+        <lastmod>2026-08-16</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>

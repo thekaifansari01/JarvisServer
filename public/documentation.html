@@ -292,16 +292,28 @@ tr:last-child td { border-bottom: none; }
               <td>Start Google Calendar OAuth</td>
             </tr>
             <tr>
-              <td><code class="font-mono text-xs text-cyan-400">jarvis logout --all</code></td>
-              <td>Logout from all connected services</td>
+              <td><code class="font-mono text-xs text-cyan-400">jarvis login --all</code></td>
+              <td>Batch authenticate WhatsApp, Telegram, Gmail, and Calendar</td>
             </tr>
             <tr>
-              <td><code class="font-mono text-xs text-cyan-400">jarvis memory --clear</code></td>
-              <td>Clear AI contextual memory</td>
+              <td><code class="font-mono text-xs text-indigo-400">jarvis bot --activate</code></td>
+              <td>Activate the global Telegram Remote Control bot</td>
+            </tr>
+            <tr>
+              <td><code class="font-mono text-xs text-indigo-400">jarvis bot --status</code></td>
+              <td>Check the live background status of your remote bot</td>
+            </tr>
+            <tr>
+              <td><code class="font-mono text-xs text-cyan-400">jarvis logout --all</code></td>
+              <td>Revoke all connected service tokens instantly</td>
+            </tr>
+            <tr>
+              <td><code class="font-mono text-xs text-amber-400">jarvis memory --clear</code></td>
+              <td>Purge short-term AI contextual memory (keeps active sessions)</td>
             </tr>
             <tr>
               <td><code class="font-mono text-xs text-rose-400">jarvis reset --hard</code></td>
-              <td>Factory reset (wipes memory and sessions)</td>
+              <td><strong>Factory reset:</strong> Wipes all property graphs, vector databases, and API sessions</td>
             </tr>
           </tbody>
         </table>
@@ -338,20 +350,20 @@ tr:last-child td { border-bottom: none; }
 
     <section id="memory" class="prose-section">
       <h2 class="text-2xl font-bold mb-4 text-white">Memory System</h2>
-      <p class="text-zinc-400 mb-6">A multi-tiered memory architecture ensures context persistence across sessions.</p>
+      <p class="text-zinc-400 mb-6">A multi-tiered memory architecture ensures context persistence and deep relational awareness across sessions.</p>
 
       <div class="space-y-3">
         <div class="p-4 border border-[#222] bg-[#0a0a0a] rounded-lg transition-colors hover:border-[#444]">
           <h4 class="text-indigo-400 font-medium text-sm mb-1 flex items-center gap-2"><i class="fa-solid fa-clock-rotate-left"></i> Rolling History (Short-Term)</h4>
-          <p class="text-sm text-zinc-500">15-day JSONL history that provides immediate context to the AgenticBrain.</p>
+          <p class="text-sm text-zinc-500">15-day JSONL rolling history that provides immediate chronological context to the AgenticBrain, auto-archiving older data.</p>
         </div>
         <div class="p-4 border border-[#222] bg-[#0a0a0a] rounded-lg transition-colors hover:border-[#444]">
-          <h4 class="text-cyan-400 font-medium text-sm mb-1 flex items-center gap-2"><i class="fa-solid fa-diagram-project"></i> Episodic Graph (Long-Term)</h4>
-          <p class="text-sm text-zinc-500">ChromaDB backend mapping semantic facts using Gemini embeddings, summarized daily.</p>
+          <h4 class="text-cyan-400 font-medium text-sm mb-1 flex items-center gap-2"><i class="fa-solid fa-diagram-project"></i> Bidirectional Property Graph (Long-Term)</h4>
+          <p class="text-sm text-zinc-500">Built on NetworkX. Extracts entities into a relational graph with <strong>temporal decay</strong> and <strong>inverse edges</strong>. Uses local <code>all-MiniLM-L6-v2</code> embeddings for zero-latency semantic edge routing.</p>
         </div>
         <div class="p-4 border border-[#222] bg-[#0a0a0a] rounded-lg transition-colors hover:border-[#444]">
-          <h4 class="text-emerald-400 font-medium text-sm mb-1 flex items-center gap-2"><i class="fa-solid fa-folder-open"></i> Workspace RAG</h4>
-          <p class="text-sm text-zinc-500">Automatic indexing of local documents with smart chunking for instant retrieval.</p>
+          <h4 class="text-emerald-400 font-medium text-sm mb-1 flex items-center gap-2"><i class="fa-solid fa-folder-open"></i> Hybrid Workspace RAG</h4>
+          <p class="text-sm text-zinc-500">Merges <strong>BM25 keyword search</strong> with <strong>Vector semantic search</strong> via Reciprocal Rank Fusion (RRF), automatically applying recency boosts to newly modified local documents.</p>
         </div>
       </div>
     </section>
@@ -361,7 +373,7 @@ tr:last-child td { border-bottom: none; }
       <p class="text-zinc-400 mb-6">Built-in capabilities available to the AgenticBrain.</p>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
-        <div class="p-3 border border-[#222] bg-[#0a0a0a] rounded flex items-center gap-3 hover:border-[#444] transition-colors"><i class="fa-solid fa-code text-indigo-400 w-4"></i> <span class="text-zinc-300">Code: repo_map, replace_block</span></div>
+        <div class="p-3 border border-[#222] bg-[#0a0a0a] rounded flex items-center gap-3 hover:border-[#444] transition-colors"><i class="fa-solid fa-code text-indigo-400 w-4"></i> <span class="text-zinc-300">Code: repo_map, replace_block (Zero Line-Drift)</span></div>
         <div class="p-3 border border-[#222] bg-[#0a0a0a] rounded flex items-center gap-3 hover:border-[#444] transition-colors"><i class="fa-solid fa-comments text-emerald-400 w-4"></i> <span class="text-zinc-300">Comms: Gmail, WhatsApp, Telegram</span></div>
         <div class="p-3 border border-[#222] bg-[#0a0a0a] rounded flex items-center gap-3 hover:border-[#444] transition-colors"><i class="fa-solid fa-desktop text-cyan-400 w-4"></i> <span class="text-zinc-300">System: OS Toggles, Clipboard</span></div>
         <div class="p-3 border border-[#222] bg-[#0a0a0a] rounded flex items-center gap-3 hover:border-[#444] transition-colors"><i class="fa-solid fa-magnifying-glass text-amber-400 w-4"></i> <span class="text-zinc-300">Search: Tavily, ArXiv</span></div>
@@ -400,6 +412,16 @@ tr:last-child td { border-bottom: none; }
               <td><span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-red-500/10 text-red-400 border border-red-500/20">Required</span></td>
             </tr>
             <tr>
+              <td><code class="font-mono text-xs text-white">OPENROUTER_API_KEY</code></td>
+              <td>Fallback Agentic Provider (Claude 3.7 / DeepSeek)</td>
+              <td><span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-zinc-500/10 text-zinc-400 border border-zinc-500/20">Optional</span></td>
+            </tr>
+            <tr>
+              <td><code class="font-mono text-xs text-white">TAVILY_API_KEY</code></td>
+              <td>Real-time Web Search Engine for AgenticBrain</td>
+              <td><span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-red-500/10 text-red-400 border border-red-500/20">Required</span></td>
+            </tr>
+            <tr>
               <td><code class="font-mono text-xs text-white">DEEPGRAM_API_KEY</code></td>
               <td>Live Speech-to-Text</td>
               <td><span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-red-500/10 text-red-400 border border-red-500/20">Required</span></td>
@@ -407,6 +429,11 @@ tr:last-child td { border-bottom: none; }
             <tr>
               <td><code class="font-mono text-xs text-white">ADB_PHONE_IP</code></td>
               <td>Tailscale IP of Android device</td>
+              <td><span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-zinc-500/10 text-zinc-400 border border-zinc-500/20">Optional</span></td>
+            </tr>
+            <tr>
+              <td><code class="font-mono text-xs text-white">TELEGRAM_API_ID &amp; HASH</code></td>
+              <td>Telegram App credentials for Desktop Client</td>
               <td><span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-zinc-500/10 text-zinc-400 border border-zinc-500/20">Optional</span></td>
             </tr>
             <tr>
