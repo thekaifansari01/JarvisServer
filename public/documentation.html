@@ -197,7 +197,8 @@ tr:last-child td { border-bottom: none; }
       </p>
       <div class="flex flex-wrap gap-2 text-xs">
         <span class="px-2.5 py-1 border border-indigo-500/30 rounded-md bg-indigo-500/10 text-indigo-300">v2.0</span>
-        <span class="px-2.5 py-1 border border-[#333] rounded-md bg-[#111] text-zinc-300">Groq · Gemini · Regolo</span>
+        <span class="px-2.5 py-1 border border-[#333] rounded-md bg-[#111] text-zinc-300">OpenAI-compatible</span>
+        <span class="px-2.5 py-1 border border-[#333] rounded-md bg-[#111] text-zinc-300">Multi-Provider</span>
         <span class="px-2.5 py-1 border border-[#333] rounded-md bg-[#111] text-zinc-300">HITL Safe</span>
         <span class="px-2.5 py-1 border border-[#333] rounded-md bg-[#111] text-zinc-300">Android Control</span>
       </div>
@@ -327,7 +328,7 @@ tr:last-child td { border-bottom: none; }
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div class="feature-card border-l-2 border-l-amber-400">
           <h3 class="text-white font-medium mb-2 flex justify-between items-center">
-            FastBrain <span class="text-[10px] font-semibold text-amber-300 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20 uppercase tracking-wider">Groq LPU</span>
+            FastBrain <span class="text-[10px] font-semibold text-amber-300 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20 uppercase tracking-wider">Fast LLM</span>
           </h3>
           <ul class="text-sm text-zinc-400 space-y-2 mt-4">
             <li><span class="text-amber-500 mr-2">✦</span> Stateless, sub-second latency</li>
@@ -337,7 +338,7 @@ tr:last-child td { border-bottom: none; }
         </div>
         <div class="feature-card border-l-2 border-l-purple-400">
           <h3 class="text-white font-medium mb-2 flex justify-between items-center">
-            AgenticBrain <span class="text-[10px] font-semibold text-purple-300 bg-purple-500/10 px-2 py-0.5 rounded border border-purple-500/20 uppercase tracking-wider">Regolo / Gemini</span>
+            AgenticBrain <span class="text-[10px] font-semibold text-purple-300 bg-purple-500/10 px-2 py-0.5 rounded border border-purple-500/20 uppercase tracking-wider">Multi-Provider</span>
           </h3>
           <ul class="text-sm text-zinc-400 space-y-2 mt-4">
             <li><span class="text-purple-500 mr-2">✦</span> Stateful, deep reasoning engine</li>
@@ -384,7 +385,7 @@ tr:last-child td { border-bottom: none; }
 
     <section id="environment" class="prose-section">
       <h2 class="text-2xl font-bold mb-4 text-white">Environment Variables</h2>
-      <p class="text-zinc-400 mb-4">Configure API keys and settings in your <code class="bg-[#222] px-1.5 py-0.5 rounded text-white font-mono text-xs">.env</code> file.</p>
+      <p class="text-zinc-400 mb-4">Configure API keys and settings in your <code class="bg-[#222] px-1.5 py-0.5 rounded text-white font-mono text-xs">.env</code> file. The system is fully OpenAI‑compatible – use any provider that supports the OpenAI API format.</p>
 
       <div class="table-wrapper">
         <table>
@@ -397,33 +398,123 @@ tr:last-child td { border-bottom: none; }
           </thead>
           <tbody>
             <tr>
-              <td><code class="font-mono text-xs text-white">GROQ_API_KEY</code></td>
-              <td>FastBrain and summarization endpoint</td>
+              <td><code class="font-mono text-xs text-white">FAST_BRAIN_API_KEY</code></td>
+              <td>API key for FastBrain (any OpenAI‑compatible provider)</td>
               <td><span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-red-500/10 text-red-400 border border-red-500/20">Required</span></td>
+            </tr>
+            <tr>
+              <td><code class="font-mono text-xs text-white">FAST_BRAIN_MODEL</code></td>
+              <td>Model name for FastBrain</td>
+              <td><span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-red-500/10 text-red-400 border border-red-500/20">Required</span></td>
+            </tr>
+            <tr>
+              <td><code class="font-mono text-xs text-white">FAST_BRAIN_ENDPOINT</code></td>
+              <td>OpenAI‑compatible endpoint (e.g., Groq, OpenRouter, Local)</td>
+              <td><span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-red-500/10 text-red-400 border border-red-500/20">Required</span></td>
+            </tr>
+            <tr>
+              <td><code class="font-mono text-xs text-white">ROUTER_API_KEY</code></td>
+              <td>API key for semantic router</td>
+              <td><span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-red-500/10 text-red-400 border border-red-500/20">Required</span></td>
+            </tr>
+            <tr>
+              <td><code class="font-mono text-xs text-white">ROUTER_MODEL</code></td>
+              <td>Router model</td>
+              <td><span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-red-500/10 text-red-400 border border-red-500/20">Required</span></td>
+            </tr>
+            <tr>
+              <td><code class="font-mono text-xs text-white">ROUTER_ENDPOINT</code></td>
+              <td>Router endpoint</td>
+              <td><span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-red-500/10 text-red-400 border border-red-500/20">Required</span></td>
+            </tr>
+            <tr>
+              <td><code class="font-mono text-xs text-white">LTM_EXTRACTION_API_KEY</code></td>
+              <td>API key for lifelong memory extraction</td>
+              <td><span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-red-500/10 text-red-400 border border-red-500/20">Required</span></td>
+            </tr>
+            <tr>
+              <td><code class="font-mono text-xs text-white">LTM_EXTRACTION_MODEL</code></td>
+              <td>Model for LTM extraction</td>
+              <td><span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-red-500/10 text-red-400 border border-red-500/20">Required</span></td>
+            </tr>
+            <tr>
+              <td><code class="font-mono text-xs text-white">LTM_EXTRACTION_ENDPOINT</code></td>
+              <td>Endpoint for LTM extraction</td>
+              <td><span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-red-500/10 text-red-400 border border-red-500/20">Required</span></td>
+            </tr>
+            <tr>
+              <td><code class="font-mono text-xs text-white">IMAGE_GEN_API_KEY</code></td>
+              <td>API key for image generation (OpenAI‑compatible)</td>
+              <td><span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-zinc-500/10 text-zinc-400 border border-zinc-500/20">Optional</span></td>
+            </tr>
+            <tr>
+              <td><code class="font-mono text-xs text-white">IMAGE_GEN_MODEL</code></td>
+              <td>Image model (default: dall-e-3)</td>
+              <td><span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-zinc-500/10 text-zinc-400 border border-zinc-500/20">Optional</span></td>
+            </tr>
+            <tr>
+              <td><code class="font-mono text-xs text-white">IMAGE_GEN_ENDPOINT</code></td>
+              <td>Image generation endpoint</td>
+              <td><span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-zinc-500/10 text-zinc-400 border border-zinc-500/20">Optional</span></td>
+            </tr>
+            <tr>
+              <td><code class="font-mono text-xs text-white">PROACTIVE_API_KEY</code></td>
+              <td>API key for proactive scout</td>
+              <td><span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-red-500/10 text-red-400 border border-red-500/20">Required</span></td>
+            </tr>
+            <tr>
+              <td><code class="font-mono text-xs text-white">PROACTIVE_MODEL</code></td>
+              <td>Model for proactive scout</td>
+              <td><span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-red-500/10 text-red-400 border border-red-500/20">Required</span></td>
+            </tr>
+            <tr>
+              <td><code class="font-mono text-xs text-white">PROACTIVE_ENDPOINT</code></td>
+              <td>Endpoint for proactive scout</td>
+              <td><span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-red-500/10 text-red-400 border border-red-500/20">Required</span></td>
+            </tr>
+            <tr>
+              <td><code class="font-mono text-xs text-white">TTS_API_KEY</code></td>
+              <td>API key for TTS (optional – falls back to Edge TTS)</td>
+              <td><span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-zinc-500/10 text-zinc-400 border border-zinc-500/20">Optional</span></td>
+            </tr>
+            <tr>
+              <td><code class="font-mono text-xs text-white">TTS_MODEL</code></td>
+              <td>TTS model</td>
+              <td><span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-zinc-500/10 text-zinc-400 border border-zinc-500/20">Optional</span></td>
+            </tr>
+            <tr>
+              <td><code class="font-mono text-xs text-white">TTS_ENDPOINT</code></td>
+              <td>TTS endpoint</td>
+              <td><span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-zinc-500/10 text-zinc-400 border border-zinc-500/20">Optional</span></td>
+            </tr>
+            <tr>
+              <td><code class="font-mono text-xs text-white">GROQ_API_KEY</code></td>
+              <td>Backward-compatible alias for <code>FAST_BRAIN_API_KEY</code></td>
+              <td><span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-zinc-500/10 text-zinc-400 border border-zinc-500/20">Alias</span></td>
             </tr>
             <tr>
               <td><code class="font-mono text-xs text-white">GEMINI_API_KEY</code></td>
-              <td>Embeddings, Vision, and Reasoning</td>
-              <td><span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-red-500/10 text-red-400 border border-red-500/20">Required</span></td>
+              <td>Gemini API key (optional, used only if configured)</td>
+              <td><span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-zinc-500/10 text-zinc-400 border border-zinc-500/20">Optional</span></td>
             </tr>
             <tr>
               <td><code class="font-mono text-xs text-white">REGOLO_API_KEY</code></td>
-              <td>Primary Agentic provider</td>
-              <td><span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-red-500/10 text-red-400 border border-red-500/20">Required</span></td>
+              <td>Regolo API key (optional)</td>
+              <td><span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-zinc-500/10 text-zinc-400 border border-zinc-500/20">Optional</span></td>
             </tr>
             <tr>
               <td><code class="font-mono text-xs text-white">OPENROUTER_API_KEY</code></td>
-              <td>Fallback Agentic Provider (Claude 3.7 / DeepSeek)</td>
+              <td>OpenRouter API key (optional)</td>
               <td><span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-zinc-500/10 text-zinc-400 border border-zinc-500/20">Optional</span></td>
             </tr>
             <tr>
               <td><code class="font-mono text-xs text-white">TAVILY_API_KEY</code></td>
-              <td>Real-time Web Search Engine for AgenticBrain</td>
+              <td>Real-time Web Search API key</td>
               <td><span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-red-500/10 text-red-400 border border-red-500/20">Required</span></td>
             </tr>
             <tr>
               <td><code class="font-mono text-xs text-white">DEEPGRAM_API_KEY</code></td>
-              <td>Live Speech-to-Text</td>
+              <td>Deepgram speech-to-text API key</td>
               <td><span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-red-500/10 text-red-400 border border-red-500/20">Required</span></td>
             </tr>
             <tr>
@@ -448,17 +539,18 @@ tr:last-child td { border-bottom: none; }
 
     <section id="providers" class="prose-section">
       <h2 class="text-2xl font-bold mb-4 text-white">Providers</h2>
-      <p class="text-zinc-400 mb-6">JARVIS supports multi-LLM failover to ensure zero downtime.</p>
+      <p class="text-zinc-400 mb-6">JARVIS supports a flexible provider abstraction layer. You can use any OpenAI‑compatible endpoint, including:</p>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div class="feature-card">
-          <h3 class="text-white font-medium mb-1 flex items-center gap-2"><i class="fa-solid fa-server text-indigo-400"></i> Primary Routing</h3>
-          <p class="text-sm text-zinc-500">Regolo MoE, Gemini, and Groq handle primary compute load.</p>
+          <h3 class="text-white font-medium mb-1 flex items-center gap-2"><i class="fa-solid fa-cloud text-indigo-400"></i> Cloud Providers</h3>
+          <p class="text-sm text-zinc-500">Regolo, Gemini, Groq, OpenRouter, Together AI, OpenAI, Mistral, and more.</p>
         </div>
         <div class="feature-card">
-          <h3 class="text-white font-medium mb-1 flex items-center gap-2"><i class="fa-solid fa-shield-cat text-cyan-400"></i> Fallback &amp; Local</h3>
-          <p class="text-sm text-zinc-500">OpenRouter or Custom endpoints (Ollama/vLLM) activate on rate limits.</p>
+          <h3 class="text-white font-medium mb-1 flex items-center gap-2"><i class="fa-solid fa-server text-cyan-400"></i> Local &amp; Custom</h3>
+          <p class="text-sm text-zinc-500">Ollama, LM Studio, vLLM, or any custom server that implements the OpenAI API.</p>
         </div>
       </div>
+      <p class="text-zinc-400 mt-4 text-sm">The system automatically falls back to secondary providers if the primary fails, ensuring zero downtime.</p>
     </section>
 
     <section id="mobile" class="prose-section">
@@ -519,6 +611,10 @@ tr:last-child td { border-bottom: none; }
             <tr>
               <td class="text-white font-medium">Command Not Recognized</td>
               <td>Run <code class="font-mono text-xs text-emerald-300 bg-emerald-500/10 border border-emerald-500/20 px-1 rounded">python SetupRegistry.py</code> from the project root and restart your terminal.</td>
+            </tr>
+            <tr>
+              <td class="text-white font-medium">FastBrain API Key Missing</td>
+              <td>Add <code class="font-mono text-xs text-amber-300 bg-amber-500/10 border border-amber-500/20 px-1 rounded">FAST_BRAIN_API_KEY</code>, <code class="font-mono text-xs text-amber-300 bg-amber-500/10 border border-amber-500/20 px-1 rounded">FAST_BRAIN_MODEL</code>, and <code class="font-mono text-xs text-amber-300 bg-amber-500/10 border border-amber-500/20 px-1 rounded">FAST_BRAIN_ENDPOINT</code> to your <code class="font-mono text-xs text-white bg-[#222] px-1 rounded">.env</code> file.</td>
             </tr>
           </tbody>
         </table>
