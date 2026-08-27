@@ -10,7 +10,15 @@ def app(environ, start_response):
         body = environ['wsgi.input'].read(content_length).decode('utf-8')
         data = json.loads(body) if body else {}
         session_id = data.get('session_id')
-    except:
+        
+        if session_id and len(session_id) < 30:
+            session_id = None
+            
+    except ValueError:
+        session_id = None
+    except json.JSONDecodeError:
+        session_id = None
+    except Exception:
         session_id = None
 
     if not session_id:

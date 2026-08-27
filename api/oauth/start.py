@@ -15,13 +15,13 @@ def app(environ, start_response):
                 params[k] = v
 
     service = params.get('service', 'calendar')
+    state = params.get('state', str(uuid.uuid4()))
 
     if service == 'calendar':
         scopes = 'https://www.googleapis.com/auth/calendar'
     else:
         scopes = 'https://mail.google.com/ https://www.googleapis.com/auth/pubsub'
 
-    state = str(uuid.uuid4())
     redis.setex(f"oauth:state:{state}", 300, service)
 
     auth_url = 'https://accounts.google.com/o/oauth2/v2/auth?' + urlencode({
