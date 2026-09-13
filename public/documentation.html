@@ -6,7 +6,9 @@
 <title>JARVIS · Documentation</title>
 <meta name="description" content="Official documentation for JARVIS - the autonomous AI agent for Windows.">
 <script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <script>
 tailwind.config = {
@@ -14,100 +16,766 @@ tailwind.config = {
     extend: {
       fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'] },
       colors: { dark: '#000000', surface: '#0a0a0a', border: '#222222', accent: '#ffffff', muted: '#888888' },
-      animation: { 'pulse-glow': 'pulse-glow 4s cubic-bezier(0.4, 0, 0.6, 1) infinite' },
-      keyframes: { 'pulse-glow': { '0%, 100%': { opacity: 0.1 }, '50%': { opacity: 0.3 } } }
+      animation: {
+        'pulse-glow': 'pulse-glow 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'aurora': 'aurora 30s ease-in-out infinite',
+        'aurora-2': 'aurora-2 40s ease-in-out infinite',
+        'gradient-shift': 'gradientShift 8s ease infinite'
+      },
+      keyframes: {
+        'pulse-glow': { '0%, 100%': { opacity: 0.15 }, '50%': { opacity: 0.45 } },
+        aurora: {
+          '0%, 100%': { transform: 'translate(0, 0) scale(1) rotate(0deg)' },
+          '33%': { transform: 'translate(8%, -5%) scale(1.15) rotate(120deg)' },
+          '66%': { transform: 'translate(-5%, 8%) scale(0.95) rotate(240deg)' }
+        },
+        'aurora-2': {
+          '0%, 100%': { transform: 'translate(0, 0) scale(1.05) rotate(0deg)' },
+          '50%': { transform: 'translate(-10%, 10%) scale(1.2) rotate(180deg)' }
+        },
+        gradientShift: {
+          '0%, 100%': { backgroundPosition: '0% 50%' },
+          '50%': { backgroundPosition: '100% 50%' }
+        }
+      }
     }
   }
 }
 </script>
 <style>
-body { color: #a1a1aa; overflow-x: hidden; background: #000000; }
-::-webkit-scrollbar { width: 8px; height: 8px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; border: 2px solid #000; }
-::-webkit-scrollbar-thumb:hover { background: #555; }
-
-.enterprise-grid {
-  background-size: 30px 30px;
-  background-image: linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px),
-                    linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px);
-  mask-image: linear-gradient(to bottom, black 20%, transparent 80%);
-  -webkit-mask-image: linear-gradient(to bottom, black 20%, transparent 80%);
+:root {
+  --indigo: #6366f1;
+  --indigo-bright: #818cf8;
+  --violet: #a855f7;
+  --violet-bright: #c084fc;
+  --cyan: #06b6d4;
+  --cyan-bright: #22d3ee;
+  --pink: #ec4899;
+  --pink-bright: #f472b6;
+  --emerald: #10b981;
+  --amber: #f59e0b;
+  --rose: #f43f5e;
+  --grad-shine: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.ambient-glow-indigo { position: fixed; top: 0; left: 0; width: 50vw; height: 50vw; background: radial-gradient(circle, rgba(99, 102, 241, 0.05) 0%, transparent 70%); border-radius: 50%; pointer-events: none; z-index: 0; }
-.ambient-glow-cyan { position: fixed; bottom: 0; right: 0; width: 50vw; height: 50vw; background: radial-gradient(circle, rgba(6, 182, 212, 0.05) 0%, transparent 70%); border-radius: 50%; pointer-events: none; z-index: 0; }
+* { -webkit-tap-highlight-color: transparent; }
+html { scroll-padding-top: 96px; }
 
-h1, h2, h3, h4, h5, h6 { color: #ffffff; letter-spacing: -0.02em; }
-a { transition: color 0.2s; }
+body {
+  color: #b8b8c0;
+  overflow-x: hidden;
+  background: #030014;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  position: relative;
+  min-height: 100vh;
+}
 
-.text-gradient-accent { background: linear-gradient(to right, #818cf8, #c084fc, #22d3ee); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.aurora-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  background: radial-gradient(ellipse at top, #0a0520 0%, #030014 50%, #000000 100%);
+}
 
-.toc-link { display: block; font-size: 0.875rem; color: #a1a1aa; padding: 0.375rem 0; transition: color 0.2s; }
-.toc-link:hover { color: #ffffff; }
-.toc-link.active { color: #818cf8; font-weight: 500; }
+.aurora-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.45;
+  will-change: transform;
+}
+.aurora-blob-1 {
+  top: -20%; left: -10%;
+  width: 60vw; height: 60vw;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.55) 0%, transparent 70%);
+  animation: aurora 30s ease-in-out infinite;
+}
+.aurora-blob-2 {
+  top: 10%; right: -15%;
+  width: 55vw; height: 55vw;
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.45) 0%, transparent 70%);
+  animation: aurora-2 40s ease-in-out infinite;
+}
+.aurora-blob-3 {
+  bottom: -20%; left: 20%;
+  width: 65vw; height: 65vw;
+  background: radial-gradient(circle, rgba(6, 182, 212, 0.38) 0%, transparent 70%);
+  animation: aurora 35s ease-in-out infinite reverse;
+}
 
-.prose-section { padding-top: 5rem; margin-top: -5rem; margin-bottom: 4rem; position: relative; z-index: 10; }
+@keyframes aurora {
+  0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); }
+  33% { transform: translate(8%, -5%) scale(1.15) rotate(120deg); }
+  66% { transform: translate(-5%, 8%) scale(0.95) rotate(240deg); }
+}
+@keyframes aurora-2 {
+  0%, 100% { transform: translate(0, 0) scale(1.05) rotate(0deg); }
+  50% { transform: translate(-10%, 10%) scale(1.2) rotate(180deg); }
+}
 
-.code-wrapper { position: relative; background: #050505; border: 1px solid #222; border-radius: 8px; overflow: hidden; margin-top: 1rem; margin-bottom: 1.5rem; transition: border-color 0.3s; box-shadow: 0 10px 30px -10px rgba(0,0,0,0.8); }
-.code-wrapper:hover { border-color: rgba(99, 102, 241, 0.3); }
-.code-header { display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 1rem; background: #0a0a0a; border-bottom: 1px solid #222; font-size: 0.75rem; color: #888; font-family: 'Plus Jakarta Sans', sans-serif; }
-.code-content { padding: 1rem; overflow-x: auto; font-family: 'JetBrains Mono', monospace; font-size: 0.875rem; line-height: 1.6; color: #e4e4e7; }
-.copy-btn { background: transparent; border: 1px solid #333; color: #a1a1aa; border-radius: 4px; padding: 0.2rem 0.6rem; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 0.4rem; }
-.copy-btn:hover { background: rgba(99, 102, 241, 0.1); color: #818cf8; border-color: rgba(99, 102, 241, 0.3); }
+.noise-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.035;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
 
-.table-wrapper { width: 100%; overflow-x: auto; margin-top: 1rem; margin-bottom: 2rem; border-radius: 8px; border: 1px solid #222; background: #050505; }
+.grid-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background-size: 44px 44px;
+  background-image:
+    linear-gradient(to right, rgba(168, 85, 247, 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(99, 102, 241, 0.045) 1px, transparent 1px);
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, black 30%, transparent 80%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, black 30%, transparent 80%);
+}
+
+::selection { background: #a855f7; color: #ffffff; }
+::-moz-selection { background: #a855f7; color: #ffffff; }
+
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: #030014; }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #6366f1, #a855f7, #06b6d4);
+  border-radius: 10px;
+  border: 2px solid #030014;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #818cf8, #c084fc, #22d3ee);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #ffffff;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+  font-weight: 700;
+}
+
+a { transition: all 0.25s var(--ease-out); }
+
+.nav-blur {
+  background: rgba(3, 0, 20, 0.55);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border-bottom: 1px solid rgba(168, 85, 247, 0.08);
+  transition: all 0.4s var(--ease-out);
+}
+.nav-blur.scrolled {
+  border-bottom-color: rgba(168, 85, 247, 0.18);
+  background: rgba(3, 0, 20, 0.85);
+  box-shadow: 0 4px 40px rgba(99, 102, 241, 0.15), 0 1px 0 rgba(168, 85, 247, 0.1);
+}
+
+.logo-mark {
+  position: relative;
+  background: linear-gradient(135deg, #6366f1, #a855f7, #06b6d4);
+  background-size: 200% 200%;
+  animation: gradientShift 6s ease infinite;
+  transition: transform 0.3s var(--ease-spring), box-shadow 0.3s var(--ease-out);
+  box-shadow:
+    0 0 20px rgba(168, 85, 247, 0.6),
+    0 0 40px rgba(99, 102, 241, 0.4),
+    inset 0 1px 0 rgba(255,255,255,0.3);
+}
+.logo-mark:hover {
+  transform: scale(1.08) rotate(-3deg);
+  box-shadow:
+    0 0 30px rgba(168, 85, 247, 0.9),
+    0 0 60px rgba(99, 102, 241, 0.6),
+    inset 0 1px 0 rgba(255,255,255,0.4);
+}
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.nav-link-top {
+  position: relative;
+  padding: 6px 2px;
+  transition: color 0.25s var(--ease-out);
+}
+.nav-link-top::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 100%; height: 1.5px;
+  background: linear-gradient(90deg, #818cf8, #c084fc, #22d3ee);
+  border-radius: 2px;
+  transform: scaleX(0);
+  transform-origin: right center;
+  transition: transform 0.35s var(--ease-out);
+  box-shadow: 0 0 8px rgba(192, 132, 252, 0.6);
+}
+.nav-link-top:hover { color: #ffffff; }
+.nav-link-top:hover::after {
+  transform: scaleX(1);
+  transform-origin: left center;
+}
+
+.sidebar-toc {
+  background: linear-gradient(180deg, rgba(20, 12, 45, 0.5) 0%, rgba(10, 5, 30, 0.4) 100%);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid rgba(168, 85, 247, 0.12);
+  border-radius: 16px;
+  padding: 1.5rem 1.25rem;
+  box-shadow: 0 20px 40px -20px rgba(0, 0, 0, 0.6);
+}
+
+.toc-link {
+  position: relative;
+  display: block;
+  font-size: 0.875rem;
+  color: #a1a1aa;
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  transition: all 0.25s var(--ease-out);
+  margin-left: -0.75rem;
+  margin-right: -0.75rem;
+}
+.toc-link:hover {
+  color: #ffffff;
+  background: rgba(168, 85, 247, 0.08);
+}
+.toc-link.active {
+  color: #d8b4fe;
+  font-weight: 500;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(168, 85, 247, 0.1));
+  box-shadow: inset 2px 0 0 #c084fc;
+}
+
+.prose-section {
+  padding-top: 5rem;
+  margin-top: -5rem;
+  margin-bottom: 4rem;
+  position: relative;
+  z-index: 10;
+  scroll-margin-top: 100px;
+}
+
+.text-gradient-accent {
+  background: linear-gradient(110deg, #818cf8 0%, #c084fc 30%, #f472b6 60%, #22d3ee 100%);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: gradientShift 8s ease infinite;
+}
+
+.glass-card {
+  position: relative;
+  background: linear-gradient(180deg, rgba(20, 12, 45, 0.7) 0%, rgba(10, 5, 30, 0.6) 100%);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(168, 85, 247, 0.15);
+  border-radius: 16px;
+  padding: 1.5rem;
+  transition:
+    transform 0.4s var(--ease-spring),
+    border-color 0.35s var(--ease-out),
+    box-shadow 0.4s var(--ease-out),
+    background 0.4s var(--ease-out);
+  overflow: hidden;
+  isolation: isolate;
+}
+.glass-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(168,85,247,0.6), rgba(99,102,241,0.3) 30%, transparent 50%, transparent 70%, rgba(6,182,212,0.5));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0.35;
+  transition: opacity 0.4s var(--ease-out);
+  pointer-events: none;
+  z-index: 2;
+}
+.glass-card::after {
+  content: '';
+  position: absolute;
+  top: -60%; right: -40%;
+  width: 100%; height: 100%;
+  background: radial-gradient(circle, rgba(168,85,247,0.22), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.6s var(--ease-out);
+  pointer-events: none;
+  z-index: 0;
+  filter: blur(40px);
+}
+.glass-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(192, 132, 252, 0.35);
+  background: linear-gradient(180deg, rgba(30, 18, 60, 0.75) 0%, rgba(15, 8, 40, 0.7) 100%);
+  box-shadow:
+    0 30px 60px -20px rgba(168, 85, 247, 0.3),
+    0 10px 30px -10px rgba(99, 102, 241, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+.glass-card:hover::before { opacity: 1; }
+.glass-card:hover::after { opacity: 1; }
+
+.code-wrapper {
+  position: relative;
+  background: linear-gradient(180deg, rgba(10, 5, 30, 0.9) 0%, rgba(3, 0, 20, 0.95) 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(168, 85, 247, 0.18);
+  border-radius: 14px;
+  overflow: hidden;
+  margin-top: 1rem;
+  margin-bottom: 1.5rem;
+  box-shadow:
+    0 20px 40px -15px rgba(0, 0, 0, 0.8),
+    0 0 40px -20px rgba(168, 85, 247, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  transition: border-color 0.4s var(--ease-out), box-shadow 0.4s var(--ease-out);
+}
+.code-wrapper::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(168,85,247,0.5), transparent 30%, transparent 70%, rgba(6,182,212,0.4));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0.6;
+  pointer-events: none;
+  z-index: 3;
+}
+.code-wrapper:hover {
+  border-color: rgba(192, 132, 252, 0.4);
+  box-shadow:
+    0 30px 60px -15px rgba(0, 0, 0, 0.9),
+    0 0 60px -20px rgba(168, 85, 247, 0.4);
+}
+
+.code-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.65rem 1.15rem;
+  background: linear-gradient(180deg, rgba(20, 12, 45, 0.8), rgba(10, 5, 30, 0.9));
+  border-bottom: 1px solid rgba(168, 85, 247, 0.12);
+  font-size: 0.75rem;
+  color: #a1a1aa;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.code-content {
+  padding: 1.15rem;
+  overflow-x: auto;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.875rem;
+  line-height: 1.7;
+  color: #e4e4e7;
+}
+
+.copy-btn {
+  background: rgba(168, 85, 247, 0.08);
+  border: 1px solid rgba(168, 85, 247, 0.25);
+  color: #d8b4fe;
+  border-radius: 7px;
+  padding: 0.28rem 0.7rem;
+  cursor: pointer;
+  transition: all 0.25s var(--ease-out);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.72rem;
+  font-weight: 500;
+}
+.copy-btn:hover {
+  background: rgba(168, 85, 247, 0.15);
+  color: #ffffff;
+  border-color: rgba(192, 132, 252, 0.5);
+  box-shadow: 0 0 20px rgba(168, 85, 247, 0.3);
+  transform: translateY(-1px);
+}
+
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+  border-radius: 14px;
+  border: 1px solid rgba(168, 85, 247, 0.15);
+  background: linear-gradient(180deg, rgba(10, 5, 30, 0.7) 0%, rgba(3, 0, 20, 0.6) 100%);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 20px 40px -20px rgba(0, 0, 0, 0.6);
+}
+
 table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
-th { text-align: left; padding: 0.75rem 1rem; border-bottom: 1px solid #222; color: #e4e4e7; font-weight: 500; background: #0a0a0a; }
-td { padding: 0.75rem 1rem; border-bottom: 1px solid #222; color: #a1a1aa; transition: background 0.2s; }
-tr:hover td { background: rgba(255,255,255,0.02); }
+th {
+  text-align: left;
+  padding: 0.85rem 1.15rem;
+  border-bottom: 1px solid rgba(168, 85, 247, 0.15);
+  color: #ffffff;
+  font-weight: 600;
+  background: linear-gradient(180deg, rgba(30, 18, 60, 0.6), rgba(20, 12, 45, 0.5));
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+td {
+  padding: 0.85rem 1.15rem;
+  border-bottom: 1px solid rgba(168, 85, 247, 0.06);
+  color: #b8b8c0;
+  transition: background 0.25s var(--ease-out);
+}
+tr:hover td {
+  background: rgba(168, 85, 247, 0.04);
+}
 tr:last-child td { border-bottom: none; }
 
-.feature-card { background: #0a0a0a; border: 1px solid #222; border-radius: 8px; padding: 1.5rem; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden; }
-.feature-card:hover { border-color: rgba(99, 102, 241, 0.3); transform: translateY(-2px); box-shadow: 0 10px 30px -10px rgba(99,102,241,0.1); }
+.feature-icon {
+  position: relative;
+  width: 42px; height: 42px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  transition: transform 0.35s var(--ease-spring);
+}
+.glass-card:hover .feature-icon {
+  transform: scale(1.1) rotate(-4deg);
+}
+.feature-icon.indigo {
+  background: linear-gradient(135deg, rgba(99,102,241,0.25), rgba(99,102,241,0.08));
+  border: 1px solid rgba(99,102,241,0.4);
+  color: #a5b4fc;
+  box-shadow: 0 0 20px rgba(99,102,241,0.3), inset 0 1px 0 rgba(255,255,255,0.12);
+}
+.feature-icon.violet {
+  background: linear-gradient(135deg, rgba(168,85,247,0.25), rgba(168,85,247,0.08));
+  border: 1px solid rgba(168,85,247,0.4);
+  color: #d8b4fe;
+  box-shadow: 0 0 20px rgba(168,85,247,0.3), inset 0 1px 0 rgba(255,255,255,0.12);
+}
+.feature-icon.cyan {
+  background: linear-gradient(135deg, rgba(6,182,212,0.25), rgba(6,182,212,0.08));
+  border: 1px solid rgba(6,182,212,0.4);
+  color: #67e8f9;
+  box-shadow: 0 0 20px rgba(6,182,212,0.3), inset 0 1px 0 rgba(255,255,255,0.12);
+}
+.feature-icon.emerald {
+  background: linear-gradient(135deg, rgba(16,185,129,0.25), rgba(16,185,129,0.08));
+  border: 1px solid rgba(16,185,129,0.4);
+  color: #6ee7b7;
+  box-shadow: 0 0 20px rgba(16,185,129,0.3), inset 0 1px 0 rgba(255,255,255,0.12);
+}
+.feature-icon.amber {
+  background: linear-gradient(135deg, rgba(245,158,11,0.25), rgba(245,158,11,0.08));
+  border: 1px solid rgba(245,158,11,0.4);
+  color: #fcd34d;
+  box-shadow: 0 0 20px rgba(245,158,11,0.3), inset 0 1px 0 rgba(255,255,255,0.12);
+}
+.feature-icon.rose {
+  background: linear-gradient(135deg, rgba(244,63,94,0.25), rgba(244,63,94,0.08));
+  border: 1px solid rgba(244,63,94,0.4);
+  color: #fda4af;
+  box-shadow: 0 0 20px rgba(244,63,94,0.3), inset 0 1px 0 rgba(255,255,255,0.12);
+}
+.feature-icon.pink {
+  background: linear-gradient(135deg, rgba(236,72,153,0.25), rgba(236,72,153,0.08));
+  border: 1px solid rgba(236,72,153,0.4);
+  color: #f9a8d4;
+  box-shadow: 0 0 20px rgba(236,72,153,0.3), inset 0 1px 0 rgba(255,255,255,0.12);
+}
 
-.nav-blur { background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid #222; }
+.download-btn {
+  position: relative;
+  background: linear-gradient(135deg, #ffffff 0%, #f0f0ff 100%);
+  color: #1a0b3d;
+  overflow: hidden;
+  isolation: isolate;
+  font-weight: 700;
+  transition: transform 0.35s var(--ease-spring), box-shadow 0.35s var(--ease-out), background 0.3s var(--ease-out);
+  box-shadow:
+    0 4px 24px rgba(255, 255, 255, 0.15),
+    0 0 40px rgba(168, 85, 247, 0.2);
+}
+.download-btn::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 60%; height: 100%;
+  background: var(--grad-shine);
+  transform: translateX(-120%) skewX(-15deg);
+  pointer-events: none;
+}
+.download-btn:hover {
+  background: linear-gradient(135deg, #ffffff 0%, #f5f0ff 100%);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow:
+    0 8px 32px rgba(255, 255, 255, 0.25),
+    0 0 60px rgba(168, 85, 247, 0.4);
+}
+.download-btn:hover::before {
+  animation: shineSweep 0.9s var(--ease-out);
+}
+.download-btn:active { transform: translateY(0) scale(0.98); }
 
-.download-btn { background: #fff; color: #000; transition: all 0.3s ease; }
-.download-btn:hover { background: #e5e5e5; transform: scale(1.02); }
+@keyframes shineSweep {
+  0% { transform: translateX(-120%) skewX(-15deg); }
+  100% { transform: translateX(220%) skewX(-15deg); }
+}
 
-#mobile-overlay { transition: opacity 0.3s ease; }
-#mobile-drawer { transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.8rem;
+  border: 1px solid;
+  border-radius: 99px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: all 0.3s var(--ease-out);
+}
+.badge-indigo {
+  border-color: rgba(168, 85, 247, 0.4);
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(168, 85, 247, 0.1));
+  color: #d8b4fe;
+  box-shadow: 0 0 15px rgba(168, 85, 247, 0.2), inset 0 1px 0 rgba(255,255,255,0.06);
+}
+.badge-plain {
+  border-color: rgba(168, 85, 247, 0.15);
+  background: rgba(168, 85, 247, 0.05);
+  color: #c4c4cc;
+}
+
+.section-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.85rem;
+  border-radius: 99px;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.12), rgba(168, 85, 247, 0.08));
+  border: 1px solid rgba(168, 85, 247, 0.22);
+  color: #d8b4fe;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  box-shadow: 0 0 20px rgba(168, 85, 247, 0.12);
+}
+
+.code-inline {
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.18), rgba(168, 85, 247, 0.12));
+  border: 1px solid rgba(168, 85, 247, 0.3);
+  color: #d8b4fe;
+  padding: 0.08rem 0.4rem;
+  border-radius: 5px;
+  font-size: 0.82em;
+  font-family: 'JetBrains Mono', monospace;
+  box-shadow: 0 0 10px rgba(168, 85, 247, 0.12);
+}
+
+.memory-card {
+  position: relative;
+  padding: 1.15rem 1.35rem;
+  border: 1px solid rgba(168, 85, 247, 0.15);
+  background: linear-gradient(180deg, rgba(20, 12, 45, 0.6) 0%, rgba(10, 5, 30, 0.5) 100%);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: 14px;
+  transition: all 0.35s var(--ease-out);
+  overflow: hidden;
+}
+.memory-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 3px; height: 100%;
+  background: linear-gradient(180deg, #6366f1, #a855f7, #06b6d4);
+  opacity: 0;
+  transition: opacity 0.3s var(--ease-out);
+}
+.memory-card:hover {
+  border-color: rgba(192, 132, 252, 0.35);
+  transform: translateX(4px);
+  box-shadow: 0 10px 30px -10px rgba(168, 85, 247, 0.25);
+}
+.memory-card:hover::before { opacity: 1; }
+
+.tool-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.85rem 1rem;
+  border: 1px solid rgba(168, 85, 247, 0.12);
+  background: linear-gradient(180deg, rgba(20, 12, 45, 0.55) 0%, rgba(10, 5, 30, 0.45) 100%);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 12px;
+  transition: all 0.3s var(--ease-out);
+  font-size: 0.85rem;
+}
+.tool-item:hover {
+  border-color: rgba(192, 132, 252, 0.35);
+  transform: translateY(-2px);
+  background: linear-gradient(180deg, rgba(30, 18, 60, 0.65) 0%, rgba(15, 8, 40, 0.55) 100%);
+  box-shadow: 0 10px 24px -10px rgba(168, 85, 247, 0.25);
+}
+
+#mobile-overlay { transition: opacity 0.3s var(--ease-out); }
+#mobile-drawer {
+  transition: transform 0.35s var(--ease-out);
+  background: linear-gradient(180deg, rgba(10, 5, 30, 0.98), rgba(3, 0, 20, 1));
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-right: 1px solid rgba(168, 85, 247, 0.2);
+  box-shadow: 20px 0 60px -20px rgba(168, 85, 247, 0.3);
+}
+
+.footer-gradient-line {
+  position: absolute;
+  top: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 66%; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(168,85,247,0.7), rgba(99,102,241,0.6), rgba(6,182,212,0.6), transparent);
+  box-shadow: 0 0 20px rgba(168, 85, 247, 0.5);
+}
+
+.social-circle { transition: all 0.3s var(--ease-out); }
+.social-circle:hover {
+  transform: translateY(-3px);
+  border-color: rgba(192, 132, 252, 0.6) !important;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(168, 85, 247, 0.15)) !important;
+  box-shadow: 0 0 30px rgba(168, 85, 247, 0.5), 0 0 60px rgba(99, 102, 241, 0.3);
+  color: #ffffff;
+}
+
+.status-required {
+  display: inline-block;
+  padding: 0.15rem 0.55rem;
+  border-radius: 6px;
+  font-size: 0.62rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  background: rgba(244, 63, 94, 0.12);
+  color: #fb7185;
+  border: 1px solid rgba(244, 63, 94, 0.3);
+  box-shadow: 0 0 12px rgba(244, 63, 94, 0.15);
+}
+.status-optional {
+  display: inline-block;
+  padding: 0.15rem 0.55rem;
+  border-radius: 6px;
+  font-size: 0.62rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  background: rgba(148, 163, 184, 0.1);
+  color: #94a3b8;
+  border: 1px solid rgba(148, 163, 184, 0.25);
+}
+.status-alias {
+  display: inline-block;
+  padding: 0.15rem 0.55rem;
+  border-radius: 6px;
+  font-size: 0.62rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  background: rgba(168, 85, 247, 0.12);
+  color: #d8b4fe;
+  border: 1px solid rgba(168, 85, 247, 0.3);
+  box-shadow: 0 0 12px rgba(168, 85, 247, 0.15);
+}
+
+.note-box {
+  display: flex;
+  gap: 0.85rem;
+  align-items: flex-start;
+  padding: 1rem 1.15rem;
+  border-radius: 12px;
+  border: 1px solid rgba(99, 102, 241, 0.25);
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.08), rgba(168, 85, 247, 0.05));
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 0 30px -10px rgba(99, 102, 241, 0.2);
+  font-size: 0.85rem;
+}
+
+@media (max-width: 968px) {
+  .aurora-blob { filter: blur(70px); }
+  .aurora-blob-1, .aurora-blob-2, .aurora-blob-3 {
+    width: 90vw;
+    height: 90vw;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
 </style>
 </head>
 <body>
 
-<div class="fixed inset-0 enterprise-grid pointer-events-none z-0"></div>
-<div class="ambient-glow-indigo animate-pulse-glow"></div>
-<div class="ambient-glow-cyan animate-pulse-glow" style="animation-delay: 2s;"></div>
+<div class="aurora-bg">
+  <div class="aurora-blob aurora-blob-1"></div>
+  <div class="aurora-blob aurora-blob-2"></div>
+  <div class="aurora-blob aurora-blob-3"></div>
+</div>
+<div class="grid-overlay"></div>
+<div class="noise-overlay"></div>
 
-<header class="fixed top-0 w-full z-50 nav-blur">
+<header id="navbar" class="fixed top-0 w-full z-50 nav-blur">
   <div class="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8 h-16 flex justify-between items-center">
     <div class="flex items-center gap-4">
       <button id="mobile-menu-btn" class="lg:hidden text-zinc-400 hover:text-white focus:outline-none transition-colors">
         <i class="fa-solid fa-bars text-xl"></i>
       </button>
-      <a href="/" class="flex items-center gap-2">
-        <div class="flex h-7 w-7 items-center justify-center rounded bg-gradient-to-br from-indigo-500 to-cyan-400 text-white transition-transform hover:scale-105 shadow-[0_0_15px_rgba(99,102,241,0.4)]">
+      <a href="/" class="flex items-center gap-2.5">
+        <div class="logo-mark flex h-8 w-8 items-center justify-center rounded-lg text-white">
           <i class="fa-solid fa-bolt text-xs"></i>
         </div>
         <span class="text-base font-bold text-white tracking-tight">JARVIS</span>
-        <span class="text-sm text-indigo-400 font-medium ml-1">Docs</span>
+        <span class="text-sm font-medium ml-1 text-gradient-accent">Docs</span>
       </a>
     </div>
     <nav class="flex items-center gap-6">
-      <a href="/" class="text-sm font-medium text-zinc-400 hover:text-white hidden sm:block transition-colors">Website</a>
-      <a href="https://github.com/thekaifansari01/Jarvis-OS-Agent" target="_blank" class="text-sm font-medium text-zinc-400 hover:text-white hidden sm:block transition-colors">GitHub</a>
-      <a href="/#download" class="download-btn px-4 py-1.5 rounded-md text-sm font-semibold shadow-[0_0_15px_rgba(255,255,255,0.1)]">Get Jarvis</a>
+      <a href="/" class="nav-link-top text-sm font-medium text-zinc-400 hover:text-white hidden sm:block">Website</a>
+      <a href="https://github.com/thekaifansari01/Jarvis-OS-Agent" target="_blank" class="nav-link-top text-sm font-medium text-zinc-400 hover:text-white hidden sm:block">GitHub</a>
+      <a href="/#download" class="download-btn px-4 py-1.5 rounded-lg text-sm font-semibold">Get Jarvis</a>
     </nav>
   </div>
 </header>
 
-<div id="mobile-overlay" class="fixed inset-0 bg-black/80 z-40 hidden opacity-0 backdrop-blur-sm"></div>
-<div id="mobile-drawer" class="fixed inset-y-0 left-0 w-72 bg-[#050505] border-r border-[#222] z-50 transform -translate-x-full lg:hidden overflow-y-auto">
+<div id="mobile-overlay" class="fixed inset-0 bg-black/85 z-40 hidden opacity-0 backdrop-blur-sm"></div>
+<div id="mobile-drawer" class="fixed inset-y-0 left-0 w-72 z-50 transform -translate-x-full lg:hidden overflow-y-auto">
   <div class="p-6">
     <div class="flex justify-between items-center mb-8">
-      <span class="text-xs font-bold text-indigo-400 uppercase tracking-wider">Navigation</span>
+      <span class="text-xs font-bold uppercase tracking-wider text-gradient-accent">Navigation</span>
       <button id="mobile-close-btn" class="text-zinc-400 hover:text-white transition-colors">
         <i class="fa-solid fa-xmark text-lg"></i>
       </button>
@@ -115,7 +783,7 @@ tr:last-child td { border-bottom: none; }
     <div class="space-y-6">
       <div>
         <h4 class="text-xs font-semibold text-white mb-3">Getting Started</h4>
-        <div class="flex flex-col space-y-1 border-l border-[#222] ml-1 pl-3">
+        <div class="flex flex-col space-y-1 border-l border-[#2a1e50] ml-1 pl-3">
           <a href="#introduction" class="toc-link mobile-link">Introduction</a>
           <a href="#prerequisites" class="toc-link mobile-link">Prerequisites</a>
           <a href="#quick-install" class="toc-link mobile-link">Quick Install</a>
@@ -124,7 +792,7 @@ tr:last-child td { border-bottom: none; }
       </div>
       <div>
         <h4 class="text-xs font-semibold text-white mb-3">Core Concepts</h4>
-        <div class="flex flex-col space-y-1 border-l border-[#222] ml-1 pl-3">
+        <div class="flex flex-col space-y-1 border-l border-[#2a1e50] ml-1 pl-3">
           <a href="#dual-brain" class="toc-link mobile-link">Dual-Brain Engine</a>
           <a href="#memory" class="toc-link mobile-link">Memory System</a>
           <a href="#tools" class="toc-link mobile-link">Tool Ecosystem</a>
@@ -132,14 +800,14 @@ tr:last-child td { border-bottom: none; }
       </div>
       <div>
         <h4 class="text-xs font-semibold text-white mb-3">Configuration</h4>
-        <div class="flex flex-col space-y-1 border-l border-[#222] ml-1 pl-3">
+        <div class="flex flex-col space-y-1 border-l border-[#2a1e50] ml-1 pl-3">
           <a href="#environment" class="toc-link mobile-link">Environment Variables</a>
           <a href="#providers" class="toc-link mobile-link">Providers</a>
         </div>
       </div>
       <div>
         <h4 class="text-xs font-semibold text-white mb-3">Advanced</h4>
-        <div class="flex flex-col space-y-1 border-l border-[#222] ml-1 pl-3">
+        <div class="flex flex-col space-y-1 border-l border-[#2a1e50] ml-1 pl-3">
           <a href="#mobile" class="toc-link mobile-link">Mobile Control</a>
           <a href="#proactive" class="toc-link mobile-link">Proactive Agents</a>
           <a href="#troubleshooting" class="toc-link mobile-link">Troubleshooting</a>
@@ -149,40 +817,42 @@ tr:last-child td { border-bottom: none; }
   </div>
 </div>
 
-<div class="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8 flex relative z-10 pt-16">
+<div class="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8 flex relative z-10 pt-24">
 
-  <aside class="hidden lg:block fixed w-64 h-[calc(100vh-4rem)] overflow-y-auto py-10 pr-8">
-    <div class="space-y-8">
-      <div>
-        <h4 class="text-sm font-semibold text-white mb-3">Getting Started</h4>
-        <div class="flex flex-col space-y-2 border-l border-[#222] ml-1 pl-4">
-          <a href="#introduction" class="toc-link">Introduction</a>
-          <a href="#prerequisites" class="toc-link">Prerequisites</a>
-          <a href="#quick-install" class="toc-link">Quick Install</a>
-          <a href="#cli-commands" class="toc-link">CLI Commands</a>
+  <aside class="hidden lg:block fixed w-64 h-[calc(100vh-6rem)] overflow-y-auto pr-4 pb-10">
+    <div class="sidebar-toc">
+      <div class="space-y-6">
+        <div>
+          <h4 class="text-xs font-semibold text-white mb-3 uppercase tracking-wider">Getting Started</h4>
+          <div class="flex flex-col space-y-1">
+            <a href="#introduction" class="toc-link">Introduction</a>
+            <a href="#prerequisites" class="toc-link">Prerequisites</a>
+            <a href="#quick-install" class="toc-link">Quick Install</a>
+            <a href="#cli-commands" class="toc-link">CLI Commands</a>
+          </div>
         </div>
-      </div>
-      <div>
-        <h4 class="text-sm font-semibold text-white mb-3">Core Concepts</h4>
-        <div class="flex flex-col space-y-2 border-l border-[#222] ml-1 pl-4">
-          <a href="#dual-brain" class="toc-link">Dual-Brain Engine</a>
-          <a href="#memory" class="toc-link">Memory System</a>
-          <a href="#tools" class="toc-link">Tool Ecosystem</a>
+        <div>
+          <h4 class="text-xs font-semibold text-white mb-3 uppercase tracking-wider">Core Concepts</h4>
+          <div class="flex flex-col space-y-1">
+            <a href="#dual-brain" class="toc-link">Dual-Brain Engine</a>
+            <a href="#memory" class="toc-link">Memory System</a>
+            <a href="#tools" class="toc-link">Tool Ecosystem</a>
+          </div>
         </div>
-      </div>
-      <div>
-        <h4 class="text-sm font-semibold text-white mb-3">Configuration</h4>
-        <div class="flex flex-col space-y-2 border-l border-[#222] ml-1 pl-4">
-          <a href="#environment" class="toc-link">Environment Variables</a>
-          <a href="#providers" class="toc-link">Providers</a>
+        <div>
+          <h4 class="text-xs font-semibold text-white mb-3 uppercase tracking-wider">Configuration</h4>
+          <div class="flex flex-col space-y-1">
+            <a href="#environment" class="toc-link">Environment Variables</a>
+            <a href="#providers" class="toc-link">Providers</a>
+          </div>
         </div>
-      </div>
-      <div>
-        <h4 class="text-sm font-semibold text-white mb-3">Advanced</h4>
-        <div class="flex flex-col space-y-2 border-l border-[#222] ml-1 pl-4">
-          <a href="#mobile" class="toc-link">Mobile Control</a>
-          <a href="#proactive" class="toc-link">Proactive Agents</a>
-          <a href="#troubleshooting" class="toc-link">Troubleshooting</a>
+        <div>
+          <h4 class="text-xs font-semibold text-white mb-3 uppercase tracking-wider">Advanced</h4>
+          <div class="flex flex-col space-y-1">
+            <a href="#mobile" class="toc-link">Mobile Control</a>
+            <a href="#proactive" class="toc-link">Proactive Agents</a>
+            <a href="#troubleshooting" class="toc-link">Troubleshooting</a>
+          </div>
         </div>
       </div>
     </div>
@@ -191,52 +861,73 @@ tr:last-child td { border-bottom: none; }
   <main class="flex-1 lg:pl-72 py-10 max-w-6xl min-w-0">
 
     <div class="mb-12 prose-section" id="introduction">
+      <span class="section-label"><i class="fa-solid fa-book"></i> Documentation</span>
       <h1 class="text-4xl md:text-5xl font-bold mb-4 text-gradient-accent">JARVIS Documentation</h1>
       <p class="text-lg text-zinc-400 leading-relaxed mb-6">
         JARVIS is a desktop-native AI Operating System and Autonomous Agent that bridges low-latency conversational AI with complex, multi-step engineering execution.
       </p>
       <div class="flex flex-wrap gap-2 text-xs">
-        <span class="px-2.5 py-1 border border-indigo-500/30 rounded-md bg-indigo-500/10 text-indigo-300">v2.0</span>
-        <span class="px-2.5 py-1 border border-[#333] rounded-md bg-[#111] text-zinc-300">OpenAI-compatible</span>
-        <span class="px-2.5 py-1 border border-[#333] rounded-md bg-[#111] text-zinc-300">Multi-Provider</span>
-        <span class="px-2.5 py-1 border border-[#333] rounded-md bg-[#111] text-zinc-300">HITL Safe</span>
-        <span class="px-2.5 py-1 border border-[#333] rounded-md bg-[#111] text-zinc-300">Android Control</span>
+        <span class="badge badge-indigo">v2.0</span>
+        <span class="badge badge-plain">OpenAI-compatible</span>
+        <span class="badge badge-plain">Multi-Provider</span>
+        <span class="badge badge-plain">HITL Safe</span>
+        <span class="badge badge-plain">Android Control</span>
       </div>
     </div>
 
     <section id="prerequisites" class="prose-section">
-      <h2 class="text-2xl font-bold mb-4 text-white">Prerequisites</h2>
+      <h2 class="text-2xl md:text-3xl font-bold mb-3 text-white">Prerequisites</h2>
       <p class="text-zinc-400 mb-6">Ensure your environment meets these requirements before installing.</p>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div class="feature-card group">
-          <h3 class="text-white font-medium mb-1 flex items-center gap-2"><i class="fa-brands fa-python text-amber-400"></i> Python 3.10+</h3>
-          <p class="text-sm text-zinc-500">Required for async event loops and core agent modules.</p>
+        <div class="glass-card">
+          <div class="flex items-center gap-3">
+            <div class="feature-icon amber"><i class="fa-brands fa-python"></i></div>
+            <div>
+              <h3 class="text-white font-semibold text-base mb-0.5">Python 3.10+</h3>
+              <p class="text-sm text-zinc-500">Required for async event loops and core agent modules.</p>
+            </div>
+          </div>
         </div>
-        <div class="feature-card group">
-          <h3 class="text-white font-medium mb-1 flex items-center gap-2"><i class="fa-brands fa-windows text-cyan-400"></i> Windows 10/11</h3>
-          <p class="text-sm text-zinc-500">Optimized for native desktop window controls.</p>
+        <div class="glass-card">
+          <div class="flex items-center gap-3">
+            <div class="feature-icon cyan"><i class="fa-brands fa-windows"></i></div>
+            <div>
+              <h3 class="text-white font-semibold text-base mb-0.5">Windows 10/11</h3>
+              <p class="text-sm text-zinc-500">Optimized for native desktop window controls.</p>
+            </div>
+          </div>
         </div>
-        <div class="feature-card group">
-          <h3 class="text-white font-medium mb-1 flex items-center gap-2"><i class="fa-brands fa-node-js text-emerald-400"></i> Node.js 18+</h3>
-          <p class="text-sm text-zinc-500">Required for the Baileys WhatsApp Web socket bridge.</p>
+        <div class="glass-card">
+          <div class="flex items-center gap-3">
+            <div class="feature-icon emerald"><i class="fa-brands fa-node-js"></i></div>
+            <div>
+              <h3 class="text-white font-semibold text-base mb-0.5">Node.js 18+</h3>
+              <p class="text-sm text-zinc-500">Required for the Baileys WhatsApp Web socket bridge.</p>
+            </div>
+          </div>
         </div>
-        <div class="feature-card group">
-          <h3 class="text-white font-medium mb-1 flex items-center gap-2"><i class="fa-brands fa-git-alt text-rose-400"></i> Git</h3>
-          <p class="text-sm text-zinc-500">For repository cloning and terminal tool execution.</p>
+        <div class="glass-card">
+          <div class="flex items-center gap-3">
+            <div class="feature-icon rose"><i class="fa-brands fa-git-alt"></i></div>
+            <div>
+              <h3 class="text-white font-semibold text-base mb-0.5">Git</h3>
+              <p class="text-sm text-zinc-500">For repository cloning and terminal tool execution.</p>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
     <section id="quick-install" class="prose-section">
-      <h2 class="text-2xl font-bold mb-4 text-white">Quick Install</h2>
+      <h2 class="text-2xl md:text-3xl font-bold mb-3 text-white">Quick Install</h2>
       <p class="text-zinc-400 mb-4">Run the following commands in PowerShell to set up JARVIS locally.</p>
 
       <div class="code-wrapper">
         <div class="code-header">
           <div class="flex gap-2">
-            <div class="w-2.5 h-2.5 rounded-full bg-[#333]"></div>
-            <div class="w-2.5 h-2.5 rounded-full bg-[#333]"></div>
-            <div class="w-2.5 h-2.5 rounded-full bg-[#333]"></div>
+            <div class="w-2.5 h-2.5 rounded-full bg-[#2a1e50]"></div>
+            <div class="w-2.5 h-2.5 rounded-full bg-[#2a1e50]"></div>
+            <div class="w-2.5 h-2.5 rounded-full bg-[#2a1e50]"></div>
           </div>
           <span class="font-mono text-zinc-500">PowerShell</span>
           <button class="copy-btn"><i class="fa-regular fa-copy"></i> Copy</button>
@@ -255,16 +946,16 @@ tr:last-child td { border-bottom: none; }
 
 <span class="text-cyan-400">python</span> SetupRegistry.py</div>
       </div>
-      <div class="mt-4 p-4 border border-indigo-500/20 bg-indigo-500/5 rounded-lg text-sm text-zinc-400 flex gap-3 items-start">
+      <div class="note-box">
         <i class="fa-solid fa-circle-info text-indigo-400 mt-0.5"></i>
         <div>
-          <strong class="text-white">Note:</strong> After running setup, open a new terminal and type <code class="bg-indigo-500/20 text-indigo-300 px-1.5 py-0.5 rounded font-mono text-xs border border-indigo-500/30">jarvis</code> to start.
+          <strong class="text-white">Note:</strong> After running setup, open a new terminal and type <code class="code-inline">jarvis</code> to start.
         </div>
       </div>
     </section>
 
     <section id="cli-commands" class="prose-section">
-      <h2 class="text-2xl font-bold mb-4 text-white">CLI Commands</h2>
+      <h2 class="text-2xl md:text-3xl font-bold mb-3 text-white">CLI Commands</h2>
       <p class="text-zinc-400 mb-4">Manage sessions, memory, and services directly from your terminal.</p>
 
       <div class="table-wrapper">
@@ -297,11 +988,11 @@ tr:last-child td { border-bottom: none; }
               <td>Batch authenticate WhatsApp, Telegram, Gmail, and Calendar</td>
             </tr>
             <tr>
-              <td><code class="font-mono text-xs text-indigo-400">jarvis bot --activate</code></td>
+              <td><code class="font-mono text-xs text-violet-400">jarvis bot --activate</code></td>
               <td>Activate the global Telegram Remote Control bot</td>
             </tr>
             <tr>
-              <td><code class="font-mono text-xs text-indigo-400">jarvis bot --status</code></td>
+              <td><code class="font-mono text-xs text-violet-400">jarvis bot --status</code></td>
               <td>Check the live background status of your remote bot</td>
             </tr>
             <tr>
@@ -322,70 +1013,72 @@ tr:last-child td { border-bottom: none; }
     </section>
 
     <section id="dual-brain" class="prose-section">
-      <h2 class="text-2xl font-bold mb-4 text-white">Dual-Brain Engine</h2>
+      <h2 class="text-2xl md:text-3xl font-bold mb-3 text-white">Dual-Brain Engine</h2>
       <p class="text-zinc-400 mb-6">JARVIS intelligently routes queries between two distinct processing engines based on complexity.</p>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div class="feature-card border-l-2 border-l-amber-400">
-          <h3 class="text-white font-medium mb-2 flex justify-between items-center">
-            FastBrain <span class="text-[10px] font-semibold text-amber-300 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20 uppercase tracking-wider">Fast LLM</span>
-          </h3>
-          <ul class="text-sm text-zinc-400 space-y-2 mt-4">
-            <li><span class="text-amber-500 mr-2">✦</span> Stateless, sub-second latency</li>
-            <li><span class="text-amber-500 mr-2">✦</span> System controls (volume, brightness)</li>
-            <li><span class="text-amber-500 mr-2">✦</span> YouTube playback &amp; simple search</li>
+        <div class="glass-card">
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="text-white font-semibold text-base">FastBrain</h3>
+            <span class="px-2 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider" style="background: rgba(245,158,11,0.12); color: #fcd34d; border: 1px solid rgba(245,158,11,0.3); box-shadow: 0 0 12px rgba(245,158,11,0.15);">Fast LLM</span>
+          </div>
+          <ul class="text-sm text-zinc-400 space-y-2.5">
+            <li class="flex items-start gap-2"><span class="text-amber-400 mt-0.5">✦</span> Stateless, sub-second latency</li>
+            <li class="flex items-start gap-2"><span class="text-amber-400 mt-0.5">✦</span> System controls (volume, brightness)</li>
+            <li class="flex items-start gap-2"><span class="text-amber-400 mt-0.5">✦</span> YouTube playback &amp; simple search</li>
           </ul>
         </div>
-        <div class="feature-card border-l-2 border-l-purple-400">
-          <h3 class="text-white font-medium mb-2 flex justify-between items-center">
-            AgenticBrain <span class="text-[10px] font-semibold text-purple-300 bg-purple-500/10 px-2 py-0.5 rounded border border-purple-500/20 uppercase tracking-wider">Multi-Provider</span>
-          </h3>
-          <ul class="text-sm text-zinc-400 space-y-2 mt-4">
-            <li><span class="text-purple-500 mr-2">✦</span> Stateful, deep reasoning engine</li>
-            <li><span class="text-purple-500 mr-2">✦</span> File CRUD &amp; code editing</li>
-            <li><span class="text-purple-500 mr-2">✦</span> Python REPL &amp; terminal automation</li>
+        <div class="glass-card">
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="text-white font-semibold text-base">AgenticBrain</h3>
+            <span class="px-2 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider" style="background: rgba(168,85,247,0.12); color: #d8b4fe; border: 1px solid rgba(168,85,247,0.3); box-shadow: 0 0 12px rgba(168,85,247,0.15);">Multi-Provider</span>
+          </div>
+          <ul class="text-sm text-zinc-400 space-y-2.5">
+            <li class="flex items-start gap-2"><span class="text-violet-400 mt-0.5">✦</span> Stateful, deep reasoning engine</li>
+            <li class="flex items-start gap-2"><span class="text-violet-400 mt-0.5">✦</span> File CRUD &amp; code editing</li>
+            <li class="flex items-start gap-2"><span class="text-violet-400 mt-0.5">✦</span> Python REPL &amp; terminal automation</li>
           </ul>
         </div>
       </div>
     </section>
 
     <section id="memory" class="prose-section">
-      <h2 class="text-2xl font-bold mb-4 text-white">Memory System</h2>
+      <h2 class="text-2xl md:text-3xl font-bold mb-3 text-white">Memory System</h2>
       <p class="text-zinc-400 mb-6">A multi-tiered memory architecture ensures context persistence and deep relational awareness across sessions.</p>
 
       <div class="space-y-3">
-        <div class="p-4 border border-[#222] bg-[#0a0a0a] rounded-lg transition-colors hover:border-[#444]">
-          <h4 class="text-indigo-400 font-medium text-sm mb-1 flex items-center gap-2"><i class="fa-solid fa-clock-rotate-left"></i> Rolling History (Short-Term)</h4>
+        <div class="memory-card">
+          <h4 class="text-indigo-400 font-medium text-sm mb-1.5 flex items-center gap-2"><i class="fa-solid fa-clock-rotate-left"></i> Rolling History (Short-Term)</h4>
           <p class="text-sm text-zinc-500">15-day JSONL rolling history that provides immediate chronological context to the AgenticBrain, auto-archiving older data.</p>
         </div>
-        <div class="p-4 border border-[#222] bg-[#0a0a0a] rounded-lg transition-colors hover:border-[#444]">
-          <h4 class="text-cyan-400 font-medium text-sm mb-1 flex items-center gap-2"><i class="fa-solid fa-diagram-project"></i> Bidirectional Property Graph (Long-Term)</h4>
-          <p class="text-sm text-zinc-500">Built on NetworkX. Extracts entities into a relational graph with <strong>temporal decay</strong> and <strong>inverse edges</strong>. Uses local <code>all-MiniLM-L6-v2</code> embeddings for zero-latency semantic edge routing.</p>
+        <div class="memory-card">
+          <h4 class="text-cyan-400 font-medium text-sm mb-1.5 flex items-center gap-2"><i class="fa-solid fa-diagram-project"></i> Bidirectional Property Graph (Long-Term)</h4>
+          <p class="text-sm text-zinc-500">Built on NetworkX. Extracts entities into a relational graph with <strong class="text-white">temporal decay</strong> and <strong class="text-white">inverse edges</strong>. Uses local <code class="code-inline">all-MiniLM-L6-v2</code> embeddings for zero-latency semantic edge routing.</p>
         </div>
-        <div class="p-4 border border-[#222] bg-[#0a0a0a] rounded-lg transition-colors hover:border-[#444]">
-          <h4 class="text-emerald-400 font-medium text-sm mb-1 flex items-center gap-2"><i class="fa-solid fa-folder-open"></i> Hybrid Workspace RAG</h4>
-          <p class="text-sm text-zinc-500">Merges <strong>BM25 keyword search</strong> with <strong>Vector semantic search</strong> via Reciprocal Rank Fusion (RRF), automatically applying recency boosts to newly modified local documents.</p>
+        <div class="memory-card">
+          <h4 class="text-emerald-400 font-medium text-sm mb-1.5 flex items-center gap-2"><i class="fa-solid fa-folder-open"></i> Hybrid Workspace RAG</h4>
+          <p class="text-sm text-zinc-500">Merges <strong class="text-white">BM25 keyword search</strong> with <strong class="text-white">Vector semantic search</strong> via Reciprocal Rank Fusion (RRF), automatically applying recency boosts to newly modified local documents.</p>
         </div>
       </div>
     </section>
 
     <section id="tools" class="prose-section">
-      <h2 class="text-2xl font-bold mb-4 text-white">Tool Ecosystem</h2>
+      <h2 class="text-2xl md:text-3xl font-bold mb-3 text-white">Tool Ecosystem</h2>
       <p class="text-zinc-400 mb-6">Built-in capabilities available to the AgenticBrain.</p>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
-        <div class="p-3 border border-[#222] bg-[#0a0a0a] rounded flex items-center gap-3 hover:border-[#444] transition-colors"><i class="fa-solid fa-code text-indigo-400 w-4"></i> <span class="text-zinc-300">Code: repo_map, replace_block (Zero Line-Drift)</span></div>
-        <div class="p-3 border border-[#222] bg-[#0a0a0a] rounded flex items-center gap-3 hover:border-[#444] transition-colors"><i class="fa-solid fa-comments text-emerald-400 w-4"></i> <span class="text-zinc-300">Comms: Gmail, WhatsApp, Telegram</span></div>
-        <div class="p-3 border border-[#222] bg-[#0a0a0a] rounded flex items-center gap-3 hover:border-[#444] transition-colors"><i class="fa-solid fa-desktop text-cyan-400 w-4"></i> <span class="text-zinc-300">System: OS Toggles, Clipboard</span></div>
-        <div class="p-3 border border-[#222] bg-[#0a0a0a] rounded flex items-center gap-3 hover:border-[#444] transition-colors"><i class="fa-solid fa-magnifying-glass text-amber-400 w-4"></i> <span class="text-zinc-300">Search: Tavily, ArXiv</span></div>
-        <div class="p-3 border border-[#222] bg-[#0a0a0a] rounded flex items-center gap-3 hover:border-[#444] transition-colors"><i class="fa-solid fa-terminal text-rose-400 w-4"></i> <span class="text-zinc-300">Execution: Python REPL, Terminal</span></div>
-        <div class="p-3 border border-[#222] bg-[#0a0a0a] rounded flex items-center gap-3 hover:border-[#444] transition-colors"><i class="fa-brands fa-android text-green-400 w-4"></i> <span class="text-zinc-300">Mobile: Android ADB integration</span></div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div class="tool-item"><i class="fa-solid fa-code text-indigo-400 w-4"></i> <span class="text-zinc-300">Code: repo_map, replace_block (Zero Line-Drift)</span></div>
+        <div class="tool-item"><i class="fa-solid fa-comments text-emerald-400 w-4"></i> <span class="text-zinc-300">Comms: Gmail, WhatsApp, Telegram</span></div>
+        <div class="tool-item"><i class="fa-solid fa-desktop text-cyan-400 w-4"></i> <span class="text-zinc-300">System: OS Toggles, Clipboard</span></div>
+        <div class="tool-item"><i class="fa-solid fa-magnifying-glass text-amber-400 w-4"></i> <span class="text-zinc-300">Search: Tavily, ArXiv</span></div>
+        <div class="tool-item"><i class="fa-solid fa-terminal text-rose-400 w-4"></i> <span class="text-zinc-300">Execution: Python REPL, Terminal</span></div>
+        <div class="tool-item"><i class="fa-brands fa-android text-green-400 w-4"></i> <span class="text-zinc-300">Mobile: Android ADB integration</span></div>
       </div>
     </section>
 
     <section id="environment" class="prose-section">
-      <h2 class="text-2xl font-bold mb-4 text-white">Environment Variables</h2>
-      <p class="text-zinc-400 mb-4">Configure API keys and settings in your <code class="bg-[#222] px-1.5 py-0.5 rounded text-white font-mono text-xs">.env</code> file. The system is fully OpenAI‑compatible – use any provider that supports the OpenAI API format.</p>
+      <h2 class="text-2xl md:text-3xl font-bold mb-3 text-white">Environment Variables</h2>
+      <p class="text-zinc-400 mb-4">Configure API keys and settings in your <code class="code-inline">.env</code> file. The system is fully OpenAI‑compatible – use any provider that supports the OpenAI API format.</p>
 
       <div class="table-wrapper">
         <table>
@@ -400,137 +1093,137 @@ tr:last-child td { border-bottom: none; }
             <tr>
               <td><code class="font-mono text-xs text-white">FAST_BRAIN_API_KEY</code></td>
               <td>API key for FastBrain (any OpenAI‑compatible provider)</td>
-              <td><span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-red-500/10 text-red-400 border border-red-500/20">Required</span></td>
+              <td><span class="status-required">Required</span></td>
             </tr>
             <tr>
               <td><code class="font-mono text-xs text-white">FAST_BRAIN_MODEL</code></td>
               <td>Model name for FastBrain</td>
-              <td><span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-red-500/10 text-red-400 border border-red-500/20">Required</span></td>
+              <td><span class="status-required">Required</span></td>
             </tr>
             <tr>
               <td><code class="font-mono text-xs text-white">FAST_BRAIN_ENDPOINT</code></td>
               <td>OpenAI‑compatible endpoint (e.g., Groq, OpenRouter, Local)</td>
-              <td><span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-red-500/10 text-red-400 border border-red-500/20">Required</span></td>
+              <td><span class="status-required">Required</span></td>
             </tr>
             <tr>
               <td><code class="font-mono text-xs text-white">ROUTER_API_KEY</code></td>
               <td>API key for semantic router</td>
-              <td><span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-red-500/10 text-red-400 border border-red-500/20">Required</span></td>
+              <td><span class="status-required">Required</span></td>
             </tr>
             <tr>
               <td><code class="font-mono text-xs text-white">ROUTER_MODEL</code></td>
               <td>Router model</td>
-              <td><span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-red-500/10 text-red-400 border border-red-500/20">Required</span></td>
+              <td><span class="status-required">Required</span></td>
             </tr>
             <tr>
               <td><code class="font-mono text-xs text-white">ROUTER_ENDPOINT</code></td>
               <td>Router endpoint</td>
-              <td><span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-red-500/10 text-red-400 border border-red-500/20">Required</span></td>
+              <td><span class="status-required">Required</span></td>
             </tr>
             <tr>
               <td><code class="font-mono text-xs text-white">LTM_EXTRACTION_API_KEY</code></td>
               <td>API key for lifelong memory extraction</td>
-              <td><span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-red-500/10 text-red-400 border border-red-500/20">Required</span></td>
+              <td><span class="status-required">Required</span></td>
             </tr>
             <tr>
               <td><code class="font-mono text-xs text-white">LTM_EXTRACTION_MODEL</code></td>
               <td>Model for LTM extraction</td>
-              <td><span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-red-500/10 text-red-400 border border-red-500/20">Required</span></td>
+              <td><span class="status-required">Required</span></td>
             </tr>
             <tr>
               <td><code class="font-mono text-xs text-white">LTM_EXTRACTION_ENDPOINT</code></td>
               <td>Endpoint for LTM extraction</td>
-              <td><span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-red-500/10 text-red-400 border border-red-500/20">Required</span></td>
+              <td><span class="status-required">Required</span></td>
             </tr>
             <tr>
               <td><code class="font-mono text-xs text-white">IMAGE_GEN_API_KEY</code></td>
               <td>API key for image generation (OpenAI‑compatible)</td>
-              <td><span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-zinc-500/10 text-zinc-400 border border-zinc-500/20">Optional</span></td>
+              <td><span class="status-optional">Optional</span></td>
             </tr>
             <tr>
               <td><code class="font-mono text-xs text-white">IMAGE_GEN_MODEL</code></td>
               <td>Image model (default: dall-e-3)</td>
-              <td><span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-zinc-500/10 text-zinc-400 border border-zinc-500/20">Optional</span></td>
+              <td><span class="status-optional">Optional</span></td>
             </tr>
             <tr>
               <td><code class="font-mono text-xs text-white">IMAGE_GEN_ENDPOINT</code></td>
               <td>Image generation endpoint</td>
-              <td><span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-zinc-500/10 text-zinc-400 border border-zinc-500/20">Optional</span></td>
+              <td><span class="status-optional">Optional</span></td>
             </tr>
             <tr>
               <td><code class="font-mono text-xs text-white">PROACTIVE_API_KEY</code></td>
               <td>API key for proactive scout</td>
-              <td><span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-red-500/10 text-red-400 border border-red-500/20">Required</span></td>
+              <td><span class="status-required">Required</span></td>
             </tr>
             <tr>
               <td><code class="font-mono text-xs text-white">PROACTIVE_MODEL</code></td>
               <td>Model for proactive scout</td>
-              <td><span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-red-500/10 text-red-400 border border-red-500/20">Required</span></td>
+              <td><span class="status-required">Required</span></td>
             </tr>
             <tr>
               <td><code class="font-mono text-xs text-white">PROACTIVE_ENDPOINT</code></td>
               <td>Endpoint for proactive scout</td>
-              <td><span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-red-500/10 text-red-400 border border-red-500/20">Required</span></td>
+              <td><span class="status-required">Required</span></td>
             </tr>
             <tr>
               <td><code class="font-mono text-xs text-white">TTS_API_KEY</code></td>
               <td>API key for TTS (optional – falls back to Edge TTS)</td>
-              <td><span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-zinc-500/10 text-zinc-400 border border-zinc-500/20">Optional</span></td>
+              <td><span class="status-optional">Optional</span></td>
             </tr>
             <tr>
               <td><code class="font-mono text-xs text-white">TTS_MODEL</code></td>
               <td>TTS model</td>
-              <td><span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-zinc-500/10 text-zinc-400 border border-zinc-500/20">Optional</span></td>
+              <td><span class="status-optional">Optional</span></td>
             </tr>
             <tr>
               <td><code class="font-mono text-xs text-white">TTS_ENDPOINT</code></td>
               <td>TTS endpoint</td>
-              <td><span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-zinc-500/10 text-zinc-400 border border-zinc-500/20">Optional</span></td>
+              <td><span class="status-optional">Optional</span></td>
             </tr>
             <tr>
               <td><code class="font-mono text-xs text-white">GROQ_API_KEY</code></td>
-              <td>Backward-compatible alias for <code>FAST_BRAIN_API_KEY</code></td>
-              <td><span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-zinc-500/10 text-zinc-400 border border-zinc-500/20">Alias</span></td>
+              <td>Backward-compatible alias for <code class="code-inline">FAST_BRAIN_API_KEY</code></td>
+              <td><span class="status-alias">Alias</span></td>
             </tr>
             <tr>
               <td><code class="font-mono text-xs text-white">GEMINI_API_KEY</code></td>
               <td>Gemini API key (optional, used only if configured)</td>
-              <td><span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-zinc-500/10 text-zinc-400 border border-zinc-500/20">Optional</span></td>
+              <td><span class="status-optional">Optional</span></td>
             </tr>
             <tr>
               <td><code class="font-mono text-xs text-white">REGOLO_API_KEY</code></td>
               <td>Regolo API key (optional)</td>
-              <td><span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-zinc-500/10 text-zinc-400 border border-zinc-500/20">Optional</span></td>
+              <td><span class="status-optional">Optional</span></td>
             </tr>
             <tr>
               <td><code class="font-mono text-xs text-white">OPENROUTER_API_KEY</code></td>
               <td>OpenRouter API key (optional)</td>
-              <td><span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-zinc-500/10 text-zinc-400 border border-zinc-500/20">Optional</span></td>
+              <td><span class="status-optional">Optional</span></td>
             </tr>
             <tr>
               <td><code class="font-mono text-xs text-white">TAVILY_API_KEY</code></td>
               <td>Real-time Web Search API key</td>
-              <td><span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-red-500/10 text-red-400 border border-red-500/20">Required</span></td>
+              <td><span class="status-required">Required</span></td>
             </tr>
             <tr>
               <td><code class="font-mono text-xs text-white">DEEPGRAM_API_KEY</code></td>
               <td>Deepgram speech-to-text API key</td>
-              <td><span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-red-500/10 text-red-400 border border-red-500/20">Required</span></td>
+              <td><span class="status-required">Required</span></td>
             </tr>
             <tr>
               <td><code class="font-mono text-xs text-white">ADB_PHONE_IP</code></td>
               <td>Tailscale IP of Android device</td>
-              <td><span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-zinc-500/10 text-zinc-400 border border-zinc-500/20">Optional</span></td>
+              <td><span class="status-optional">Optional</span></td>
             </tr>
             <tr>
               <td><code class="font-mono text-xs text-white">TELEGRAM_API_ID &amp; HASH</code></td>
               <td>Telegram App credentials for Desktop Client</td>
-              <td><span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-zinc-500/10 text-zinc-400 border border-zinc-500/20">Optional</span></td>
+              <td><span class="status-optional">Optional</span></td>
             </tr>
             <tr>
               <td><code class="font-mono text-xs text-white">CUSTOM_BASE_URL</code></td>
               <td>For Ollama/LM Studio local inference</td>
-              <td><span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-zinc-500/10 text-zinc-400 border border-zinc-500/20">Optional</span></td>
+              <td><span class="status-optional">Optional</span></td>
             </tr>
           </tbody>
         </table>
@@ -538,31 +1231,41 @@ tr:last-child td { border-bottom: none; }
     </section>
 
     <section id="providers" class="prose-section">
-      <h2 class="text-2xl font-bold mb-4 text-white">Providers</h2>
+      <h2 class="text-2xl md:text-3xl font-bold mb-3 text-white">Providers</h2>
       <p class="text-zinc-400 mb-6">JARVIS supports a flexible provider abstraction layer. You can use any OpenAI‑compatible endpoint, including:</p>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div class="feature-card">
-          <h3 class="text-white font-medium mb-1 flex items-center gap-2"><i class="fa-solid fa-cloud text-indigo-400"></i> Cloud Providers</h3>
-          <p class="text-sm text-zinc-500">Regolo, Gemini, Groq, OpenRouter, Together AI, OpenAI, Mistral, and more.</p>
+        <div class="glass-card">
+          <div class="flex items-center gap-3">
+            <div class="feature-icon indigo"><i class="fa-solid fa-cloud"></i></div>
+            <div>
+              <h3 class="text-white font-semibold text-base mb-0.5">Cloud Providers</h3>
+              <p class="text-sm text-zinc-500">Regolo, Gemini, Groq, OpenRouter, Together AI, OpenAI, Mistral, and more.</p>
+            </div>
+          </div>
         </div>
-        <div class="feature-card">
-          <h3 class="text-white font-medium mb-1 flex items-center gap-2"><i class="fa-solid fa-server text-cyan-400"></i> Local &amp; Custom</h3>
-          <p class="text-sm text-zinc-500">Ollama, LM Studio, vLLM, or any custom server that implements the OpenAI API.</p>
+        <div class="glass-card">
+          <div class="flex items-center gap-3">
+            <div class="feature-icon cyan"><i class="fa-solid fa-server"></i></div>
+            <div>
+              <h3 class="text-white font-semibold text-base mb-0.5">Local &amp; Custom</h3>
+              <p class="text-sm text-zinc-500">Ollama, LM Studio, vLLM, or any custom server that implements the OpenAI API.</p>
+            </div>
+          </div>
         </div>
       </div>
       <p class="text-zinc-400 mt-4 text-sm">The system automatically falls back to secondary providers if the primary fails, ensuring zero downtime.</p>
     </section>
 
     <section id="mobile" class="prose-section">
-      <h2 class="text-2xl font-bold mb-4 text-white">Mobile Control</h2>
+      <h2 class="text-2xl md:text-3xl font-bold mb-3 text-white">Mobile Control</h2>
       <p class="text-zinc-400 mb-4">Execute Android commands directly via ADB over Tailscale.</p>
 
       <div class="code-wrapper">
         <div class="code-header">
           <div class="flex gap-2">
-            <div class="w-2.5 h-2.5 rounded-full bg-[#333]"></div>
-            <div class="w-2.5 h-2.5 rounded-full bg-[#333]"></div>
-            <div class="w-2.5 h-2.5 rounded-full bg-[#333]"></div>
+            <div class="w-2.5 h-2.5 rounded-full bg-[#2a1e50]"></div>
+            <div class="w-2.5 h-2.5 rounded-full bg-[#2a1e50]"></div>
+            <div class="w-2.5 h-2.5 rounded-full bg-[#2a1e50]"></div>
           </div>
           <span class="font-mono text-zinc-500">Bash</span>
           <button class="copy-btn"><i class="fa-regular fa-copy"></i> Copy</button>
@@ -575,14 +1278,14 @@ tr:last-child td { border-bottom: none; }
     </section>
 
     <section id="proactive" class="prose-section">
-      <h2 class="text-2xl font-bold mb-4 text-white">Proactive Agents &amp; HITL</h2>
+      <h2 class="text-2xl md:text-3xl font-bold mb-3 text-white">Proactive Agents &amp; HITL</h2>
       <p class="text-zinc-400 mb-4">Background services act as scouts. They monitor incoming data but adhere strictly to the Human-in-the-Loop (HITL) protocol.</p>
-      <div class="p-6 border border-indigo-500/20 bg-[#0a0a0a] rounded-lg mb-4 relative overflow-hidden">
-        <div class="absolute top-0 right-0 w-32 h-32 bg-indigo-500/5 rounded-full blur-2xl pointer-events-none"></div>
-        <h4 class="text-white font-medium text-sm mb-4 flex items-center gap-2"><i class="fa-solid fa-bolt text-indigo-400"></i> Example Flow</h4>
+      <div class="glass-card">
+        <div class="absolute top-0 right-0 w-40 h-40 rounded-full blur-3xl pointer-events-none" style="background: radial-gradient(circle, rgba(168,85,247,0.15), transparent 70%);"></div>
+        <h4 class="text-white font-semibold text-base mb-4 flex items-center gap-2 relative z-10"><i class="fa-solid fa-bolt text-violet-400"></i> Example Flow</h4>
         <ol class="text-sm text-zinc-400 space-y-3 list-decimal list-inside relative z-10">
           <li>Listener detects an email update regarding a meeting shift.</li>
-          <li>JARVIS halts execution and prompts: <br><span class="inline-block mt-2 px-3 py-2 bg-[#111] border border-[#333] rounded text-indigo-300 font-mono text-xs">"I received an email from Ram that the meeting has been shifted to 5 PM. Should I update the calendar?"</span></li>
+          <li>JARVIS halts execution and prompts: <br><span class="inline-block mt-2 px-3 py-2 rounded-lg text-violet-300 font-mono text-xs" style="background: rgba(168,85,247,0.08); border: 1px solid rgba(168,85,247,0.25);">"I received an email from Ram that the meeting has been shifted to 5 PM. Should I update the calendar?"</span></li>
           <li>User explicitly confirms via voice or text.</li>
           <li>JARVIS executes the calendar API update.</li>
         </ol>
@@ -590,7 +1293,7 @@ tr:last-child td { border-bottom: none; }
     </section>
 
     <section id="troubleshooting" class="prose-section border-b-0 pb-0">
-      <h2 class="text-2xl font-bold mb-4 text-white">Troubleshooting</h2>
+      <h2 class="text-2xl md:text-3xl font-bold mb-3 text-white">Troubleshooting</h2>
       <div class="table-wrapper">
         <table>
           <thead>
@@ -602,35 +1305,35 @@ tr:last-child td { border-bottom: none; }
           <tbody>
             <tr>
               <td class="text-white font-medium">ModuleNotFoundError</td>
-              <td>Ensure <code class="font-mono text-xs text-indigo-300 bg-indigo-500/10 border border-indigo-500/20 px-1 rounded">.venv</code> is activated before running <code class="font-mono text-xs text-indigo-300 bg-indigo-500/10 border border-indigo-500/20 px-1 rounded">pip install -r requirements.txt</code>.</td>
+              <td>Ensure <code class="code-inline">.venv</code> is activated before running <code class="code-inline">pip install -r requirements.txt</code>.</td>
             </tr>
             <tr>
               <td class="text-white font-medium">WhatsApp Fails</td>
-              <td>Verify Node.js 18+ is installed and <code class="font-mono text-xs text-cyan-300 bg-cyan-500/10 border border-cyan-500/20 px-1 rounded">npm install</code> was run in the BaileysServer directory.</td>
+              <td>Verify Node.js 18+ is installed and <code class="code-inline">npm install</code> was run in the BaileysServer directory.</td>
             </tr>
             <tr>
               <td class="text-white font-medium">Command Not Recognized</td>
-              <td>Run <code class="font-mono text-xs text-emerald-300 bg-emerald-500/10 border border-emerald-500/20 px-1 rounded">python SetupRegistry.py</code> from the project root and restart your terminal.</td>
+              <td>Run <code class="code-inline">python SetupRegistry.py</code> from the project root and restart your terminal.</td>
             </tr>
             <tr>
               <td class="text-white font-medium">FastBrain API Key Missing</td>
-              <td>Add <code class="font-mono text-xs text-amber-300 bg-amber-500/10 border border-amber-500/20 px-1 rounded">FAST_BRAIN_API_KEY</code>, <code class="font-mono text-xs text-amber-300 bg-amber-500/10 border border-amber-500/20 px-1 rounded">FAST_BRAIN_MODEL</code>, and <code class="font-mono text-xs text-amber-300 bg-amber-500/10 border border-amber-500/20 px-1 rounded">FAST_BRAIN_ENDPOINT</code> to your <code class="font-mono text-xs text-white bg-[#222] px-1 rounded">.env</code> file.</td>
+              <td>Add <code class="code-inline">FAST_BRAIN_API_KEY</code>, <code class="code-inline">FAST_BRAIN_MODEL</code>, and <code class="code-inline">FAST_BRAIN_ENDPOINT</code> to your <code class="code-inline">.env</code> file.</td>
             </tr>
           </tbody>
         </table>
       </div>
     </section>
 
-<footer class="border-t border-[#222] bg-[#000] pt-16 pb-8 relative overflow-hidden">
-  <div class="absolute top-0 left-1/2 -translate-x-1/2 w-2/3 h-px bg-gradient-to-r from-transparent via-indigo-500/50 to-transparent"></div>
+<footer class="border-t border-[#1e123c] bg-[#030014]/80 backdrop-blur-sm pt-16 pb-8 relative overflow-hidden mt-16">
+  <div class="footer-gradient-line"></div>
 
   <div class="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
     <div class="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-12 mb-12">
-      
+
       <div class="md:col-span-5 lg:col-span-5 flex flex-col items-center md:items-start text-center md:text-left">
-        <div class="flex items-center gap-2 mb-4">
-          <div class="flex h-6 w-6 items-center justify-center rounded bg-gradient-to-br from-indigo-500 to-cyan-400 text-white shadow-[0_0_15px_rgba(99,102,241,0.4)]">
-            <i class="fa-solid fa-bolt text-[10px]"></i>
+        <div class="flex items-center gap-2.5 mb-4">
+          <div class="logo-mark flex h-7 w-7 items-center justify-center rounded-lg text-white">
+            <i class="fa-solid fa-bolt text-[11px]"></i>
           </div>
           <span class="text-xl font-bold text-white tracking-tight">JARVIS.</span>
         </div>
@@ -640,42 +1343,42 @@ tr:last-child td { border-bottom: none; }
       </div>
 
       <div class="md:col-span-7 lg:col-span-7 grid grid-cols-2 sm:grid-cols-3 gap-8 text-center sm:text-left">
-        
+
         <div class="flex flex-col gap-3">
-          <span class="text-white font-semibold text-xs tracking-widest uppercase mb-1">Product</span>
+          <span class="text-white font-semibold text-[11px] tracking-widest uppercase mb-1">Product</span>
           <a href="/#features" class="text-sm text-zinc-500 hover:text-indigo-400 transition-colors">Features</a>
-          <a href="/#engine" class="text-sm text-zinc-500 hover:text-indigo-400 transition-colors">Engine</a>
+          <a href="/#engine" class="text-sm text-zinc-500 hover:text-violet-400 transition-colors">Engine</a>
           <a href="/#download" class="text-sm text-zinc-500 hover:text-cyan-400 transition-colors">Download</a>
         </div>
-        
+
         <div class="flex flex-col gap-3">
-          <span class="text-white font-semibold text-xs tracking-widest uppercase mb-1">Resources</span>
+          <span class="text-white font-semibold text-[11px] tracking-widest uppercase mb-1">Resources</span>
           <a href="/documentation" class="text-sm text-zinc-500 hover:text-indigo-400 transition-colors">Documentation</a>
-          <a href="/faq" class="text-sm text-zinc-500 hover:text-indigo-400 transition-colors">FAQ</a>
-          <a href="/about" class="text-sm text-zinc-500 hover:text-indigo-400 transition-colors">About the Builder</a>
+          <a href="/faq" class="text-sm text-zinc-500 hover:text-violet-400 transition-colors">FAQ</a>
+          <a href="/about" class="text-sm text-zinc-500 hover:text-cyan-400 transition-colors">About the Builder</a>
         </div>
 
         <div class="flex flex-col gap-3 col-span-2 sm:col-span-1">
-          <span class="text-white font-semibold text-xs tracking-widest uppercase mb-1">Legal</span>
+          <span class="text-white font-semibold text-[11px] tracking-widest uppercase mb-1">Legal</span>
           <a href="/privacy" class="text-sm text-zinc-500 hover:text-indigo-400 transition-colors">Privacy Policy</a>
-          <a href="https://github.com/thekaifansari01/Jarvis-OS-Agent/blob/main/LICENSE" target="_blank" class="text-sm text-zinc-500 hover:text-indigo-400 transition-colors">GNU GPL v3.0</a>
+          <a href="https://github.com/thekaifansari01/Jarvis-OS-Agent/blob/main/LICENSE" target="_blank" class="text-sm text-zinc-500 hover:text-violet-400 transition-colors">GNU GPL v3.0</a>
         </div>
 
       </div>
     </div>
 
-    <div class="pt-8 border-t border-[#111] flex flex-col md:flex-row justify-between items-center gap-6">
+    <div class="pt-8 border-t border-[#1e123c] flex flex-col md:flex-row justify-between items-center gap-6">
       <div class="text-xs text-zinc-600 font-medium tracking-wide">
         &copy; 2026 Kaif Ansari. All systems online.
       </div>
       <div class="flex gap-3">
-        <a href="https://github.com/thekaifansari01/Jarvis-OS-Agent" target="_blank" class="w-9 h-9 rounded-full bg-[#0a0a0a] border border-[#222] flex items-center justify-center text-zinc-400 hover:text-white hover:border-indigo-500/50 hover:bg-indigo-500/10 hover:shadow-[0_0_15px_rgba(99,102,241,0.2)] transition-all">
+        <a href="https://github.com/thekaifansari01/Jarvis-OS-Agent" target="_blank" class="social-circle w-10 h-10 rounded-full bg-[#0a0520] border border-[#2a1e50] flex items-center justify-center text-zinc-400">
           <i class="fa-brands fa-github text-sm"></i>
         </a>
-        <a href="https://x.com/thekaifansari01" target="_blank" class="w-9 h-9 rounded-full bg-[#0a0a0a] border border-[#222] flex items-center justify-center text-zinc-400 hover:text-white hover:border-indigo-500/50 hover:bg-indigo-500/10 hover:shadow-[0_0_15px_rgba(99,102,241,0.2)] transition-all">
+        <a href="https://x.com/thekaifansari01" target="_blank" class="social-circle w-10 h-10 rounded-full bg-[#0a0520] border border-[#2a1e50] flex items-center justify-center text-zinc-400">
           <i class="fa-brands fa-x-twitter text-sm"></i>
         </a>
-        <a href="https://linkedin.com/in/thekaifansari01" target="_blank" class="w-9 h-9 rounded-full bg-[#0a0a0a] border border-[#222] flex items-center justify-center text-zinc-400 hover:text-white hover:border-indigo-500/50 hover:bg-indigo-500/10 hover:shadow-[0_0_15px_rgba(99,102,241,0.2)] transition-all">
+        <a href="https://linkedin.com/in/thekaifansari01" target="_blank" class="social-circle w-10 h-10 rounded-full bg-[#0a0520] border border-[#2a1e50] flex items-center justify-center text-zinc-400">
           <i class="fa-brands fa-linkedin-in text-sm"></i>
         </a>
       </div>
@@ -693,7 +1396,7 @@ const mobileTocLinks = document.querySelectorAll('.mobile-link');
 
 function updateActiveLinks() {
   let current = '';
-  const scrollPosition = window.scrollY + 100;
+  const scrollPosition = window.scrollY + 120;
 
   sections.forEach(section => {
     const sectionTop = section.offsetTop;
@@ -718,8 +1421,14 @@ function updateActiveLinks() {
   });
 }
 
-window.addEventListener('scroll', updateActiveLinks);
+window.addEventListener('scroll', updateActiveLinks, { passive: true });
 updateActiveLinks();
+
+window.addEventListener('scroll', () => {
+  const nav = document.getElementById('navbar');
+  if (window.scrollY > 20) { nav.classList.add('scrolled'); }
+  else { nav.classList.remove('scrolled'); }
+}, { passive: true });
 
 const mobileMenuBtn = document.getElementById('mobile-menu-btn');
 const mobileCloseBtn = document.getElementById('mobile-close-btn');
@@ -765,10 +1474,11 @@ document.querySelectorAll('.copy-btn').forEach(btn => {
 });
 </script>
 <script>
-        window.NexusConfig = {
-            apiKey: 'e0415383ab2f7ffb5c0bbeb2412849068e515047ed8ca17058a25383fcfca14d'
-        };
-    </script>
-    <script defer src="https://cdn.jsdelivr.net/npm/nexus-web-assistant@4.1.0/dist/nexus-assistant.min.js"></script>
+  window.NexusConfig = {
+    apiKey: 'e0415383ab2f7ffb5c0bbeb2412849068e515047ed8ca17058a25383fcfca14d',
+    model: 'qwen/qwen3.8-27b',
+  };
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/nexus-web-assistant@4.1.0/dist/nexus-assistant.min.js"></script>
 </body>
 </html>

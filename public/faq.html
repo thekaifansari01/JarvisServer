@@ -5,7 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>JARVIS · FAQ</title>
 <script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <script>
 tailwind.config = {
@@ -13,37 +15,484 @@ tailwind.config = {
     extend: {
       fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'] },
       colors: { dark: '#000000', surface: '#0a0a0a', border: '#222222', accent: '#ffffff', muted: '#888888' },
-      animation: { 'pulse-glow': 'pulse-glow 4s cubic-bezier(0.4, 0, 0.6, 1) infinite' },
-      keyframes: { 'pulse-glow': { '0%, 100%': { opacity: 0.1 }, '50%': { opacity: 0.2 } } }
+      animation: {
+        'pulse-glow': 'pulse-glow 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'aurora': 'aurora 30s ease-in-out infinite',
+        'aurora-2': 'aurora-2 40s ease-in-out infinite'
+      },
+      keyframes: {
+        'pulse-glow': { '0%, 100%': { opacity: 0.15 }, '50%': { opacity: 0.4 } },
+        aurora: {
+          '0%, 100%': { transform: 'translate(0, 0) scale(1) rotate(0deg)' },
+          '33%': { transform: 'translate(8%, -5%) scale(1.15) rotate(120deg)' },
+          '66%': { transform: 'translate(-5%, 8%) scale(0.95) rotate(240deg)' }
+        },
+        'aurora-2': {
+          '0%, 100%': { transform: 'translate(0, 0) scale(1.05) rotate(0deg)' },
+          '50%': { transform: 'translate(-10%, 10%) scale(1.2) rotate(180deg)' }
+        }
+      }
     }
   }
 }
 </script>
 <style>
-body { color: #a1a1aa; overflow-x: hidden; background: #000000; }
-::-webkit-scrollbar { width: 8px; height: 8px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; border: 2px solid #000; }
-::-webkit-scrollbar-thumb:hover { background: #555; }
-.enterprise-grid { background-size: 30px 30px; background-image: linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px); mask-image: linear-gradient(to bottom, black 20%, transparent 80%); -webkit-mask-image: linear-gradient(to bottom, black 20%, transparent 80%); }
-.ambient-glow-indigo { position: fixed; top: 0; left: 50%; transform: translateX(-50%); width: 60vw; height: 40vw; background: radial-gradient(ellipse, rgba(99, 102, 241, 0.08) 0%, transparent 70%); border-radius: 50%; pointer-events: none; z-index: 0; }
-.text-gradient-accent { background: linear-gradient(to right, #818cf8, #22d3ee); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-.nav-blur { background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid transparent; transition: all 0.4s ease; }
-.nav-blur.scrolled { border-bottom-color: #222; background: rgba(0, 0, 0, 0.8); box-shadow: 0 4px 30px rgba(0,0,0,0.5); }
-.reveal { opacity: 0; transform: translateY(30px); transition: all 0.6s cubic-bezier(0.2, 0.8, 0.2, 1); }
+:root {
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --grad-shine: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
+}
+
+* { -webkit-tap-highlight-color: transparent; }
+html { scroll-padding-top: 96px; }
+
+body {
+  color: #b8b8c0;
+  overflow-x: hidden;
+  background: #030014;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  position: relative;
+  min-height: 100vh;
+}
+
+.aurora-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  background: radial-gradient(ellipse at top, #0a0520 0%, #030014 50%, #000000 100%);
+}
+
+.aurora-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.5;
+  will-change: transform;
+}
+.aurora-blob-1 {
+  top: -20%; left: -10%;
+  width: 60vw; height: 60vw;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.55) 0%, transparent 70%);
+  animation: aurora 30s ease-in-out infinite;
+}
+.aurora-blob-2 {
+  top: 10%; right: -15%;
+  width: 55vw; height: 55vw;
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.5) 0%, transparent 70%);
+  animation: aurora-2 40s ease-in-out infinite;
+}
+.aurora-blob-3 {
+  bottom: -20%; left: 20%;
+  width: 65vw; height: 65vw;
+  background: radial-gradient(circle, rgba(6, 182, 212, 0.4) 0%, transparent 70%);
+  animation: aurora 35s ease-in-out infinite reverse;
+}
+
+@keyframes aurora {
+  0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); }
+  33% { transform: translate(8%, -5%) scale(1.15) rotate(120deg); }
+  66% { transform: translate(-5%, 8%) scale(0.95) rotate(240deg); }
+}
+@keyframes aurora-2 {
+  0%, 100% { transform: translate(0, 0) scale(1.05) rotate(0deg); }
+  50% { transform: translate(-10%, 10%) scale(1.2) rotate(180deg); }
+}
+
+.noise-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.035;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.grid-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background-size: 44px 44px;
+  background-image:
+    linear-gradient(to right, rgba(168, 85, 247, 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(99, 102, 241, 0.045) 1px, transparent 1px);
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, black 30%, transparent 80%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, black 30%, transparent 80%);
+}
+
+::selection { background: #a855f7; color: #ffffff; }
+::-moz-selection { background: #a855f7; color: #ffffff; }
+
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: #030014; }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #6366f1, #a855f7, #06b6d4);
+  border-radius: 10px;
+  border: 2px solid #030014;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #818cf8, #c084fc, #22d3ee);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #ffffff;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+  font-weight: 700;
+}
+
+a { transition: all 0.25s var(--ease-out); }
+
+.nav-blur {
+  background: rgba(3, 0, 20, 0.55);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border-bottom: 1px solid rgba(168, 85, 247, 0.08);
+  transition: all 0.4s var(--ease-out);
+}
+.nav-blur.scrolled {
+  border-bottom-color: rgba(168, 85, 247, 0.18);
+  background: rgba(3, 0, 20, 0.85);
+  box-shadow: 0 4px 40px rgba(99, 102, 241, 0.15), 0 1px 0 rgba(168, 85, 247, 0.1);
+}
+
+.logo-mark {
+  position: relative;
+  background: linear-gradient(135deg, #6366f1, #a855f7, #06b6d4);
+  background-size: 200% 200%;
+  animation: gradientShift 6s ease infinite;
+  transition: transform 0.3s var(--ease-spring), box-shadow 0.3s var(--ease-out);
+  box-shadow:
+    0 0 20px rgba(168, 85, 247, 0.6),
+    0 0 40px rgba(99, 102, 241, 0.4),
+    inset 0 1px 0 rgba(255,255,255,0.3);
+}
+.logo-mark:hover {
+  transform: scale(1.08) rotate(-3deg);
+  box-shadow:
+    0 0 30px rgba(168, 85, 247, 0.9),
+    0 0 60px rgba(99, 102, 241, 0.6),
+    inset 0 1px 0 rgba(255,255,255,0.4);
+}
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.nav-link-top {
+  position: relative;
+  padding: 6px 2px;
+  transition: color 0.25s var(--ease-out);
+}
+.nav-link-top::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 100%; height: 1.5px;
+  background: linear-gradient(90deg, #818cf8, #c084fc, #22d3ee);
+  border-radius: 2px;
+  transform: scaleX(0);
+  transform-origin: right center;
+  transition: transform 0.35s var(--ease-out);
+  box-shadow: 0 0 8px rgba(192, 132, 252, 0.6);
+}
+.nav-link-top:hover { color: #ffffff; }
+.nav-link-top:hover::after {
+  transform: scaleX(1);
+  transform-origin: left center;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out);
+}
 .reveal.active { opacity: 1; transform: translateY(0); }
-.faq-card { background: #0a0a0a; border: 1px solid #222; border-radius: 12px; padding: 1.5rem; transition: all 0.3s ease; height: 100%; display: flex; flex-direction: column; }
-.faq-card:hover { border-color: rgba(99, 102, 241, 0.4); box-shadow: 0 10px 30px -10px rgba(99, 102, 241, 0.1); }
-.download-btn { background: #fff; color: #000; transition: all 0.3s ease; }
-.download-btn:hover { background: #e5e5e5; transform: scale(1.02); }
-#mobile-overlay { transition: opacity 0.3s ease; }
-#mobile-drawer { transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+.delay-100 { transition-delay: 100ms; }
+.delay-200 { transition-delay: 200ms; }
+
+.text-gradient-accent {
+  background: linear-gradient(110deg, #818cf8 0%, #c084fc 30%, #f472b6 60%, #22d3ee 100%);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: gradientShift 8s ease infinite;
+}
+
+.section-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.9rem;
+  border-radius: 99px;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.12), rgba(168, 85, 247, 0.08));
+  border: 1px solid rgba(168, 85, 247, 0.25);
+  color: #d8b4fe;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 1.25rem;
+  box-shadow: 0 0 20px rgba(168, 85, 247, 0.15);
+}
+
+.faq-card {
+  position: relative;
+  padding: 1.75rem;
+  background: linear-gradient(180deg, rgba(20, 12, 45, 0.7) 0%, rgba(10, 5, 30, 0.6) 100%);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(168, 85, 247, 0.15);
+  border-radius: 20px;
+  transition:
+    transform 0.4s var(--ease-spring),
+    border-color 0.35s var(--ease-out),
+    box-shadow 0.4s var(--ease-out),
+    background 0.4s var(--ease-out);
+  overflow: hidden;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.faq-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(168,85,247,0.6), rgba(99,102,241,0.3) 30%, transparent 50%, transparent 70%, rgba(6,182,212,0.5));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0.4;
+  transition: opacity 0.4s var(--ease-out);
+  pointer-events: none;
+  z-index: 2;
+}
+.faq-card::after {
+  content: '';
+  position: absolute;
+  top: -60%; right: -40%;
+  width: 100%; height: 100%;
+  background: radial-gradient(circle, rgba(168,85,247,0.22), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.6s var(--ease-out);
+  pointer-events: none;
+  z-index: 0;
+  filter: blur(40px);
+}
+.faq-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(192, 132, 252, 0.4);
+  background: linear-gradient(180deg, rgba(30, 18, 60, 0.8) 0%, rgba(15, 8, 40, 0.7) 100%);
+  box-shadow:
+    0 30px 60px -20px rgba(168, 85, 247, 0.35),
+    0 10px 30px -10px rgba(99, 102, 241, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+.faq-card:hover::before { opacity: 1; }
+.faq-card:hover::after { opacity: 1; }
+
+.faq-icon {
+  width: 40px; height: 40px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background: linear-gradient(135deg, rgba(168,85,247,0.22), rgba(99,102,241,0.1));
+  border: 1px solid rgba(168,85,247,0.35);
+  color: #d8b4fe;
+  box-shadow: 0 0 20px rgba(168,85,247,0.25), inset 0 1px 0 rgba(255,255,255,0.1);
+  transition: transform 0.35s var(--ease-spring);
+}
+.faq-card:hover .faq-icon {
+  transform: scale(1.08) rotate(-5deg);
+}
+
+.code-inline {
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.18), rgba(168, 85, 247, 0.12));
+  border: 1px solid rgba(168, 85, 247, 0.3);
+  color: #d8b4fe;
+  padding: 0.08rem 0.4rem;
+  border-radius: 5px;
+  font-size: 0.82em;
+  font-family: 'JetBrains Mono', monospace;
+  box-shadow: 0 0 10px rgba(168, 85, 247, 0.12);
+}
+.code-inline-danger {
+  background: rgba(244, 63, 94, 0.12);
+  border: 1px solid rgba(244, 63, 94, 0.3);
+  color: #fb7185;
+  padding: 0.08rem 0.4rem;
+  border-radius: 5px;
+  font-size: 0.82em;
+  font-family: 'JetBrains Mono', monospace;
+  box-shadow: 0 0 10px rgba(244, 63, 94, 0.12);
+}
+
+.download-btn {
+  position: relative;
+  background: linear-gradient(135deg, #ffffff 0%, #f0f0ff 100%);
+  color: #1a0b3d;
+  overflow: hidden;
+  isolation: isolate;
+  font-weight: 700;
+  transition: transform 0.35s var(--ease-spring), box-shadow 0.35s var(--ease-out);
+  box-shadow:
+    0 4px 24px rgba(255, 255, 255, 0.15),
+    0 0 40px rgba(168, 85, 247, 0.2);
+}
+.download-btn::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 60%; height: 100%;
+  background: var(--grad-shine);
+  transform: translateX(-120%) skewX(-15deg);
+  pointer-events: none;
+}
+.download-btn:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow:
+    0 8px 32px rgba(255, 255, 255, 0.25),
+    0 0 60px rgba(168, 85, 247, 0.4);
+}
+.download-btn:hover::before {
+  animation: shineSweep 0.9s var(--ease-out);
+}
+.download-btn:active { transform: translateY(0) scale(0.98); }
+
+@keyframes shineSweep {
+  0% { transform: translateX(-120%) skewX(-15deg); }
+  100% { transform: translateX(220%) skewX(-15deg); }
+}
+
+.cta-card {
+  position: relative;
+  padding: 2rem;
+  background: linear-gradient(180deg, rgba(20, 12, 45, 0.7) 0%, rgba(10, 5, 30, 0.6) 100%);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(168, 85, 247, 0.2);
+  border-radius: 20px;
+  overflow: hidden;
+  isolation: isolate;
+  box-shadow:
+    0 30px 60px -20px rgba(0, 0, 0, 0.7),
+    0 0 60px -20px rgba(168, 85, 247, 0.3);
+}
+.cta-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(168,85,247,0.6), transparent 30%, transparent 70%, rgba(6,182,212,0.5));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0.7;
+  pointer-events: none;
+  z-index: 2;
+}
+.cta-card::after {
+  content: '';
+  position: absolute;
+  top: -50%; left: 30%;
+  width: 60%; height: 100%;
+  background: radial-gradient(circle, rgba(168,85,247,0.15), transparent 60%);
+  pointer-events: none;
+  filter: blur(60px);
+  z-index: 0;
+}
+
+.link-accent {
+  position: relative;
+  color: #c084fc;
+  font-weight: 600;
+  transition: color 0.25s var(--ease-out);
+}
+.link-accent::after {
+  content: '';
+  position: absolute;
+  bottom: -2px; left: 0;
+  width: 100%; height: 1.5px;
+  background: linear-gradient(90deg, #818cf8, #c084fc, #22d3ee);
+  border-radius: 2px;
+  transform: scaleX(0);
+  transform-origin: right center;
+  transition: transform 0.35s var(--ease-out);
+  box-shadow: 0 0 8px rgba(192, 132, 252, 0.6);
+}
+.link-accent:hover { color: #e9d5ff; }
+.link-accent:hover::after {
+  transform: scaleX(1);
+  transform-origin: left center;
+}
+
+#mobile-overlay { transition: opacity 0.3s var(--ease-out); }
+#mobile-drawer {
+  transition: transform 0.35s var(--ease-out);
+  background: linear-gradient(180deg, rgba(10, 5, 30, 0.98), rgba(3, 0, 20, 1));
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-right: 1px solid rgba(168, 85, 247, 0.2);
+  box-shadow: 20px 0 60px -20px rgba(168, 85, 247, 0.3);
+}
+
+.footer-gradient-line {
+  position: absolute;
+  top: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 66%; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(168,85,247,0.7), rgba(99,102,241,0.6), rgba(6,182,212,0.6), transparent);
+  box-shadow: 0 0 20px rgba(168, 85, 247, 0.5);
+}
+
+.social-circle { transition: all 0.3s var(--ease-out); }
+.social-circle:hover {
+  transform: translateY(-3px);
+  border-color: rgba(192, 132, 252, 0.6) !important;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(168, 85, 247, 0.15)) !important;
+  box-shadow: 0 0 30px rgba(168, 85, 247, 0.5), 0 0 60px rgba(99, 102, 241, 0.3);
+  color: #ffffff;
+}
+
+@media (max-width: 968px) {
+  .aurora-blob { filter: blur(70px); }
+  .aurora-blob-1, .aurora-blob-2, .aurora-blob-3 {
+    width: 90vw;
+    height: 90vw;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
 </style>
 </head>
 <body>
 
-<div class="fixed inset-0 enterprise-grid pointer-events-none z-0"></div>
-<div class="ambient-glow-indigo animate-pulse-glow"></div>
+<div class="aurora-bg">
+  <div class="aurora-blob aurora-blob-1"></div>
+  <div class="aurora-blob aurora-blob-2"></div>
+  <div class="aurora-blob aurora-blob-3"></div>
+</div>
+<div class="grid-overlay"></div>
+<div class="noise-overlay"></div>
 
 <header id="navbar" class="fixed top-0 w-full z-50 nav-blur">
   <div class="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8 h-16 flex justify-between items-center">
@@ -51,29 +500,29 @@ body { color: #a1a1aa; overflow-x: hidden; background: #000000; }
       <button id="mobile-menu-btn" class="md:hidden text-zinc-400 hover:text-white focus:outline-none transition-colors">
         <i class="fa-solid fa-bars text-xl"></i>
       </button>
-      <a href="/" class="flex items-center gap-2">
-        <div class="flex h-7 w-7 items-center justify-center rounded bg-gradient-to-br from-indigo-500 to-cyan-400 text-white transition-transform hover:scale-105 shadow-[0_0_15px_rgba(99,102,241,0.4)]">
+      <a href="/" class="flex items-center gap-2.5">
+        <div class="logo-mark flex h-8 w-8 items-center justify-center rounded-lg text-white">
           <i class="fa-solid fa-bolt text-xs"></i>
         </div>
         <span class="text-base font-bold text-white tracking-tight">JARVIS</span>
       </a>
     </div>
     <nav class="hidden md:flex items-center space-x-8">
-      <a href="/#features" class="text-sm font-medium text-zinc-400 hover:text-white">Features</a>
-      <a href="/documentation" class="text-sm font-medium text-zinc-400 hover:text-white">Docs</a>
-      <a href="/about" class="text-sm font-medium text-zinc-400 hover:text-white">About</a>
+      <a href="/#features" class="nav-link-top text-sm font-medium text-zinc-400 hover:text-white">Features</a>
+      <a href="/documentation" class="nav-link-top text-sm font-medium text-zinc-400 hover:text-white">Docs</a>
+      <a href="/about" class="nav-link-top text-sm font-medium text-zinc-400 hover:text-white">About</a>
     </nav>
     <div class="flex items-center gap-4 sm:gap-6">
-      <a href="/#download" class="download-btn px-4 py-1.5 rounded-md text-sm font-semibold shadow-[0_0_15px_rgba(255,255,255,0.1)]">Get Jarvis</a>
+      <a href="/#download" class="download-btn px-4 py-1.5 rounded-lg text-sm font-semibold">Get Jarvis</a>
     </div>
   </div>
 </header>
 
-<div id="mobile-overlay" class="fixed inset-0 bg-black/80 z-40 hidden opacity-0 backdrop-blur-sm"></div>
-<div id="mobile-drawer" class="fixed inset-y-0 left-0 w-72 bg-[#050505] border-r border-[#222] z-50 transform -translate-x-full md:hidden flex flex-col h-full">
-  <div class="p-6 border-b border-[#222] flex justify-between items-center">
+<div id="mobile-overlay" class="fixed inset-0 bg-black/85 z-40 hidden opacity-0 backdrop-blur-sm"></div>
+<div id="mobile-drawer" class="fixed inset-y-0 left-0 w-72 z-50 transform -translate-x-full md:hidden flex flex-col h-full">
+  <div class="p-6 border-b border-[#1e123c] flex justify-between items-center">
     <div class="flex items-center gap-2">
-      <div class="flex h-6 w-6 items-center justify-center rounded bg-gradient-to-br from-indigo-500 to-cyan-400 text-white">
+      <div class="logo-mark flex h-6 w-6 items-center justify-center rounded text-white">
         <i class="fa-solid fa-bolt text-[10px]"></i>
       </div>
       <span class="font-bold text-white tracking-tight">Menu</span>
@@ -92,96 +541,108 @@ body { color: #a1a1aa; overflow-x: hidden; background: #000000; }
 
 <main class="relative z-10 pt-32 pb-24 px-4 sm:px-6 lg:px-8">
   <div class="max-w-5xl mx-auto">
-    
+
     <div class="reveal mb-16 text-center">
-      <h1 class="text-4xl md:text-5xl font-bold text-white mb-4 tracking-tight">Frequently Asked Questions</h1>
+      <span class="section-label"><i class="fa-solid fa-circle-question"></i> FAQ</span>
+      <h1 class="text-4xl md:text-5xl font-bold mb-4 tracking-tight">Frequently Asked <span class="text-gradient-accent">Questions</span></h1>
       <p class="text-lg text-zinc-400 max-w-2xl mx-auto">Everything you need to know about setting up, running, and customizing JARVIS for your workflow.</p>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      
+
       <div class="faq-card reveal">
-        <h3 class="text-lg font-bold text-white mb-2 flex items-start gap-2">
-          <i class="fa-solid fa-circle-question text-indigo-400 mt-1"></i> Is JARVIS completely free to use?
-        </h3>
-        <p class="text-sm text-zinc-400 leading-relaxed mt-auto">
-          Yes, the core JARVIS software is 100% free and open-source under the <strong>GNU General Public License v3.0 (GPLv3)</strong>. However, if you use cloud APIs like Groq, Gemini, or Regolo, you may incur standard API usage costs depending on their respective free tiers.
+        <div class="flex items-start gap-3 mb-3">
+          <div class="faq-icon"><i class="fa-solid fa-circle-question text-sm"></i></div>
+          <h3 class="text-lg font-bold text-white pt-1.5">Is JARVIS completely free to use?</h3>
+        </div>
+        <p class="text-sm text-zinc-400 leading-relaxed">
+          Yes, the core JARVIS software is 100% free and open-source under the <strong class="text-white">GNU General Public License v3.0 (GPLv3)</strong>. However, if you use cloud APIs like Groq, Gemini, or Regolo, you may incur standard API usage costs depending on their respective free tiers.
         </p>
       </div>
 
       <div class="faq-card reveal delay-100">
-        <h3 class="text-lg font-bold text-white mb-2 flex items-start gap-2">
-          <i class="fa-solid fa-circle-question text-indigo-400 mt-1"></i> Can I run it completely offline?
-        </h3>
-        <p class="text-sm text-zinc-400 leading-relaxed mt-auto">
-          Absolutely. You can point JARVIS to any local OpenAI-compatible endpoint. By running Ollama or LM Studio locally and updating the <code class="bg-[#222] px-1 rounded text-xs text-white">CUSTOM_BASE_URL</code> in your <code class="bg-[#222] px-1 rounded text-xs text-white">.env</code>, you can achieve 100% local, offline inference.
+        <div class="flex items-start gap-3 mb-3">
+          <div class="faq-icon"><i class="fa-solid fa-circle-question text-sm"></i></div>
+          <h3 class="text-lg font-bold text-white pt-1.5">Can I run it completely offline?</h3>
+        </div>
+        <p class="text-sm text-zinc-400 leading-relaxed">
+          Absolutely. You can point JARVIS to any local OpenAI-compatible endpoint. By running Ollama or LM Studio locally and updating the <code class="code-inline">CUSTOM_BASE_URL</code> in your <code class="code-inline">.env</code>, you can achieve 100% local, offline inference.
         </p>
       </div>
 
       <div class="faq-card reveal">
-        <h3 class="text-lg font-bold text-white mb-2 flex items-start gap-2">
-          <i class="fa-solid fa-circle-question text-indigo-400 mt-1"></i> What is the Contributor License Agreement (CLA)?
-        </h3>
-        <p class="text-sm text-zinc-400 leading-relaxed mt-auto">
-          JARVIS uses a <strong>CLA</strong> to ensure the project can remain open-source while allowing commercial licensing for enterprises. By submitting a Pull Request, you agree to transfer copyright of your contribution to Kaif Ansari, enabling the project to be distributed under both GPLv3 and proprietary licenses without seeking further permission.
+        <div class="flex items-start gap-3 mb-3">
+          <div class="faq-icon"><i class="fa-solid fa-circle-question text-sm"></i></div>
+          <h3 class="text-lg font-bold text-white pt-1.5">What is the Contributor License Agreement (CLA)?</h3>
+        </div>
+        <p class="text-sm text-zinc-400 leading-relaxed">
+          JARVIS uses a <strong class="text-white">CLA</strong> to ensure the project can remain open-source while allowing commercial licensing for enterprises. By submitting a Pull Request, you agree to transfer copyright of your contribution to Kaif Ansari, enabling the project to be distributed under both GPLv3 and proprietary licenses without seeking further permission.
         </p>
       </div>
 
       <div class="faq-card reveal delay-100">
-        <h3 class="text-lg font-bold text-white mb-2 flex items-start gap-2">
-          <i class="fa-solid fa-circle-question text-indigo-400 mt-1"></i> Does it work on Mac and Linux?
-        </h3>
-        <p class="text-sm text-zinc-400 leading-relaxed mt-auto">
+        <div class="flex items-start gap-3 mb-3">
+          <div class="faq-icon"><i class="fa-solid fa-circle-question text-sm"></i></div>
+          <h3 class="text-lg font-bold text-white pt-1.5">Does it work on Mac and Linux?</h3>
+        </div>
+        <p class="text-sm text-zinc-400 leading-relaxed">
           Currently, JARVIS is heavily optimized for Windows (native window controls, registry setups). Linux (.AppImage) and macOS (.dmg) versions are in active development and will be released very soon.
         </p>
       </div>
 
       <div class="faq-card reveal delay-100">
-        <h3 class="text-lg font-bold text-white mb-2 flex items-start gap-2">
-          <i class="fa-solid fa-circle-question text-indigo-400 mt-1"></i> How does Mobile ADB control work?
-        </h3>
-        <p class="text-sm text-zinc-400 leading-relaxed mt-auto">
-          It uses ADB (Android Debug Bridge) routed over Tailscale. You need to enable USB Debugging on your phone, run <code class="bg-[#222] px-1 rounded text-xs text-white">adb tcpip 5555</code>, connect via your Tailscale IP, and add that IP to your <code class="bg-[#222] px-1 rounded text-xs text-white">.env</code>.
+        <div class="flex items-start gap-3 mb-3">
+          <div class="faq-icon"><i class="fa-solid fa-circle-question text-sm"></i></div>
+          <h3 class="text-lg font-bold text-white pt-1.5">How does Mobile ADB control work?</h3>
+        </div>
+        <p class="text-sm text-zinc-400 leading-relaxed">
+          It uses ADB (Android Debug Bridge) routed over Tailscale. You need to enable USB Debugging on your phone, run <code class="code-inline">adb tcpip 5555</code>, connect via your Tailscale IP, and add that IP to your <code class="code-inline">.env</code>.
         </p>
       </div>
 
       <div class="faq-card reveal">
-        <h3 class="text-lg font-bold text-white mb-2 flex items-start gap-2">
-          <i class="fa-solid fa-circle-question text-indigo-400 mt-1"></i> Will it accidentally delete my files?
-        </h3>
-        <p class="text-sm text-zinc-400 leading-relaxed mt-auto">
-          JARVIS employs a strict `shlex` tokenization and path canonicalization layer that auto-blocks highly destructive commands (like <code class="bg-[#222] px-1 rounded text-xs text-rose-400">rm -rf /</code>). Additionally, our Human-in-the-Loop (HITL) system ensures it asks for consent before major actions.
+        <div class="flex items-start gap-3 mb-3">
+          <div class="faq-icon"><i class="fa-solid fa-circle-question text-sm"></i></div>
+          <h3 class="text-lg font-bold text-white pt-1.5">Will it accidentally delete my files?</h3>
+        </div>
+        <p class="text-sm text-zinc-400 leading-relaxed">
+          JARVIS employs a strict <code class="code-inline">shlex</code> tokenization and path canonicalization layer that auto-blocks highly destructive commands (like <code class="code-inline-danger">rm -rf /</code>). Additionally, our Human-in-the-Loop (HITL) system ensures it asks for consent before major actions.
         </p>
       </div>
 
       <div class="faq-card reveal delay-100">
-        <h3 class="text-lg font-bold text-white mb-2 flex items-start gap-2">
-          <i class="fa-solid fa-circle-question text-indigo-400 mt-1"></i> Why are WhatsApp and Telegram separated?
-        </h3>
-        <p class="text-sm text-zinc-400 leading-relaxed mt-auto">
+        <div class="flex items-start gap-3 mb-3">
+          <div class="faq-icon"><i class="fa-solid fa-circle-question text-sm"></i></div>
+          <h3 class="text-lg font-bold text-white pt-1.5">Why are WhatsApp and Telegram separated?</h3>
+        </div>
+        <p class="text-sm text-zinc-400 leading-relaxed">
           WhatsApp uses the Baileys Node.js web socket bridge for stable connections, requiring a QR code scan. Telegram uses the native MTProto API via Telethon for deeper OS integration and remote bot control. Both are managed safely as background services.
         </p>
       </div>
 
     </div>
 
-    <div class="mt-16 text-center reveal delay-200">
-      <p class="text-zinc-400">Still have questions? Check out the full <a href="/documentation" class="text-indigo-400 hover:text-indigo-300 font-medium">Documentation</a> or raise an issue on <a href="https://github.com/thekaifansari01/Jarvis-OS-Agent" target="_blank" class="text-indigo-400 hover:text-indigo-300 font-medium">GitHub</a>.</p>
+    <div class="mt-16 reveal delay-200">
+      <div class="cta-card text-center">
+        <p class="text-zinc-400 relative z-10 text-base">
+          Still have questions? Check out the full <a href="/documentation" class="link-accent">Documentation</a> or raise an issue on <a href="https://github.com/thekaifansari01/Jarvis-OS-Agent" target="_blank" class="link-accent">GitHub</a>.
+        </p>
+      </div>
     </div>
 
   </div>
 </main>
 
-<footer class="border-t border-[#222] bg-[#000] pt-16 pb-8 relative overflow-hidden">
-  <div class="absolute top-0 left-1/2 -translate-x-1/2 w-2/3 h-px bg-gradient-to-r from-transparent via-indigo-500/50 to-transparent"></div>
+<footer class="border-t border-[#1e123c] bg-[#030014]/80 backdrop-blur-sm pt-16 pb-8 relative overflow-hidden">
+  <div class="footer-gradient-line"></div>
 
   <div class="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
     <div class="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-12 mb-12">
-      
+
       <div class="md:col-span-5 lg:col-span-5 flex flex-col items-center md:items-start text-center md:text-left">
-        <div class="flex items-center gap-2 mb-4">
-          <div class="flex h-6 w-6 items-center justify-center rounded bg-gradient-to-br from-indigo-500 to-cyan-400 text-white shadow-[0_0_15px_rgba(99,102,241,0.4)]">
-            <i class="fa-solid fa-bolt text-[10px]"></i>
+        <div class="flex items-center gap-2.5 mb-4">
+          <div class="logo-mark flex h-7 w-7 items-center justify-center rounded-lg text-white">
+            <i class="fa-solid fa-bolt text-[11px]"></i>
           </div>
           <span class="text-xl font-bold text-white tracking-tight">JARVIS.</span>
         </div>
@@ -191,42 +652,42 @@ body { color: #a1a1aa; overflow-x: hidden; background: #000000; }
       </div>
 
       <div class="md:col-span-7 lg:col-span-7 grid grid-cols-2 sm:grid-cols-3 gap-8 text-center sm:text-left">
-        
+
         <div class="flex flex-col gap-3">
-          <span class="text-white font-semibold text-xs tracking-widest uppercase mb-1">Product</span>
+          <span class="text-white font-semibold text-[11px] tracking-widest uppercase mb-1">Product</span>
           <a href="/#features" class="text-sm text-zinc-500 hover:text-indigo-400 transition-colors">Features</a>
-          <a href="/#engine" class="text-sm text-zinc-500 hover:text-indigo-400 transition-colors">Engine</a>
+          <a href="/#engine" class="text-sm text-zinc-500 hover:text-violet-400 transition-colors">Engine</a>
           <a href="/#download" class="text-sm text-zinc-500 hover:text-cyan-400 transition-colors">Download</a>
         </div>
-        
+
         <div class="flex flex-col gap-3">
-          <span class="text-white font-semibold text-xs tracking-widest uppercase mb-1">Resources</span>
+          <span class="text-white font-semibold text-[11px] tracking-widest uppercase mb-1">Resources</span>
           <a href="/documentation" class="text-sm text-zinc-500 hover:text-indigo-400 transition-colors">Documentation</a>
-          <a href="/faq" class="text-sm text-zinc-500 hover:text-indigo-400 transition-colors">FAQ</a>
-          <a href="/about" class="text-sm text-zinc-500 hover:text-indigo-400 transition-colors">About the Builder</a>
+          <a href="/faq" class="text-sm text-zinc-500 hover:text-violet-400 transition-colors">FAQ</a>
+          <a href="/about" class="text-sm text-zinc-500 hover:text-cyan-400 transition-colors">About the Builder</a>
         </div>
 
         <div class="flex flex-col gap-3 col-span-2 sm:col-span-1">
-          <span class="text-white font-semibold text-xs tracking-widest uppercase mb-1">Legal</span>
+          <span class="text-white font-semibold text-[11px] tracking-widest uppercase mb-1">Legal</span>
           <a href="/privacy" class="text-sm text-zinc-500 hover:text-indigo-400 transition-colors">Privacy Policy</a>
-          <a href="https://github.com/thekaifansari01/Jarvis-OS-Agent/blob/main/LICENSE" target="_blank" class="text-sm text-zinc-500 hover:text-indigo-400 transition-colors">GNU GPL v3.0</a>
+          <a href="https://github.com/thekaifansari01/Jarvis-OS-Agent/blob/main/LICENSE" target="_blank" class="text-sm text-zinc-500 hover:text-violet-400 transition-colors">GNU GPL v3.0</a>
         </div>
 
       </div>
     </div>
 
-    <div class="pt-8 border-t border-[#111] flex flex-col md:flex-row justify-between items-center gap-6">
+    <div class="pt-8 border-t border-[#1e123c] flex flex-col md:flex-row justify-between items-center gap-6">
       <div class="text-xs text-zinc-600 font-medium tracking-wide">
         &copy; 2026 Kaif Ansari. All systems online.
       </div>
       <div class="flex gap-3">
-        <a href="https://github.com/thekaifansari01/Jarvis-OS-Agent" target="_blank" class="w-9 h-9 rounded-full bg-[#0a0a0a] border border-[#222] flex items-center justify-center text-zinc-400 hover:text-white hover:border-indigo-500/50 hover:bg-indigo-500/10 hover:shadow-[0_0_15px_rgba(99,102,241,0.2)] transition-all">
+        <a href="https://github.com/thekaifansari01/Jarvis-OS-Agent" target="_blank" class="social-circle w-10 h-10 rounded-full bg-[#0a0520] border border-[#2a1e50] flex items-center justify-center text-zinc-400">
           <i class="fa-brands fa-github text-sm"></i>
         </a>
-        <a href="https://x.com/thekaifansari01" target="_blank" class="w-9 h-9 rounded-full bg-[#0a0a0a] border border-[#222] flex items-center justify-center text-zinc-400 hover:text-white hover:border-indigo-500/50 hover:bg-indigo-500/10 hover:shadow-[0_0_15px_rgba(99,102,241,0.2)] transition-all">
+        <a href="https://x.com/thekaifansari01" target="_blank" class="social-circle w-10 h-10 rounded-full bg-[#0a0520] border border-[#2a1e50] flex items-center justify-center text-zinc-400">
           <i class="fa-brands fa-x-twitter text-sm"></i>
         </a>
-        <a href="https://linkedin.com/in/thekaifansari01" target="_blank" class="w-9 h-9 rounded-full bg-[#0a0a0a] border border-[#222] flex items-center justify-center text-zinc-400 hover:text-white hover:border-indigo-500/50 hover:bg-indigo-500/10 hover:shadow-[0_0_15px_rgba(99,102,241,0.2)] transition-all">
+        <a href="https://linkedin.com/in/thekaifansari01" target="_blank" class="social-circle w-10 h-10 rounded-full bg-[#0a0520] border border-[#2a1e50] flex items-center justify-center text-zinc-400">
           <i class="fa-brands fa-linkedin-in text-sm"></i>
         </a>
       </div>
@@ -237,9 +698,9 @@ body { color: #a1a1aa; overflow-x: hidden; background: #000000; }
 <script>
 window.addEventListener('scroll', () => {
   const nav = document.getElementById('navbar');
-  if (window.scrollY > 20) { nav.classList.add('scrolled'); } 
+  if (window.scrollY > 20) { nav.classList.add('scrolled'); }
   else { nav.classList.remove('scrolled'); }
-});
+}, { passive: true });
 
 const mobileMenuBtn = document.getElementById('mobile-menu-btn');
 const mobileCloseBtn = document.getElementById('mobile-close-btn');
