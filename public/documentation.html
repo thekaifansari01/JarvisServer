@@ -565,6 +565,12 @@ tr:last-child td { border-bottom: none; }
   background: rgba(168, 85, 247, 0.05);
   color: #c4c4cc;
 }
+.badge-emerald {
+  border-color: rgba(16, 185, 129, 0.4);
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(6, 182, 212, 0.1));
+  color: #6ee7b7;
+  box-shadow: 0 0 15px rgba(16, 185, 129, 0.2), inset 0 1px 0 rgba(255,255,255,0.06);
+}
 
 .section-label {
   display: inline-flex;
@@ -864,14 +870,15 @@ tr:last-child td { border-bottom: none; }
       <span class="section-label"><i class="fa-solid fa-book"></i> Documentation</span>
       <h1 class="text-4xl md:text-5xl font-bold mb-4 text-gradient-accent">JARVIS Documentation</h1>
       <p class="text-lg text-zinc-400 leading-relaxed mb-6">
-        JARVIS is a desktop-native AI Operating System and Autonomous Agent that bridges low-latency conversational AI with complex, multi-step engineering execution.
+        JARVIS is a local-first AI Operating System and Autonomous Agent that bridges low-latency conversational AI with complex, multi-step engineering execution on Windows.
       </p>
       <div class="flex flex-wrap gap-2 text-xs">
-        <span class="badge badge-indigo">v2.0</span>
+        <span class="badge badge-indigo">Windows 10/11</span>
         <span class="badge badge-plain">OpenAI-compatible</span>
         <span class="badge badge-plain">Multi-Provider</span>
         <span class="badge badge-plain">HITL Safe</span>
-        <span class="badge badge-plain">Android Control</span>
+        <span class="badge badge-plain">Live Correction</span>
+        <span class="badge badge-emerald"><i class="fa-solid fa-feather text-[10px]"></i> Runs on 4 GB RAM</span>
       </div>
     </div>
 
@@ -893,7 +900,7 @@ tr:last-child td { border-bottom: none; }
             <div class="feature-icon cyan"><i class="fa-brands fa-windows"></i></div>
             <div>
               <h3 class="text-white font-semibold text-base mb-0.5">Windows 10/11</h3>
-              <p class="text-sm text-zinc-500">Optimized for native desktop window controls.</p>
+              <p class="text-sm text-zinc-500">Optimized for native desktop window controls. Only supported OS.</p>
             </div>
           </div>
         </div>
@@ -914,6 +921,13 @@ tr:last-child td { border-bottom: none; }
               <p class="text-sm text-zinc-500">For repository cloning and terminal tool execution.</p>
             </div>
           </div>
+        </div>
+      </div>
+
+      <div class="note-box mt-6">
+        <i class="fa-solid fa-feather text-emerald-400 mt-0.5"></i>
+        <div>
+          <strong class="text-white">Low-spec friendly:</strong> JARVIS was developed and tested on an Intel i5-3210M (2012) with 4 GB RAM. If your machine runs Windows 11, it can run JARVIS. Cloud LLM providers keep the local footprint small.
         </div>
       </div>
     </section>
@@ -1037,6 +1051,7 @@ tr:last-child td { border-bottom: none; }
             <li class="flex items-start gap-2"><span class="text-violet-400 mt-0.5">✦</span> Stateful, deep reasoning engine</li>
             <li class="flex items-start gap-2"><span class="text-violet-400 mt-0.5">✦</span> File CRUD &amp; code editing</li>
             <li class="flex items-start gap-2"><span class="text-violet-400 mt-0.5">✦</span> Python REPL &amp; terminal automation</li>
+            <li class="flex items-start gap-2"><span class="text-violet-400 mt-0.5">✦</span> Live mid-execution correction</li>
           </ul>
         </div>
       </div>
@@ -1053,11 +1068,15 @@ tr:last-child td { border-bottom: none; }
         </div>
         <div class="memory-card">
           <h4 class="text-cyan-400 font-medium text-sm mb-1.5 flex items-center gap-2"><i class="fa-solid fa-diagram-project"></i> Bidirectional Property Graph (Long-Term)</h4>
-          <p class="text-sm text-zinc-500">Built on NetworkX. Extracts entities into a relational graph with <strong class="text-white">temporal decay</strong> and <strong class="text-white">inverse edges</strong>. Uses local <code class="code-inline">all-MiniLM-L6-v2</code> embeddings for zero-latency semantic edge routing.</p>
+          <p class="text-sm text-zinc-500">Built on NetworkX. Extracts entities into a relational graph with <strong class="text-white">temporal decay</strong> and <strong class="text-white">inverse edges</strong>. Uses local <code class="code-inline">BAAI/bge-small-en-v1.5</code> embeddings for fast semantic edge routing.</p>
         </div>
         <div class="memory-card">
           <h4 class="text-emerald-400 font-medium text-sm mb-1.5 flex items-center gap-2"><i class="fa-solid fa-folder-open"></i> Hybrid Workspace RAG</h4>
           <p class="text-sm text-zinc-500">Merges <strong class="text-white">BM25 keyword search</strong> with <strong class="text-white">Vector semantic search</strong> via Reciprocal Rank Fusion (RRF), automatically applying recency boosts to newly modified local documents.</p>
+        </div>
+        <div class="memory-card">
+          <h4 class="text-pink-400 font-medium text-sm mb-1.5 flex items-center gap-2"><i class="fa-solid fa-user"></i> User Profile &amp; Mood Tracker</h4>
+          <p class="text-sm text-zinc-500">Auto-extracts user bio, preferences, and mood states into knowledge-graph triplets for personalized context across months.</p>
         </div>
       </div>
     </section>
@@ -1070,15 +1089,17 @@ tr:last-child td { border-bottom: none; }
         <div class="tool-item"><i class="fa-solid fa-code text-indigo-400 w-4"></i> <span class="text-zinc-300">Code: repo_map, replace_block (Zero Line-Drift)</span></div>
         <div class="tool-item"><i class="fa-solid fa-comments text-emerald-400 w-4"></i> <span class="text-zinc-300">Comms: Gmail, WhatsApp, Telegram</span></div>
         <div class="tool-item"><i class="fa-solid fa-desktop text-cyan-400 w-4"></i> <span class="text-zinc-300">System: OS Toggles, Clipboard</span></div>
-        <div class="tool-item"><i class="fa-solid fa-magnifying-glass text-amber-400 w-4"></i> <span class="text-zinc-300">Search: Tavily, ArXiv</span></div>
+        <div class="tool-item"><i class="fa-solid fa-magnifying-glass text-amber-400 w-4"></i> <span class="text-zinc-300">Search: Tavily, ArXiv, Deep Research</span></div>
         <div class="tool-item"><i class="fa-solid fa-terminal text-rose-400 w-4"></i> <span class="text-zinc-300">Execution: Python REPL, Terminal</span></div>
-        <div class="tool-item"><i class="fa-brands fa-android text-green-400 w-4"></i> <span class="text-zinc-300">Mobile: Android ADB integration</span></div>
+        <div class="tool-item"><i class="fa-solid fa-mobile-screen-button text-green-400 w-4"></i> <span class="text-zinc-300">Mobile: Android via Termux SSH</span></div>
+        <div class="tool-item"><i class="fa-solid fa-calendar text-violet-400 w-4"></i> <span class="text-zinc-300">Calendar: Google Calendar OAuth</span></div>
+        <div class="tool-item"><i class="fa-solid fa-image text-pink-400 w-4"></i> <span class="text-zinc-300">Image: Generate &amp; Edit</span></div>
       </div>
     </section>
 
     <section id="environment" class="prose-section">
       <h2 class="text-2xl md:text-3xl font-bold mb-3 text-white">Environment Variables</h2>
-      <p class="text-zinc-400 mb-4">Configure API keys and settings in your <code class="code-inline">.env</code> file. The system is fully OpenAI‑compatible – use any provider that supports the OpenAI API format.</p>
+      <p class="text-zinc-400 mb-4">Configure API keys and settings in your <code class="code-inline">.env</code> file. The system is fully OpenAI-compatible — use any provider that supports the OpenAI API format.</p>
 
       <div class="table-wrapper">
         <table>
@@ -1092,7 +1113,7 @@ tr:last-child td { border-bottom: none; }
           <tbody>
             <tr>
               <td><code class="font-mono text-xs text-white">FAST_BRAIN_API_KEY</code></td>
-              <td>API key for FastBrain (any OpenAI‑compatible provider)</td>
+              <td>API key for FastBrain (any OpenAI-compatible provider)</td>
               <td><span class="status-required">Required</span></td>
             </tr>
             <tr>
@@ -1102,7 +1123,7 @@ tr:last-child td { border-bottom: none; }
             </tr>
             <tr>
               <td><code class="font-mono text-xs text-white">FAST_BRAIN_ENDPOINT</code></td>
-              <td>OpenAI‑compatible endpoint (e.g., Groq, OpenRouter, Local)</td>
+              <td>OpenAI-compatible endpoint (e.g., Groq, OpenRouter, Local)</td>
               <td><span class="status-required">Required</span></td>
             </tr>
             <tr>
@@ -1137,7 +1158,7 @@ tr:last-child td { border-bottom: none; }
             </tr>
             <tr>
               <td><code class="font-mono text-xs text-white">IMAGE_GEN_API_KEY</code></td>
-              <td>API key for image generation (OpenAI‑compatible)</td>
+              <td>API key for image generation (OpenAI-compatible)</td>
               <td><span class="status-optional">Optional</span></td>
             </tr>
             <tr>
@@ -1167,7 +1188,7 @@ tr:last-child td { border-bottom: none; }
             </tr>
             <tr>
               <td><code class="font-mono text-xs text-white">TTS_API_KEY</code></td>
-              <td>API key for TTS (optional – falls back to Edge TTS)</td>
+              <td>API key for TTS (optional — falls back to Edge TTS)</td>
               <td><span class="status-optional">Optional</span></td>
             </tr>
             <tr>
@@ -1211,8 +1232,8 @@ tr:last-child td { border-bottom: none; }
               <td><span class="status-required">Required</span></td>
             </tr>
             <tr>
-              <td><code class="font-mono text-xs text-white">ADB_PHONE_IP</code></td>
-              <td>Tailscale IP of Android device</td>
+              <td><code class="font-mono text-xs text-white">MOBILE_DEVICE_ID</code></td>
+              <td>Target device ID for Termux SSH bridge</td>
               <td><span class="status-optional">Optional</span></td>
             </tr>
             <tr>
@@ -1225,6 +1246,11 @@ tr:last-child td { border-bottom: none; }
               <td>For Ollama/LM Studio local inference</td>
               <td><span class="status-optional">Optional</span></td>
             </tr>
+            <tr>
+              <td><code class="font-mono text-xs text-white">CUSTOM_MODEL</code></td>
+              <td>Local model name (e.g., llama3.2:3b)</td>
+              <td><span class="status-optional">Optional</span></td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -1232,14 +1258,14 @@ tr:last-child td { border-bottom: none; }
 
     <section id="providers" class="prose-section">
       <h2 class="text-2xl md:text-3xl font-bold mb-3 text-white">Providers</h2>
-      <p class="text-zinc-400 mb-6">JARVIS supports a flexible provider abstraction layer. You can use any OpenAI‑compatible endpoint, including:</p>
+      <p class="text-zinc-400 mb-6">JARVIS supports a flexible provider abstraction layer. You can use any OpenAI-compatible endpoint, including:</p>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div class="glass-card">
           <div class="flex items-center gap-3">
             <div class="feature-icon indigo"><i class="fa-solid fa-cloud"></i></div>
             <div>
               <h3 class="text-white font-semibold text-base mb-0.5">Cloud Providers</h3>
-              <p class="text-sm text-zinc-500">Regolo, Gemini, Groq, OpenRouter, Together AI, OpenAI, Mistral, and more.</p>
+              <p class="text-sm text-zinc-500">Regolo (Qwen3.5-122b), Gemma-4, Groq, OpenRouter, Together AI, OpenAI, Mistral, and more.</p>
             </div>
           </div>
         </div>
@@ -1253,12 +1279,12 @@ tr:last-child td { border-bottom: none; }
           </div>
         </div>
       </div>
-      <p class="text-zinc-400 mt-4 text-sm">The system automatically falls back to secondary providers if the primary fails, ensuring zero downtime.</p>
+      <p class="text-zinc-400 mt-4 text-sm">The system automatically falls back to secondary providers if the primary fails, reducing downtime during rate limits or provider outages.</p>
     </section>
 
     <section id="mobile" class="prose-section">
       <h2 class="text-2xl md:text-3xl font-bold mb-3 text-white">Mobile Control</h2>
-      <p class="text-zinc-400 mb-4">Execute Android commands directly via ADB over Tailscale.</p>
+      <p class="text-zinc-400 mb-4">Execute Android commands directly via Termux SSH over a Tailscale tunnel. No ADB, no USB cable — pure wireless control from your PC.</p>
 
       <div class="code-wrapper">
         <div class="code-header">
@@ -1267,13 +1293,22 @@ tr:last-child td { border-bottom: none; }
             <div class="w-2.5 h-2.5 rounded-full bg-[#2a1e50]"></div>
             <div class="w-2.5 h-2.5 rounded-full bg-[#2a1e50]"></div>
           </div>
-          <span class="font-mono text-zinc-500">Bash</span>
+          <span class="font-mono text-zinc-500">Termux SSH</span>
           <button class="copy-btn"><i class="fa-regular fa-copy"></i> Copy</button>
         </div>
-        <div class="code-content whitespace-pre"><span class="text-emerald-400">adb</span> shell input keyevent 26                 <span class="text-zinc-500"># Lock/Unlock</span>
-<span class="text-emerald-400">adb</span> shell am start -a android.intent.action.CALL -d tel:+91  <span class="text-zinc-500"># Make Call</span>
-<span class="text-emerald-400">adb</span> shell screencap /sdcard/screen.png      <span class="text-zinc-500"># Screenshot</span>
-<span class="text-emerald-400">adb</span> shell dumpsys battery                   <span class="text-zinc-500"># Battery Status</span></div>
+        <div class="code-content whitespace-pre"><span class="text-emerald-400">termux-torch</span> on                              <span class="text-zinc-500"># Toggle flashlight</span>
+<span class="text-emerald-400">termux-vibrate</span> -d 2000                        <span class="text-zinc-500"># Vibrate device</span>
+<span class="text-emerald-400">termux-battery-status</span>                          <span class="text-zinc-500"># Battery info</span>
+<span class="text-emerald-400">termux-camera-photo</span> -c 0 /sdcard/pic.jpg      <span class="text-zinc-500"># Silent photo</span>
+<span class="text-emerald-400">am</span> start -n com.whatsapp/.Main                <span class="text-zinc-500"># Open WhatsApp</span>
+<span class="text-emerald-400">am</span> start -a android.intent.action.DIAL -d tel:+91XXXXXXXXXX</div>
+      </div>
+
+      <div class="note-box mt-4">
+        <i class="fa-solid fa-circle-info text-indigo-400 mt-0.5"></i>
+        <div>
+          <strong class="text-white">Setup:</strong> Install <span class="text-white">Termux</span> and <span class="text-white">Termux:API</span> from F-Droid. Configure OpenSSH (<code class="code-inline">sshd</code>) with key-based auth. Connect both devices via Tailscale.
+        </div>
       </div>
     </section>
 
@@ -1319,6 +1354,22 @@ tr:last-child td { border-bottom: none; }
               <td class="text-white font-medium">FastBrain API Key Missing</td>
               <td>Add <code class="code-inline">FAST_BRAIN_API_KEY</code>, <code class="code-inline">FAST_BRAIN_MODEL</code>, and <code class="code-inline">FAST_BRAIN_ENDPOINT</code> to your <code class="code-inline">.env</code> file.</td>
             </tr>
+            <tr>
+              <td class="text-white font-medium">Mobile SSH Times Out</td>
+              <td>Confirm Tailscale is connected on both devices and <code class="code-inline">sshd</code> is running in Termux.</td>
+            </tr>
+            <tr>
+              <td class="text-white font-medium">Knowledge Graph Feels Stale</td>
+              <td>Delete <code class="code-inline">Data/jarvis_memory/lifetime_graph.json</code> and reboot — nodes, weights, and embeddings rebuild.</td>
+            </tr>
+            <tr>
+              <td class="text-white font-medium">Hybrid RAG Results Poor</td>
+              <td>Delete <code class="code-inline">Data/jarvis_memory/rag_chroma_db</code> and reboot to force a fresh index.</td>
+            </tr>
+            <tr>
+              <td class="text-white font-medium">Live Correction Ignored</td>
+              <td>Ensure Jarvis is running in AgenticBrain mode (semantic router decision = AGENTIC). FastBrain is stateless and does not support mid-run re-planning.</td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -1338,7 +1389,7 @@ tr:last-child td { border-bottom: none; }
           <span class="text-xl font-bold text-white tracking-tight">JARVIS.</span>
         </div>
         <p class="text-sm text-zinc-400 leading-relaxed max-w-sm">
-          Built by an 18-year-old solo developer. No team. No funding. Engineered with absolute passion to give you complete control over your digital ecosystem.
+          Built by an 18-year-old solo developer. No team. No funding. No high-end hardware — engineered on an Intel i5-3210M with 4 GB RAM to give you complete control over your digital ecosystem.
         </p>
       </div>
 
@@ -1347,6 +1398,7 @@ tr:last-child td { border-bottom: none; }
         <div class="flex flex-col gap-3">
           <span class="text-white font-semibold text-[11px] tracking-widest uppercase mb-1">Product</span>
           <a href="/#features" class="text-sm text-zinc-500 hover:text-indigo-400 transition-colors">Features</a>
+          <a href="/#correction" class="text-sm text-zinc-500 hover:text-cyan-400 transition-colors">Live Correction</a>
           <a href="/#engine" class="text-sm text-zinc-500 hover:text-violet-400 transition-colors">Engine</a>
           <a href="/#download" class="text-sm text-zinc-500 hover:text-cyan-400 transition-colors">Download</a>
         </div>
@@ -1354,13 +1406,13 @@ tr:last-child td { border-bottom: none; }
         <div class="flex flex-col gap-3">
           <span class="text-white font-semibold text-[11px] tracking-widest uppercase mb-1">Resources</span>
           <a href="/documentation" class="text-sm text-zinc-500 hover:text-indigo-400 transition-colors">Documentation</a>
-          <a href="/faq" class="text-sm text-zinc-500 hover:text-violet-400 transition-colors">FAQ</a>
-          <a href="/about" class="text-sm text-zinc-500 hover:text-cyan-400 transition-colors">About the Builder</a>
+          <a href="https://github.com/thekaifansari01/Jarvis-OS-Agent#-troubleshooting--faq" target="_blank" class="text-sm text-zinc-500 hover:text-violet-400 transition-colors">FAQ</a>
+          <a href="https://github.com/thekaifansari01" target="_blank" class="text-sm text-zinc-500 hover:text-cyan-400 transition-colors">About the Builder</a>
         </div>
 
         <div class="flex flex-col gap-3 col-span-2 sm:col-span-1">
           <span class="text-white font-semibold text-[11px] tracking-widest uppercase mb-1">Legal</span>
-          <a href="/privacy" class="text-sm text-zinc-500 hover:text-indigo-400 transition-colors">Privacy Policy</a>
+          <a href="https://github.com/thekaifansari01/Jarvis-OS-Agent/blob/main/CONTRIBUTING.md" target="_blank" class="text-sm text-zinc-500 hover:text-indigo-400 transition-colors">Contributing</a>
           <a href="https://github.com/thekaifansari01/Jarvis-OS-Agent/blob/main/LICENSE" target="_blank" class="text-sm text-zinc-500 hover:text-violet-400 transition-colors">GNU GPL v3.0</a>
         </div>
 
@@ -1476,7 +1528,7 @@ document.querySelectorAll('.copy-btn').forEach(btn => {
 <script>
   window.NexusConfig = {
     apiKey: 'e0415383ab2f7ffb5c0bbeb2412849068e515047ed8ca17058a25383fcfca14d',
-    model: 'qwen/qwen3.8-27b',
+    model: 'openai/gpt-oss-120b',
   };
 </script>
 <script defer src="https://cdn.jsdelivr.net/npm/nexus-web-assistant@4.3.0/dist/nexus-assistant.min.js"></script>

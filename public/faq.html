@@ -556,7 +556,7 @@ a { transition: all 0.25s var(--ease-out); }
           <h3 class="text-lg font-bold text-white pt-1.5">Is JARVIS completely free to use?</h3>
         </div>
         <p class="text-sm text-zinc-400 leading-relaxed">
-          Yes, the core JARVIS software is 100% free and open-source under the <strong class="text-white">GNU General Public License v3.0 (GPLv3)</strong>. However, if you use cloud APIs like Groq, Gemini, or Regolo, you may incur standard API usage costs depending on their respective free tiers.
+          Yes, the core JARVIS software is 100% free and open-source under the <strong class="text-white">GNU General Public License v3.0 (GPLv3)</strong>. The system can run entirely on local Ollama or LM Studio models for zero API cost. If you use cloud APIs like Groq, Gemma, or Regolo, you may incur standard API usage costs depending on their respective free tiers.
         </p>
       </div>
 
@@ -567,6 +567,26 @@ a { transition: all 0.25s var(--ease-out); }
         </div>
         <p class="text-sm text-zinc-400 leading-relaxed">
           Absolutely. You can point JARVIS to any local OpenAI-compatible endpoint. By running Ollama or LM Studio locally and updating the <code class="code-inline">CUSTOM_BASE_URL</code> in your <code class="code-inline">.env</code>, you can achieve 100% local, offline inference.
+        </p>
+      </div>
+
+      <div class="faq-card reveal">
+        <div class="flex items-start gap-3 mb-3">
+          <div class="faq-icon"><i class="fa-solid fa-circle-question text-sm"></i></div>
+          <h3 class="text-lg font-bold text-white pt-1.5">What hardware do I need to run JARVIS?</h3>
+        </div>
+        <p class="text-sm text-zinc-400 leading-relaxed">
+          Very little. JARVIS was developed and tested on an <strong class="text-white">Intel i5-3210M (2012) with 4 GB RAM</strong>. Because JARVIS uses cloud LLM providers by default, you don't need a powerful GPU or 32 GB of RAM. If your machine can run Windows 11 and a browser, it can run JARVIS. More RAM = faster embedding loads.
+        </p>
+      </div>
+
+      <div class="faq-card reveal delay-100">
+        <div class="flex items-start gap-3 mb-3">
+          <div class="faq-icon"><i class="fa-solid fa-circle-question text-sm"></i></div>
+          <h3 class="text-lg font-bold text-white pt-1.5">What is Live Mid-Execution Correction?</h3>
+        </div>
+        <p class="text-sm text-zinc-400 leading-relaxed">
+          The AgenticBrain loop is <strong class="text-white">interruptible</strong>. If you change your mind mid-task — for example, saying "not WhatsApp, send an email instead" — Jarvis absorbs the correction, revises its plan in-place, and keeps already-completed steps intact. No full restart, no hallucinated apology loop. This runs only in AgenticBrain mode; FastBrain is stateless.
         </p>
       </div>
 
@@ -586,17 +606,17 @@ a { transition: all 0.25s var(--ease-out); }
           <h3 class="text-lg font-bold text-white pt-1.5">Does it work on Mac and Linux?</h3>
         </div>
         <p class="text-sm text-zinc-400 leading-relaxed">
-          Currently, JARVIS is heavily optimized for Windows (native window controls, registry setups). Linux (.AppImage) and macOS (.dmg) versions are in active development and will be released very soon.
+          Currently, JARVIS is <strong class="text-white">Windows-only (Windows 10/11)</strong>. The GUI automation, PC monitor, and mobile bridge assume Windows paths and APIs (pywin32, comtypes, Windows Registry). Linux and macOS are not currently planned, but community contributions are welcome if you'd like to port it.
         </p>
       </div>
 
       <div class="faq-card reveal delay-100">
         <div class="flex items-start gap-3 mb-3">
           <div class="faq-icon"><i class="fa-solid fa-circle-question text-sm"></i></div>
-          <h3 class="text-lg font-bold text-white pt-1.5">How does Mobile ADB control work?</h3>
+          <h3 class="text-lg font-bold text-white pt-1.5">How does Mobile Control work?</h3>
         </div>
         <p class="text-sm text-zinc-400 leading-relaxed">
-          It uses ADB (Android Debug Bridge) routed over Tailscale. You need to enable USB Debugging on your phone, run <code class="code-inline">adb tcpip 5555</code>, connect via your Tailscale IP, and add that IP to your <code class="code-inline">.env</code>.
+          Mobile control uses <strong class="text-white">Termux SSH over a Tailscale tunnel</strong> — no ADB, no USB cable. Install Termux + Termux:API from F-Droid, configure OpenSSH (<code class="code-inline">sshd</code>) with key-based authentication, connect both devices via Tailscale, and add your device ID to the connected devices file. Jarvis can then control flashlight, vibrate, battery, camera, notifications, and open apps via <code class="code-inline">termux-*</code> API commands.
         </p>
       </div>
 
@@ -616,7 +636,7 @@ a { transition: all 0.25s var(--ease-out); }
           <h3 class="text-lg font-bold text-white pt-1.5">Why are WhatsApp and Telegram separated?</h3>
         </div>
         <p class="text-sm text-zinc-400 leading-relaxed">
-          WhatsApp uses the Baileys Node.js web socket bridge for stable connections, requiring a QR code scan. Telegram uses the native MTProto API via Telethon for deeper OS integration and remote bot control. Both are managed safely as background services.
+          WhatsApp uses the Baileys Node.js web socket bridge for stable connections, requiring a QR code scan. Telegram uses the native MTProto API via Telethon for deeper OS integration and remote bot control. Both are managed safely as background services by the ServiceWatchdog.
         </p>
       </div>
 
@@ -647,7 +667,7 @@ a { transition: all 0.25s var(--ease-out); }
           <span class="text-xl font-bold text-white tracking-tight">JARVIS.</span>
         </div>
         <p class="text-sm text-zinc-400 leading-relaxed max-w-sm">
-          Built by an 18-year-old solo developer. No team. No funding. Engineered with absolute passion to give you complete control over your digital ecosystem.
+          Built by an 18-year-old solo developer. No team. No funding. No high-end hardware — engineered on an Intel i5-3210M with 4 GB RAM to give you complete control over your digital ecosystem.
         </p>
       </div>
 
@@ -656,6 +676,7 @@ a { transition: all 0.25s var(--ease-out); }
         <div class="flex flex-col gap-3">
           <span class="text-white font-semibold text-[11px] tracking-widest uppercase mb-1">Product</span>
           <a href="/#features" class="text-sm text-zinc-500 hover:text-indigo-400 transition-colors">Features</a>
+          <a href="/#correction" class="text-sm text-zinc-500 hover:text-cyan-400 transition-colors">Live Correction</a>
           <a href="/#engine" class="text-sm text-zinc-500 hover:text-violet-400 transition-colors">Engine</a>
           <a href="/#download" class="text-sm text-zinc-500 hover:text-cyan-400 transition-colors">Download</a>
         </div>
@@ -670,6 +691,7 @@ a { transition: all 0.25s var(--ease-out); }
         <div class="flex flex-col gap-3 col-span-2 sm:col-span-1">
           <span class="text-white font-semibold text-[11px] tracking-widest uppercase mb-1">Legal</span>
           <a href="/privacy" class="text-sm text-zinc-500 hover:text-indigo-400 transition-colors">Privacy Policy</a>
+          <a href="https://github.com/thekaifansari01/Jarvis-OS-Agent/blob/main/CONTRIBUTING.md" target="_blank" class="text-sm text-zinc-500 hover:text-cyan-400 transition-colors">Contributing</a>
           <a href="https://github.com/thekaifansari01/Jarvis-OS-Agent/blob/main/LICENSE" target="_blank" class="text-sm text-zinc-500 hover:text-violet-400 transition-colors">GNU GPL v3.0</a>
         </div>
 

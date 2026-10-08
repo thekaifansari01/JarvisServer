@@ -3,7 +3,7 @@
     <!-- Main landing page -->
     <url>
         <loc>https://jarvis-os-agent.vercel.app/</loc>
-        <lastmod>2026-08-16</lastmod>
+        <lastmod>2026-10-8</lastmod>
         <changefreq>weekly</changefreq>
         <priority>1.0</priority>
     </url>
@@ -11,7 +11,7 @@
     <!-- Documentation -->
     <url>
         <loc>https://jarvis-os-agent.vercel.app/documentation</loc>
-        <lastmod>2026-08-16</lastmod>
+        <lastmod>2026-10-8</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
@@ -19,7 +19,7 @@
     <!-- FAQ -->
     <url>
         <loc>https://jarvis-os-agent.vercel.app/faq</loc>
-        <lastmod>2026-08-14</lastmod>
+        <lastmod>2026-10-8</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
@@ -27,7 +27,7 @@
     <!-- About the Builder -->
     <url>
         <loc>https://jarvis-os-agent.vercel.app/about</loc>
-        <lastmod>2026-08-14</lastmod>
+        <lastmod>2026-10-8</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.6</priority>
     </url>
@@ -35,7 +35,7 @@
     <!-- Privacy Policy -->
     <url>
         <loc>https://jarvis-os-agent.vercel.app/privacy</loc>
-        <lastmod>2026-08-14</lastmod>
+        <lastmod>2026-10-8</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.4</priority>
     </url>

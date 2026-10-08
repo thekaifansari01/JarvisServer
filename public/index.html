@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>JARVIS · The Autonomous AI Agent</title>
-<meta name="description" content="JARVIS - Desktop-native AI Operating System with zero line-drift code editing, proactive HITL, mobile control, and lifelong memory.">
+<title>JARVIS · The Autonomous AI Agent for Windows</title>
+<meta name="description" content="JARVIS - Local-first AI Operating System for Windows with live mid-execution correction, zero line-drift code editing, proactive HITL, mobile control, and lifelong memory.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://jarvis-agent.vercel.app">
-<meta property="og:title" content="JARVIS · The Autonomous AI Agent">
-<meta property="og:description" content="A locally-hosted AI Operating System with zero line-drift coding, proactive HITL, mobile control, and lifelong memory.">
+<meta property="og:title" content="JARVIS · The Autonomous AI Agent for Windows">
+<meta property="og:description" content="Local-first AI Operating System with live mid-execution correction, zero line-drift coding, proactive HITL, mobile control, and lifelong memory.">
 <meta property="og:image" content="https://jarvis-agent.vercel.app/og-banner.png">
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -558,6 +558,14 @@ a { transition: all 0.25s var(--ease-out); }
     inset 0 1px 0 rgba(255,255,255,0.12);
   background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(168, 85, 247, 0.15));
 }
+.badge-emerald {
+  border-color: rgba(16, 185, 129, 0.4);
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(6, 182, 212, 0.1));
+  color: #6ee7b7;
+  box-shadow:
+    0 0 20px rgba(16, 185, 129, 0.25),
+    inset 0 1px 0 rgba(255,255,255,0.08);
+}
 
 #mobile-overlay { transition: opacity 0.3s var(--ease-out); }
 #mobile-drawer {
@@ -687,12 +695,13 @@ a { transition: all 0.25s var(--ease-out); }
 
     <nav class="hidden md:flex items-center space-x-8">
       <a href="#features" class="nav-link-top text-sm font-medium text-zinc-400 hover:text-white">Features</a>
+      <a href="#correction" class="nav-link-top text-sm font-medium text-zinc-400 hover:text-white">Live Correction</a>
       <a href="#engine" class="nav-link-top text-sm font-medium text-zinc-400 hover:text-white">Engine</a>
       <a href="#demo" class="nav-link-top text-sm font-medium text-zinc-400 hover:text-white">Demo</a>
     </nav>
 
     <div class="flex items-center gap-4 sm:gap-6">
-      <a href="/documentation" class="nav-link-top text-sm font-medium text-zinc-400 hover:text-white hidden sm:block">Docs</a>
+      <a href="https://github.com/thekaifansari01/Jarvis-OS-Agent" target="_blank" class="nav-link-top text-sm font-medium text-zinc-400 hover:text-white hidden sm:block">GitHub</a>
       <a href="#download" class="download-btn px-4 py-1.5 rounded-lg text-sm font-semibold">Get Jarvis</a>
     </div>
   </div>
@@ -713,11 +722,12 @@ a { transition: all 0.25s var(--ease-out); }
   </div>
   <div class="flex-1 overflow-y-auto p-6 space-y-6">
     <a href="#features" class="block text-lg font-medium text-zinc-300 hover:text-white mobile-link">Features</a>
+    <a href="#correction" class="block text-lg font-medium text-zinc-300 hover:text-white mobile-link">Live Correction</a>
     <a href="#engine" class="block text-lg font-medium text-zinc-300 hover:text-white mobile-link">Engine</a>
     <a href="#demo" class="block text-lg font-medium text-zinc-300 hover:text-white mobile-link">Demo</a>
     <div class="h-px w-full bg-[#1e123c] my-4"></div>
-    <a href="/documentation" class="block text-lg font-medium text-zinc-300 hover:text-white mobile-link">Documentation</a>
     <a href="https://github.com/thekaifansari01/Jarvis-OS-Agent" target="_blank" class="block text-lg font-medium text-zinc-300 hover:text-white mobile-link">GitHub Repo</a>
+    <a href="https://github.com/thekaifansari01/Jarvis-OS-Agent/blob/main/README.md" target="_blank" class="block text-lg font-medium text-zinc-300 hover:text-white mobile-link">Documentation</a>
   </div>
   <div class="p-6 border-t border-[#1e123c]">
     <a href="#download" class="download-btn w-full py-3 rounded-lg font-semibold text-center block mobile-link">Download Now</a>
@@ -728,13 +738,17 @@ a { transition: all 0.25s var(--ease-out); }
 
   <section class="relative pt-24 pb-20 md:pt-32 md:pb-28 px-4 sm:px-6 lg:px-8 min-h-[85vh] flex flex-col justify-center items-center text-center">
     <div class="max-w-4xl mx-auto relative z-10">
-      <div class="mb-8 reveal">
+      <div class="mb-8 reveal flex flex-wrap justify-center gap-3">
         <span class="badge badge-indigo">
           <span class="relative flex h-2 w-2 mr-1">
             <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-fuchsia-400 opacity-75"></span>
             <span class="relative inline-flex rounded-full h-2 w-2 bg-fuchsia-400"></span>
           </span>
-          v2.0 · Autonomous AI Agent for Windows
+          Autonomous AI Agent for Windows
+        </span>
+        <span class="badge badge-emerald">
+          <i class="fa-solid fa-feather text-[10px]"></i>
+          Runs on Intel i5-3210M · 4 GB RAM
         </span>
       </div>
 
@@ -744,7 +758,7 @@ a { transition: all 0.25s var(--ease-out); }
       </h1>
 
       <p class="text-base sm:text-lg md:text-xl text-zinc-400 mb-10 max-w-2xl mx-auto leading-relaxed reveal delay-200">
-        A locally-hosted AI Operating System with zero line-drift coding, proactive HITL, mobile control, and lifelong memory.<br>
+        A local-first AI Operating System with live mid-execution correction, zero line-drift coding, proactive HITL, mobile control, and lifelong memory.<br>
         <span class="text-sm text-zinc-500 mt-3 block font-medium tracking-wide">Built by an 18-year-old solo developer. No team. No funding.</span>
       </p>
 
@@ -764,25 +778,25 @@ a { transition: all 0.25s var(--ease-out); }
     <div class="absolute right-0 top-0 w-24 md:w-40 h-full marquee-mask-right z-10 pointer-events-none"></div>
     <div class="flex animate-marquee whitespace-nowrap items-center">
       <div class="flex gap-12 md:gap-20 px-8 items-center text-xs md:text-sm font-medium text-zinc-500 uppercase tracking-widest">
-        <span class="flex items-center gap-2 transition-colors hover:text-zinc-200"><i class="fa-brands fa-google text-blue-400"></i> Gemini-4</span>
+        <span class="flex items-center gap-2 transition-colors hover:text-zinc-200"><i class="fa-brands fa-google text-blue-400"></i> Gemma-4</span>
         <span class="flex items-center gap-2 transition-colors hover:text-zinc-200"><i class="fa-solid fa-server text-emerald-400"></i> Llama-3.3</span>
         <span class="flex items-center gap-2 transition-colors hover:text-zinc-200"><i class="fa-brands fa-whatsapp text-green-500"></i> Baileys</span>
         <span class="flex items-center gap-2 transition-colors hover:text-zinc-200"><i class="fa-solid fa-microchip text-orange-400"></i> Groq LPU</span>
         <span class="flex items-center gap-2 transition-colors hover:text-zinc-200"><i class="fa-solid fa-network-wired text-indigo-400"></i> Tailscale</span>
         <span class="flex items-center gap-2 transition-colors hover:text-zinc-200"><i class="fa-solid fa-diagram-project text-rose-400"></i> Property Graph</span>
         <span class="flex items-center gap-2 transition-colors hover:text-zinc-200"><i class="fa-solid fa-magnifying-glass text-cyan-400"></i> Hybrid RAG</span>
-        <span class="flex items-center gap-2 transition-colors hover:text-zinc-200"><i class="fa-brands fa-android text-green-400"></i> ADB Control</span>
-        <span class="flex items-center gap-2 transition-colors hover:text-zinc-200"><i class="fa-solid fa-bolt text-yellow-400"></i> Regolo MoE</span>
+        <span class="flex items-center gap-2 transition-colors hover:text-zinc-200"><i class="fa-solid fa-terminal text-green-400"></i> Termux SSH</span>
+        <span class="flex items-center gap-2 transition-colors hover:text-zinc-200"><i class="fa-solid fa-bolt text-yellow-400"></i> Regolo</span>
 
-        <span class="flex items-center gap-2 transition-colors hover:text-zinc-200"><i class="fa-brands fa-google text-blue-400"></i> Gemini-4</span>
+        <span class="flex items-center gap-2 transition-colors hover:text-zinc-200"><i class="fa-brands fa-google text-blue-400"></i> Gemma-4</span>
         <span class="flex items-center gap-2 transition-colors hover:text-zinc-200"><i class="fa-solid fa-server text-emerald-400"></i> Llama-3.3</span>
         <span class="flex items-center gap-2 transition-colors hover:text-zinc-200"><i class="fa-brands fa-whatsapp text-green-500"></i> Baileys</span>
         <span class="flex items-center gap-2 transition-colors hover:text-zinc-200"><i class="fa-solid fa-microchip text-orange-400"></i> Groq LPU</span>
         <span class="flex items-center gap-2 transition-colors hover:text-zinc-200"><i class="fa-solid fa-network-wired text-indigo-400"></i> Tailscale</span>
         <span class="flex items-center gap-2 transition-colors hover:text-zinc-200"><i class="fa-solid fa-diagram-project text-rose-400"></i> Property Graph</span>
         <span class="flex items-center gap-2 transition-colors hover:text-zinc-200"><i class="fa-solid fa-magnifying-glass text-cyan-400"></i> Hybrid RAG</span>
-        <span class="flex items-center gap-2 transition-colors hover:text-zinc-200"><i class="fa-brands fa-android text-green-400"></i> ADB Control</span>
-        <span class="flex items-center gap-2 transition-colors hover:text-zinc-200"><i class="fa-solid fa-bolt text-yellow-400"></i> Regolo MoE</span>
+        <span class="flex items-center gap-2 transition-colors hover:text-zinc-200"><i class="fa-solid fa-terminal text-green-400"></i> Termux SSH</span>
+        <span class="flex items-center gap-2 transition-colors hover:text-zinc-200"><i class="fa-solid fa-bolt text-yellow-400"></i> Regolo</span>
       </div>
     </div>
   </div>
@@ -798,15 +812,25 @@ a { transition: all 0.25s var(--ease-out); }
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
         <div class="glass-card reveal lg:col-span-2 flex flex-col justify-between p-7">
           <div>
-            <div class="feature-icon indigo">
-              <i class="fa-solid fa-code"></i>
+            <div class="feature-icon cyan">
+              <i class="fa-solid fa-arrows-rotate"></i>
             </div>
-            <h3 class="text-lg md:text-xl font-semibold mb-2 text-white">Line-Drift-Free Code Editing</h3>
-            <p class="text-sm text-zinc-400 max-w-lg leading-relaxed">Exact <code class="code-inline">replace_block</code> diffs instead of fragile line numbers — eliminates the classic "line-drift bug". Automatically catches syntax errors via AST linter and self-corrects.</p>
+            <h3 class="text-lg md:text-xl font-semibold mb-2 text-white">Live Mid-Execution Correction</h3>
+            <p class="text-sm text-zinc-400 max-w-lg leading-relaxed">The agent loop is <span class="text-cyan-300 font-medium">genuinely interruptible</span>. Change your mind mid-task — Jarvis absorbs the correction, revises the plan in-place, and keeps completed steps intact. No restart. No hallucination. No lost work.</p>
           </div>
         </div>
 
         <div class="glass-card reveal delay-100 flex flex-col justify-between p-7">
+          <div>
+            <div class="feature-icon indigo">
+              <i class="fa-solid fa-code"></i>
+            </div>
+            <h3 class="text-lg md:text-xl font-semibold mb-2 text-white">Line-Drift-Free Editing</h3>
+            <p class="text-sm text-zinc-400 leading-relaxed">Exact <code class="code-inline">replace_block</code> diffs instead of fragile line numbers. Syntax errors caught via AST linter and self-corrected automatically.</p>
+          </div>
+        </div>
+
+        <div class="glass-card reveal flex flex-col justify-between p-7">
           <div>
             <div class="feature-icon emerald">
               <i class="fa-solid fa-envelope"></i>
@@ -816,33 +840,33 @@ a { transition: all 0.25s var(--ease-out); }
           </div>
         </div>
 
-        <div class="glass-card reveal flex flex-col justify-between p-7">
-          <div>
-            <div class="feature-icon violet">
-              <i class="fa-brands fa-android"></i>
-            </div>
-            <h3 class="text-lg md:text-xl font-semibold mb-2 text-white">Mobile Phone Control</h3>
-            <p class="text-sm text-zinc-400 leading-relaxed">Control your Android via ADB over Tailscale — lock/unlock, open apps, make calls, read SMS, toggle WiFi/Data, and adjust volume straight from your PC.</p>
-          </div>
-        </div>
-
         <div class="glass-card reveal delay-100 flex flex-col justify-between p-7">
           <div>
-            <div class="feature-icon amber">
-              <i class="fa-solid fa-rotate"></i>
+            <div class="feature-icon violet">
+              <i class="fa-solid fa-mobile-screen-button"></i>
             </div>
-            <h3 class="text-lg md:text-xl font-semibold mb-2 text-white">Multi-LLM Failover</h3>
-            <p class="text-sm text-zinc-400 leading-relaxed">Seamlessly switches between Regolo, Gemini, OpenRouter, or local models (Ollama, LM Studio) if primary hits rate limits to ensure zero downtime.</p>
+            <h3 class="text-lg md:text-xl font-semibold mb-2 text-white">Mobile Control</h3>
+            <p class="text-sm text-zinc-400 leading-relaxed">Control your Android via Termux SSH over Tailscale — lock/unlock, open apps, make calls, read SMS, toggle WiFi/Data, and adjust volume from your PC.</p>
           </div>
         </div>
 
         <div class="glass-card reveal delay-200 flex flex-col justify-between p-7">
           <div>
+            <div class="feature-icon amber">
+              <i class="fa-solid fa-rotate"></i>
+            </div>
+            <h3 class="text-lg md:text-xl font-semibold mb-2 text-white">Multi-LLM Failover</h3>
+            <p class="text-sm text-zinc-400 leading-relaxed">Automatically switches between Regolo, Gemma, OpenRouter, or local models (Ollama, LM Studio) when the primary provider hits rate limits.</p>
+          </div>
+        </div>
+
+        <div class="glass-card reveal delay-300 flex flex-col justify-between p-7">
+          <div>
             <div class="feature-icon rose">
               <i class="fa-brands fa-telegram"></i>
             </div>
             <h3 class="text-lg md:text-xl font-semibold mb-2 text-white">Telegram Remote Bot</h3>
-            <p class="text-sm text-zinc-400 leading-relaxed">Control your Windows PC from anywhere globally. Send commands to your remote bot and Jarvis executes them silently in the background.</p>
+            <p class="text-sm text-zinc-400 leading-relaxed">Send commands to your PC from anywhere in the world. Jarvis executes them silently in the background without disturbing your desktop session.</p>
           </div>
         </div>
 
@@ -851,11 +875,49 @@ a { transition: all 0.25s var(--ease-out); }
             <div class="feature-icon pink">
               <i class="fa-solid fa-diagram-project"></i>
             </div>
-            <h3 class="text-lg md:text-xl font-semibold mb-2 text-white">Bidirectional Property Graph & Hybrid RAG</h3>
-            <p class="text-sm text-zinc-400 max-w-3xl leading-relaxed">Built on NetworkX. Extracts entities into an enterprise-grade Property Graph with bidirectional edge routing, temporal decay, and metadata context indexing. Merged with a Hybrid RAG system (BM25 + Vector + RRF) for unparalleled zero-latency semantic recall.</p>
+            <h3 class="text-lg md:text-xl font-semibold mb-2 text-white">Bidirectional Property Graph &amp; Hybrid RAG</h3>
+            <p class="text-sm text-zinc-400 max-w-3xl leading-relaxed">Built on NetworkX. Extracts entities into a persistent Property Graph with bidirectional edge routing, temporal decay, and metadata context indexing. Merged with a Hybrid RAG system (BM25 + Vector + RRF) for fast semantic recall across months of memory.</p>
           </div>
         </div>
       </div>
+    </div>
+  </section>
+
+  <section id="correction" class="py-24 md:py-32 px-4 sm:px-6 lg:px-8 border-t border-[#1e123c] relative">
+    <div class="max-w-4xl mx-auto">
+      <div class="mb-10 md:mb-12 reveal text-center">
+        <span class="section-label"><i class="fa-solid fa-arrows-rotate"></i> Signature Feature</span>
+        <h2 class="text-3xl md:text-5xl font-bold mb-3 text-white">Interruptible. Not fire-and-forget.</h2>
+        <p class="text-zinc-400 text-sm md:text-base max-w-2xl mx-auto">Most AI agents either finish the plan or die trying. Jarvis listens while it works — you can change your mind mid-task and it adapts without restarting.</p>
+      </div>
+
+      <div class="code-wrapper reveal" id="correction-container">
+        <div class="code-header">
+          <div class="flex gap-2">
+            <div class="w-3 h-3 rounded-full bg-[#2a2a2a] hover:bg-[#ff5f56] transition-colors"></div>
+            <div class="w-3 h-3 rounded-full bg-[#2a2a2a] hover:bg-[#ffbd2e] transition-colors"></div>
+            <div class="w-3 h-3 rounded-full bg-[#2a2a2a] hover:bg-[#27c93f] transition-colors"></div>
+          </div>
+          <span class="mx-auto text-zinc-500 font-mono tracking-wide">~/jarvis-core/live_correction.log</span>
+          <div class="w-[44px]"></div>
+        </div>
+
+        <div class="code-content text-[11px] sm:text-xs md:text-sm">
+          <div class="text-zinc-300 space-y-3 font-mono">
+            <div><span class="text-zinc-500">[21:18:03]</span> <span class="text-indigo-400">Step 1</span> · Agent recalls <span class="text-cyan-300">'Rahul'</span> from LTM graph</div>
+            <div><span class="text-zinc-500">[21:18:42]</span> <span class="text-indigo-400">Step 2</span> · Creates project folder + Flask skeleton <span class="text-green-400">✓</span></div>
+            <div><span class="text-zinc-500">[21:18:44]</span> <span class="text-amber-400 font-bold">⚠ User injected live feedback:</span> <span class="text-zinc-200">"oh sorry rahul ko mail krna hai whstapp nhi uski mail hai kaif13018@gmail.com"</span></div>
+            <div><span class="text-zinc-500">[21:19:03]</span> <span class="text-fuchsia-400">Step 3</span> · Agent revises plan in-place — <span class="text-zinc-400">skips WhatsApp, targets Gmail</span></div>
+            <div><span class="text-zinc-500">[21:19:10]</span> <span class="text-fuchsia-400">Step 4</span> · Sends Gmail to corrected address <span class="text-green-400">✓</span></div>
+            <div><span class="text-zinc-500">[21:19:16]</span> <span class="text-fuchsia-400">Step 5</span> · Creates Calendar event for tomorrow 5 PM <span class="text-green-400">✓</span></div>
+            <div><span class="text-zinc-500">[21:19:21]</span> <span class="text-fuchsia-400">Step 6</span> · Voices summary · <span class="text-cyan-300 font-bold">1.99s reaction time</span> <span class="terminal-cursor"></span></div>
+          </div>
+        </div>
+      </div>
+
+      <p class="text-zinc-500 text-xs md:text-sm mt-6 text-center px-4">
+        Already-completed steps stayed intact. No restart. No hallucinated apology loop. This is the same interruptibility that enterprise copilots fight to implement — Jarvis ships it out of the box.
+      </p>
     </div>
   </section>
 
@@ -881,9 +943,9 @@ a { transition: all 0.25s var(--ease-out); }
         <div class="code-content text-[11px] sm:text-xs md:text-sm">
           <div class="text-zinc-500 mb-6 space-y-1.5">
             <div class="flex items-center gap-2"><span class="text-green-400">✓</span> FastBrain online <span class="text-zinc-600 hidden sm:inline">(Groq Llama-3.3-70b)</span></div>
-            <div class="flex items-center gap-2"><span class="text-green-400">✓</span> AgenticBrain ready <span class="text-zinc-600 hidden sm:inline">(Regolo MoE + Gemini-4)</span></div>
+            <div class="flex items-center gap-2"><span class="text-green-400">✓</span> AgenticBrain ready <span class="text-zinc-600 hidden sm:inline">(Regolo · Qwen3.5-122b + Gemma-4 fallback)</span></div>
             <div class="flex items-center gap-2"><span class="text-green-400">✓</span> Property Graph loaded <span class="text-zinc-600 hidden sm:inline">(Bidirectional LTM)</span></div>
-            <div class="flex items-center gap-2"><span class="text-green-400">✓</span> Mobile ADB connected <span class="text-zinc-600 hidden sm:inline">(Android phone online)</span></div>
+            <div class="flex items-center gap-2"><span class="text-green-400">✓</span> Mobile Termux connected <span class="text-zinc-600 hidden sm:inline">(Android phone online)</span></div>
           </div>
 
           <div class="mb-6 break-words text-white">
@@ -907,7 +969,7 @@ a { transition: all 0.25s var(--ease-out); }
       <div class="mb-10 md:mb-12">
         <span class="section-label"><i class="fa-solid fa-play"></i> Live Demo</span>
         <h2 class="text-3xl md:text-5xl font-bold mb-3 text-white">See JARVIS in Action</h2>
-        <p class="text-zinc-400 max-w-2xl mx-auto text-sm md:text-base">Watch the autonomous AI agent build, test, and deploy a complete project — without any human intervention.</p>
+        <p class="text-zinc-400 max-w-2xl mx-auto text-sm md:text-base">Watch the autonomous AI agent build, test, and complete a project — without any human intervention.</p>
       </div>
 
       <div class="video-container reveal">
@@ -915,7 +977,7 @@ a { transition: all 0.25s var(--ease-out); }
           width="861"
           height="657"
           src="https://www.youtube.com/embed/fVaFTl44sts"
-          title="I Gave JARVIS ONE COMMAND… It Built &amp; Tested a Project By Itself 🤯"
+          title="I Gave JARVIS ONE COMMAND… It Built &amp; Tested a Project By Itself"
           frameborder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           referrerpolicy="strict-origin-when-cross-origin"
@@ -924,7 +986,7 @@ a { transition: all 0.25s var(--ease-out); }
         ></iframe>
       </div>
       <p class="text-zinc-500 text-xs md:text-sm mt-6 px-4">
-        The demo shows Jarvis creating a Flask API, writing tests, detecting a bug, generating a coverage report, and emailing the results autonomously.
+        Full raw console logs of the same mission (6 steps, ~80 seconds, zero failures) are available in the repository README on GitHub.
       </p>
     </div>
   </section>
@@ -933,37 +995,38 @@ a { transition: all 0.25s var(--ease-out); }
     <div class="max-w-[90rem] mx-auto text-center reveal">
       <span class="section-label"><i class="fa-solid fa-download"></i> Get Started</span>
       <h2 class="text-3xl md:text-5xl font-bold mb-3 text-white">Get Jarvis Today</h2>
-      <p class="text-zinc-400 max-w-2xl mx-auto mb-10 md:mb-12 text-sm md:text-base">100% free and open source. One-click installer for Windows, Linux, and macOS.</p>
+      <p class="text-zinc-400 max-w-2xl mx-auto mb-10 md:mb-12 text-sm md:text-base">Free &amp; open-source under GPLv3. Windows 10/11 · Python 3.10+ · Node.js 18+ required for WhatsApp bridge.</p>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 max-w-4xl mx-auto text-left">
         <div class="glass-card reveal flex flex-col justify-between p-7">
           <div>
-            <h3 class="text-lg md:text-xl font-semibold text-white mb-2 flex items-center gap-2"><i class="fa-brands fa-windows text-cyan-400"></i> Windows</h3>
-            <p class="text-xs md:text-sm text-zinc-500 mb-6">.exe installer · 250 MB</p>
+            <h3 class="text-lg md:text-xl font-semibold text-white mb-2 flex items-center gap-2"><i class="fa-brands fa-windows text-cyan-400"></i> Windows Source</h3>
+            <p class="text-xs md:text-sm text-zinc-500 mb-6">Python-based setup · ~200 MB after dependencies</p>
           </div>
-          <a href="https://github.com/thekaifansari01/Jarvis-OS-Agent/releases/latest" class="download-btn px-4 py-2.5 rounded-lg text-sm font-semibold text-center w-full block">Download</a>
+          <a href="https://github.com/thekaifansari01/Jarvis-OS-Agent" class="download-btn px-4 py-2.5 rounded-lg text-sm font-semibold text-center w-full block">View on GitHub</a>
         </div>
 
-        <div class="glass-card reveal delay-100 flex flex-col justify-between p-7 opacity-60">
+        <div class="glass-card reveal delay-100 flex flex-col justify-between p-7">
           <div>
-            <h3 class="text-lg md:text-xl font-semibold text-white mb-2 flex items-center gap-2"><i class="fa-brands fa-linux text-amber-400"></i> Linux</h3>
-            <p class="text-xs md:text-sm text-zinc-500 mb-6">.AppImage · 240 MB</p>
+            <h3 class="text-lg md:text-xl font-semibold text-white mb-2 flex items-center gap-2"><i class="fa-solid fa-list-check text-violet-400"></i> Requirements</h3>
+            <p class="text-xs md:text-sm text-zinc-500 mb-6">Python 3.10+ · Node.js 18+ · API keys (Groq/Gemma/Deepgram)</p>
           </div>
-          <button disabled class="download-btn-secondary px-4 py-2.5 rounded-lg text-sm font-semibold w-full cursor-not-allowed text-zinc-600">Coming Soon</button>
+          <a href="https://github.com/thekaifansari01/Jarvis-OS-Agent#-installation" target="_blank" class="download-btn-secondary px-4 py-2.5 rounded-lg text-sm font-semibold text-center w-full block">Setup Guide</a>
         </div>
 
-        <div class="glass-card reveal delay-200 flex flex-col justify-between p-7 opacity-60">
+        <div class="glass-card reveal delay-200 flex flex-col justify-between p-7">
           <div>
-            <h3 class="text-lg md:text-xl font-semibold text-white mb-2 flex items-center gap-2"><i class="fa-brands fa-apple text-zinc-300"></i> macOS</h3>
-            <p class="text-xs md:text-sm text-zinc-500 mb-6">.dmg · 260 MB</p>
+            <h3 class="text-lg md:text-xl font-semibold text-white mb-2 flex items-center gap-2"><i class="fa-solid fa-scale-balanced text-emerald-400"></i> Free &amp; Open Source</h3>
+            <p class="text-xs md:text-sm text-zinc-500 mb-6">GPLv3 · Zero cost with local Ollama / LM Studio models</p>
           </div>
-          <button disabled class="download-btn-secondary px-4 py-2.5 rounded-lg text-sm font-semibold w-full cursor-not-allowed text-zinc-600">Coming Soon</button>
+          <a href="https://github.com/thekaifansari01/Jarvis-OS-Agent/blob/main/LICENSE" target="_blank" class="download-btn-secondary px-4 py-2.5 rounded-lg text-sm font-semibold text-center w-full block">View License</a>
         </div>
       </div>
 
       <div class="mt-12 flex flex-wrap justify-center gap-6 text-sm">
         <a href="https://github.com/thekaifansari01/Jarvis-OS-Agent" target="_blank" class="text-zinc-400 hover:text-white transition flex items-center gap-2"><i class="fa-brands fa-github text-lg"></i> Source Code</a>
-        <a href="/documentation" class="text-zinc-400 hover:text-white transition flex items-center gap-2"><i class="fa-solid fa-book text-indigo-400"></i> Documentation</a>
+        <a href="https://github.com/thekaifansari01/Jarvis-OS-Agent/blob/main/README.md" target="_blank" class="text-zinc-400 hover:text-white transition flex items-center gap-2"><i class="fa-solid fa-book text-indigo-400"></i> Documentation</a>
+        <a href="https://github.com/thekaifansari01/Jarvis-OS-Agent/stargazers" target="_blank" class="text-zinc-400 hover:text-white transition flex items-center gap-2"><i class="fa-solid fa-star text-amber-400"></i> Star on GitHub</a>
       </div>
     </div>
   </section>
@@ -992,21 +1055,22 @@ a { transition: all 0.25s var(--ease-out); }
         <div class="flex flex-col gap-3">
           <span class="text-white font-semibold text-[11px] tracking-widest uppercase mb-1">Product</span>
           <a href="#features" class="text-sm text-zinc-500 hover:text-indigo-400 transition-colors">Features</a>
+          <a href="#correction" class="text-sm text-zinc-500 hover:text-cyan-400 transition-colors">Live Correction</a>
           <a href="#engine" class="text-sm text-zinc-500 hover:text-violet-400 transition-colors">Engine</a>
-          <a href="#download" class="text-sm text-zinc-500 hover:text-cyan-400 transition-colors">Download</a>
+          <a href="#download" class="text-sm text-zinc-500 hover:text-emerald-400 transition-colors">Download</a>
         </div>
 
         <div class="flex flex-col gap-3">
           <span class="text-white font-semibold text-[11px] tracking-widest uppercase mb-1">Resources</span>
-          <a href="/documentation" class="text-sm text-zinc-500 hover:text-indigo-400 transition-colors">Documentation</a>
-          <a href="/faq" class="text-sm text-zinc-500 hover:text-violet-400 transition-colors">FAQ</a>
-          <a href="/about" class="text-sm text-zinc-500 hover:text-cyan-400 transition-colors">About the Builder</a>
+          <a href="https://github.com/thekaifansari01/Jarvis-OS-Agent/blob/main/README.md" target="_blank" class="text-sm text-zinc-500 hover:text-indigo-400 transition-colors">Documentation</a>
+          <a href="https://github.com/thekaifansari01/Jarvis-OS-Agent#-troubleshooting--faq" target="_blank" class="text-sm text-zinc-500 hover:text-violet-400 transition-colors">FAQ</a>
+          <a href="https://github.com/thekaifansari01" target="_blank" class="text-sm text-zinc-500 hover:text-cyan-400 transition-colors">About the Builder</a>
         </div>
 
         <div class="flex flex-col gap-3 col-span-2 sm:col-span-1">
           <span class="text-white font-semibold text-[11px] tracking-widest uppercase mb-1">Legal</span>
-          <a href="/privacy" class="text-sm text-zinc-500 hover:text-indigo-400 transition-colors">Privacy Policy</a>
-          <a href="https://github.com/thekaifansari01/Jarvis-OS-Agent/blob/main/LICENSE" target="_blank" class="text-sm text-zinc-500 hover:text-violet-400 transition-colors">GNU GPL v3.0</a>
+          <a href="https://github.com/thekaifansari01/Jarvis-OS-Agent/blob/main/LICENSE" target="_blank" class="text-sm text-zinc-500 hover:text-emerald-400 transition-colors">GNU GPL v3.0</a>
+          <a href="https://github.com/thekaifansari01/Jarvis-OS-Agent/blob/main/CONTRIBUTING.md" target="_blank" class="text-sm text-zinc-500 hover:text-indigo-400 transition-colors">Contributing</a>
         </div>
 
       </div>
