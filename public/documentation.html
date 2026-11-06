@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <title>Documentation — JARVIS OS Agent</title>
-<meta name="description" content="Complete documentation for JARVIS OS Agent — installation, configuration, voice setup, memory, MCP integration, Android bridge, Telegram bot, CLI reference, and troubleshooting." />
+<meta name="description" content="Complete documentation for JARVIS OS Agent — installation, configuration, voice setup, memory, MCP integration, Android bridge, Telegram bot, CLI reference, agent panel, typing popup, STT popup, input popup, and troubleshooting." />
 <meta name="theme-color" content="#05050a" />
 <meta property="og:title" content="JARVIS Documentation" />
 <meta property="og:description" content="Complete documentation for JARVIS OS Agent — install, configure, and operate the autonomous AI operating system for Windows." />
@@ -1055,6 +1055,491 @@ details.faq .faq-body {
   transform: translateY(-2px);
 }
 
+.section-intro {
+  font-size: 1rem;
+  color: var(--text-dim);
+  line-height: 1.75;
+  margin-bottom: 24px;
+}
+
+.ui-hero-banner {
+  position: relative;
+  padding: clamp(24px, 4vw, 40px);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.06), rgba(168, 85, 247, 0.06));
+  border: 1px solid rgba(0, 212, 255, 0.15);
+  margin: 24px 0 40px;
+  overflow: hidden;
+}
+.ui-hero-banner::before {
+  content: '';
+  position: absolute;
+  top: -50%; left: 50%;
+  width: 600px; height: 600px;
+  transform: translateX(-50%);
+  background: radial-gradient(circle, rgba(0,212,255,0.15), transparent 60%);
+  pointer-events: none;
+  animation: heroGlow 6s ease-in-out infinite;
+}
+@keyframes heroGlow {
+  0%, 100% { opacity: 0.6; transform: translateX(-50%) scale(1); }
+  50% { opacity: 1; transform: translateX(-50%) scale(1.1); }
+}
+.ui-hero-banner .badge-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+  position: relative;
+  z-index: 1;
+}
+.ui-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  color: var(--text-dim);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.ui-hero-badge .material-symbols-outlined { font-size: 13px; color: var(--accent); }
+.ui-hero-badge.live .dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--success);
+  box-shadow: 0 0 8px var(--success);
+  animation: badgePulse 2s ease-in-out infinite;
+}
+@keyframes badgePulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.85); }
+}
+.ui-hero-banner h1 {
+  position: relative;
+  z-index: 1;
+  margin-bottom: 16px;
+}
+.ui-hero-banner p {
+  position: relative;
+  z-index: 1;
+  color: var(--text-dim);
+  font-size: 1rem;
+  line-height: 1.75;
+  margin-bottom: 0;
+  max-width: 700px;
+}
+
+.ui-feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 14px;
+  margin: 24px 0 32px;
+}
+.ui-feature-card {
+  padding: 20px;
+  background: linear-gradient(135deg, var(--bg-2), var(--bg-elev));
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s var(--ease-out);
+}
+.ui-feature-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.ui-feature-card:hover {
+  border-color: rgba(0, 212, 255, 0.35);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+}
+.ui-feature-card:hover::before { opacity: 1; }
+.ui-feature-card .icon-wrap {
+  width: 40px;
+  height: 40px;
+  border-radius: 11px;
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.15), rgba(168, 85, 247, 0.1));
+  border: 1px solid rgba(0, 212, 255, 0.25);
+  display: grid;
+  place-items: center;
+  color: var(--accent);
+  margin-bottom: 14px;
+  transition: transform 0.3s var(--ease-out);
+}
+.ui-feature-card:hover .icon-wrap { transform: scale(1.08) rotate(-6deg); }
+.ui-feature-card .icon-wrap .material-symbols-outlined { font-size: 22px; }
+.ui-feature-card h4 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+.ui-feature-card p {
+  font-size: 0.83rem;
+  color: var(--text-muted);
+  line-height: 1.55;
+  margin: 0;
+}
+
+.screenshot-frame {
+  position: relative;
+  background: linear-gradient(135deg, var(--bg-elev), var(--bg));
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin: 24px 0;
+  transition: border-color 0.3s, transform 0.3s var(--ease-out), box-shadow 0.3s;
+}
+.screenshot-frame:hover {
+  border-color: rgba(0, 212, 255, 0.35);
+  transform: translateY(-2px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+}
+.screenshot-frame img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: calc(var(--radius) - 1px) calc(var(--radius) - 1px) 0 0;
+}
+.screenshot-frame figcaption {
+  padding: 12px 16px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  border-top: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.02);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.screenshot-frame .badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  background: rgba(0, 212, 255, 0.12);
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  border-radius: 4px;
+  color: var(--accent);
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  flex-shrink: 0;
+}
+
+.gallery-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 14px;
+  margin: 24px 0;
+}
+.gallery-row .screenshot-frame { margin: 0; }
+
+.shot-annotated {
+  position: relative;
+  background: linear-gradient(135deg, var(--bg-elev), var(--bg));
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin: 24px 0;
+}
+.shot-annotated img { display: block; width: 100%; height: auto; }
+.shot-annotated .pin {
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #05050a;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: 0.85rem;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 0 0 3px rgba(5,5,10,0.7), 0 4px 12px rgba(0, 212, 255, 0.5);
+  z-index: 2;
+  transform: translate(-50%, -50%);
+}
+
+.anatomy-legend {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 10px 24px;
+  margin: 16px 0 32px;
+  padding: 16px 20px;
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  list-style: none;
+}
+.anatomy-legend li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text-dim);
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+.anatomy-legend .num {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgba(0, 212, 255, 0.15);
+  border: 1px solid rgba(0, 212, 255, 0.35);
+  color: var(--accent);
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 600;
+  font-size: 0.7rem;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.storyboard {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding: 16px 0;
+  margin: 20px 0;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-strong) transparent;
+}
+.storyboard::-webkit-scrollbar { height: 4px; }
+.storyboard::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 2px; }
+.storyboard .frame {
+  flex-shrink: 0;
+  min-width: 160px;
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 12px 10px;
+  text-align: center;
+  transition: all 0.2s;
+}
+.storyboard .frame:hover {
+  border-color: rgba(0, 212, 255, 0.3);
+  background: var(--bg-elev);
+}
+.storyboard .frame-time {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  color: var(--accent);
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+.storyboard .frame-desc {
+  font-size: 0.76rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+.storyboard .arrow {
+  display: flex;
+  align-items: center;
+  color: var(--text-muted);
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.ui-mode-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  gap: 10px;
+  margin: 20px 0;
+}
+.ui-mode-item {
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 14px 10px;
+  text-align: center;
+  transition: all 0.2s;
+  cursor: help;
+}
+.ui-mode-item:hover {
+  border-color: rgba(0, 212, 255, 0.4);
+  background: var(--bg-elev);
+  transform: translateY(-2px);
+}
+.ui-mode-item .icon-circle {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.12), rgba(168, 85, 247, 0.08));
+  border: 1px solid rgba(0, 212, 255, 0.25);
+  display: grid;
+  place-items: center;
+  margin: 0 auto 8px;
+  color: var(--accent);
+}
+.ui-mode-item .icon-circle .material-symbols-outlined { font-size: 18px; }
+.ui-mode-item .label {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 500;
+  font-size: 0.8rem;
+  color: var(--text);
+  margin-bottom: 2px;
+}
+.ui-mode-item .trigger {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  color: var(--text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.color-swatch-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 20px 0;
+  padding: 16px;
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+.color-swatch {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px 6px 6px;
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  transition: all 0.2s;
+  cursor: help;
+}
+.color-swatch:hover {
+  border-color: var(--border-strong);
+  transform: translateY(-1px);
+}
+.color-swatch .dot {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.2), 0 0 8px currentColor;
+  flex-shrink: 0;
+}
+
+.kbd-chord {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 12px 0;
+}
+.kbd-key {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.82rem;
+  font-weight: 500;
+  padding: 8px 14px;
+  background: var(--bg-elev);
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  color: var(--text);
+  box-shadow: 0 3px 0 rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.04) inset;
+  transition: all 0.15s;
+}
+.kbd-key:hover {
+  transform: translateY(-1px);
+  border-color: var(--accent);
+  color: var(--accent);
+  box-shadow: 0 4px 0 rgba(0,0,0,0.4), 0 0 16px rgba(0, 212, 255, 0.2);
+}
+.kbd-plus {
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--text-muted);
+  font-size: 1rem;
+}
+
+.arch-flow {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 24px;
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin: 20px 0;
+  position: relative;
+  overflow: hidden;
+}
+.arch-flow::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(0,212,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,212,255,0.03) 1px, transparent 1px);
+  background-size: 24px 24px;
+  pointer-events: none;
+}
+.arch-flow-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 1;
+}
+.arch-flow-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  min-width: 80px;
+}
+.arch-flow-node {
+  padding: 10px 16px;
+  background: var(--bg-elev);
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.76rem;
+  color: var(--text-dim);
+  transition: all 0.2s;
+}
+.arch-flow-node:hover {
+  border-color: var(--accent);
+  color: var(--text);
+  box-shadow: 0 0 16px rgba(0, 212, 255, 0.15);
+}
+.arch-flow-node.accent {
+  border-color: rgba(0, 212, 255, 0.4);
+  color: var(--accent);
+  background: rgba(0, 212, 255, 0.05);
+}
+.arch-flow-node.purple {
+  border-color: rgba(168, 85, 247, 0.4);
+  color: var(--accent-2);
+  background: rgba(168, 85, 247, 0.05);
+}
+.arch-flow-node.green {
+  border-color: rgba(16, 185, 129, 0.4);
+  color: var(--success);
+  background: rgba(16, 185, 129, 0.05);
+}
+.arch-flow-arrow {
+  color: var(--text-muted);
+  font-size: 1.1rem;
+}
+
 @media (max-width: 1200px) {
   .layout { grid-template-columns: var(--sidebar-w) 1fr; }
   .toc { display: none; }
@@ -1098,6 +1583,19 @@ details.faq .faq-body {
   table.data-table { font-size: 0.8rem; }
   table.data-table th,
   table.data-table td { padding: 9px 12px; }
+  .ui-hero-banner { padding: 20px; }
+  .ui-hero-banner h1 { font-size: 1.6rem; }
+  .gallery-row { grid-template-columns: 1fr; }
+  .anatomy-legend { grid-template-columns: 1fr; }
+  .ui-mode-grid { grid-template-columns: repeat(auto-fit, minmax(95px, 1fr)); }
+  .shot-annotated .pin { width: 22px; height: 22px; font-size: 0.7rem; box-shadow: 0 0 0 2px rgba(5,5,10,0.7), 0 3px 8px rgba(0, 212, 255, 0.5); }
+  .color-swatch-row { gap: 8px; padding: 12px; }
+  .color-swatch { padding: 5px 10px 5px 5px; font-size: 0.68rem; }
+  .color-swatch .dot { width: 14px; height: 14px; }
+  .arch-flow { padding: 16px; }
+  .arch-flow-node { font-size: 0.7rem; padding: 8px 12px; }
+  .arch-flow-label { min-width: 60px; font-size: 0.6rem; }
+  .storyboard .frame { min-width: 130px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1181,6 +1679,16 @@ details.faq .faq-body {
       <li><a href="#cli" data-section="cli"><span class="material-symbols-outlined">terminal</span>CLI Commands</a></li>
       <li><a href="#tools" data-section="tools"><span class="material-symbols-outlined">handyman</span>Tools</a></li>
       <li><a href="#architecture" data-section="architecture"><span class="material-symbols-outlined">account_tree</span>Architecture</a></li>
+    </ul>
+  </div>
+  <div class="sidebar-group">
+    <div class="sidebar-label">Interface</div>
+    <ul class="sidebar-list">
+      <li><a href="#agent-panel" data-section="agent-panel"><span class="material-symbols-outlined">dashboard</span>Agent Panel</a></li>
+      <li><a href="#typing-popup" data-section="typing-popup"><span class="material-symbols-outlined">chat_bubble</span>Typing Popup</a></li>
+      <li><a href="#stt-popup" data-section="stt-popup"><span class="material-symbols-outlined">graphic_eq</span>STT Popup</a></li>
+      <li><a href="#input-popup" data-section="input-popup"><span class="material-symbols-outlined">keyboard</span>Input Popup</a></li>
+      <li><a href="#ui-comparison" data-section="ui-comparison"><span class="material-symbols-outlined">compare</span>UI Comparison</a></li>
     </ul>
   </div>
   <div class="sidebar-group">
@@ -2012,6 +2520,1831 @@ jarvis bot --deactivate  <span class="code-cmt"># revoke &amp; offline the bot</
 
       <hr/>
 
+      <h1 id="agent-panel">Agent Panel</h1>
+
+      <div class="ui-hero-banner">
+        <div class="badge-row">
+          <span class="ui-hero-badge live"><span class="dot"></span>Live</span>
+          <span class="ui-hero-badge"><span class="material-symbols-outlined">bolt</span>ZMQ Powered</span>
+          <span class="ui-hero-badge"><span class="material-symbols-outlined">verified_user</span>HITL Gates</span>
+          <span class="ui-hero-badge"><span class="material-symbols-outlined">palette</span>16 Orb Modes</span>
+        </div>
+        <h1>The Agent Panel</h1>
+        <p>The Agent Panel is JARVIS's floating command center — a premium always-on-top overlay that shows exactly what the agent is thinking, which tool it's running, how many tokens it has consumed, and when it needs your permission before doing something irreversible. It is not a chat window. It is a live observability layer over the autonomous loop.</p>
+      </div>
+
+      <div class="ui-feature-grid">
+        <div class="ui-feature-card">
+          <div class="icon-wrap"><span class="material-symbols-outlined">psychology</span></div>
+          <h4>Live Thought Stream</h4>
+          <p>Watch reasoning unfold in real-time with syntax-highlighted markdown.</p>
+        </div>
+        <div class="ui-feature-card">
+          <div class="icon-wrap"><span class="material-symbols-outlined">verified_user</span></div>
+          <h4>HITL Consent Gates</h4>
+          <p>Approve, edit, or cancel every WhatsApp, Telegram, or Email before it sends.</p>
+        </div>
+        <div class="ui-feature-card">
+          <div class="icon-wrap"><span class="material-symbols-outlined">sync</span></div>
+          <h4>Non-Blocking</h4>
+          <p>Panel never interrupts the agent — it's read-only until a decision is required.</p>
+        </div>
+        <div class="ui-feature-card">
+          <div class="icon-wrap"><span class="material-symbols-outlined">palette</span></div>
+          <h4>Action-Aware Theming</h4>
+          <p>Every tool has its own icon, color, and pulse animation.</p>
+        </div>
+      </div>
+
+      <div class="callout info">
+        <span class="material-symbols-outlined">info</span>
+        <div class="callout-body">
+          <p><strong>Read-only by design.</strong> The Agent Panel is not a chat window — you can't type into it. Commands come from voice, <code>Ctrl+Shift+J</code>, or the Telegram bot. The panel observes and, when needed, asks for approval.</p>
+        </div>
+      </div>
+
+      <figure class="screenshot-frame">
+        <img src="screenshots/ui/agent-panel-hero.png" alt="Agent Panel showing live thinking state with purple status orb, thought stream, step counter, and token count" loading="lazy">
+        <figcaption>
+          <span class="badge">Live</span>
+          Agent Panel in active thinking state — Step 03, 1.2k tokens, purple orb
+        </figcaption>
+      </figure>
+
+      <h2 id="agent-panel-when">When It Appears<a href="#agent-panel-when" class="anchor material-symbols-outlined">link</a></h2>
+      <ul class="bullets">
+        <li><strong>Auto-spawns</strong> on every agent loop start — voice command, <code>Ctrl+Shift+J</code>, Telegram bot, MCP tool call</li>
+        <li><strong>Stays visible</strong> while <code>hide_timer</code> is active (4-second idle cooldown)</li>
+        <li><strong>Fades out</strong> after 4 seconds of no activity — unless awaiting confirmation</li>
+        <li><strong>Reappears</strong> instantly on next status update</li>
+        <li><strong>Never blocks</strong> the underlying desktop — it's <code>Qt.Tool</code>, no taskbar entry, no focus steal</li>
+        <li><strong>Bypasses</strong> the 4-second timer entirely when a confirmation is pending</li>
+      </ul>
+
+      <div class="callout warning">
+        <span class="material-symbols-outlined">warning</span>
+        <div class="callout-body">
+          <p>The panel cannot be "closed" manually while the agent runs — it dismisses itself. To hide permanently, stop JARVIS from the CLI.</p>
+        </div>
+      </div>
+
+      <h2 id="agent-panel-states">The States<a href="#agent-panel-states" class="anchor material-symbols-outlined">link</a></h2>
+      <p>The panel cycles through four visual states, each with its own orb color, status text, and animation:</p>
+
+      <div class="gallery-row">
+        <figure class="screenshot-frame">
+          <img src="screenshots/ui/agent-panel-idle.png" alt="Idle state with grey orb and neutral palette" loading="lazy">
+          <figcaption><span class="badge">Idle</span>Neutral grey orb — ready</figcaption>
+        </figure>
+        <figure class="screenshot-frame">
+          <img src="screenshots/ui/agent-panel-thinking.png" alt="Thinking state with purple orb and thought stream" loading="lazy">
+          <figcaption><span class="badge">Thinking</span>Purple orb, live reasoning</figcaption>
+        </figure>
+        <figure class="screenshot-frame">
+          <img src="screenshots/ui/agent-panel-confirm.png" alt="Confirmation state with WhatsApp preview card" loading="lazy">
+          <figcaption><span class="badge">HITL</span>WhatsApp preview card with Send/Cancel</figcaption>
+        </figure>
+        <figure class="screenshot-frame">
+          <img src="screenshots/ui/agent-panel-done.png" alt="Done state with green checkmark" loading="lazy">
+          <figcaption><span class="badge">Done</span>Green check, task complete</figcaption>
+        </figure>
+      </div>
+
+      <h2 id="agent-panel-anatomy">Anatomy of the Panel<a href="#agent-panel-anatomy" class="anchor material-symbols-outlined">link</a></h2>
+      <p>Seven distinct regions compose the panel, each with a specific function:</p>
+
+      <div class="shot-annotated">
+        <img src="screenshots/ui/agent-panel-anatomy.png" alt="Agent Panel anatomy with numbered pins overlaid on screenshot" loading="lazy">
+        <span class="pin" style="top: 12%; left: 6%;">1</span>
+        <span class="pin" style="top: 12%; left: 22%;">2</span>
+        <span class="pin" style="top: 12%; left: 40%;">3</span>
+        <span class="pin" style="top: 12%; left: 78%;">4</span>
+        <span class="pin" style="top: 45%; left: 50%;">5</span>
+        <span class="pin" style="top: 75%; left: 50%;">6</span>
+        <span class="pin" style="top: 90%; left: 50%;">7</span>
+      </div>
+
+      <ul class="anatomy-legend">
+        <li><span class="num">1</span>Status Orb</li>
+        <li><span class="num">2</span>Status Tag</li>
+        <li><span class="num">3</span>Detail Pill</li>
+        <li><span class="num">4</span>Meta Capsule</li>
+        <li><span class="num">5</span>Thought Stream</li>
+        <li><span class="num">6</span>Observation Card</li>
+        <li><span class="num">7</span>Preview Card</li>
+      </ul>
+
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr><th>Region</th><th>Purpose</th><th>Updates</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Status Orb</strong></td><td>24×24 icon reflecting current action</td><td>Per action change</td></tr>
+            <tr><td><strong>Status Tag</strong></td><td>Human-readable label ("Thinking", "Gmail")</td><td>Per action change</td></tr>
+            <tr><td><strong>Detail Pill</strong></td><td>Elided tool name (e.g., "whatsapp_send")</td><td>Per tool call</td></tr>
+            <tr><td><strong>Meta Capsule</strong></td><td>Step counter + token count</td><td>Per step</td></tr>
+            <tr><td><strong>Thought Stream</strong></td><td>Markdown-rendered reasoning</td><td>Throttled at 90ms</td></tr>
+            <tr><td><strong>Observation Card</strong></td><td>Collapsible tool result (max 90px)</td><td>Per tool result</td></tr>
+            <tr><td><strong>Preview Card</strong></td><td>HITL confirmation UI</td><td>Per confirmation</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="agent-panel-orb">The Status Orb — 16 Action Icons<a href="#agent-panel-orb" class="anchor material-symbols-outlined">link</a></h2>
+      <p>Every tool type has its own visual identity. The orb changes icon and color to reflect what's currently happening:</p>
+
+      <div class="ui-mode-grid">
+        <div class="ui-mode-item">
+          <div class="icon-circle"><span class="material-symbols-outlined">blur_on</span></div>
+          <div class="label">Thinking</div>
+          <div class="trigger">Initial planning</div>
+        </div>
+        <div class="ui-mode-item">
+          <div class="icon-circle"><span class="material-symbols-outlined">search</span></div>
+          <div class="label">Search</div>
+          <div class="trigger">search_actions</div>
+        </div>
+        <div class="ui-mode-item">
+          <div class="icon-circle"><span class="material-symbols-outlined">manage_search</span></div>
+          <div class="label">Deep Task</div>
+          <div class="trigger">deep_research</div>
+        </div>
+        <div class="ui-mode-item">
+          <div class="icon-circle"><span class="material-symbols-outlined">terminal</span></div>
+          <div class="label">Terminal</div>
+          <div class="trigger">execute_terminal</div>
+        </div>
+        <div class="ui-mode-item">
+          <div class="icon-circle"><span class="material-symbols-outlined">code</span></div>
+          <div class="label">Python</div>
+          <div class="trigger">run_python_code</div>
+        </div>
+        <div class="ui-mode-item">
+          <div class="icon-circle"><span class="material-symbols-outlined">mouse</span></div>
+          <div class="label">GUI Control</div>
+          <div class="trigger">gui_controller</div>
+        </div>
+        <div class="ui-mode-item">
+          <div class="icon-circle"><span class="material-symbols-outlined">hub</span></div>
+          <div class="label">Memory</div>
+          <div class="trigger">memory_actions</div>
+        </div>
+        <div class="ui-mode-item">
+          <div class="icon-circle"><span class="material-symbols-outlined">folder</span></div>
+          <div class="label">Files</div>
+          <div class="trigger">file_operations</div>
+        </div>
+        <div class="ui-mode-item">
+          <div class="icon-circle"><span class="material-symbols-outlined">phone_android</span></div>
+          <div class="label">Mobile</div>
+          <div class="trigger">mobile_action</div>
+        </div>
+        <div class="ui-mode-item">
+          <div class="icon-circle"><span class="material-symbols-outlined">swap_horiz</span></div>
+          <div class="label">Transfer</div>
+          <div class="trigger">file_transfer_action</div>
+        </div>
+        <div class="ui-mode-item">
+          <div class="icon-circle"><span class="material-symbols-outlined">image</span></div>
+          <div class="label">Image Gen</div>
+          <div class="trigger">image_command</div>
+        </div>
+        <div class="ui-mode-item">
+          <div class="icon-circle"><span class="material-symbols-outlined">content_paste</span></div>
+          <div class="label">Clipboard</div>
+          <div class="trigger">clipboard_action</div>
+        </div>
+        <div class="ui-mode-item">
+          <div class="icon-circle"><span class="material-symbols-outlined">calendar_today</span></div>
+          <div class="label">Calendar</div>
+          <div class="trigger">calendar_action</div>
+        </div>
+        <div class="ui-mode-item">
+          <div class="icon-circle"><span class="material-symbols-outlined">desktop_windows</span></div>
+          <div class="label">Workspace</div>
+          <div class="trigger">system_controller</div>
+        </div>
+        <div class="ui-mode-item">
+          <div class="icon-circle"><span class="material-symbols-outlined">mail</span></div>
+          <div class="label">Comms</div>
+          <div class="trigger">communication</div>
+        </div>
+        <div class="ui-mode-item">
+          <div class="icon-circle"><span class="material-symbols-outlined">check_circle</span></div>
+          <div class="label">Done</div>
+          <div class="trigger">step = 0</div>
+        </div>
+      </div>
+
+      <div class="callout info">
+        <span class="material-symbols-outlined">info</span>
+        <div class="callout-body">
+          <p><strong>Cached by RGB bucket + DPR.</strong> Static icons (<code>search</code>, <code>python</code>, etc.) are pre-rendered as QPixmaps for near-zero paint cost. Only <code>thinking</code> and <code>idle</code> are re-rendered live because they animate the halo pulse.</p>
+        </div>
+      </div>
+
+      <h2 id="agent-panel-colors">Color Palette — Action-Coded Theming<a href="#agent-panel-colors" class="anchor material-symbols-outlined">link</a></h2>
+      <p>The entire panel — border gradient, ambient glow, observation bar, orb — shifts to a per-action color. This palette is defined in <code>Theme.py</code> as <code>ACCENT_PALETTE</code>:</p>
+
+      <div class="color-swatch-row">
+        <span class="color-swatch" style="color: #0A84FF;"><span class="dot" style="background: #0A84FF;"></span>Search</span>
+        <span class="color-swatch" style="color: #FF4169;"><span class="dot" style="background: #FF4169;"></span>Deep Task</span>
+        <span class="color-swatch" style="color: #3082C8;"><span class="dot" style="background: #3082C8;"></span>Python</span>
+        <span class="color-swatch" style="color: #BF5AF2;"><span class="dot" style="background: #BF5AF2;"></span>Thinking</span>
+        <span class="color-swatch" style="color: #FF9F0A;"><span class="dot" style="background: #FF9F0A;"></span>Workspace</span>
+        <span class="color-swatch" style="color: #30D158;"><span class="dot" style="background: #30D158;"></span>Comms</span>
+        <span class="color-swatch" style="color: #25D366;"><span class="dot" style="background: #25D366;"></span>WhatsApp</span>
+        <span class="color-swatch" style="color: #0098EA;"><span class="dot" style="background: #0098EA;"></span>Telegram</span>
+        <span class="color-swatch" style="color: #5E5CE6;"><span class="dot" style="background: #5E5CE6;"></span>GUI</span>
+        <span class="color-swatch" style="color: #00D4B2;"><span class="dot" style="background: #00D4B2;"></span>Mobile</span>
+        <span class="color-swatch" style="color: #FFD60A;"><span class="dot" style="background: #FFD60A;"></span>File Ops</span>
+        <span class="color-swatch" style="color: #32D74B;"><span class="dot" style="background: #32D74B;"></span>Terminal</span>
+        <span class="color-swatch" style="color: #FF6E8C;"><span class="dot" style="background: #FF6E8C;"></span>Clipboard</span>
+        <span class="color-swatch" style="color: #F04664;"><span class="dot" style="background: #F04664;"></span>Image Gen</span>
+        <span class="color-swatch" style="color: #5AC8FA;"><span class="dot" style="background: #5AC8FA;"></span>Calendar</span>
+        <span class="color-swatch" style="color: #AF52DE;"><span class="dot" style="background: #AF52DE;"></span>Memory</span>
+      </div>
+
+      <div class="callout success">
+        <span class="material-symbols-outlined" style="color: var(--success);">auto_awesome</span>
+        <div class="callout-body">
+          <p><strong>Smooth crossfades.</strong> Colors transition over ~1 second at 45ms per tick (18% per step). When the task finishes, the palette drifts back to neutral grey (<code>idle = [130,140,165]</code>).</p>
+        </div>
+      </div>
+
+      <h2 id="agent-panel-thought">The Thought Stream<a href="#agent-panel-thought" class="anchor material-symbols-outlined">link</a></h2>
+      <p>The main body of the panel renders the agent's live reasoning as formatted markdown. It supports:</p>
+      <ul class="bullets">
+        <li><strong>Fenced code blocks</strong> with syntax highlighting — Python, JS, SQL, C++, Go, Rust, Shell (auto-detected regex)</li>
+        <li><strong>Tables</strong> with alignment detection</li>
+        <li><strong>Headings, bold, italic, strikethrough</strong></li>
+        <li><strong>Inline code chips</strong> and <strong>clickable links</strong> (open in external browser)</li>
+        <li><strong>Bullet + numbered lists</strong> with nested indentation</li>
+        <li><strong>Blockquotes</strong> (nested depth supported)</li>
+        <li><strong>Checkbox lists</strong> — <code>[ ]</code> → ☐, <code>[x]</code> → ☑</li>
+      </ul>
+
+      <div class="gallery-row">
+        <figure class="screenshot-frame">
+          <img src="screenshots/ui/agent-panel-thought-code.png" alt="Thought stream showing Python code block with syntax highlighting" loading="lazy">
+          <figcaption><span class="badge">Code</span>Python syntax highlighted in thought stream</figcaption>
+        </figure>
+        <figure class="screenshot-frame">
+          <img src="screenshots/ui/agent-panel-thought-table.png" alt="Thought stream showing a markdown table with proper formatting" loading="lazy">
+          <figcaption><span class="badge">Table</span>Markdown table with aligned cells</figcaption>
+        </figure>
+      </div>
+
+      <div class="callout info">
+        <span class="material-symbols-outlined">info</span>
+        <div class="callout-body">
+          <p><strong>Scroll lock behavior.</strong> Auto-scrolls to bottom unless you've manually scrolled up. Scrolling up "locks" the view; new content won't pull you down until the step counter increments. After 5,000 chars, older content is safely trimmed — mid-code-fence and mid-table cuts are auto-healed.</p>
+        </div>
+      </div>
+
+      <h2 id="agent-panel-observation">The Observation Card<a href="#agent-panel-observation" class="anchor material-symbols-outlined">link</a></h2>
+      <p>When a tool returns an <code>observation</code> string, the panel shows a dedicated card below the thought stream:</p>
+      <ul class="bullets">
+        <li><strong>Max height:</strong> 90px (elided to 155 chars)</li>
+        <li><strong>Accent-colored left bar</strong> matches current action color</li>
+        <li><strong>Auto-hides</strong> when next thought arrives or task completes</li>
+        <li><strong>Separated from thought stream</strong> by a hairline divider</li>
+      </ul>
+
+      <figure class="screenshot-frame">
+        <img src="screenshots/ui/agent-panel-observation.png" alt="Observation card showing test result summary with accent-colored left border" loading="lazy">
+        <figcaption><span class="badge">Result</span>Tool observation — 12 tests passed, accent-bordered</figcaption>
+      </figure>
+
+      <h2 id="agent-panel-hitl">Human-in-the-Loop Confirmation<a href="#agent-panel-hitl" class="anchor material-symbols-outlined">link</a></h2>
+      <p>This is the trust anchor. When the agent needs to send an irreversible action — WhatsApp message, Telegram, Email, or destructive file operation — the panel raises a premium confirmation card that <strong>cannot be bypassed</strong>.</p>
+
+      <div class="callout danger">
+        <span class="material-symbols-outlined">gpp_maybe</span>
+        <div class="callout-body">
+          <p><strong>Never bypassed.</strong> Even if the user says "just do it" in the voice prompt, <code>email_action</code>, <code>whatsapp_action</code>, and <code>telegram_action</code> <strong>always</strong> raise the confirmation card. The agent cannot auto-approve its own outgoing messages. This is enforced at the ZMQ boundary, not in the prompt.</p>
+        </div>
+      </div>
+
+      <h3 id="agent-panel-hitl-when">Actions that trigger the gate</h3>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr><th>Platform</th><th>Tool</th><th>Irreversible?</th><th>Requires Confirm</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>WhatsApp</td><td><code>whatsapp_action</code></td><td>Yes — real contact</td><td>✅</td></tr>
+            <tr><td>Telegram</td><td><code>telegram_action</code></td><td>Yes — message/call</td><td>✅</td></tr>
+            <tr><td>Email</td><td><code>email_action</code></td><td>Yes — Gmail OAuth</td><td>✅</td></tr>
+            <tr><td>File delete</td><td><code>file_operations</code> (delete)</td><td>Yes — disk-level</td><td>✅</td></tr>
+            <tr><td>Terminal</td><td><code>execute_terminal_command</code> (<code>rm -rf</code>)</td><td>Yes — blocked/asked</td><td>✅</td></tr>
+            <tr><td>Calendar</td><td><code>calendar_action</code> (create/delete)</td><td>Yes — external event</td><td>✅</td></tr>
+            <tr><td>Image gen</td><td><code>image_command</code></td><td>Depends on provider</td><td>⚠️ Varies</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 id="agent-panel-hitl-anatomy">Anatomy of the confirmation card</h3>
+      <div class="shot-annotated">
+        <img src="screenshots/ui/agent-panel-hitl-whatsapp.png" alt="WhatsApp confirmation card with badge, recipient, editable body, and Send/Cancel buttons" loading="lazy">
+        <span class="pin" style="top: 10%; left: 10%;">1</span>
+        <span class="pin" style="top: 10%; left: 40%;">2</span>
+        <span class="pin" style="top: 50%; left: 50%;">3</span>
+        <span class="pin" style="top: 88%; left: 25%;">4</span>
+        <span class="pin" style="top: 88%; left: 75%;">5</span>
+      </div>
+      <ul class="anatomy-legend">
+        <li><span class="num">1</span>Platform Badge</li>
+        <li><span class="num">2</span>Recipient Row</li>
+        <li><span class="num">3</span>Body Editor</li>
+        <li><span class="num">4</span>Cancel Button</li>
+        <li><span class="num">5</span>Send Now Button</li>
+      </ul>
+
+      <p>Each platform gets its own themed badge color:</p>
+      <div class="gallery-row">
+        <figure class="screenshot-frame">
+          <img src="screenshots/ui/agent-panel-hitl-whatsapp.png" alt="WhatsApp confirmation with green badge" loading="lazy">
+          <figcaption><span class="badge" style="background: rgba(37,211,102,0.15); border-color: rgba(37,211,102,0.4); color: #25D366;">WhatsApp</span>Green badge</figcaption>
+        </figure>
+        <figure class="screenshot-frame">
+          <img src="screenshots/ui/agent-panel-hitl-telegram.png" alt="Telegram confirmation with blue badge" loading="lazy">
+          <figcaption><span class="badge" style="background: rgba(0,152,234,0.15); border-color: rgba(0,152,234,0.4); color: #0098EA;">Telegram</span>Blue badge</figcaption>
+        </figure>
+        <figure class="screenshot-frame">
+          <img src="screenshots/ui/agent-panel-hitl-email.png" alt="Email confirmation with orange badge and subject field" loading="lazy">
+          <figcaption><span class="badge" style="background: rgba(255,159,10,0.15); border-color: rgba(255,159,10,0.4); color: #FF9F0A;">Email</span>Orange badge + subject</figcaption>
+        </figure>
+      </div>
+
+      <h3 id="agent-panel-hitl-edit">What you can edit</h3>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr><th>Field</th><th>Editable</th><th>Persisted to Agent</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Recipient (To:)</td><td>❌ No</td><td>—</td></tr>
+            <tr><td>Subject (email)</td><td>✅ Yes</td><td>✅ Yes</td></tr>
+            <tr><td>Body</td><td>✅ Yes</td><td>✅ Yes</td></tr>
+            <tr><td>Attachments</td><td>❌ No</td><td>—</td></tr>
+            <tr><td>Platform</td><td>❌ No</td><td>—</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout warning">
+        <span class="material-symbols-outlined">warning</span>
+        <div class="callout-body">
+          <p><strong>Recipients are locked.</strong> You can't redirect a message to a different person from the panel — this prevents prompt-injection attacks from hijacking outgoing comms. To change recipient, cancel and re-issue the command.</p>
+        </div>
+      </div>
+
+      <h3 id="agent-panel-hitl-keys">Keyboard shortcuts during confirmation</h3>
+      <div class="kbd-chord">
+        <kbd class="kbd-key">Esc</kbd>
+        <span class="kbd-plus">→</span>
+        <span style="color: var(--text-dim); font-size: 0.88rem;">Cancel &amp; reject</span>
+      </div>
+      <div class="kbd-chord">
+        <kbd class="kbd-key">Ctrl</kbd>
+        <span class="kbd-plus">+</span>
+        <kbd class="kbd-key">Enter</kbd>
+        <span class="kbd-plus">→</span>
+        <span style="color: var(--text-dim); font-size: 0.88rem;">Approve &amp; send</span>
+      </div>
+
+      <div class="callout info">
+        <span class="material-symbols-outlined">info</span>
+        <div class="callout-body">
+          <p><strong>Focus steal on arrival.</strong> When a confirmation appears, the panel steals focus to the body editor — you can start typing edits immediately. This is the only time the panel takes focus.</p>
+        </div>
+      </div>
+
+      <h3 id="agent-panel-hitl-queue">The confirmation queue</h3>
+      <ul class="bullets">
+        <li>If a second confirmation arrives while one is open, it's <strong>appended to a FIFO queue</strong></li>
+        <li>Once you decide on the first, the next slides in immediately — no flash, no wait</li>
+        <li>No hard limit — but in practice agents rarely issue more than 2 in a row</li>
+        <li>Queue is <strong>in-memory only</strong> — a panel restart clears the queue</li>
+        <li>Queued confirmations are <strong>not auto-approved</strong> if ignored — they stay pending</li>
+      </ul>
+
+      <div class="callout danger">
+        <span class="material-symbols-outlined">timer</span>
+        <div class="callout-body">
+          <p><strong>90-second expiry.</strong> Each confirmation has a 90-second timeout enforced by the agent (not the panel). If you don't decide in time, the agent autonomously aborts and logs <code>HITL TIMEOUT</code>. Approve fast or re-run the command.</p>
+        </div>
+      </div>
+
+      <h2 id="agent-panel-controls">Controls &amp; Shortcuts<a href="#agent-panel-controls" class="anchor material-symbols-outlined">link</a></h2>
+
+      <h3>Dragging</h3>
+      <ul class="bullets">
+        <li><strong>Click and drag</strong> anywhere in the top 62px header zone</li>
+        <li><strong>Not draggable</strong> from buttons, text areas, scrollbars, or links</li>
+        <li><strong>Snaps to screen edges</strong> — clamped to primary screen bounds</li>
+        <li><strong>Position persists</strong> across panel show/hide within the session</li>
+      </ul>
+
+      <h3>Resizing</h3>
+      <ul class="bullets">
+        <li><strong>9px grab-zone</strong> on all four edges</li>
+        <li><strong>22px corner-zone</strong> for diagonal resize</li>
+        <li><strong>Min size:</strong> 440 × 160</li>
+        <li><strong>Max size:</strong> 1280 × 860</li>
+        <li><strong>Live layout</strong> — thought stream re-flows as you drag</li>
+      </ul>
+
+      <h3>Reset to default</h3>
+      <div class="kbd-chord">
+        <kbd class="kbd-key">Double-click header</kbd>
+        <span class="kbd-plus">→</span>
+        <span style="color: var(--text-dim); font-size: 0.88rem;">Restore 580 × 196, re-center</span>
+      </div>
+
+      <h3>Auto-hide</h3>
+      <ul class="bullets">
+        <li><strong>4-second cooldown</strong> after last status update</li>
+        <li><strong>Suppressed</strong> when awaiting confirmation, dragging, resizing, or hovering</li>
+        <li><strong>Fades out</strong> over 190ms and slides up 20px</li>
+        <li><strong>RGB timer stops</strong> on hide — zero background CPU</li>
+      </ul>
+
+      <h2 id="agent-panel-arch">Architecture — ZMQ Bridge<a href="#agent-panel-arch" class="anchor material-symbols-outlined">link</a></h2>
+      <p>The panel communicates with the agent loop over ZeroMQ sockets. Three independent channels handle the three message types:</p>
+
+      <div class="arch-flow">
+        <div class="arch-flow-row">
+          <span class="arch-flow-label">Status</span>
+          <span class="arch-flow-node accent">Agent PUB :5555</span>
+          <span class="arch-flow-arrow">→</span>
+          <span class="arch-flow-node">Panel SUB</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--text-muted); margin-left: auto;">PUB/SUB · fire-and-forget</span>
+        </div>
+        <div class="arch-flow-row">
+          <span class="arch-flow-label">Confirm In</span>
+          <span class="arch-flow-node purple">Agent PUSH :5556</span>
+          <span class="arch-flow-arrow">→</span>
+          <span class="arch-flow-node">Panel PULL</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--text-muted); margin-left: auto;">PUSH/PULL · reliable</span>
+        </div>
+        <div class="arch-flow-row">
+          <span class="arch-flow-label">Confirm Out</span>
+          <span class="arch-flow-node">Panel PUSH</span>
+          <span class="arch-flow-arrow">→</span>
+          <span class="arch-flow-node green">Agent PULL :5557</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--text-muted); margin-left: auto;">PUSH/PULL · decision reply</span>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr><th>Port</th><th>Direction</th><th>Protocol</th><th>Purpose</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>5555</code></td><td>Agent → Panel</td><td>PUB/SUB</td><td>Status updates — self-healing if panel restarts</td></tr>
+            <tr><td><code>5556</code></td><td>Agent → Panel</td><td>PUSH/PULL</td><td>Confirmation requests — reliable delivery</td></tr>
+            <tr><td><code>5557</code></td><td>Panel → Agent</td><td>PUSH/PULL</td><td>Confirmation decisions — approve/cancel + edits</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout info">
+        <span class="material-symbols-outlined">info</span>
+        <div class="callout-body">
+          <p><strong>Auto-recovery.</strong> The listener automatically retries as the opposing socket type on <code>EADDRINUSE</code> — meaning the panel and agent can start in <strong>any order</strong> and still connect.</p>
+        </div>
+      </div>
+
+      <div class="callout success">
+        <span class="material-symbols-outlined">speed</span>
+        <div class="callout-body">
+          <p><strong>Message batching.</strong> The listener drains up to 100 status messages per 25ms poll cycle and only emits the latest. Even a firehose of thought tokens never floods Qt's event queue — the panel stays at 60fps.</p>
+        </div>
+      </div>
+
+      <h2 id="agent-panel-perf">Performance &amp; Premium Details<a href="#agent-panel-perf" class="anchor material-symbols-outlined">link</a></h2>
+
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr><th>Technique</th><th>What it does</th><th>Impact</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Island static pixmap cache</strong></td><td>Shell (shadows, gradient, shine) pre-rendered once per size + color bucket</td><td>90% paint cost eliminated on static frames</td></tr>
+            <tr><td><strong>Border-only repaints</strong></td><td>During RGB crossfades, only the 1px border region is invalidated</td><td>Constant 60fps during color transitions</td></tr>
+            <tr><td><strong>Thought throttling</strong></td><td>90ms debounce on markdown rendering</td><td>Token streams don't jank</td></tr>
+            <tr><td><strong>Icon pixmap cache</strong></td><td>16 mode icons cached by RGB bucket + DPR</td><td>Zero repaint cost for static orbs</td></tr>
+            <tr><td><strong>Markdown 4-layer cache</strong></td><td>HTML, line, code-line, highlight all memoized</td><td>Renders 50× faster on repeat content</td></tr>
+            <tr><td><strong>Smooth scroll animation</strong></td><td>110ms eased, 0.65 wheel multiplier</td><td>Native-feeling, not Qt-jittery</td></tr>
+            <tr><td><strong>Fast-mode resize</strong></td><td>During interactive drag, shadows collapse to 1 layer</td><td>Resize stays fluid on 4GB RAM</td></tr>
+            <tr><td><strong>Elided labels</strong></td><td>Detail, recipient, attachment truncate with …</td><td>Never overflow, never reflow</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="agent-panel-trouble">Troubleshooting the Panel<a href="#agent-panel-trouble" class="anchor material-symbols-outlined">link</a></h2>
+
+      <details class="faq">
+        <summary>Panel doesn't appear when I run a command<span class="material-symbols-outlined">add</span></summary>
+        <div class="faq-body">Check that ZmqListener is running (log line: <code>ZmqListener loop error</code>). Verify ports <code>5555</code>–<code>5557</code> are not firewalled. On restrictive Windows setups, allow <code>python.exe</code> through Windows Defender Firewall.</div>
+      </details>
+
+      <details class="faq">
+        <summary>Confirmation card appears but Esc doesn't cancel<span class="material-symbols-outlined">add</span></summary>
+        <div class="faq-body">Ensure focus is on the panel — click the panel first. Esc is bound to <code>preview_body_edit</code> and <code>preview_subject_input</code> only. If focus leaked elsewhere, use the Cancel button.</div>
+      </details>
+
+      <details class="faq">
+        <summary>Panel stuck showing "Step 03" forever<span class="material-symbols-outlined">add</span></summary>
+        <div class="faq-body">The agent likely crashed mid-loop. Restart JARVIS. The panel resets on the next status update with <code>step=0, action=idle</code>.</div>
+      </details>
+
+      <details class="faq">
+        <summary>Text in thought stream is unreadable<span class="material-symbols-outlined">add</span></summary>
+        <div class="faq-body">Missing <code>english.ttf</code>, <code>devangri.ttf</code>, or <code>code.ttf</code> in <code>Data/fonts/</code>. Ensure all three fonts are present. The panel falls back to Segoe UI but may render Devanagari incorrectly.</div>
+      </details>
+
+      <div class="pager">
+        <a href="#architecture" class="pager-link">
+          <span class="pager-label">Previous</span>
+          <span class="pager-title"><span class="material-symbols-outlined">arrow_back</span>Architecture</span>
+        </a>
+        <a href="#typing-popup" class="pager-link next">
+          <span class="pager-label">Next</span>
+          <span class="pager-title">Typing Popup<span class="material-symbols-outlined">arrow_forward</span></span>
+        </a>
+      </div>
+
+      <hr/>
+
+      <h1 id="typing-popup">Typing Popup</h1>
+
+      <div class="ui-hero-banner">
+        <div class="badge-row">
+          <span class="ui-hero-badge live"><span class="dot"></span>Live</span>
+          <span class="ui-hero-badge"><span class="material-symbols-outlined">description</span>File IPC</span>
+          <span class="ui-hero-badge"><span class="material-symbols-outlined">graphic_eq</span>TTS Word Sync</span>
+          <span class="ui-hero-badge"><span class="material-symbols-outlined">image</span>Async Previews</span>
+        </div>
+        <h1>The Typing Popup</h1>
+        <p>The Typing Popup is JARVIS's response surface — the premium floating window where the agent's final answer streams in character-by-character, with live markdown rendering, syntax-highlighted code blocks, async image previews, and word-by-word text-to-speech highlighting. Where the Agent Panel shows what JARVIS is thinking, the Typing Popup shows what it's saying.</p>
+      </div>
+
+      <div class="ui-feature-grid">
+        <div class="ui-feature-card">
+          <div class="icon-wrap"><span class="material-symbols-outlined">stream</span></div>
+          <h4>Token Streaming</h4>
+          <p>Text appears as it's generated — markdown heals mid-stream.</p>
+        </div>
+        <div class="ui-feature-card">
+          <div class="icon-wrap"><span class="material-symbols-outlined">graphic_eq</span></div>
+          <h4>TTS Word Sync</h4>
+          <p>Every spoken word highlights in real-time, synced to audio.</p>
+        </div>
+        <div class="ui-feature-card">
+          <div class="icon-wrap"><span class="material-symbols-outlined">image</span></div>
+          <h4>Async Previews</h4>
+          <p>YouTube thumbnails, link cards, image cards — all fetched in background.</p>
+        </div>
+        <div class="ui-feature-card">
+          <div class="icon-wrap"><span class="material-symbols-outlined">auto_awesome</span></div>
+          <h4>Smart Self-Dismiss</h4>
+          <p>Fades out after 6s on short responses, stays on long ones.</p>
+        </div>
+      </div>
+
+      <div class="callout info">
+        <span class="material-symbols-outlined">info</span>
+        <div class="callout-body">
+          <p><strong>Read-only surface.</strong> The popup doesn't accept input — you talk to JARVIS via the Agent Panel or voice. It's auto-positioned and self-managing.</p>
+        </div>
+      </div>
+
+      <figure class="screenshot-frame">
+        <img src="screenshots/ui/typing-popup-hero.png" alt="Typing Popup showing streaming response with code block and image card rendering" loading="lazy">
+        <figcaption><span class="badge">Live</span>Typing Popup mid-stream — code block + image card</figcaption>
+      </figure>
+
+      <h2 id="typing-popup-when">When It Appears<a href="#typing-popup-when" class="anchor material-symbols-outlined">link</a></h2>
+      <ul class="bullets">
+        <li><strong>File-triggered:</strong> appears the moment <code>Data/typing_status.json</code> receives <code>{status: "typing", text: "..."}</code></li>
+        <li><strong>Auto-shows</strong> on <code>"typing"</code> or <code>"completed"</code> status change</li>
+        <li><strong>Re-shows</strong> if the file is re-written while the popup is fading out</li>
+        <li><strong>Re-renders live</strong> as the <code>text</code> field grows</li>
+        <li><strong>Always centered</strong> horizontally, 36px from top — unless dragged</li>
+        <li><strong>Slides down + fades in</strong> (320ms quint-eased entry)</li>
+      </ul>
+
+      <div class="callout warning">
+        <span class="material-symbols-outlined">warning</span>
+        <div class="callout-body">
+          <p><strong>File-driven, not socket-driven.</strong> The popup is entirely file-triggered — no ZMQ, no IPC server. If <code>Data/typing_status.json</code> is never written by the agent, the popup will never appear. This makes it safe to run standalone and easy to test manually.</p>
+        </div>
+      </div>
+
+      <h2 id="typing-popup-states">The Response Lifecycle<a href="#typing-popup-states" class="anchor material-symbols-outlined">link</a></h2>
+
+      <div class="arch-flow">
+        <div class="arch-flow-row">
+          <span class="arch-flow-label">State 1</span>
+          <span class="arch-flow-node accent">TYPING</span>
+          <span class="arch-flow-arrow">→</span>
+          <span style="color: var(--text-dim); font-size: 0.88rem;">Purple orb, auto-scroll, height animates up</span>
+        </div>
+        <div class="arch-flow-row">
+          <span class="arch-flow-label">State 2</span>
+          <span class="arch-flow-node green">COMPLETED</span>
+          <span class="arch-flow-arrow">→</span>
+          <span style="color: var(--text-dim); font-size: 0.88rem;">Green check, final render, scroll unlocks</span>
+        </div>
+        <div class="arch-flow-row">
+          <span class="arch-flow-label">State 3</span>
+          <span class="arch-flow-node">DISMISSED</span>
+          <span class="arch-flow-arrow">→</span>
+          <span style="color: var(--text-dim); font-size: 0.88rem;">250ms fade out, app exits if standalone</span>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr><th>State</th><th>Status Tag</th><th>Orb Color</th><th>Auto-Behaviors</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>typing</code></td><td>"Jarvis Responding"</td><td>Purple <code>#BF5AF2</code></td><td>Auto-scroll ON, height animates up, idle counter reset</td></tr>
+            <tr><td><code>completed</code></td><td>"Response Ready"</td><td>Green <code>#30D158</code></td><td>Scroll unlocks, final render, idle counter starts</td></tr>
+            <tr><td><code>dismissed</code></td><td>—</td><td>—</td><td>250ms fade out, app exits</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="gallery-row">
+        <figure class="screenshot-frame">
+          <img src="screenshots/ui/typing-popup-typing.png" alt="Typing state with purple orb and streaming text" loading="lazy">
+          <figcaption><span class="badge">Typing</span>Purple orb, streaming text</figcaption>
+        </figure>
+        <figure class="screenshot-frame">
+          <img src="screenshots/ui/typing-popup-completed.png" alt="Completed state with green check and final markdown" loading="lazy">
+          <figcaption><span class="badge">Completed</span>Green check, final markdown</figcaption>
+        </figure>
+        <figure class="screenshot-frame">
+          <img src="screenshots/ui/typing-popup-tts.png" alt="TTS active with word highlighted in purple" loading="lazy">
+          <figcaption><span class="badge">TTS</span>Word highlighted in accent color</figcaption>
+        </figure>
+      </div>
+
+      <h2 id="typing-popup-anatomy">Anatomy of the Popup<a href="#typing-popup-anatomy" class="anchor material-symbols-outlined">link</a></h2>
+
+      <div class="shot-annotated">
+        <img src="screenshots/ui/typing-popup-anatomy.png" alt="Typing Popup anatomy with numbered pins overlaid" loading="lazy">
+        <span class="pin" style="top: 12%; left: 5%;">1</span>
+        <span class="pin" style="top: 12%; left: 18%;">2</span>
+        <span class="pin" style="top: 12%; left: 32%;">3</span>
+        <span class="pin" style="top: 12%; left: 76%;">4</span>
+        <span class="pin" style="top: 12%; left: 84%;">5</span>
+        <span class="pin" style="top: 12%; left: 92%;">6</span>
+        <span class="pin" style="top: 18%; left: 50%;">7</span>
+        <span class="pin" style="top: 55%; left: 50%;">8</span>
+        <span class="pin" style="top: 85%; left: 50%;">9</span>
+      </div>
+
+      <ul class="anatomy-legend">
+        <li><span class="num">1</span>Status Orb</li>
+        <li><span class="num">2</span>Status Tag</li>
+        <li><span class="num">3</span>Mood Pill</li>
+        <li><span class="num">4</span>Speaker Button</li>
+        <li><span class="num">5</span>Copy Button</li>
+        <li><span class="num">6</span>Close Button</li>
+        <li><span class="num">7</span>Separator</li>
+        <li><span class="num">8</span>Content Area</li>
+        <li><span class="num">9</span>Preview Overlay</li>
+      </ul>
+
+      <h2 id="typing-popup-mood">The Mood Pill<a href="#typing-popup-mood" class="anchor material-symbols-outlined">link</a></h2>
+      <p>If the agent's response starts with an <code>[emotion]</code> tag (2-20 chars, alphanumeric + space + hyphen + underscore), it's extracted and displayed as a rounded pill next to the status tag. Common emotions include:</p>
+
+      <div class="gallery-row">
+        <figure class="screenshot-frame">
+          <img src="screenshots/ui/typing-popup-mood-pills.png" alt="Three mood pills showing Focused, Happy, and Curious variants" loading="lazy">
+          <figcaption><span class="badge">Moods</span>Focused · Happy · Curious</figcaption>
+        </figure>
+      </div>
+
+      <ul class="bullets">
+        <li>Example: <code>[focused] Let me analyze that codebase...</code> → pill shows <code>Focused</code></li>
+        <li><strong>Stripped from rendered text</strong> — users never see the raw tag</li>
+        <li><strong>Stripped from copy text</strong> — clipboard gets clean response only</li>
+        <li>Hidden automatically when no emotion tag is present</li>
+      </ul>
+
+      <div class="callout success">
+        <span class="material-symbols-outlined">check_circle</span>
+        <div class="callout-body">
+          <p><strong>Cosmetic layer.</strong> The mood pill doesn't affect agent behavior — it just makes the popup feel alive. Especially effective during long responses where <code>[focused]</code> shifts to <code>[confident]</code> at the end.</p>
+        </div>
+      </div>
+
+      <h2 id="typing-popup-markdown">Rich Content Rendering<a href="#typing-popup-markdown" class="anchor material-symbols-outlined">link</a></h2>
+
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr><th>Feature</th><th>Rendering</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Headings (H1-H6)</td><td>Size-scaled, purple bottom-border on H1</td></tr>
+            <tr><td>Bold / italic / strikethrough</td><td>Inline styled</td></tr>
+            <tr><td>Inline <code>code</code></td><td>Dark chip, purple text, monospace</td></tr>
+            <tr><td>Fenced code blocks</td><td>Traffic-light header, language label, monokai syntax</td></tr>
+            <tr><td>Tables</td><td>Bordered grid, header row with 7% white bg</td></tr>
+            <tr><td>Blockquotes</td><td>Left purple border, italic, tinted bg</td></tr>
+            <tr><td>Bullet / numbered lists</td><td>Nested indentation, custom bullets</td></tr>
+            <tr><td>Links</td><td>Purple, underlined, click opens in external browser</td></tr>
+            <tr><td>Images (URL, path)</td><td>Rendered as styled card, click opens full preview</td></tr>
+            <tr><td>YouTube URLs</td><td>Auto-detected, thumbnail with play button</td></tr>
+            <tr><td>Checkboxes</td><td>☐ / ☑ glyphs</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="gallery-row">
+        <figure class="screenshot-frame">
+          <img src="screenshots/ui/typing-popup-code-block.png" alt="Code block with traffic lights, PYTHON label, and syntax highlighting" loading="lazy">
+          <figcaption><span class="badge">Code</span>Traffic lights + PYTHON label + monokai</figcaption>
+        </figure>
+        <figure class="screenshot-frame">
+          <img src="screenshots/ui/typing-popup-markdown-table.png" alt="Markdown table with proper cell borders and header row" loading="lazy">
+          <figcaption><span class="badge">Table</span>Bordered grid with header row</figcaption>
+        </figure>
+      </div>
+
+      <h3 id="typing-popup-streaming">The Streaming Stabilizer</h3>
+      <p>While text is streaming, markdown is often <strong>incomplete</strong> — unclosed code fences, partial links, broken image syntax. The parser auto-heals on every render:</p>
+
+      <div class="storyboard">
+        <div class="frame">
+          <div class="frame-time">Frame 1</div>
+          <div class="frame-desc">User sees: <code>```py</code> start, code streaming</div>
+        </div>
+        <span class="arrow">→</span>
+        <div class="frame">
+          <div class="frame-time">Frame 2</div>
+          <div class="frame-desc">Partial fence auto-closed, renders as block</div>
+        </div>
+        <span class="arrow">→</span>
+        <div class="frame">
+          <div class="frame-time">Frame 3</div>
+          <div class="frame-desc">Full render, syntax highlighting active</div>
+        </div>
+      </div>
+
+      <div class="callout success">
+        <span class="material-symbols-outlined">check_circle</span>
+        <div class="callout-body">
+          <p><strong>No broken renders.</strong> Unclosed code fences auto-append <code>```</code>, partial image syntax is replaced with a "Loading Image..." card, trailing URLs become link preview placeholders. Users never see a broken UI, even if markdown is 40% complete.</p>
+        </div>
+      </div>
+
+      <h2 id="typing-popup-previews">Async Image &amp; Link Previews<a href="#typing-popup-previews" class="anchor material-symbols-outlined">link</a></h2>
+      <p>Four custom URL schemes drive the preview system:</p>
+
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr><th>Scheme</th><th>Purpose</th><th>Renderer</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>img://&lt;url&gt;</code></td><td>Direct image</td><td>Styled rounded card with domain + resolution footer</td></tr>
+            <tr><td><code>preview://&lt;url&gt;</code></td><td>Link preview card</td><td>420×286 card with hero image + title + description</td></tr>
+            <tr><td><code>loading://image</code></td><td>Placeholder</td><td>Animated "Loading..." shimmer while fetching</td></tr>
+            <tr><td><code>imgpreview://&lt;url&gt;</code></td><td>Full-screen click</td><td>Opens the modal overlay</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Link preview pipeline</h3>
+      <ol class="steps">
+        <li><strong>Microlink API attempt</strong> — fetches title, description, image, publisher from the target URL.</li>
+        <li><strong>Fallback: direct scrape</strong> — if Microlink fails or times out, fetches the raw URL and parses OpenGraph tags.</li>
+        <li><strong>Hero image fetch</strong> — if an image URL is found, a second async request downloads it.</li>
+        <li><strong>Card render</strong> — composes a 420×286 card: hero (192px) + title + description + domain pill.</li>
+        <li><strong>Cache</strong> — meta cached in <code>Data/cache/meta_cache.json</code>, styled image cached in LRU.</li>
+      </ol>
+
+      <div class="gallery-row">
+        <figure class="screenshot-frame">
+          <img src="screenshots/ui/typing-popup-link-preview.png" alt="Link preview card with hero image, title, description, and domain" loading="lazy">
+          <figcaption><span class="badge">Link</span>Async link preview with hero image</figcaption>
+        </figure>
+        <figure class="screenshot-frame">
+          <img src="screenshots/ui/typing-popup-youtube.png" alt="YouTube thumbnail card with red play button pill" loading="lazy">
+          <figcaption><span class="badge">YouTube</span>Auto-embed with red play pill</figcaption>
+        </figure>
+      </div>
+
+      <h3>YouTube auto-embed</h3>
+      <ul class="bullets">
+        <li>Any YouTube URL (<code>watch?v=</code>, <code>youtu.be/</code>, <code>shorts/</code>, <code>embed/</code>) auto-extracted for the 11-char video ID</li>
+        <li>Thumbnail fetched from <code>maxresdefault.jpg</code>, fallback to <code>hqdefault.jpg</code></li>
+        <li>Rendered with centered red YouTube play button pill (58×40)</li>
+        <li>Click opens the actual YouTube URL in external browser</li>
+      </ul>
+
+      <h3>Image preview modal</h3>
+      <p>Click any image card to open the full-panel overlay with:</p>
+      <ul class="bullets">
+        <li><strong>Top bar:</strong> resolution label (<code>1920 × 1080 px</code>) + close X</li>
+        <li><strong>Center:</strong> full image scaled to fit</li>
+        <li><strong>Bottom bar:</strong> "Open Original ↗" button (opens source URL in browser)</li>
+        <li><strong>Close:</strong> click anywhere OR press Esc</li>
+      </ul>
+
+      <figure class="screenshot-frame">
+        <img src="screenshots/ui/typing-popup-image-modal.png" alt="Image preview modal with resolution label and Open Original button" loading="lazy">
+        <figcaption><span class="badge">Modal</span>Full-panel image preview with resolution + Open button</figcaption>
+      </figure>
+
+      <h3>Caching strategy</h3>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr><th>Cache</th><th>Size</th><th>TTL</th><th>Purpose</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Styled images</td><td>100 (LRU)</td><td>Until evicted</td><td>Fast re-render on scroll</td></tr>
+            <tr><td>Raw images</td><td>35 (LRU)</td><td>Until evicted</td><td>Source for re-styling on resize</td></tr>
+            <tr><td>Failed URLs</td><td>∞</td><td>30s</td><td>Avoid retrying bad URLs</td></tr>
+            <tr><td>Meta cache</td><td>∞</td><td>Persistent</td><td>Link preview metadata</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="typing-popup-tts">Text-to-Speech Integration<a href="#typing-popup-tts" class="anchor material-symbols-outlined">link</a></h2>
+      <p>When TTS is configured, every spoken word highlights in real-time — perfectly synced to the audio, not estimated. This is done via a dedicated <code>tts_word_sync.json</code> channel that carries word-level timings from the TTS engine.</p>
+
+      <div class="arch-flow">
+        <div class="arch-flow-row">
+          <span class="arch-flow-label">Step 1</span>
+          <span class="arch-flow-node accent">TTS Status</span>
+          <span class="arch-flow-arrow">→</span>
+          <span style="color: var(--text-dim); font-size: 0.88rem;">Popup starts 33ms highlight ticker</span>
+        </div>
+        <div class="arch-flow-row">
+          <span class="arch-flow-label">Step 2</span>
+          <span class="arch-flow-node purple">Word Sync</span>
+          <span class="arch-flow-arrow">→</span>
+          <span style="color: var(--text-dim); font-size: 0.88rem;">Popup builds char-span map for sentence</span>
+        </div>
+        <div class="arch-flow-row">
+          <span class="arch-flow-label">Step 3</span>
+          <span class="arch-flow-node green">Highlight</span>
+          <span class="arch-flow-arrow">→</span>
+          <span style="color: var(--text-dim); font-size: 0.88rem;">Current word gets accent bg via ExtraSelection</span>
+        </div>
+      </div>
+
+      <div class="storyboard">
+        <div class="frame">
+          <div class="frame-time">0.00s</div>
+          <div class="frame-desc">"The" highlighted</div>
+        </div>
+        <span class="arrow">→</span>
+        <div class="frame">
+          <div class="frame-time">0.15s</div>
+          <div class="frame-desc">"function" highlighted</div>
+        </div>
+        <span class="arrow">→</span>
+        <div class="frame">
+          <div class="frame-time">0.48s</div>
+          <div class="frame-desc">"returns" highlighted</div>
+        </div>
+        <span class="arrow">→</span>
+        <div class="frame">
+          <div class="frame-time">0.72s</div>
+          <div class="frame-desc">"a" highlighted</div>
+        </div>
+      </div>
+
+      <div class="callout success">
+        <span class="material-symbols-outlined">bolt</span>
+        <div class="callout-body">
+          <p><strong>Frame-perfect.</strong> The TTS engine reports its own word timings, so the highlight is exact — even at 2× speed or with pauses mid-sentence. No estimated timing, no drift.</p>
+        </div>
+      </div>
+
+      <h3>Word-sync compatibility</h3>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr><th>TTS Provider</th><th>Word Sync Supported</th><th>Notes</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Sarvam</td><td>✅ Yes</td><td>Native word timings</td></tr>
+            <tr><td>Deepgram</td><td>✅ Yes</td><td>Native word timings</td></tr>
+            <tr><td>Edge TTS</td><td>❌ No</td><td>No timings — no highlight</td></tr>
+            <tr><td>Azure TTS</td><td>✅ Yes</td><td>Via WordBoundary events</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout warning">
+        <span class="material-symbols-outlined">warning</span>
+        <div class="callout-body">
+          <p>If the TTS provider doesn't support word timings, the <strong>audio still plays</strong> and the <strong>speaker button still works</strong> — only the word highlight is silently skipped. Nothing breaks.</p>
+        </div>
+      </div>
+
+      <h2 id="typing-popup-controls">Controls &amp; Shortcuts<a href="#typing-popup-controls" class="anchor material-symbols-outlined">link</a></h2>
+
+      <h3>Dragging</h3>
+      <div class="kbd-chord">
+        <kbd class="kbd-key">Click &amp; drag</kbd>
+        <span class="kbd-plus">→</span>
+        <span style="color: var(--text-dim); font-size: 0.88rem;">Reposition popup (except on buttons/links)</span>
+      </div>
+
+      <h3>Keyboard</h3>
+      <div class="kbd-chord">
+        <kbd class="kbd-key">Esc</kbd>
+        <span class="kbd-plus">→</span>
+        <span style="color: var(--text-dim); font-size: 0.88rem;">Close modal, then fade out popup</span>
+      </div>
+
+      <h3>Scrolling</h3>
+      <ul class="bullets">
+        <li><strong>Auto-scroll ON</strong> while typing — always scrolls to bottom</li>
+        <li><strong>Scroll up</strong> — auto-scroll turns OFF (respects reading)</li>
+        <li><strong>Scroll to bottom</strong> — auto-scroll re-enables</li>
+        <li><strong>Smooth animation</strong> — cubic-eased, 25% distance per tick at 60fps</li>
+      </ul>
+
+      <h3>Auto-dismiss conditions</h3>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr><th>Condition</th><th>Value</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Status</td><td><code>completed</code></td></tr>
+            <tr><td>Mouse not hovering</td><td>Required</td></tr>
+            <tr><td>TTS not speaking</td><td>Required</td></tr>
+            <tr><td>Preview modal closed</td><td>Required</td></tr>
+            <tr><td>Word count</td><td>0 &lt; words &lt; 45</td></tr>
+            <tr><td>Idle duration</td><td>&gt; 360 ticks (~6 seconds)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout info">
+        <span class="material-symbols-outlined">info</span>
+        <div class="callout-body">
+          <p><strong>45-word threshold.</strong> Long answers stay visible (user is reading), short answers disappear (user already read it). Hover over the popup to reset the idle counter and keep it visible.</p>
+        </div>
+      </div>
+
+      <figure class="screenshot-frame">
+        <img src="screenshots/ui/typing-popup-copy-btn.png" alt="Copy button showing transition from Copy to Copied state" loading="lazy">
+        <figcaption><span class="badge">Copy</span>Copy button in "✓ Copied" feedback state</figcaption>
+      </figure>
+
+      <h2 id="typing-popup-arch">Architecture — File-Based IPC<a href="#typing-popup-arch" class="anchor material-symbols-outlined">link</a></h2>
+      <p>Unlike the Agent Panel (ZMQ), the Typing Popup uses <strong>file-based IPC</strong>. Four independent JSON channels carry all data:</p>
+
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr><th>File</th><th>Direction</th><th>Writer</th><th>Purpose</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>Data/typing_status.json</code></td><td>Agent → Popup</td><td>Agent loop</td><td>Response text + status</td></tr>
+            <tr><td><code>Data/tts_status.json</code></td><td>TTS → Popup</td><td>TTS engine</td><td>Speaking state + text</td></tr>
+            <tr><td><code>Data/tts_word_sync.json</code></td><td>TTS → Popup</td><td>TTS engine</td><td>Word-level timings</td></tr>
+            <tr><td><code>Data/tts_command.json</code></td><td>Popup → TTS</td><td>Popup</td><td>Stop / respeak commands</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout info">
+        <span class="material-symbols-outlined">info</span>
+        <div class="callout-body">
+          <p><strong>Why files, not ZMQ?</strong> The Typing Popup is a <strong>separate process</strong> that runs standalone. File IPC means it can start before the agent, survive agent restarts, and be tested with nothing more than <code>echo '{...}' > Data/typing_status.json</code>. The trade-off is slightly higher latency (~16ms poll) — imperceptible for text.</p>
+        </div>
+      </div>
+
+      <div class="callout success">
+        <span class="material-symbols-outlined">check_circle</span>
+        <div class="callout-body">
+          <p><strong>Dual detection.</strong> QFileSystemWatcher fires immediately on file write AND a 16ms master timer polls <code>mtime</code> every 144ms as a fallback — in case watch events are lost on network drives. Belt + suspenders.</p>
+        </div>
+      </div>
+
+      <h2 id="typing-popup-perf">Performance &amp; Premium Details<a href="#typing-popup-perf" class="anchor material-symbols-outlined">link</a></h2>
+
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr><th>Technique</th><th>What it does</th><th>Impact</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>16ms master timer</strong></td><td>Single timer drives RGB, height, scroll, polling, word highlight</td><td>60fps with one loop</td></tr>
+            <tr><td><strong>Async markdown worker</strong></td><td>Pygments + markdown2 on a QThread</td><td>No UI stall on large code blocks</td></tr>
+            <tr><td><strong>Debounced parse</strong></td><td>28ms debounce; cancels in-flight worker</td><td>Prevents N workers queuing</td></tr>
+            <tr><td><strong>Streaming tail stabilizer</strong></td><td>Repairs partial markdown on every render</td><td>No flicker mid-stream</td></tr>
+            <tr><td><strong>Styled image cache</strong></td><td>100 LRU entries with DPR-aware pixmaps</td><td>Zero repaint on scroll</td></tr>
+            <tr><td><strong>Meta cache persistence</strong></td><td>Disk-backed link preview metadata</td><td>Instant on second view</td></tr>
+            <tr><td><strong>Height animation</strong></td><td>Eased 26% per tick to target</td><td>Smooth expansion</td></tr>
+            <tr><td><strong>Dirty region tracking</strong></td><td>QTextDocument invalidates changed blocks only</td><td>Only repaints diffs</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="typing-popup-trouble">Troubleshooting the Popup<a href="#typing-popup-trouble" class="anchor material-symbols-outlined">link</a></h2>
+
+      <details class="faq">
+        <summary>Popup never appears<span class="material-symbols-outlined">add</span></summary>
+        <div class="faq-body">Check that <code>Data/typing_status.json</code> exists with <code>{"status": "typing", "text": "..."}</code>. If the file exists but the popup doesn't show, check Qt logs for <code>OpenType support missing</code> — the font may be corrupted.</div>
+      </details>
+
+      <details class="faq">
+        <summary>Images stay as "Loading Image..." forever<span class="material-symbols-outlined">add</span></summary>
+        <div class="faq-body">Microlink API may be down or rate-limited. Images still load directly via fallback scraper. Check <code>Data/cache/meta_cache.json</code> for stale entries and delete if needed.</div>
+      </details>
+
+      <details class="faq">
+        <summary>Word highlight doesn't sync with audio<span class="material-symbols-outlined">add</span></summary>
+        <div class="faq-body">Verify <code>Data/tts_word_sync.json</code> is being written by the TTS engine. If <code>active: false</code> persists, the TTS provider doesn't support word timings — check the compatibility table above. Edge TTS doesn't support it; Sarvam and Deepgram do.</div>
+      </details>
+
+      <details class="faq">
+        <summary>Popup flashes then disappears<span class="material-symbols-outlined">add</span></summary>
+        <div class="faq-body">Word count is under 45 and you're not hovering. Hover to lock it open, or increase the response length. This is intended behavior for short answers.</div>
+      </details>
+
+      <details class="faq">
+        <summary>Copy button copies wrong text<span class="material-symbols-outlined">add</span></summary>
+        <div class="faq-body">If the response starts with <code>[emotion]</code>, verify the tag matches the regex <code>^\[[a-zA-Z_ -]{2,20}\]</code>. Malformed tags (like <code>[happy_emoji_😀]</code>) are not stripped.</div>
+      </details>
+
+      <div class="pager">
+        <a href="#agent-panel" class="pager-link">
+          <span class="pager-label">Previous</span>
+          <span class="pager-title"><span class="material-symbols-outlined">arrow_back</span>Agent Panel</span>
+        </a>
+        <a href="#stt-popup" class="pager-link next">
+          <span class="pager-label">Next</span>
+          <span class="pager-title">STT Popup<span class="material-symbols-outlined">arrow_forward</span></span>
+        </a>
+      </div>
+
+      <hr/>
+
+      <h1 id="stt-popup">STT Popup</h1>
+
+      <div class="ui-hero-banner">
+        <div class="badge-row">
+          <span class="ui-hero-badge live"><span class="dot"></span>Live</span>
+          <span class="ui-hero-badge"><span class="material-symbols-outlined">wifi</span>UDP Socket</span>
+          <span class="ui-hero-badge"><span class="material-symbols-outlined">touch_app</span>Click-Through</span>
+          <span class="ui-hero-badge"><span class="material-symbols-outlined">translate</span>Hinglish Ready</span>
+        </div>
+        <h1>The STT Popup</h1>
+        <p>The STT Popup is JARVIS's live voice input surface — a small floating pill at the bottom of your screen that shows exactly what the speech-to-text engine is hearing, in real time, with a state-aware animated waveform. It's the only JARVIS UI component that is completely transparent to clicks — you can keep typing in your IDE while the waveform dances at the bottom of your screen.</p>
+      </div>
+
+      <div class="ui-feature-grid">
+        <div class="ui-feature-card">
+          <div class="icon-wrap"><span class="material-symbols-outlined">mic</span></div>
+          <h4>Live Transcription</h4>
+          <p>Words appear as you speak — last 7 words visible.</p>
+        </div>
+        <div class="ui-feature-card">
+          <div class="icon-wrap"><span class="material-symbols-outlined">graphic_eq</span></div>
+          <h4>3-State Waveform</h4>
+          <p>5 animated bars switch between listening, understanding, transcribed.</p>
+        </div>
+        <div class="ui-feature-card">
+          <div class="icon-wrap"><span class="material-symbols-outlined">touch_app</span></div>
+          <h4>Click-Through</h4>
+          <p>Zero input capture — you can't accidentally click it.</p>
+        </div>
+        <div class="ui-feature-card">
+          <div class="icon-wrap"><span class="material-symbols-outlined">translate</span></div>
+          <h4>Hinglish Ready</h4>
+          <p>Auto-detects Devanagari and swaps to Nirmala UI font.</p>
+        </div>
+      </div>
+
+      <div class="callout info">
+        <span class="material-symbols-outlined">info</span>
+        <div class="callout-body">
+          <p><strong>Never takes focus.</strong> Uses <code>Qt.WindowTransparentForInput</code> — mouse clicks pass straight through to whatever is underneath. You can keep typing in your IDE while transcribing.</p>
+        </div>
+      </div>
+
+      <figure class="screenshot-frame">
+        <img src="screenshots/ui/stt-popup-hero.png" alt="STT Popup in listening state at bottom center of screen with blue waveform" loading="lazy">
+        <figcaption><span class="badge">Live</span>STT Popup — voice input surface</figcaption>
+      </figure>
+
+      <h2 id="stt-popup-states">The 4 States<a href="#stt-popup-states" class="anchor material-symbols-outlined">link</a></h2>
+      <p>The popup transitions through four states as speech is captured and processed:</p>
+
+      <div class="gallery-row">
+        <figure class="screenshot-frame">
+          <img src="screenshots/ui/stt-popup-listening.png" alt="Listening state with blue waveform bars and placeholder text" loading="lazy">
+          <figcaption><span class="badge" style="background: rgba(10,132,255,0.15); border-color: rgba(10,132,255,0.4); color: #0A84FF;">Listening</span>Blue bars, "Listening..."</figcaption>
+        </figure>
+        <figure class="screenshot-frame">
+          <img src="screenshots/ui/stt-popup-understanding.png" alt="Understanding state with purple sine-wave bars" loading="lazy">
+          <figcaption><span class="badge" style="background: rgba(191,90,242,0.15); border-color: rgba(191,90,242,0.4); color: #BF5AF2;">Understanding</span>Purple sine-wave pattern</figcaption>
+        </figure>
+        <figure class="screenshot-frame">
+          <img src="screenshots/ui/stt-popup-transcribed.png" alt="Transcribed state with green checkmark" loading="lazy">
+          <figcaption><span class="badge" style="background: rgba(48,209,88,0.15); border-color: rgba(48,209,88,0.4); color: #30D158;">Transcribed</span>Green checkmark, final text</figcaption>
+        </figure>
+        <figure class="screenshot-frame">
+          <img src="screenshots/ui/stt-popup-hindi.png" alt="Hindi transcription with Devanagari text" loading="lazy">
+          <figcaption><span class="badge">Hindi</span>Devanagari rendering</figcaption>
+        </figure>
+      </div>
+
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr><th>State</th><th>Waveform</th><th>Text Style</th><th>Accent Color</th><th>Hold</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>listening</code></td><td>Random bars (4.5–20px)</td><td>96% white, Medium</td><td><code>#0A84FF</code> blue</td><td>Until stop</td></tr>
+            <tr><td><code>understanding</code></td><td>Sine-wave (5–21px)</td><td>96% white, Medium</td><td><code>#BF5AF2</code> purple</td><td>Until stop</td></tr>
+            <tr><td><code>transcribed</code></td><td>Static green check</td><td>100% white, Medium</td><td><code>#30D158</code> green</td><td>2.2 seconds</td></tr>
+            <tr><td><code>idle</code></td><td>Hidden</td><td>—</td><td><code>#6E6E78</code> grey</td><td>Fade out</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout success">
+        <span class="material-symbols-outlined">check_circle</span>
+        <div class="callout-body">
+          <p><strong>Peripheral awareness.</strong> The state color is the biggest UX win — during fast command speaking, you can tell from peripheral vision whether JARVIS is still listening (blue), processing (purple), or has locked in the transcription (green). No reading required.</p>
+        </div>
+      </div>
+
+      <h2 id="stt-popup-anatomy">Anatomy of the Popup<a href="#stt-popup-anatomy" class="anchor material-symbols-outlined">link</a></h2>
+
+      <div class="shot-annotated">
+        <img src="screenshots/ui/stt-popup-anatomy.png" alt="STT Popup anatomy with numbered pins" loading="lazy">
+        <span class="pin" style="top: 50%; left: 12%;">1</span>
+        <span class="pin" style="top: 50%; left: 55%;">2</span>
+        <span class="pin" style="top: 15%; left: 80%;">3</span>
+        <span class="pin" style="top: 85%; left: 50%;">4</span>
+      </div>
+
+      <ul class="anatomy-legend">
+        <li><span class="num">1</span>Waveform</li>
+        <li><span class="num">2</span>Text Label</li>
+        <li><span class="num">3</span>Island Frame</li>
+        <li><span class="num">4</span>Auto-Width Container</li>
+      </ul>
+
+      <h2 id="stt-popup-waveform">The Waveform Indicator<a href="#stt-popup-waveform" class="anchor material-symbols-outlined">link</a></h2>
+      <p>Five vertical bars that animate independently per state, with distinct visual identity:</p>
+
+      <figure class="screenshot-frame">
+        <img src="screenshots/ui/stt-popup-waveform.png" alt="Waveform close-up showing all four state variants side by side" loading="lazy">
+        <figcaption><span class="badge">Waveform</span>All 4 state variants side-by-side</figcaption>
+      </figure>
+
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr><th>State</th><th>Update Pattern</th><th>Visual Effect</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>listening</code></td><td>Each bar independent random <code>[4.5, 20]</code> px</td><td>Chaotic, alive, mic is hearing something</td></tr>
+            <tr><td><code>understanding</code></td><td>Sine wave: <code>5 + abs(sin(phase*2.5 + i*0.8)) * 16</code></td><td>Rhythmic, processing pipeline working</td></tr>
+            <tr><td><code>transcribed</code></td><td>Bars hidden, replaced by static checkmark</td><td>Done, final</td></tr>
+            <tr><td><code>idle</code></td><td>Bars collapse to 5px</td><td>Flatline, at rest</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout info">
+        <span class="material-symbols-outlined">info</span>
+        <div class="callout-body">
+          <p><strong>60fps smoothness.</strong> Bars interpolate at 22% per 16ms tick — no snapping. Bar colors have a glow shadow that scales with height. Each bar has a vertical gradient for depth.</p>
+        </div>
+      </div>
+
+      <h2 id="stt-popup-text">Text Display &amp; Font Logic<a href="#stt-popup-text" class="anchor material-symbols-outlined">link</a></h2>
+
+      <h3>7-word truncation</h3>
+      <ul class="bullets">
+        <li>Full transcript stored internally (<code>last_text</code>)</li>
+        <li><strong>Only last 7 words shown</strong> — with <code>"..."</code> prefix if truncated</li>
+        <li>Example: <code>"... the database schema needs a new index"</code> (12 words spoken, 7 shown)</li>
+        <li>Prevents popup width from ballooning during long commands</li>
+      </ul>
+
+      <h3>Hindi detection</h3>
+      <ul class="bullets">
+        <li>Scans every char for <strong>Devanagari range</strong> (<code>\u0900</code>–<code>\u097F</code>)</li>
+        <li>If ANY Devanagari char detected → switches font from English to <strong>Nirmala UI</strong></li>
+        <li>Font size bumps <strong>+1pt</strong> for Hindi (13pt vs 12pt) for legibility</li>
+        <li><strong>Auto-capitalization skipped for Hindi</strong> — Devanagari has no case</li>
+      </ul>
+
+      <div class="callout success">
+        <span class="material-symbols-outlined">translate</span>
+        <div class="callout-body">
+          <p><strong>Hinglish-safe.</strong> You can speak Hinglish ("Calendar mein meeting add karo") and the text renders correctly — English words in Segoe UI, Hindi words in Nirmala UI, seamlessly interleaved by Qt's font substitution.</p>
+        </div>
+      </div>
+
+      <h2 id="stt-popup-position">Positioning &amp; Auto-Hide<a href="#stt-popup-position" class="anchor material-symbols-outlined">link</a></h2>
+      <ul class="bullets">
+        <li><strong>Horizontally centered</strong> on primary screen</li>
+        <li><strong>Vertically 52px above taskbar</strong></li>
+        <li><strong>Moves up 22px</strong> on show, <strong>down 18px</strong> on hide</li>
+        <li><strong>Width re-measures</strong> on every text update</li>
+        <li><strong>Cannot hide during <code>transcribed</code></strong> (2.2s lock)</li>
+        <li><strong>Animation:</strong> 200ms fade out + 260ms slide down + hide</li>
+      </ul>
+
+      <div class="callout success">
+        <span class="material-symbols-outlined">check_circle</span>
+        <div class="callout-body">
+          <p><strong>2.2s transcribed lock.</strong> Gives you time to read the final transcript before it vanishes. If the transcript is wrong and you want to retry — the green check holds long enough to notice the error.</p>
+        </div>
+      </div>
+
+      <h2 id="stt-popup-arch">Architecture — UDP Datagram Channel<a href="#stt-popup-arch" class="anchor material-symbols-outlined">link</a></h2>
+      <p>The STT Popup uses <strong>UDP datagrams</strong> for communication — the only JARVIS UI that uses UDP:</p>
+
+      <div class="arch-flow">
+        <div class="arch-flow-row">
+          <span class="arch-flow-label">Speech</span>
+          <span class="arch-flow-node accent">STT Engine</span>
+          <span class="arch-flow-arrow">→</span>
+          <span class="arch-flow-node">UDP:5556</span>
+          <span class="arch-flow-arrow">→</span>
+          <span class="arch-flow-node green">STT Popup</span>
+        </div>
+      </div>
+
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="code-block-lang"><span class="material-symbols-outlined">description</span>JSON payload</span>
+          <button class="code-copy" data-copy-target>Copy</button>
+        </div>
+<pre><code>{
+  <span class="code-str">"status"</span>: <span class="code-str">"listening"</span>,
+  <span class="code-str">"text"</span>: <span class="code-str">"the full transcribed sentence so far"</span>
+}</code></pre>
+      </div>
+
+      <p>Valid <code>status</code> values: <code>listening</code>, <code>understanding</code>, <code>transcribed</code>, <code>idle</code>, <code>exit</code>.</p>
+
+      <h3>Why UDP?</h3>
+      <ul class="bullets">
+        <li><strong>Fire-and-forget</strong> — if popup isn't running, no error thrown</li>
+        <li><strong>No handshake</strong> — 0ms overhead per message</li>
+        <li><strong>Idempotent updates</strong> — each datagram is a full state snapshot</li>
+        <li><strong>Low latency</strong> — critical for live transcription</li>
+      </ul>
+
+      <div class="callout warning">
+        <span class="material-symbols-outlined">warning</span>
+        <div class="callout-body">
+          <p><strong>Firewall consideration.</strong> UDP 5556 is a different protocol from AgentPanel's ZMQ 5556 TCP — no conflict. But on some Windows firewalls, <strong>UDP 5556 must be explicitly allowed</strong> for the same app. Symptom if blocked: popup shows "Listening..." forever.</p>
+        </div>
+      </div>
+
+      <h2 id="stt-popup-perf">Performance &amp; Premium Details<a href="#stt-popup-perf" class="anchor material-symbols-outlined">link</a></h2>
+
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr><th>Technique</th><th>Impact</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>UDP socket (no parsing thread)</td><td>Single-threaded, zero overhead</td></tr>
+            <tr><td><code>WindowTransparentForInput</code></td><td>Zero focus steal, zero click capture</td></tr>
+            <tr><td>Custom waveform widget</td><td>Zero QML overhead, pure Qt paint</td></tr>
+            <tr><td>Auto-width (240–760px)</td><td>Never truncates text, never blocks screen</td></tr>
+            <tr><td>Hindi font swap</td><td>Cached font IDs, no per-paint lookup</td></tr>
+            <tr><td>Gradient border (animated)</td><td>36ms tick, single repaint region</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="stt-popup-trouble">Troubleshooting<a href="#stt-popup-trouble" class="anchor material-symbols-outlined">link</a></h2>
+
+      <details class="faq">
+        <summary>Popup shows "Listening..." forever<span class="material-symbols-outlined">add</span></summary>
+        <div class="faq-body">UDP 5556 is blocked by firewall, or the speech engine isn't sending datagrams. Check <code>netstat -an | findstr 5556</code> for a UDP listener. Whitelist the app in Windows Firewall.</div>
+      </details>
+
+      <details class="faq">
+        <summary>Hindi text shows as boxes<span class="material-symbols-outlined">add</span></summary>
+        <div class="faq-body"><code>Data/fonts/devangri.ttf</code> is missing. The fallback "Nirmala UI" must be installed on Windows 10+. Install the bundled font or the system font.</div>
+      </details>
+
+      <details class="faq">
+        <summary>Text is cut off mid-word<span class="material-symbols-outlined">add</span></summary>
+        <div class="faq-body">Check window scaling (125%, 150%) isn't pushing width calculation off. The 240px min width should always be respected — report as an issue if not.</div>
+      </details>
+
+      <details class="faq">
+        <summary>Waveform bars are frozen<span class="material-symbols-outlined">add</span></summary>
+        <div class="faq-body">The <code>anim_timer</code> thread is starved. Check CPU usage — the popup needs ~16ms per tick. Close other heavy processes or restart JARVIS.</div>
+      </details>
+
+      <details class="faq">
+        <summary>Popup doesn't auto-hide after transcription<span class="material-symbols-outlined">add</span></summary>
+        <div class="faq-body"><code>transcribed_timer</code> never fired. Check that the Qt event loop isn't blocked by another long task. Restart JARVIS to reset the timer.</div>
+      </details>
+
+      <div class="pager">
+        <a href="#typing-popup" class="pager-link">
+          <span class="pager-label">Previous</span>
+          <span class="pager-title"><span class="material-symbols-outlined">arrow_back</span>Typing Popup</span>
+        </a>
+        <a href="#input-popup" class="pager-link next">
+          <span class="pager-label">Next</span>
+          <span class="pager-title">Input Popup<span class="material-symbols-outlined">arrow_forward</span></span>
+        </a>
+      </div>
+
+      <hr/>
+
+      <h1 id="input-popup">Input Popup</h1>
+
+      <div class="ui-hero-banner">
+        <div class="badge-row">
+          <span class="ui-hero-badge live"><span class="dot"></span>Live</span>
+          <span class="ui-hero-badge"><span class="material-symbols-outlined">keyboard_command_key</span>Ctrl+Shift+J</span>
+          <span class="ui-hero-badge"><span class="material-symbols-outlined">code</span>Subprocess IPC</span>
+          <span class="ui-hero-badge"><span class="material-symbols-outlined">expand_more</span>Auto-Height</span>
+        </div>
+        <h1>The Input Popup</h1>
+        <p>The Input Popup is JARVIS's keyboard command surface — a premium floating input box that appears at the bottom of your screen when you press Ctrl+Shift+J, accepts a text command, and closes with Enter. It's the "type mode" counterpart to the STT Popup's "voice mode" — same destination, different door. The entire popup is 340ms of animation choreography, from the slide-up entry to the slide-down exit.</p>
+      </div>
+
+      <div class="ui-feature-grid">
+        <div class="ui-feature-card">
+          <div class="icon-wrap"><span class="material-symbols-outlined">bolt</span></div>
+          <h4>Global Hotkey</h4>
+          <p>Ctrl+Shift+J from anywhere in Windows.</p>
+        </div>
+        <div class="ui-feature-card">
+          <div class="icon-wrap"><span class="material-symbols-outlined">auto_awesome</span></div>
+          <h4>Pulse-on-Type</h4>
+          <p>Border glows purple when text is entered.</p>
+        </div>
+        <div class="ui-feature-card">
+          <div class="icon-wrap"><span class="material-symbols-outlined">reactive</span></div>
+          <h4>Auto-Height</h4>
+          <p>Grows to 180px, then scrolls.</p>
+        </div>
+        <div class="ui-feature-card">
+          <div class="icon-wrap"><span class="material-symbols-outlined">check_circle</span></div>
+          <h4>Enter to Send</h4>
+          <p>Shift+Enter for newline, Enter to submit.</p>
+        </div>
+      </div>
+
+      <div class="callout info">
+        <span class="material-symbols-outlined">info</span>
+        <div class="callout-body">
+          <p><strong>Modal by design.</strong> Unlike the STT Popup (which is click-through), the Input Popup is modal — it steals focus and blocks interaction with the app underneath until you send or cancel. This is intentional: you're committing to a command, not accidentally pressing a hotkey.</p>
+        </div>
+      </div>
+
+      <figure class="screenshot-frame">
+        <img src="screenshots/ui/input-popup-hero.png" alt="Input Popup in typing state with pulsing border, enter indicator, and text visible" loading="lazy">
+        <figcaption><span class="badge">Live</span>Input Popup — keyboard command surface</figcaption>
+      </figure>
+
+      <h2 id="input-popup-states">The 2 States<a href="#input-popup-states" class="anchor material-symbols-outlined">link</a></h2>
+
+      <div class="gallery-row">
+        <figure class="screenshot-frame">
+          <img src="screenshots/ui/input-popup-idle.png" alt="Idle state with static border and placeholder" loading="lazy">
+          <figcaption><span class="badge">Idle</span>Static border, "What do you need?" placeholder</figcaption>
+        </figure>
+        <figure class="screenshot-frame">
+          <img src="screenshots/ui/input-popup-typing.png" alt="Typing state with pulsing border and visible enter indicator" loading="lazy">
+          <figcaption><span class="badge">Typing</span>Pulsing border + enter indicator</figcaption>
+        </figure>
+        <figure class="screenshot-frame">
+          <img src="screenshots/ui/input-popup-multiline.png" alt="Multi-line input with auto-expanded height" loading="lazy">
+          <figcaption><span class="badge">Multi-line</span>Auto-expanded to 5 lines</figcaption>
+        </figure>
+      </div>
+
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr><th>Trigger</th><th>State</th><th>Border</th><th>Indicator</th><th>Accent</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Empty</td><td>Idle</td><td>Static 100 alpha</td><td>Hidden (0%)</td><td><code>#BF5AF2</code></td></tr>
+            <tr><td>1+ chars</td><td>Typing</td><td>Pulsing 100–190 alpha</td><td>Visible (95%)</td><td><code>#C864FC</code></td></tr>
+            <tr><td>Cleared</td><td>Idle</td><td>Returns to static</td><td>Fades to 0%</td><td><code>#BF5AF2</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout success">
+        <span class="material-symbols-outlined">check_circle</span>
+        <div class="callout-body">
+          <p><strong>Pulse animation</strong> (1200ms up + 1200ms down loop) is subtle but unmistakable — your eye locks onto the popup when text is entered. It signals "I'm ready, send me" without needing a button press.</p>
+        </div>
+      </div>
+
+      <h2 id="input-popup-anatomy">Anatomy of the Popup<a href="#input-popup-anatomy" class="anchor material-symbols-outlined">link</a></h2>
+
+      <div class="shot-annotated">
+        <img src="screenshots/ui/input-popup-anatomy.png" alt="Input Popup anatomy with numbered pins" loading="lazy">
+        <span class="pin" style="top: 45%; left: 6%;">1</span>
+        <span class="pin" style="top: 55%; left: 45%;">2</span>
+        <span class="pin" style="top: 45%; left: 92%;">3</span>
+        <span class="pin" style="top: 15%; left: 50%;">4</span>
+        <span class="pin" style="top: 88%; left: 50%;">5</span>
+      </div>
+
+      <ul class="anatomy-legend">
+        <li><span class="num">1</span>JARVIS Icon</li>
+        <li><span class="num">2</span>Text Input</li>
+        <li><span class="num">3</span>Enter Indicator</li>
+        <li><span class="num">4</span>Glass Container</li>
+        <li><span class="num">5</span>Border Pulse</li>
+      </ul>
+
+      <h2 id="input-popup-indicator">The Enter Indicator<a href="#input-popup-indicator" class="anchor material-symbols-outlined">link</a></h2>
+      <p>A circular indicator that appears when text is entered:</p>
+      <ul class="bullets">
+        <li><strong>28×28 circle</strong> with two nested glow rings</li>
+        <li><strong>Arrow-in-circle glyph</strong> — stylized ↵ rendered as path</li>
+        <li><strong>Hidden when empty</strong> — 0% opacity</li>
+        <li><strong>Appears when 1+ chars typed</strong> — 95% opacity, 400ms fade-in</li>
+        <li><strong>Pulses color</strong> with the container's accent</li>
+        <li><strong>Click it</strong> to submit (same as Enter)</li>
+      </ul>
+
+      <figure class="screenshot-frame">
+        <img src="screenshots/ui/input-popup-indicator.png" alt="Enter indicator close-up showing circle with arrow glyph" loading="lazy">
+        <figcaption><span class="badge">Indicator</span>Arrow-in-circle enter glyph</figcaption>
+      </figure>
+
+      <div class="callout info">
+        <span class="material-symbols-outlined">info</span>
+        <div class="callout-body">
+          <p><strong>Only button.</strong> The enter indicator is the popup's only button — no Send/Cancel buttons here, unlike the Agent Panel's HITL cards. Intentional minimalism — you shouldn't have to aim your mouse to send a text command.</p>
+        </div>
+      </div>
+
+      <h2 id="input-popup-input">Smart Input Behaviors<a href="#input-popup-input" class="anchor material-symbols-outlined">link</a></h2>
+
+      <h3>Keyboard shortcuts</h3>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr><th>Key</th><th>Action</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><kbd class="kbd-key" style="display: inline-block; padding: 2px 8px; font-size: 0.75rem;">Enter</kbd></td><td>Accept — submit command, fade out</td></tr>
+            <tr><td><kbd class="kbd-key" style="display: inline-block; padding: 2px 8px; font-size: 0.75rem;">Shift + Enter</kbd></td><td>New line — multi-line commands</td></tr>
+            <tr><td><kbd class="kbd-key" style="display: inline-block; padding: 2px 8px; font-size: 0.75rem;">Esc</kbd></td><td>Reject — cancel, fade out with no submit</td></tr>
+            <tr><td><kbd class="kbd-key" style="display: inline-block; padding: 2px 8px; font-size: 0.75rem;">Ctrl + V</kbd></td><td>Paste as plain text (rich formatting stripped)</td></tr>
+            <tr><td><kbd class="kbd-key" style="display: inline-block; padding: 2px 8px; font-size: 0.75rem;">Tab</kbd></td><td>Focus cycler</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Paste sanitization</h3>
+      <ul class="bullets">
+        <li>Any rich text (from Word, browser, etc.) is <strong>stripped to plain text</strong> on paste</li>
+        <li>Preserves <strong>Unicode</strong> (Devanagari, emoji)</li>
+        <li><strong>Preserves line breaks</strong> — multi-line pastes stay multi-line</li>
+        <li>No HTML, no formatting, no images</li>
+      </ul>
+
+      <div class="callout success">
+        <span class="material-symbols-outlined">check_circle</span>
+        <div class="callout-body">
+          <p><strong>Safe paste from anywhere.</strong> Paste from Discord, Word, code snippet — it becomes clean text. No hidden formatting leaking into the agent prompt.</p>
+        </div>
+      </div>
+
+      <h2 id="input-popup-resize">Auto-Resize &amp; Layout<a href="#input-popup-resize" class="anchor material-symbols-outlined">link</a></h2>
+
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr><th>Content</th><th>Height</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Empty / 1 line</td><td>30px (min)</td></tr>
+            <tr><td>2 lines</td><td>54px</td></tr>
+            <tr><td>3 lines</td><td>78px</td></tr>
+            <tr><td>4 lines</td><td>102px</td></tr>
+            <tr><td>5 lines</td><td>126px</td></tr>
+            <tr><td>6 lines</td><td>150px</td></tr>
+            <tr><td>7 lines</td><td>174px</td></tr>
+            <tr><td>8+ lines</td><td><strong>180px max + scrollbar</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="storyboard">
+        <div class="frame">
+          <div class="frame-time">0ms</div>
+          <div class="frame-desc">1 line, 30px</div>
+        </div>
+        <span class="arrow">→</span>
+        <div class="frame">
+          <div class="frame-time">340ms</div>
+          <div class="frame-desc">3 lines, 78px</div>
+        </div>
+        <span class="arrow">→</span>
+        <div class="frame">
+          <div class="frame-time">680ms</div>
+          <div class="frame-desc">5 lines, 126px</div>
+        </div>
+        <span class="arrow">→</span>
+        <div class="frame">
+          <div class="frame-time">1020ms</div>
+          <div class="frame-desc">8+ lines, 180px + scroll</div>
+        </div>
+      </div>
+
+      <div class="callout info">
+        <span class="material-symbols-outlined">info</span>
+        <div class="callout-body">
+          <p><strong>Bottom-anchored growth.</strong> When you type a long command, the popup grows <strong>upward</strong> — bottom edge stays fixed, so your input line stays in your natural gaze. You don't have to look down to keep typing.</p>
+        </div>
+      </div>
+
+      <h2 id="input-popup-arch">Architecture — Subprocess Stdout<a href="#input-popup-arch" class="anchor material-symbols-outlined">link</a></h2>
+      <p>The Input Popup runs as a <strong>subprocess</strong> per invocation and returns via stdout:</p>
+
+      <div class="arch-flow">
+        <div class="arch-flow-row">
+          <span class="arch-flow-label">Launch</span>
+          <span class="arch-flow-node accent">Parent Process</span>
+          <span class="arch-flow-arrow">→</span>
+          <span class="arch-flow-node">Subprocess</span>
+        </div>
+        <div class="arch-flow-row">
+          <span class="arch-flow-label">Wait</span>
+          <span class="arch-flow-node">User types</span>
+          <span class="arch-flow-arrow">→</span>
+          <span class="arch-flow-node green">Presses Enter</span>
+        </div>
+        <div class="arch-flow-row">
+          <span class="arch-flow-label">Reply</span>
+          <span class="arch-flow-node purple">stdout</span>
+          <span class="arch-flow-arrow">→</span>
+          <span class="arch-flow-node accent">Parent decodes</span>
+        </div>
+      </div>
+
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="code-block-lang"><span class="material-symbols-outlined">terminal</span>stdout format</span>
+          <button class="code-copy" data-copy-target>Copy</button>
+        </div>
+<pre><code>JARVIS_CMD_B64::&lt;base64-encoded-utf8-command&gt;</code></pre>
+      </div>
+
+      <p>Example: user types <code>Open VS Code and find the test file</code> → popup outputs <code>JARVIS_CMD_B64:::T3BlbiBWUyBDb2RlIGFuZCBmaW5kIHRoZSB0ZXN0IGZpbGU=</code> → parent decodes back to the original command.</p>
+
+      <h3>Why stdout, not file/IPC?</h3>
+      <ul class="bullets">
+        <li><strong>Modal subprocess</strong> — popup's lifetime is exactly one command</li>
+        <li><strong>No persistent state</strong> — no file cleanup needed</li>
+        <li><strong>Base64 wrapping</strong> — handles any Unicode/emoji/newline safely</li>
+        <li><strong>Exit code:</strong> <code>0</code> on accept, <code>1</code> on reject or error</li>
+        <li><strong>Stderr:</strong> captured for debugging (traceback on crash)</li>
+      </ul>
+
+      <div class="callout success">
+        <span class="material-symbols-outlined">check_circle</span>
+        <div class="callout-body">
+          <p><strong>Base64 encoding.</strong> Commands with emoji 😀, Devanagari, Arabic, newlines, or even null bytes all survive the IPC intact. No encoding headaches, no character corruption.</p>
+        </div>
+      </div>
+
+      <h2 id="input-popup-anim">Positioning &amp; Animations<a href="#input-popup-anim" class="anchor material-symbols-outlined">link</a></h2>
+
+      <h3>Position</h3>
+      <ul class="bullets">
+        <li>Horizontally centered on primary screen</li>
+        <li><strong>160px above taskbar</strong> (higher than STT Popup)</li>
+        <li>Width: fixed <strong>720px</strong> — doesn't reflow on text</li>
+        <li>Vertical position: <strong>bottom-anchored</strong> — bottom edge fixed, grows up</li>
+      </ul>
+
+      <h3>Animation choreography</h3>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr><th>Phase</th><th>Duration</th><th>Easing</th><th>Effect</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Entry fade</td><td>280ms</td><td>OutCubic</td><td>0 → 1 opacity</td></tr>
+            <tr><td>Entry slide</td><td>360ms</td><td>OutQuint</td><td>+28px → target Y</td></tr>
+            <tr><td>Pulse up</td><td>1200ms</td><td>InOutSine</td><td>Border 100 → 190 alpha</td></tr>
+            <tr><td>Pulse down</td><td>1200ms</td><td>InOutSine</td><td>Border 190 → 100 alpha</td></tr>
+            <tr><td>Indicator fade</td><td>400ms</td><td>InOutSine</td><td>0 → 95%</td></tr>
+            <tr><td>Resize</td><td>340ms</td><td>OutQuart</td><td>Height grows</td></tr>
+            <tr><td>Exit fade</td><td>260ms</td><td>InCubic</td><td>1 → 0 opacity</td></tr>
+            <tr><td>Exit slide</td><td>300ms</td><td>InQuart</td><td>Y → Y + 24px</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="storyboard">
+        <div class="frame">
+          <div class="frame-time">0ms</div>
+          <div class="frame-desc">Fade in start</div>
+        </div>
+        <span class="arrow">→</span>
+        <div class="frame">
+          <div class="frame-time">180ms</div>
+          <div class="frame-desc">Slide mid</div>
+        </div>
+        <span class="arrow">→</span>
+        <div class="frame">
+          <div class="frame-time">360ms</div>
+          <div class="frame-desc">Entry complete</div>
+        </div>
+        <span class="arrow">→</span>
+        <div class="frame">
+          <div class="frame-time">Long</div>
+          <div class="frame-desc">Pulse loop (2400ms)</div>
+        </div>
+      </div>
+
+      <div class="callout info">
+        <span class="material-symbols-outlined">info</span>
+        <div class="callout-body">
+          <p><strong>360ms entry.</strong> Fast enough to feel instant, slow enough to feel premium. macOS Spotlight opens in ~150ms but feels less ceremonial. JARVIS's popup is deliberately slightly slower — a tool you invoke deliberately.</p>
+        </div>
+      </div>
+
+      <h2 id="input-popup-perf">Performance &amp; Premium Details<a href="#input-popup-perf" class="anchor material-symbols-outlined">link</a></h2>
+
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr><th>Technique</th><th>Impact</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Single <code>QDialog</code> instance per invocation</td><td>Zero memory leak across runs</td></tr>
+            <tr><td><code>pulseIntensity</code> pyqtProperty</td><td>Smooth 2s loop, no QTimer jitter</td></tr>
+            <tr><td><code>indicatorOpacity</code> pyqtProperty</td><td>Independent animation from container</td></tr>
+            <tr><td>Parallel animation group for resize</td><td>Window + text input resize in sync</td></tr>
+            <tr><td>QSS for text input (not per-paint)</td><td>Native performance</td></tr>
+            <tr><td>Base64 stdout (no sockets)</td><td>Zero IPC infrastructure</td></tr>
+            <tr><td>Font substitution chain</td><td>Segoe UI → Nirmala UI → Mangal (Hinglish safe)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="input-popup-trouble">Troubleshooting<a href="#input-popup-trouble" class="anchor material-symbols-outlined">link</a></h2>
+
+      <details class="faq">
+        <summary>Ctrl+Shift+J doesn't open the popup<span class="material-symbols-outlined">add</span></summary>
+        <div class="faq-body">Global hotkey registration failed — usually because another app grabbed it. Check Task Manager → Startup → is JARVIS disabled? Or check if another app (VS Code, Discord) uses the same hotkey.</div>
+      </details>
+
+      <details class="faq">
+        <summary>Popup opens but I can't type<span class="material-symbols-outlined">add</span></summary>
+        <div class="faq-body">Focus delay (150ms) may not have fired. Click into the input area once. If persistent, verify no other modal window is stealing focus.</div>
+      </details>
+
+      <details class="faq">
+        <summary>Enter submits but nothing happens<span class="material-symbols-outlined">add</span></summary>
+        <div class="faq-body">Parent process isn't reading stdout. Check that the launcher is waiting on <code>input_popup.communicate()</code> or similar. If the agent crashed, the command is lost — no persistence layer exists.</div>
+      </details>
+
+      <details class="faq">
+        <summary>Multi-line commands get cut off<span class="material-symbols-outlined">add</span></summary>
+        <div class="faq-body">Text input maxes at 180px. For very long inputs, write to a file and reference it: <code>Read file C:\commands\my_task.txt</code>. Or increase <code>MAX_TEXT_HEIGHT</code> in source.</div>
+      </details>
+
+      <details class="faq">
+        <summary>Popup stays open forever<span class="material-symbols-outlined">add</span></summary>
+        <div class="faq-body"><code>isClosing</code> flag stuck. Report as bug — should never happen. If urgent, press Esc to force reject, or kill the process via Task Manager.</div>
+      </details>
+
+      <div class="pager">
+        <a href="#stt-popup" class="pager-link">
+          <span class="pager-label">Previous</span>
+          <span class="pager-title"><span class="material-symbols-outlined">arrow_back</span>STT Popup</span>
+        </a>
+        <a href="#ui-comparison" class="pager-link next">
+          <span class="pager-label">Next</span>
+          <span class="pager-title">UI Comparison<span class="material-symbols-outlined">arrow_forward</span></span>
+        </a>
+      </div>
+
+      <hr/>
+
+      <h1 id="ui-comparison">UI Comparison</h1>
+      <p class="lead">All four JARVIS UI components are independent processes with their own IPC mechanism. Crashing one doesn't take down the others — a deliberate resilience choice.</p>
+
+      <h2 id="ui-comparison-table">Side-by-side<a href="#ui-comparison-table" class="anchor material-symbols-outlined">link</a></h2>
+
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Feature</th>
+              <th>Agent Panel</th>
+              <th>Typing Popup</th>
+              <th>STT Popup</th>
+              <th>Input Popup</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Direction</strong></td><td>Output (live)</td><td>Output (final)</td><td>Input (voice)</td><td>Input (text)</td></tr>
+            <tr><td><strong>IPC</strong></td><td>ZMQ TCP</td><td>File JSON</td><td>UDP socket</td><td>Subprocess stdout</td></tr>
+            <tr><td><strong>Position</strong></td><td>Top center</td><td>Top center</td><td>Bottom center</td><td>Bottom center</td></tr>
+            <tr><td><strong>Clickable</strong></td><td>Yes (HITL, drag)</td><td>Yes (drag, copy)</td><td><strong>No</strong> (click-through)</td><td>Yes (typing focus)</td></tr>
+            <tr><td><strong>Persistent</strong></td><td>While loop active</td><td>Until dismissed</td><td>While speaking</td><td>While dialog open</td></tr>
+            <tr><td><strong>Multi-instance</strong></td><td>One</td><td>One</td><td>One</td><td>One per invocation</td></tr>
+            <tr><td><strong>Can overlap</strong></td><td>Yes</td><td>Yes</td><td>Yes</td><td>Blocks (modal)</td></tr>
+            <tr><td><strong>Interaction</strong></td><td>Read + HITL</td><td>Read + copy</td><td>None</td><td>Type + Enter</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="ui-comparison-flow">How they connect<a href="#ui-comparison-flow" class="anchor material-symbols-outlined">link</a></h2>
+
+      <div class="arch-flow">
+        <div class="arch-flow-row">
+          <span class="arch-flow-label">Input</span>
+          <span class="arch-flow-node accent">STT Popup</span>
+          <span class="arch-flow-arrow">or</span>
+          <span class="arch-flow-node accent">Input Popup</span>
+          <span class="arch-flow-arrow">→</span>
+          <span class="arch-flow-node purple">Agent Loop</span>
+        </div>
+        <div class="arch-flow-row">
+          <span class="arch-flow-label">Output</span>
+          <span class="arch-flow-node purple">Agent Loop</span>
+          <span class="arch-flow-arrow">→</span>
+          <span class="arch-flow-node green">Agent Panel</span>
+          <span class="arch-flow-arrow">+</span>
+          <span class="arch-flow-node green">Typing Popup</span>
+        </div>
+      </div>
+
+      <div class="callout success">
+        <span class="material-symbols-outlined">check_circle</span>
+        <div class="callout-body">
+          <p><strong>Independent processes.</strong> A frozen Typing Popup doesn't stop the Agent Panel from showing live thoughts. A crashed Agent Panel doesn't stop STT from transcribing. If one crashes, the others keep running — and JARVIS auto-restarts the failed one via ServiceWatchdog.</p>
+        </div>
+      </div>
+
+      <h2 id="ui-comparison-choose">Which input should you use?<a href="#ui-comparison-choose" class="anchor material-symbols-outlined">link</a></h2>
+
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr><th>Scenario</th><th>Best Option</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Hands busy, quick command</td><td>STT Popup — voice</td></tr>
+            <tr><td>Complex, multi-line command</td><td>Input Popup — text + Shift+Enter</td></tr>
+            <tr><td>Precise technical query</td><td>Input Popup — code formatting</td></tr>
+            <tr><td>Casual "hey Jarvis"</td><td>STT Popup — wake word</td></tr>
+            <tr><td>Drafting emails</td><td>Input Popup — long form</td></tr>
+            <tr><td>Away from keyboard</td><td>STT Popup + Telegram bot</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="pager">
+        <a href="#input-popup" class="pager-link">
+          <span class="pager-label">Previous</span>
+          <span class="pager-title"><span class="material-symbols-outlined">arrow_back</span>Input Popup</span>
+        </a>
+        <a href="#troubleshooting" class="pager-link next">
+          <span class="pager-label">Next</span>
+          <span class="pager-title">Troubleshooting<span class="material-symbols-outlined">arrow_forward</span></span>
+        </a>
+      </div>
+
+      <hr/>
+
       <h1 id="troubleshooting">Troubleshooting</h1>
       <p class="lead">Common issues and their fixes. For anything not listed here, <a href="https://github.com/thekaifansari01/Jarvis-OS-Agent/issues" target="_blank" rel="noopener">open an issue on GitHub</a>.</p>
 
@@ -2037,7 +4370,7 @@ pip install -r requirements.txt</code></pre>
       <h2 id="trouble-whatsapp">WhatsApp won't start<a href="#trouble-whatsapp" class="anchor material-symbols-outlined">link</a></h2>
       <ol class="steps">
         <li><strong>Verify Node.js 18+</strong> — run <code>node --version</code>.</li>
-        <li><strong>Reinstall the bridge</strong> — <code>cd tools/Messanger/whatsapp/BaileysServer && npm install</code>.</li>
+        <li><strong>Reinstall the bridge</strong> — <code>cd tools/Messanger/whatsapp/BaileysServer &amp;&amp; npm install</code>.</li>
         <li><strong>Check port 3000</strong> — if busy, kill the process or change the port.</li>
       </ol>
 
@@ -2137,9 +4470,9 @@ pip install -r requirements.txt</code></pre>
       </details>
 
       <div class="pager">
-        <a href="#quick-start" class="pager-link">
+        <a href="#ui-comparison" class="pager-link">
           <span class="pager-label">Previous</span>
-          <span class="pager-title"><span class="material-symbols-outlined">arrow_back</span>Quick Start</span>
+          <span class="pager-title"><span class="material-symbols-outlined">arrow_back</span>UI Comparison</span>
         </a>
         <a href="https://github.com/thekaifansari01/Jarvis-OS-Agent/issues" class="pager-link next" target="_blank" rel="noopener">
           <span class="pager-label">Need more help?</span>
