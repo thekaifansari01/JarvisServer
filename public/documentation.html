@@ -1692,6 +1692,12 @@ details.faq .faq-body {
     </ul>
   </div>
   <div class="sidebar-group">
+    <div class="sidebar-label">System</div>
+    <ul class="sidebar-list">
+      <li><a href="#lifecycle-shutdown" data-section="lifecycle-shutdown"><span class="material-symbols-outlined">power_settings_new</span>Lifecycle &amp; Shutdown</a></li>
+    </ul>
+  </div>
+  <div class="sidebar-group">
     <div class="sidebar-label">Help</div>
     <ul class="sidebar-list">
       <li><a href="#troubleshooting" data-section="troubleshooting"><span class="material-symbols-outlined">bug_report</span>Troubleshooting</a></li>
@@ -4336,6 +4342,438 @@ jarvis bot --deactivate  <span class="code-cmt"># revoke &amp; offline the bot</
         <a href="#input-popup" class="pager-link">
           <span class="pager-label">Previous</span>
           <span class="pager-title"><span class="material-symbols-outlined">arrow_back</span>Input Popup</span>
+        </a>
+        <a href="#lifecycle-shutdown" class="pager-link next">
+          <span class="pager-label">Next</span>
+          <span class="pager-title">Lifecycle &amp; Shutdown<span class="material-symbols-outlined">arrow_forward</span></span>
+        </a>
+      </div>
+
+      <hr/>
+
+      <h1 id="lifecycle-shutdown">Lifecycle &amp; Shutdown</h1>
+
+      <div class="ui-hero-banner">
+        <div class="badge-row">
+          <span class="ui-hero-badge live"><span class="dot"></span>Graceful</span>
+          <span class="ui-hero-badge"><span class="material-symbols-outlined">shield</span>Signal-Safe</span>
+          <span class="ui-hero-badge"><span class="material-symbols-outlined">monitor_heart</span>Watchdog</span>
+          <span class="ui-hero-badge"><span class="material-symbols-outlined">restart_alt</span>Auto-Recovery</span>
+        </div>
+        <h1>Lifecycle &amp; Shutdown</h1>
+        <p>JARVIS ships 7 background services, 3 Qt overlays, a Node.js bridge, and dozens of subprocesses. Every one of them needs to die cleanly — but the memory graph, behavioral patterns, and session state must survive. The lifecycle system is a 14-step graceful shutdown choreography guarded by an idempotent flag, 7 signal handlers, and a parallel service-teardown that completes in ~2.6 seconds.</p>
+      </div>
+
+      <div class="ui-feature-grid">
+        <div class="ui-feature-card">
+          <div class="icon-wrap"><span class="material-symbols-outlined">lock</span></div>
+          <h4>Idempotent Guard</h4>
+          <p>Double Ctrl+C is safe — the second press returns instantly.</p>
+        </div>
+        <div class="ui-feature-card">
+          <div class="icon-wrap"><span class="material-symbols-outlined">notifications_active</span></div>
+          <h4>7 Exit Paths</h4>
+          <p>Ctrl+C, Ctrl+Break, window close, logoff, shutdown — all covered.</p>
+        </div>
+        <div class="ui-feature-card">
+          <div class="icon-wrap"><span class="material-symbols-outlined">save</span></div>
+          <h4>State Preserved</h4>
+          <p>LTM graph and behavioral engine save before any process is killed.</p>
+        </div>
+        <div class="ui-feature-card">
+          <div class="icon-wrap"><span class="material-symbols-outlined">speed</span></div>
+          <h4>2.6s Total</h4>
+          <p>7 services tear down in parallel, not sequentially.</p>
+        </div>
+      </div>
+
+      <h2 id="lifecycle-triggers">When Shutdown Triggers<a href="#lifecycle-triggers" class="anchor material-symbols-outlined">link</a></h2>
+      <p>JARVIS registers handlers for every standard exit path — plus a few Windows-specific ones that signals alone can't catch:</p>
+
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr><th>#</th><th>Trigger</th><th>OS Event / Signal</th><th>Handler</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>1</td><td><strong>Ctrl + C</strong></td><td><code>SIGINT</code></td><td><code>signal_handler()</code></td></tr>
+            <tr><td>2</td><td><strong>Ctrl + Break</strong></td><td><code>SIGBREAK</code></td><td><code>signal_handler()</code></td></tr>
+            <tr><td>3</td><td><strong>External taskkill</strong></td><td><code>SIGTERM</code></td><td><code>signal_handler()</code></td></tr>
+            <tr><td>4</td><td><strong>Window X button</strong></td><td><code>CTRL_CLOSE_EVENT (2)</code></td><td><code>_win_ctrl_handler()</code></td></tr>
+            <tr><td>5</td><td><strong>Windows logoff</strong></td><td><code>CTRL_LOGOFF_EVENT (5)</code></td><td><code>_win_ctrl_handler()</code></td></tr>
+            <tr><td>6</td><td><strong>System shutdown</strong></td><td><code>CTRL_SHUTDOWN_EVENT (6)</code></td><td><code>_win_ctrl_handler()</code></td></tr>
+            <tr><td>7</td><td><strong>Tray → Exit</strong></td><td>GUI click</td><td><code>shutdown_jarvis()</code></td></tr>
+            <tr><td>8</td><td><strong>Python process exit</strong></td><td><code>atexit</code></td><td>Lambda → <code>shutdown_jarvis()</code></td></tr>
+            <tr><td>9</td><td><strong>Main loop end</strong></td><td>—</td><td><code>finally</code> block</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout warning">
+        <span class="material-symbols-outlined">warning</span>
+        <div class="callout-body">
+          <p><strong>Signals alone don't catch the X button.</strong> On Windows, clicking the window close button sends <code>CTRL_CLOSE_EVENT</code> — not <code>SIGTERM</code>. Without the <code>ctypes.windll.kernel32.SetConsoleCtrlHandler</code> registration, JARVIS would hang as a zombie process whenever you closed the console window.</p>
+        </div>
+      </div>
+
+      <h2 id="lifecycle-sequence">The 14-Step Shutdown Sequence<a href="#lifecycle-sequence" class="anchor material-symbols-outlined">link</a></h2>
+      <p>Every shutdown follows the same 6-phase choreography. Each phase is guarded — if it fails, the next still runs.</p>
+
+      <div class="arch-flow">
+        <div class="arch-flow-row">
+          <span class="arch-flow-label">Phase 1</span>
+          <span class="arch-flow-node accent">Guard &amp; Flag</span>
+          <span class="arch-flow-arrow">→</span>
+          <span style="color: var(--text-dim); font-size: 0.88rem;">Acquire lock, set <code>_shutdown_started</code>, break main loop</span>
+        </div>
+        <div class="arch-flow-row">
+          <span class="arch-flow-label">Phase 2</span>
+          <span class="arch-flow-node accent">Graceful Signals</span>
+          <span class="arch-flow-arrow">→</span>
+          <span style="color: var(--text-dim); font-size: 0.88rem;">Restore console, set shutdown event, remove lock file, stop tray</span>
+        </div>
+        <div class="arch-flow-row">
+          <span class="arch-flow-label">Phase 3</span>
+          <span class="arch-flow-node purple">Save State</span>
+          <span class="arch-flow-arrow">→</span>
+          <span style="color: var(--text-dim); font-size: 0.88rem;">Persist LTM graph + Behavioral Pattern Engine</span>
+        </div>
+        <div class="arch-flow-row">
+          <span class="arch-flow-label">Phase 4</span>
+          <span class="arch-flow-node purple">Stop Workers</span>
+          <span class="arch-flow-arrow">→</span>
+          <span style="color: var(--text-dim); font-size: 0.88rem;">Thread pool cancel, TTS cleanup, pygame quit, watchdog stop</span>
+        </div>
+        <div class="arch-flow-row">
+          <span class="arch-flow-label">Phase 5</span>
+          <span class="arch-flow-node green">Parallel Teardown</span>
+          <span class="arch-flow-arrow">→</span>
+          <span style="color: var(--text-dim); font-size: 0.88rem;">7 services killed in parallel, 2.5s max each</span>
+        </div>
+        <div class="arch-flow-row">
+          <span class="arch-flow-label">Phase 6</span>
+          <span class="arch-flow-node green">Hard Exit</span>
+          <span class="arch-flow-arrow">→</span>
+          <span style="color: var(--text-dim); font-size: 0.88rem;">Process tree cleanup, <code>os._exit(0)</code></span>
+        </div>
+      </div>
+
+      <div class="callout success">
+        <span class="material-symbols-outlined">bolt</span>
+        <div class="callout-body">
+          <p><strong>Parallel teardown = 7× speedup.</strong> 7 services × 2.5s timeout = 17.5s if sequential. But <code>stop_all_services()</code> spawns 7 threads — total wall-clock is ~2.5s regardless of count. Shutdown stays under 3 seconds on any hardware.</p>
+        </div>
+      </div>
+
+      <div class="callout info">
+        <span class="material-symbols-outlined">info</span>
+        <div class="callout-body">
+          <p><strong>Why <code>os._exit()</code> not <code>sys.exit()</code>?</strong> <code>sys.exit()</code> runs more Python cleanup — atexit handlers, finally blocks, garbage collection. But JARVIS has already done all cleanup manually. <code>os._exit()</code> skips everything — guaranteeing no stray handler accidentally respawns a thread or writes to a corrupted state during teardown.</p>
+        </div>
+      </div>
+
+      <div class="storyboard">
+        <div class="frame">
+          <div class="frame-time">0 ms</div>
+          <div class="frame-desc">Signal received — guard acquires lock</div>
+        </div>
+        <span class="arrow">→</span>
+        <div class="frame">
+          <div class="frame-time">10 ms</div>
+          <div class="frame-desc">Console restored, lock file removed</div>
+        </div>
+        <span class="arrow">→</span>
+        <div class="frame">
+          <div class="frame-time">300 ms</div>
+          <div class="frame-desc">LTM graph + behavioral engine saved</div>
+        </div>
+        <span class="arrow">→</span>
+        <div class="frame">
+          <div class="frame-time">800 ms</div>
+          <div class="frame-desc">Thread pool cancelled, TTS stopped</div>
+        </div>
+        <span class="arrow">→</span>
+        <div class="frame">
+          <div class="frame-time">2.5 s</div>
+          <div class="frame-desc">All 7 services terminated in parallel</div>
+        </div>
+        <span class="arrow">→</span>
+        <div class="frame">
+          <div class="frame-time">2.6 s</div>
+          <div class="frame-desc"><code>os._exit(0)</code> — clean exit</div>
+        </div>
+      </div>
+
+      <div class="callout warning">
+        <span class="material-symbols-outlined">warning</span>
+        <div class="callout-body">
+          <p><strong>Second Ctrl+C is safe.</strong> The <code>_shutdown_started</code> flag returns instantly from <code>shutdown_jarvis()</code>. Users instinctively mash Ctrl+C when shutdown is slow — no double-kill, no exception, no half-state.</p>
+        </div>
+      </div>
+
+      <h2 id="lifecycle-subprocess">Subprocess Manager — Process Tree Control<a href="#lifecycle-subprocess" class="anchor material-symbols-outlined">link</a></h2>
+      <p>Every spawned process is tracked by a singleton <code>SubprocessManager</code> registered with <code>atexit</code>:</p>
+
+      <div class="arch-flow">
+        <div class="arch-flow-row">
+          <span class="arch-flow-label">Manager</span>
+          <span class="arch-flow-node purple">SubprocessManager</span>
+          <span style="color: var(--text-muted); font-size: 0.75rem;">singleton · atexit-registered</span>
+        </div>
+        <div class="arch-flow-row">
+          <span class="arch-flow-label">Children</span>
+          <span class="arch-flow-node">AgentPanel</span>
+          <span class="arch-flow-node">SttPopup</span>
+          <span class="arch-flow-node">Baileys</span>
+          <span class="arch-flow-node">MobileBridge</span>
+          <span class="arch-flow-node">MCP</span>
+        </div>
+        <div class="arch-flow-row">
+          <span class="arch-flow-label">Kill</span>
+          <span class="arch-flow-node green">psutil recursive tree</span>
+          <span style="color: var(--text-muted); font-size: 0.75rem;">3s graceful → 2s force</span>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr><th>Feature</th><th>Behavior</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Singleton pattern</strong></td><td>One manager, one process registry</td></tr>
+            <tr><td><strong>Windows flags</strong></td><td><code>CREATE_NEW_PROCESS_GROUP</code> — Ctrl+Break propagates to children</td></tr>
+            <tr><td><strong>Unix flags</strong></td><td><code>start_new_session=True</code> — separate session, no TTY hogging</td></tr>
+            <tr><td><strong>Tree kill</strong></td><td><code>psutil.Process(pid).children(recursive=True)</code> — orphans impossible</td></tr>
+            <tr><td><strong>Timeout</strong></td><td>3s graceful terminate, then 2s force kill</td></tr>
+            <tr><td><strong>atexit registration</strong></td><td>Even uncaught exceptions trigger cleanup</td></tr>
+            <tr><td><strong>Idempotent</strong></td><td>Called twice? Second is a no-op</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout info">
+        <span class="material-symbols-outlined">info</span>
+        <div class="callout-body">
+          <p><strong><code>CREATE_NEW_PROCESS_GROUP</code> matters.</strong> Without it, Ctrl+C in the console would propagate to ALL child processes at once — Qt overlays would crash mid-render, Node.js would abandon partial writes. With it, the manager sequences shutdown — graceful, one service at a time.</p>
+        </div>
+      </div>
+
+      <h2 id="lifecycle-lock">The Lock File — One Instance Only<a href="#lifecycle-lock" class="anchor material-symbols-outlined">link</a></h2>
+      <p>JARVIS refuses to start if another instance is already running. A lock file with the current PID prevents duplicate launches:</p>
+
+      <div class="arch-flow">
+        <div class="arch-flow-row">
+          <span class="arch-flow-label">Startup</span>
+          <span class="arch-flow-node accent">create_lock_file()</span>
+          <span class="arch-flow-arrow">→</span>
+          <span style="color: var(--text-dim); font-size: 0.88rem;">Writes current PID</span>
+        </div>
+        <div class="arch-flow-row">
+          <span class="arch-flow-label">Second launch</span>
+          <span class="arch-flow-node">is_jarvis_running()</span>
+          <span class="arch-flow-arrow">→</span>
+          <span style="color: var(--text-dim); font-size: 0.88rem;">Checks if PID is alive</span>
+        </div>
+        <div class="arch-flow-row">
+          <span class="arch-flow-label">On shutdown</span>
+          <span class="arch-flow-node green">remove_lock_file()</span>
+          <span class="arch-flow-arrow">→</span>
+          <span style="color: var(--text-dim); font-size: 0.88rem;">Frees JARVIS for next launch</span>
+        </div>
+      </div>
+
+      <div class="callout warning">
+        <span class="material-symbols-outlined">warning</span>
+        <div class="callout-body">
+          <p><strong>Stale lock file.</strong> If JARVIS crashes hard (<code>taskkill /F /IM python.exe</code>), the atexit handler may not run — the lock file lingers. Next startup shows "Already running" even though nothing is. <strong>Fix:</strong> delete the lock file manually, or check Task Manager for the rogue <code>python.exe</code> and kill it.</p>
+        </div>
+      </div>
+
+      <h2 id="lifecycle-watchdog">Service Watchdog — Auto-Recovery<a href="#lifecycle-watchdog" class="anchor material-symbols-outlined">link</a></h2>
+      <p>The watchdog thread checks every service on a 5-second interval. If one crashes, it restarts — but only if credentials exist and the service is <em>supposed</em> to be running.</p>
+
+      <div class="arch-flow">
+        <div class="arch-flow-row">
+          <span class="arch-flow-label">Check</span>
+          <span class="arch-flow-node accent">Every 5s</span>
+          <span class="arch-flow-arrow">→</span>
+          <span style="color: var(--text-dim); font-size: 0.88rem;">Is service running?</span>
+        </div>
+        <div class="arch-flow-row">
+          <span class="arch-flow-label">If down</span>
+          <span class="arch-flow-node">Has creds?</span>
+          <span class="arch-flow-arrow">→</span>
+          <span style="color: var(--text-dim); font-size: 0.88rem;">No → skip (log once/min)</span>
+        </div>
+        <div class="arch-flow-row">
+          <span class="arch-flow-label">If ready</span>
+          <span class="arch-flow-node purple">Restart</span>
+          <span class="arch-flow-arrow">→</span>
+          <span style="color: var(--text-dim); font-size: 0.88rem;">After 3 strikes → 120s backoff</span>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr><th>Service</th><th>Port</th><th>Ready Check</th><th>Creds Required</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Baileys (WhatsApp)</strong></td><td><code>:3000</code></td><td>—</td><td><code>auth_info_baileys/creds.json</code></td></tr>
+            <tr><td><strong>STT Popup</strong></td><td>UDP <code>:5556</code></td><td>—</td><td>Microphone available</td></tr>
+            <tr><td><strong>Mobile Bridge</strong></td><td><code>:8090</code></td><td>—</td><td>Always true</td></tr>
+            <tr><td><strong>Telegram Remote</strong></td><td>—</td><td><code>is_telegram_remote_init_started</code></td><td><code>telegram_bot_token.enc</code></td></tr>
+            <tr><td><strong>Indexer Dashboard</strong></td><td><code>:8080</code></td><td><code>is_rag_engine_init_started</code></td><td>Always true</td></tr>
+            <tr><td><strong>MCP Manager</strong></td><td>—</td><td><code>is_mcp_ready</code></td><td><code>is_mcp_enabled</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout success">
+        <span class="material-symbols-outlined">check_circle</span>
+        <div class="callout-body">
+          <p><strong>Smart skip.</strong> If WhatsApp login isn't done (no <code>creds.json</code>), the watchdog doesn't restart Baileys — it skips entirely. Logs once per minute. This is production-grade: don't retry things that aren't meant to run.</p>
+        </div>
+      </div>
+
+      <div class="callout warning">
+        <span class="material-symbols-outlined">warning</span>
+        <div class="callout-body">
+          <p><strong>3 strikes + 120s backoff.</strong> If a service fails 3 times consecutively (e.g., port conflict), the watchdog backs off for 120 seconds. Prevents infinite restart loops from melting the CPU.</p>
+        </div>
+      </div>
+
+      <h2 id="lifecycle-tray">System Tray Integration<a href="#lifecycle-tray" class="anchor material-symbols-outlined">link</a></h2>
+      <p>When you minimize the console, it hides to the system tray — not the taskbar. A daemon thread checks the window state every 250ms.</p>
+
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr><th>Action</th><th>Effect</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Left-click tray icon</strong></td><td>Restore console, lock window size</td></tr>
+            <tr><td><strong>Right-click → Open Jarvis</strong></td><td>Restore + foreground</td></tr>
+            <tr><td><strong>Right-click → Exit Jarvis</strong></td><td>Graceful shutdown</td></tr>
+            <tr><td><strong>Minimize console</strong></td><td>Auto-hide to tray (250ms poll)</td></tr>
+            <tr><td><strong>Close window</strong></td><td>Full shutdown (via CTRL_CLOSE)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout info">
+        <span class="material-symbols-outlined">info</span>
+        <div class="callout-body">
+          <p><strong>Optional dependency.</strong> <code>pystray</code> and <code>PIL</code> are not installed by default. Without them JARVIS still runs — you just can't minimize to tray. Install: <code>pip install pystray pillow</code>.</p>
+        </div>
+      </div>
+
+      <h2 id="lifecycle-console">Console Locking (Windows Polish)<a href="#lifecycle-console" class="anchor material-symbols-outlined">link</a></h2>
+      <p>On Windows, JARVIS locks the console window to a specific size and style — 96 × 28 grid, 860 × 540 pixels, resize buttons removed. This is polish, not restriction.</p>
+
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr><th>Console Type</th><th>Behavior</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Windows Terminal</strong> (<code>WT_SESSION</code> set)</td><td>Skips buffer resize (handled by WT itself), applies via ANSI escape</td></tr>
+            <tr><td><strong>Legacy conhost</strong></td><td>Full <code>SetConsoleScreenBufferSize</code> + <code>SetConsoleWindowInfo</code></td></tr>
+            <tr><td><strong>Non-Windows</strong></td><td>Falls back to ANSI escape <code>\033[8;{rows};{cols}t</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout warning">
+        <span class="material-symbols-outlined">warning</span>
+        <div class="callout-body">
+          <p><strong>QuickEdit disabled.</strong> QuickEdit is the Windows feature where clicking in the console selects text and <em>pauses the process</em>. On a busy output stream, a mis-click freezes the whole thing. JARVIS disables QuickEdit at startup — no accidental freezes.</p>
+        </div>
+      </div>
+
+      <h2 id="lifecycle-saved">What Gets Saved vs Killed<a href="#lifecycle-saved" class="anchor material-symbols-outlined">link</a></h2>
+
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr><th>✅ Saved (before exit)</th><th>❌ Killed (during exit)</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>LTM semantic graph</td><td>Agent Panel subprocess</td></tr>
+            <tr><td>Behavioral Pattern Engine state</td><td>STT Popup subprocess</td></tr>
+            <tr><td>Session cookies (untouched)</td><td>Baileys WhatsApp server</td></tr>
+            <tr><td>Conversation history (incremental)</td><td>Mobile Bridge server</td></tr>
+            <tr><td>RAG vector index (on disk)</td><td>RAG Indexer Dashboard</td></tr>
+            <tr><td>Config in <code>.env</code> (untouched)</td><td>Telegram polling thread</td></tr>
+            <tr><td>Dashboard folder rules</td><td>MCP manager + MCP subprocesses</td></tr>
+            <tr><td>MCP server configs</td><td>Input Popup (if open)</td></tr>
+            <tr><td>Telegram token (encrypted)</td><td>Thread pool in-flight tasks</td></tr>
+            <tr><td>Auth tokens (untouched)</td><td>Pygame audio device</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout success">
+        <span class="material-symbols-outlined">check_circle</span>
+        <div class="callout-body">
+          <p><strong>Nothing lost.</strong> Memory graph, behavioral patterns, conversation history — all saved <em>before</em> any kill signal is sent. Even Windows logoff (CTRL_LOGOFF) runs steps 9–10 before step 15. State survives everything short of a power cut.</p>
+        </div>
+      </div>
+
+      <h2 id="lifecycle-handler">Command Handler Guards<a href="#lifecycle-handler" class="anchor material-symbols-outlined">link</a></h2>
+      <p>Commands behave deterministically during shutdown — no half-executed side effects:</p>
+
+      <ul class="bullets">
+        <li><strong>Pre-check:</strong> <code>if is_shutting_down(): return</code> — drops incoming commands immediately</li>
+        <li><strong>Mid-check:</strong> After <code>process_command()</code>, another check — if shutdown started mid-processing, actions aren't executed</li>
+        <li><strong>Interrupt check:</strong> <code>if interrupt.is_interrupted(): return</code> — voice interrupt support</li>
+        <li><strong>Empty guard:</strong> Empty strings and <code>None</code> dropped before processing</li>
+      </ul>
+
+      <div class="callout info">
+        <span class="material-symbols-outlined">info</span>
+        <div class="callout-body">
+          <p><strong>Dual shutdown check.</strong> The handler checks <code>is_shutting_down()</code> <em>twice</em> — before and after <code>process_command()</code>. A 5-second AgenticBrain task that started before shutdown <strong>won't execute its side effects</strong> if shutdown triggers mid-run. Critical: you don't want an email going out after Ctrl+C.</p>
+        </div>
+      </div>
+
+      <h2 id="lifecycle-trouble">Troubleshooting Shutdown<a href="#lifecycle-trouble" class="anchor material-symbols-outlined">link</a></h2>
+
+      <details class="faq">
+        <summary>Ctrl+C doesn't exit — JARVIS stays running<span class="material-symbols-outlined">add</span></summary>
+        <div class="faq-body">One of the background services is hung (likely MCP or WhatsApp). Wait 3s for parallel teardown, then press Ctrl+C again — the idempotent guard makes it safe. If still stuck, open another terminal and run <code>taskkill /F /PID &lt;pid&gt;</code>.</div>
+      </details>
+
+      <details class="faq">
+        <summary>JARVIS won't start — says "Already running"<span class="material-symbols-outlined">add</span></summary>
+        <div class="faq-body">Lock file is stale from a previous crash. Delete the lock file in the repo root. Then check Task Manager → <code>python.exe</code> → kill any orphan JARVIS process.</div>
+      </details>
+
+      <details class="faq">
+        <summary>Shutdown takes more than 30 seconds<span class="material-symbols-outlined">add</span></summary>
+        <div class="faq-body">One service is stuck waiting. Each service has a 2.5s timeout — total wall-clock should be ~2.6s. If exceeding, check startup logs to identify which service is hanging. Common culprit: WhatsApp Baileys waiting for network close during teardown.</div>
+      </details>
+
+      <details class="faq">
+        <summary>Zombie processes after crash<span class="material-symbols-outlined">add</span></summary>
+        <div class="faq-body"><code>os._exit()</code> didn't run — likely a hard <code>kill -9</code> or <code>taskkill /F</code>. Orphaned children get reparented to <code>System</code> PID 4. Fix: in PowerShell, <code>Get-Process python | Stop-Process -Force</code>.</div>
+      </details>
+
+      <details class="faq">
+        <summary>System tray icon doesn't appear<span class="material-symbols-outlined">add</span></summary>
+        <div class="faq-body"><code>pystray</code> or <code>PIL</code> is missing. Install: <code>pip install pystray pillow</code>. Alternatively the tray library silently failed on non-Windows — tray is Windows-only.</div>
+      </details>
+
+      <details class="faq">
+        <summary>Second JARVIS instance won't start<span class="material-symbols-outlined">add</span></summary>
+        <div class="faq-body">Same as "Already running" above. Check Task Manager for orphan <code>python.exe</code>. If PID is gone but lock file is there, delete the lock manually.</div>
+      </details>
+
+      <div class="pager">
+        <a href="#ui-comparison" class="pager-link">
+          <span class="pager-label">Previous</span>
+          <span class="pager-title"><span class="material-symbols-outlined">arrow_back</span>UI Comparison</span>
         </a>
         <a href="#troubleshooting" class="pager-link next">
           <span class="pager-label">Next</span>
