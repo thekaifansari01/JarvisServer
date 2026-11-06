@@ -1,478 +1,858 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth bg-black antialiased">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>JARVIS · FAQ</title>
-<script src="https://cdn.tailwindcss.com"></script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>FAQ — JARVIS OS Agent</title>
+<meta name="description" content="Answers to the most common questions about JARVIS — cost, hardware, offline mode, privacy, mobile control, file safety, and more." />
+<meta name="theme-color" content="#05050a" />
+<meta property="og:title" content="FAQ — JARVIS OS Agent" />
+<meta property="og:description" content="Everything you need to know about setting up, running, and customizing JARVIS." />
+<meta property="og:type" content="website" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-<script>
-tailwind.config = {
-  theme: {
-    extend: {
-      fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'] },
-      colors: { dark: '#000000', surface: '#0a0a0a', border: '#222222', accent: '#ffffff', muted: '#888888' },
-      animation: {
-        'pulse-glow': 'pulse-glow 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-        'aurora': 'aurora 30s ease-in-out infinite',
-        'aurora-2': 'aurora-2 40s ease-in-out infinite'
-      },
-      keyframes: {
-        'pulse-glow': { '0%, 100%': { opacity: 0.15 }, '50%': { opacity: 0.4 } },
-        aurora: {
-          '0%, 100%': { transform: 'translate(0, 0) scale(1) rotate(0deg)' },
-          '33%': { transform: 'translate(8%, -5%) scale(1.15) rotate(120deg)' },
-          '66%': { transform: 'translate(-5%, 8%) scale(0.95) rotate(240deg)' }
-        },
-        'aurora-2': {
-          '0%, 100%': { transform: 'translate(0, 0) scale(1.05) rotate(0deg)' },
-          '50%': { transform: 'translate(-10%, 10%) scale(1.2) rotate(180deg)' }
-        }
-      }
-    }
-  }
-}
-</script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" />
 <style>
 :root {
+  --bg: #05050a;
+  --bg-2: #08080f;
+  --bg-elev: #0d0d16;
+  --surface: rgba(255, 255, 255, 0.025);
+  --surface-hover: rgba(255, 255, 255, 0.05);
+  --border: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.14);
+  --text: #f0f0f5;
+  --text-dim: #b0b0c0;
+  --text-muted: #6b6b80;
+  --accent: #00d4ff;
+  --accent-2: #a855f7;
+  --success: #10b981;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+  --radius-sm: 10px;
+  --radius: 16px;
+  --radius-lg: 24px;
+  --max-w: 1240px;
+  --nav-h: 72px;
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
-  --grad-shine: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
 }
 
-* { -webkit-tap-highlight-color: transparent; }
-html { scroll-padding-top: 96px; }
-
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 body {
-  color: #b8b8c0;
-  overflow-x: hidden;
-  background: #030014;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  font-size: 16px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
-  position: relative;
+  overflow-x: hidden;
   min-height: 100vh;
 }
+img, svg { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+ul { list-style: none; }
+::selection { background: rgba(0, 212, 255, 0.3); color: var(--text); }
 
-.aurora-bg {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  overflow: hidden;
-  background: radial-gradient(ellipse at top, #0a0520 0%, #030014 50%, #000000 100%);
-}
-
-.aurora-blob {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(100px);
-  opacity: 0.5;
-  will-change: transform;
-}
-.aurora-blob-1 {
-  top: -20%; left: -10%;
-  width: 60vw; height: 60vw;
-  background: radial-gradient(circle, rgba(99, 102, 241, 0.55) 0%, transparent 70%);
-  animation: aurora 30s ease-in-out infinite;
-}
-.aurora-blob-2 {
-  top: 10%; right: -15%;
-  width: 55vw; height: 55vw;
-  background: radial-gradient(circle, rgba(168, 85, 247, 0.5) 0%, transparent 70%);
-  animation: aurora-2 40s ease-in-out infinite;
-}
-.aurora-blob-3 {
-  bottom: -20%; left: 20%;
-  width: 65vw; height: 65vw;
-  background: radial-gradient(circle, rgba(6, 182, 212, 0.4) 0%, transparent 70%);
-  animation: aurora 35s ease-in-out infinite reverse;
+.material-symbols-outlined {
+  font-family: 'Material Symbols Outlined';
+  font-weight: 400;
+  font-style: normal;
+  font-size: 22px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+  user-select: none;
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
 }
 
-@keyframes aurora {
-  0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); }
-  33% { transform: translate(8%, -5%) scale(1.15) rotate(120deg); }
-  66% { transform: translate(-5%, 8%) scale(0.95) rotate(240deg); }
+h1, h2, h3, h4 {
+  font-family: 'Space Grotesk', 'Inter', sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
 }
-@keyframes aurora-2 {
-  0%, 100% { transform: translate(0, 0) scale(1.05) rotate(0deg); }
-  50% { transform: translate(-10%, 10%) scale(1.2) rotate(180deg); }
-}
+h1 { font-size: clamp(2.2rem, 5vw, 3.8rem); letter-spacing: -0.04em; }
+h2 { font-size: clamp(1.4rem, 2.2vw, 1.75rem); }
+h3 { font-size: clamp(1rem, 1.4vw, 1.1rem); }
 
-.noise-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  opacity: 0.035;
-  mix-blend-mode: overlay;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-}
-
-.grid-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  background-size: 44px 44px;
-  background-image:
-    linear-gradient(to right, rgba(168, 85, 247, 0.045) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(99, 102, 241, 0.045) 1px, transparent 1px);
-  mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, black 30%, transparent 80%);
-  -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, black 30%, transparent 80%);
-}
-
-::selection { background: #a855f7; color: #ffffff; }
-::-moz-selection { background: #a855f7; color: #ffffff; }
-
-::-webkit-scrollbar { width: 10px; height: 10px; }
-::-webkit-scrollbar-track { background: #030014; }
-::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #6366f1, #a855f7, #06b6d4);
-  border-radius: 10px;
-  border: 2px solid #030014;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #818cf8, #c084fc, #22d3ee);
-}
-
-h1, h2, h3, h4, h5, h6 {
-  color: #ffffff;
-  letter-spacing: -0.025em;
-  line-height: 1.2;
-  font-weight: 700;
-}
-
-a { transition: all 0.25s var(--ease-out); }
-
-.nav-blur {
-  background: rgba(3, 0, 20, 0.55);
-  backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
-  border-bottom: 1px solid rgba(168, 85, 247, 0.08);
-  transition: all 0.4s var(--ease-out);
-}
-.nav-blur.scrolled {
-  border-bottom-color: rgba(168, 85, 247, 0.18);
-  background: rgba(3, 0, 20, 0.85);
-  box-shadow: 0 4px 40px rgba(99, 102, 241, 0.15), 0 1px 0 rgba(168, 85, 247, 0.1);
-}
-
-.logo-mark {
-  position: relative;
-  background: linear-gradient(135deg, #6366f1, #a855f7, #06b6d4);
-  background-size: 200% 200%;
-  animation: gradientShift 6s ease infinite;
-  transition: transform 0.3s var(--ease-spring), box-shadow 0.3s var(--ease-out);
-  box-shadow:
-    0 0 20px rgba(168, 85, 247, 0.6),
-    0 0 40px rgba(99, 102, 241, 0.4),
-    inset 0 1px 0 rgba(255,255,255,0.3);
-}
-.logo-mark:hover {
-  transform: scale(1.08) rotate(-3deg);
-  box-shadow:
-    0 0 30px rgba(168, 85, 247, 0.9),
-    0 0 60px rgba(99, 102, 241, 0.6),
-    inset 0 1px 0 rgba(255,255,255,0.4);
-}
-@keyframes gradientShift {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-}
-
-.nav-link-top {
-  position: relative;
-  padding: 6px 2px;
-  transition: color 0.25s var(--ease-out);
-}
-.nav-link-top::after {
-  content: '';
-  position: absolute;
-  bottom: 0; left: 0;
-  width: 100%; height: 1.5px;
-  background: linear-gradient(90deg, #818cf8, #c084fc, #22d3ee);
-  border-radius: 2px;
-  transform: scaleX(0);
-  transform-origin: right center;
-  transition: transform 0.35s var(--ease-out);
-  box-shadow: 0 0 8px rgba(192, 132, 252, 0.6);
-}
-.nav-link-top:hover { color: #ffffff; }
-.nav-link-top:hover::after {
-  transform: scaleX(1);
-  transform-origin: left center;
-}
-
-.reveal {
-  opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out);
-}
-.reveal.active { opacity: 1; transform: translateY(0); }
-.delay-100 { transition-delay: 100ms; }
-.delay-200 { transition-delay: 200ms; }
-
-.text-gradient-accent {
-  background: linear-gradient(110deg, #818cf8 0%, #c084fc 30%, #f472b6 60%, #22d3ee 100%);
-  background-size: 300% 300%;
+.gradient-text {
+  background: linear-gradient(135deg, #fff 0%, var(--accent) 45%, var(--accent-2) 100%);
+  background-size: 200% auto;
   -webkit-background-clip: text;
   background-clip: text;
-  -webkit-text-fill-color: transparent;
   color: transparent;
   animation: gradientShift 8s ease infinite;
 }
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% center; }
+  50% { background-position: 100% center; }
+}
 
-.section-label {
+.eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--accent);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.4rem 0.9rem;
-  border-radius: 99px;
-  background: linear-gradient(135deg, rgba(99, 102, 241, 0.12), rgba(168, 85, 247, 0.08));
-  border: 1px solid rgba(168, 85, 247, 0.25);
-  color: #d8b4fe;
-  font-size: 0.7rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  margin-bottom: 1.25rem;
-  box-shadow: 0 0 20px rgba(168, 85, 247, 0.15);
+  gap: 10px;
+}
+.eyebrow::before {
+  content: '';
+  width: 24px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent));
 }
 
-.faq-card {
-  position: relative;
-  padding: 1.75rem;
-  background: linear-gradient(180deg, rgba(20, 12, 45, 0.7) 0%, rgba(10, 5, 30, 0.6) 100%);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border: 1px solid rgba(168, 85, 247, 0.15);
-  border-radius: 20px;
-  transition:
-    transform 0.4s var(--ease-spring),
-    border-color 0.35s var(--ease-out),
-    box-shadow 0.4s var(--ease-out),
-    background 0.4s var(--ease-out);
-  overflow: hidden;
-  isolation: isolate;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-.faq-card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  padding: 1px;
-  background: linear-gradient(135deg, rgba(168,85,247,0.6), rgba(99,102,241,0.3) 30%, transparent 50%, transparent 70%, rgba(6,182,212,0.5));
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  opacity: 0.4;
-  transition: opacity 0.4s var(--ease-out);
-  pointer-events: none;
-  z-index: 2;
-}
-.faq-card::after {
-  content: '';
-  position: absolute;
-  top: -60%; right: -40%;
-  width: 100%; height: 100%;
-  background: radial-gradient(circle, rgba(168,85,247,0.22), transparent 60%);
-  opacity: 0;
-  transition: opacity 0.6s var(--ease-out);
-  pointer-events: none;
-  z-index: 0;
-  filter: blur(40px);
-}
-.faq-card:hover {
-  transform: translateY(-6px);
-  border-color: rgba(192, 132, 252, 0.4);
-  background: linear-gradient(180deg, rgba(30, 18, 60, 0.8) 0%, rgba(15, 8, 40, 0.7) 100%);
-  box-shadow:
-    0 30px 60px -20px rgba(168, 85, 247, 0.35),
-    0 10px 30px -10px rgba(99, 102, 241, 0.25),
-    inset 0 1px 0 rgba(255, 255, 255, 0.06);
-}
-.faq-card:hover::before { opacity: 1; }
-.faq-card:hover::after { opacity: 1; }
+.container { width: 100%; max-width: var(--max-w); margin: 0 auto; padding: 0 24px; }
+.section { padding: clamp(56px, 8vw, 100px) 0; }
 
-.faq-icon {
-  width: 40px; height: 40px;
-  border-radius: 12px;
+.scroll-progress {
+  position: fixed;
+  top: 0; left: 0;
+  height: 2px;
+  width: 0;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  z-index: 1000;
+  box-shadow: 0 0 12px rgba(0, 212, 255, 0.6);
+  transition: width 0.05s linear;
+}
+
+.bg-layer { position: fixed; inset: 0; pointer-events: none; z-index: -1; overflow: hidden; }
+.bg-grid {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 40%, transparent 80%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 40%, transparent 80%);
+}
+.bg-noise {
+  position: absolute; inset: 0;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+  pointer-events: none;
+}
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.5;
+  animation: float 22s ease-in-out infinite;
+  will-change: transform;
+}
+.orb-1 { top: -10%; left: 10%; width: 480px; height: 480px; background: radial-gradient(circle, rgba(0,212,255,0.3), transparent 70%); }
+.orb-2 { top: 20%; right: 5%; width: 520px; height: 520px; background: radial-gradient(circle, rgba(168,85,247,0.25), transparent 70%); animation-delay: -7s; }
+.orb-3 { bottom: 0; left: 40%; width: 400px; height: 400px; background: radial-gradient(circle, rgba(0,212,255,0.15), transparent 70%); animation-delay: -13s; }
+@keyframes float {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(40px, -30px) scale(1.05); }
+}
+
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: var(--nav-h);
+  z-index: 100;
   display: flex;
   align-items: center;
-  justify-content: center;
+  transition: background 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+  border-bottom: 1px solid transparent;
+}
+.nav::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent), var(--accent-2), var(--accent), transparent);
+  background-size: 200% auto;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  animation: gradientShift 6s ease infinite;
+}
+.nav.scrolled {
+  background: rgba(5, 5, 10, 0.78);
+  backdrop-filter: blur(22px) saturate(180%);
+  -webkit-backdrop-filter: blur(22px) saturate(180%);
+  border-bottom-color: var(--border);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+.nav.scrolled::before { opacity: 1; }
+.nav-inner {
+  width: 100%; max-width: var(--max-w);
+  margin: 0 auto; padding: 0 24px;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 24px;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  font-size: 1.05rem;
+  letter-spacing: -0.02em;
   flex-shrink: 0;
-  background: linear-gradient(135deg, rgba(168,85,247,0.22), rgba(99,102,241,0.1));
-  border: 1px solid rgba(168,85,247,0.35);
-  color: #d8b4fe;
-  box-shadow: 0 0 20px rgba(168,85,247,0.25), inset 0 1px 0 rgba(255,255,255,0.1);
+}
+.brand-mark {
+  width: 34px; height: 34px;
+  border-radius: 9px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  display: grid; place-items: center;
+  box-shadow: 0 0 24px rgba(0, 212, 255, 0.4);
+  position: relative;
+  transition: transform 0.4s var(--ease-spring), box-shadow 0.3s;
+  flex-shrink: 0;
+}
+.brand:hover .brand-mark { transform: rotate(-10deg) scale(1.08); box-shadow: 0 0 32px rgba(0, 212, 255, 0.6); }
+.brand-mark .material-symbols-outlined { color: #05050a; font-size: 20px; font-variation-settings: 'FILL' 1, 'wght' 600; }
+.brand-mark::after {
+  content: '';
+  position: absolute; inset: 0;
+  border-radius: 9px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  filter: blur(12px);
+  opacity: 0.6;
+  z-index: -1;
+}
+.brand-text { display: inline-flex; align-items: center; gap: 8px; }
+.brand-version {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  font-weight: 500;
+  padding: 2px 7px;
+  background: rgba(0, 212, 255, 0.1);
+  border: 1px solid rgba(0, 212, 255, 0.22);
+  border-radius: 4px;
+  color: var(--accent);
+  letter-spacing: 0.04em;
+  line-height: 1.4;
+}
+.nav-links { display: flex; align-items: center; gap: 2px; flex: 1; justify-content: center; }
+.nav-links a {
+  padding: 8px 14px;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--text-dim);
+  border-radius: 8px;
+  transition: color 0.2s, background 0.2s;
+  position: relative;
+}
+.nav-links a::before {
+  content: '';
+  position: absolute;
+  bottom: 3px;
+  left: 50%;
+  transform: translateX(-50%) scale(0);
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 10px var(--accent);
   transition: transform 0.35s var(--ease-spring);
 }
-.faq-card:hover .faq-icon {
-  transform: scale(1.08) rotate(-5deg);
+.nav-links a:hover { color: var(--text); background: var(--surface); }
+.nav-links a:hover::before { transform: translateX(-50%) scale(1); }
+.nav-links a.active { color: var(--text); background: var(--surface); }
+.nav-links a.active::before { transform: translateX(-50%) scale(1); }
+.nav-actions { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+.nav-github {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-dim);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  transition: all 0.2s;
 }
+.nav-github:hover { color: var(--text); background: var(--surface-hover); border-color: var(--border-strong); }
+.nav-github svg { transition: transform 0.4s var(--ease-spring); }
+.nav-github:hover svg { transform: rotate(-12deg) scale(1.1); }
+.nav-cta { padding: 8px 16px; font-size: 0.85rem; }
 
-.code-inline {
-  background: linear-gradient(135deg, rgba(99, 102, 241, 0.18), rgba(168, 85, 247, 0.12));
-  border: 1px solid rgba(168, 85, 247, 0.3);
-  color: #d8b4fe;
-  padding: 0.08rem 0.4rem;
-  border-radius: 5px;
-  font-size: 0.82em;
-  font-family: 'JetBrains Mono', monospace;
-  box-shadow: 0 0 10px rgba(168, 85, 247, 0.12);
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px 20px;
+  border-radius: 10px;
+  font-size: 0.92rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  border: 1px solid transparent;
+  letter-spacing: -0.01em;
 }
-.code-inline-danger {
-  background: rgba(244, 63, 94, 0.12);
-  border: 1px solid rgba(244, 63, 94, 0.3);
-  color: #fb7185;
-  padding: 0.08rem 0.4rem;
-  border-radius: 5px;
-  font-size: 0.82em;
-  font-family: 'JetBrains Mono', monospace;
-  box-shadow: 0 0 10px rgba(244, 63, 94, 0.12);
-}
-
-.download-btn {
-  position: relative;
-  background: linear-gradient(135deg, #ffffff 0%, #f0f0ff 100%);
-  color: #1a0b3d;
-  overflow: hidden;
-  isolation: isolate;
-  font-weight: 700;
-  transition: transform 0.35s var(--ease-spring), box-shadow 0.35s var(--ease-out);
-  box-shadow:
-    0 4px 24px rgba(255, 255, 255, 0.15),
-    0 0 40px rgba(168, 85, 247, 0.2);
-}
-.download-btn::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0;
-  width: 60%; height: 100%;
-  background: var(--grad-shine);
-  transform: translateX(-120%) skewX(-15deg);
-  pointer-events: none;
-}
-.download-btn:hover {
-  transform: translateY(-2px) scale(1.02);
-  box-shadow:
-    0 8px 32px rgba(255, 255, 255, 0.25),
-    0 0 60px rgba(168, 85, 247, 0.4);
-}
-.download-btn:hover::before {
-  animation: shineSweep 0.9s var(--ease-out);
-}
-.download-btn:active { transform: translateY(0) scale(0.98); }
-
-@keyframes shineSweep {
-  0% { transform: translateX(-120%) skewX(-15deg); }
-  100% { transform: translateX(220%) skewX(-15deg); }
-}
-
-.cta-card {
-  position: relative;
-  padding: 2rem;
-  background: linear-gradient(180deg, rgba(20, 12, 45, 0.7) 0%, rgba(10, 5, 30, 0.6) 100%);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border: 1px solid rgba(168, 85, 247, 0.2);
-  border-radius: 20px;
-  overflow: hidden;
-  isolation: isolate;
-  box-shadow:
-    0 30px 60px -20px rgba(0, 0, 0, 0.7),
-    0 0 60px -20px rgba(168, 85, 247, 0.3);
-}
-.cta-card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  padding: 1px;
-  background: linear-gradient(135deg, rgba(168,85,247,0.6), transparent 30%, transparent 70%, rgba(6,182,212,0.5));
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  opacity: 0.7;
-  pointer-events: none;
-  z-index: 2;
-}
-.cta-card::after {
-  content: '';
-  position: absolute;
-  top: -50%; left: 30%;
-  width: 60%; height: 100%;
-  background: radial-gradient(circle, rgba(168,85,247,0.15), transparent 60%);
-  pointer-events: none;
-  filter: blur(60px);
-  z-index: 0;
-}
-
-.link-accent {
-  position: relative;
-  color: #c084fc;
+.btn .material-symbols-outlined { font-size: 18px; }
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #05050a;
   font-weight: 600;
-  transition: color 0.25s var(--ease-out);
+  box-shadow: 0 8px 32px rgba(0, 212, 255, 0.25);
 }
-.link-accent::after {
+.btn-primary:hover { box-shadow: 0 12px 40px rgba(0, 212, 255, 0.45); }
+.btn-ghost { background: var(--surface); border-color: var(--border); color: var(--text); }
+.btn-ghost:hover { background: var(--surface-hover); border-color: var(--border-strong); }
+.btn-lg { padding: 14px 26px; font-size: 1rem; border-radius: 12px; }
+
+.mobile-toggle {
+  display: none;
+  width: 40px; height: 40px;
+  border-radius: 8px;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+  color: var(--text);
+}
+.mobile-toggle:hover { background: var(--surface); }
+
+.hero {
+  padding: calc(var(--nav-h) + 60px) 0 32px;
+  text-align: center;
+}
+.hero h1 { max-width: 800px; margin: 16px auto 20px; }
+.hero-sub {
+  max-width: 640px;
+  margin: 0 auto 32px;
+  font-size: clamp(1rem, 1.4vw, 1.1rem);
+  color: var(--text-dim);
+  line-height: 1.65;
+}
+
+.search-wrap {
+  max-width: 640px;
+  margin: 0 auto 32px;
+  padding: 0 24px;
+}
+.search-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 8px 8px 20px;
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.search-box:focus-within {
+  border-color: rgba(0, 212, 255, 0.4);
+  box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.1);
+}
+.search-box .material-symbols-outlined {
+  color: var(--text-muted);
+  font-size: 22px;
+  flex-shrink: 0;
+}
+.search-box input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text);
+  font-size: 0.98rem;
+  padding: 10px 0;
+  min-width: 0;
+}
+.search-box input::placeholder { color: var(--text-muted); }
+.search-box .search-clear {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  transition: all 0.2s;
+}
+.search-box .search-clear:hover {
+  color: var(--text);
+  background: var(--surface);
+}
+.search-box.has-value .search-clear { display: flex; }
+
+.categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  max-width: 900px;
+  margin: 0 auto 40px;
+  padding: 0 24px;
+}
+.cat-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-dim);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  transition: all 0.2s;
+  cursor: pointer;
+}
+.cat-pill:hover { color: var(--text); border-color: var(--border-strong); background: var(--surface-hover); }
+.cat-pill.active {
+  color: var(--accent);
+  background: rgba(0, 212, 255, 0.08);
+  border-color: rgba(0, 212, 255, 0.3);
+}
+.cat-pill .material-symbols-outlined { font-size: 15px; }
+
+.faq-wrap { max-width: 860px; margin: 0 auto; padding: 0 24px 96px; }
+
+.faq-list { display: flex; flex-direction: column; gap: 10px; }
+
+.faq-item {
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: border-color 0.2s, background 0.2s;
+}
+.faq-item:hover { border-color: var(--border-strong); }
+.faq-item[open] {
+  border-color: rgba(0, 212, 255, 0.25);
+  background: var(--bg-elev);
+  box-shadow: 0 4px 24px rgba(0, 212, 255, 0.05);
+}
+.faq-item summary {
+  padding: 20px 24px;
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  font-weight: 500;
+  font-size: 0.98rem;
+  transition: color 0.2s;
+}
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary:hover { color: var(--accent); }
+.faq-item[open] summary { color: var(--text); }
+.faq-q {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex: 1;
+  min-width: 0;
+}
+.faq-q-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  background: rgba(0, 212, 255, 0.1);
+  border: 1px solid rgba(0, 212, 255, 0.2);
+  color: var(--accent);
+  flex-shrink: 0;
+  transition: transform 0.3s var(--ease-spring);
+}
+.faq-item[open] .faq-q-icon { transform: scale(1.08); }
+.faq-q-icon .material-symbols-outlined { font-size: 16px; }
+.faq-chevron {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  color: var(--text-muted);
+  flex-shrink: 0;
+  transition: transform 0.25s var(--ease-out), color 0.2s, background 0.2s;
+}
+.faq-item:hover .faq-chevron { color: var(--text); background: var(--surface); }
+.faq-item[open] .faq-chevron { transform: rotate(180deg); color: var(--accent); background: rgba(0, 212, 255, 0.08); }
+.faq-chevron .material-symbols-outlined { font-size: 20px; }
+.faq-answer {
+  padding: 0 24px 22px;
+  color: var(--text-dim);
+  font-size: 0.92rem;
+  line-height: 1.75;
+}
+.faq-answer p + p { margin-top: 12px; }
+.faq-answer strong { color: var(--text); font-weight: 500; }
+.faq-answer a { color: var(--accent); border-bottom: 1px solid rgba(0, 212, 255, 0.3); transition: all 0.15s; }
+.faq-answer a:hover { border-bottom-color: var(--accent); background: rgba(0, 212, 255, 0.08); }
+.faq-answer code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85em;
+  padding: 2px 6px;
+  background: rgba(0, 212, 255, 0.1);
+  border: 1px solid rgba(0, 212, 255, 0.2);
+  border-radius: 5px;
+  color: var(--accent);
+}
+
+.empty-state {
+  display: none;
+  padding: 64px 24px;
+  text-align: center;
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+.empty-state.show { display: block; }
+.empty-state .material-symbols-outlined {
+  font-size: 48px;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+.empty-state h3 { margin-bottom: 8px; }
+.empty-state p { color: var(--text-dim); font-size: 0.94rem; }
+
+.cta {
+  text-align: center;
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.06), rgba(168, 85, 247, 0.06));
+  border: 1px solid rgba(0, 212, 255, 0.15);
+  border-radius: var(--radius-lg);
+  padding: clamp(40px, 6vw, 64px) 32px;
+  position: relative;
+  overflow: hidden;
+  max-width: 800px;
+  margin: 0 auto;
+}
+.cta::before {
   content: '';
   position: absolute;
-  bottom: -2px; left: 0;
-  width: 100%; height: 1.5px;
-  background: linear-gradient(90deg, #818cf8, #c084fc, #22d3ee);
-  border-radius: 2px;
-  transform: scaleX(0);
-  transform-origin: right center;
-  transition: transform 0.35s var(--ease-out);
-  box-shadow: 0 0 8px rgba(192, 132, 252, 0.6);
+  top: -50%; left: 50%;
+  width: 800px; height: 800px;
+  transform: translateX(-50%);
+  background: radial-gradient(circle, rgba(0,212,255,0.15), transparent 60%);
+  pointer-events: none;
+  animation: pulseGlow 6s ease-in-out infinite;
 }
-.link-accent:hover { color: #e9d5ff; }
-.link-accent:hover::after {
-  transform: scaleX(1);
-  transform-origin: left center;
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.6; transform: translateX(-50%) scale(1); }
+  50% { opacity: 1; transform: translateX(-50%) scale(1.1); }
 }
+.cta h2 { margin-bottom: 16px; position: relative; }
+.cta p { color: var(--text-dim); max-width: 480px; margin: 0 auto 28px; position: relative; }
+.cta-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; position: relative; }
 
-#mobile-overlay { transition: opacity 0.3s var(--ease-out); }
-#mobile-drawer {
-  transition: transform 0.35s var(--ease-out);
-  background: linear-gradient(180deg, rgba(10, 5, 30, 0.98), rgba(3, 0, 20, 1));
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border-right: 1px solid rgba(168, 85, 247, 0.2);
-  box-shadow: 20px 0 60px -20px rgba(168, 85, 247, 0.3);
+.footer {
+  position: relative;
+  border-top: 1px solid var(--border);
+  padding: 72px 0 32px;
+  overflow: hidden;
 }
-
-.footer-gradient-line {
+.footer::before {
+  content: '';
   position: absolute;
   top: 0; left: 50%;
   transform: translateX(-50%);
-  width: 66%; height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(168,85,247,0.7), rgba(99,102,241,0.6), rgba(6,182,212,0.6), transparent);
-  box-shadow: 0 0 20px rgba(168, 85, 247, 0.5);
+  width: min(600px, 80%);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent), var(--accent-2), var(--accent), transparent);
+  box-shadow: 0 0 30px 2px rgba(0, 212, 255, 0.4);
+}
+.footer::after {
+  content: '';
+  position: absolute;
+  top: -200px; left: 50%;
+  transform: translateX(-50%);
+  width: 700px;
+  height: 400px;
+  background: radial-gradient(ellipse at center, rgba(0, 212, 255, 0.08), transparent 60%);
+  pointer-events: none;
+  z-index: -1;
+}
+.footer-hero {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 64px;
+  align-items: start;
+  margin-bottom: 56px;
+}
+.footer-brand-block { display: flex; flex-direction: column; }
+.footer-brand-block .brand { font-size: 1.35rem; margin-bottom: 20px; align-self: flex-start; }
+.footer-brand-block .brand-mark { width: 42px; height: 42px; border-radius: 11px; }
+.footer-brand-block .brand-mark .material-symbols-outlined { font-size: 24px; }
+.footer-tagline {
+  color: var(--text-dim);
+  font-size: 0.95rem;
+  line-height: 1.65;
+  max-width: 400px;
+  margin-bottom: 24px;
+}
+.footer-badges { display: flex; flex-wrap: wrap; gap: 8px; }
+.footer-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  letter-spacing: 0.03em;
+  transition: all 0.2s;
+}
+.footer-badge:hover { color: var(--text-dim); border-color: var(--border-strong); }
+.footer-badge .status-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--success);
+  box-shadow: 0 0 8px var(--success);
+  animation: pulse 2s ease-in-out infinite;
+}
+.footer-badge .material-symbols-outlined { font-size: 14px; color: var(--accent); }
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.85); }
+}
+.footer-newsletter h4 { font-family: 'Space Grotesk', sans-serif; font-size: 1.1rem; margin-bottom: 8px; letter-spacing: -0.02em; }
+.footer-newsletter p { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 18px; line-height: 1.55; }
+.newsletter-form {
+  display: flex;
+  gap: 6px;
+  padding: 5px;
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: 11px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.newsletter-form:focus-within { border-color: rgba(0, 212, 255, 0.35); box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.1); }
+.newsletter-form input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  padding: 10px 12px;
+  color: var(--text);
+  font-size: 0.88rem;
+  outline: none;
+  min-width: 0;
+}
+.newsletter-form input::placeholder { color: var(--text-muted); }
+.newsletter-form button {
+  padding: 10px 18px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #05050a;
+  font-weight: 600;
+  font-size: 0.85rem;
+  border-radius: 7px;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.newsletter-form button:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(0, 212, 255, 0.35); }
+.footer-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border-strong), transparent);
+  margin-bottom: 56px;
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 40px;
+  margin-bottom: 56px;
+}
+.footer-col h5 {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+  margin-bottom: 20px;
+}
+.footer-col ul { display: flex; flex-direction: column; gap: 12px; }
+.footer-col a {
+  font-size: 0.88rem;
+  color: var(--text-dim);
+  transition: color 0.2s, transform 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  width: fit-content;
+}
+.footer-col a:hover { color: var(--accent); transform: translateX(3px); }
+.footer-social-list { display: flex; flex-direction: column; gap: 12px; }
+.footer-social-list a {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  font-size: 0.85rem;
+  transition: all 0.2s;
+}
+.footer-social-list a:hover {
+  color: var(--accent);
+  border-color: rgba(0, 212, 255, 0.3);
+  background: rgba(0, 212, 255, 0.06);
+  transform: translateX(3px);
+}
+.footer-social-list svg { width: 15px; height: 15px; flex-shrink: 0; }
+.footer-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 32px;
+  border-top: 1px solid var(--border);
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.footer-copy a { color: var(--text-dim); transition: color 0.2s; }
+.footer-copy a:hover { color: var(--accent); }
+.footer-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+.footer-status .status-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--success);
+  box-shadow: 0 0 8px var(--success);
+  animation: pulse 2s ease-in-out infinite;
+}
+.footer-backtop {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  transition: all 0.2s;
+}
+.footer-backtop:hover {
+  color: var(--accent);
+  border-color: rgba(0, 212, 255, 0.3);
+  background: rgba(0, 212, 255, 0.06);
+  transform: translateY(-2px);
+}
+.footer-backtop .material-symbols-outlined { font-size: 16px; transition: transform 0.2s; }
+.footer-backtop:hover .material-symbols-outlined { transform: translateY(-2px); }
+
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out); }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+
+@media (max-width: 1200px) {
+  .nav-links { gap: 0; }
+  .nav-links a { padding: 8px 10px; font-size: 0.85rem; }
+  .nav-github span:not(.material-symbols-outlined) { display: none; }
+  .nav-github { padding: 8px 10px; }
 }
 
-.social-circle { transition: all 0.3s var(--ease-out); }
-.social-circle:hover {
-  transform: translateY(-3px);
-  border-color: rgba(192, 132, 252, 0.6) !important;
-  background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(168, 85, 247, 0.15)) !important;
-  box-shadow: 0 0 30px rgba(168, 85, 247, 0.5), 0 0 60px rgba(99, 102, 241, 0.3);
-  color: #ffffff;
+@media (max-width: 1024px) {
+  .footer-hero { grid-template-columns: 1fr; gap: 40px; }
+  .footer-grid { grid-template-columns: repeat(3, 1fr); gap: 32px; }
 }
 
-@media (max-width: 968px) {
-  .aurora-blob { filter: blur(70px); }
-  .aurora-blob-1, .aurora-blob-2, .aurora-blob-3 {
-    width: 90vw;
-    height: 90vw;
+@media (max-width: 900px) {
+  .nav-links a { padding: 8px 8px; font-size: 0.82rem; }
+}
+
+@media (max-width: 768px) {
+  :root { --nav-h: 64px; }
+  .nav-inner { gap: 12px; padding: 0 16px; }
+  .nav-links {
+    display: none;
+    position: fixed;
+    top: var(--nav-h);
+    left: 0; right: 0; bottom: 0;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 24px 16px;
+    gap: 8px;
+    background: rgba(5, 5, 10, 0.98);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    overflow-y: auto;
+    border-top: 1px solid var(--border);
+    z-index: 99;
   }
+  .nav.mobile-open .nav-links { display: flex; animation: navSlideIn 0.35s var(--ease-out); }
+  @keyframes navSlideIn {
+    from { opacity: 0; transform: translateY(-8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .nav-links a {
+    padding: 16px 20px;
+    font-size: 1rem;
+    border-radius: 10px;
+    width: 100%;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .nav-links a::before { display: none; }
+  .nav-links a::after {
+    content: '→';
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--text-muted);
+    transition: transform 0.2s, color 0.2s;
+    font-size: 1.1rem;
+  }
+  .nav-links a:hover::after, .nav-links a.active::after { transform: translateX(4px); color: var(--accent); }
+  .nav-links a.active { border-color: rgba(0, 212, 255, 0.3); background: rgba(0, 212, 255, 0.06); }
+  .nav-github span:not(.material-symbols-outlined) { display: inline; }
+  .nav-github { padding: 8px 12px; }
+  .nav-cta { display: none; }
+  .mobile-toggle { display: flex; }
+  .hero { padding-top: calc(var(--nav-h) + 40px); }
+  .faq-item summary { padding: 16px 18px; font-size: 0.92rem; }
+  .faq-answer { padding: 0 18px 18px; font-size: 0.88rem; }
+  .faq-q-icon { width: 28px; height: 28px; }
+  .faq-chevron { width: 28px; height: 28px; }
+  .footer { padding: 56px 0 24px; }
+  .footer-grid { grid-template-columns: repeat(2, 1fr); gap: 32px; }
+  .footer-hero { margin-bottom: 40px; }
+  .footer-divider { margin-bottom: 40px; }
+  .footer-bottom { flex-direction: column; text-align: center; justify-content: center; }
+  .newsletter-form { flex-direction: column; padding: 8px; gap: 8px; }
+  .newsletter-form button { width: 100%; padding: 12px 18px; }
+  .footer-social-list { flex-direction: row; flex-wrap: wrap; }
+  .footer-social-list a { flex: 1; min-width: 120px; justify-content: center; }
+}
+
+@media (max-width: 480px) {
+  .search-box { padding: 6px 6px 6px 16px; }
+  .search-box input { font-size: 0.92rem; padding: 10px 0; }
+  .categories { gap: 6px; }
+  .cat-pill { padding: 6px 12px; font-size: 0.8rem; }
+  .cat-pill .material-symbols-outlined { font-size: 14px; }
+  .footer-grid { grid-template-columns: 1fr; gap: 28px; }
+  .footer-social-list a { min-width: 100%; }
+  .brand-version { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -480,277 +860,566 @@ a { transition: all 0.25s var(--ease-out); }
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
+  .reveal { opacity: 1; transform: none; }
+  .gradient-text { animation: none; }
 }
 </style>
 </head>
 <body>
 
-<div class="aurora-bg">
-  <div class="aurora-blob aurora-blob-1"></div>
-  <div class="aurora-blob aurora-blob-2"></div>
-  <div class="aurora-blob aurora-blob-3"></div>
-</div>
-<div class="grid-overlay"></div>
-<div class="noise-overlay"></div>
+<div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
 
-<header id="navbar" class="fixed top-0 w-full z-50 nav-blur">
-  <div class="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8 h-16 flex justify-between items-center">
-    <div class="flex items-center gap-4">
-      <button id="mobile-menu-btn" class="md:hidden text-zinc-400 hover:text-white focus:outline-none transition-colors">
-        <i class="fa-solid fa-bars text-xl"></i>
-      </button>
-      <a href="/" class="flex items-center gap-2.5">
-        <div class="logo-mark flex h-8 w-8 items-center justify-center rounded-lg text-white">
-          <i class="fa-solid fa-bolt text-xs"></i>
-        </div>
-        <span class="text-base font-bold text-white tracking-tight">JARVIS</span>
-      </a>
+<div class="bg-layer" aria-hidden="true">
+  <div class="bg-grid"></div>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+  <div class="bg-noise"></div>
+</div>
+
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="brand">
+      <span class="brand-mark">
+        <span class="material-symbols-outlined">deployed_code</span>
+      </span>
+      <span class="brand-text">
+        JARVIS
+        <span class="brand-version">v1.0</span>
+      </span>
+    </a>
+    <div class="nav-links" id="navLinks">
+      <a href="index.html#features">Features</a>
+      <a href="docs/index.html">Docs</a>
+      <a href="about.html">About</a>
+      <a href="faq.html" class="active">FAQ</a>
     </div>
-    <nav class="hidden md:flex items-center space-x-8">
-      <a href="/#features" class="nav-link-top text-sm font-medium text-zinc-400 hover:text-white">Features</a>
-      <a href="/documentation" class="nav-link-top text-sm font-medium text-zinc-400 hover:text-white">Docs</a>
-      <a href="/about" class="nav-link-top text-sm font-medium text-zinc-400 hover:text-white">About</a>
-    </nav>
-    <div class="flex items-center gap-4 sm:gap-6">
-      <a href="/#download" class="download-btn px-4 py-1.5 rounded-lg text-sm font-semibold">Get Jarvis</a>
+    <div class="nav-actions">
+      <a href="https://github.com/thekaifansari01/Jarvis-OS-Agent" class="nav-github" target="_blank" rel="noopener">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56v-2c-3.2.69-3.88-1.36-3.88-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.23-1.28-5.23-5.69 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18.92-.26 1.91-.39 2.89-.39.98 0 1.97.13 2.89.39 2.21-1.49 3.18-1.18 3.18-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.42-2.69 5.39-5.25 5.68.41.35.78 1.05.78 2.11v3.13c0 .31.21.68.8.56A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
+        <span>Star</span>
+      </a>
+      <a href="index.html#install" class="btn btn-primary nav-cta">Get started</a>
+      <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle menu">
+        <span class="material-symbols-outlined">menu</span>
+      </button>
     </div>
   </div>
-</header>
+</nav>
 
-<div id="mobile-overlay" class="fixed inset-0 bg-black/85 z-40 hidden opacity-0 backdrop-blur-sm"></div>
-<div id="mobile-drawer" class="fixed inset-y-0 left-0 w-72 z-50 transform -translate-x-full md:hidden flex flex-col h-full">
-  <div class="p-6 border-b border-[#1e123c] flex justify-between items-center">
-    <div class="flex items-center gap-2">
-      <div class="logo-mark flex h-6 w-6 items-center justify-center rounded text-white">
-        <i class="fa-solid fa-bolt text-[10px]"></i>
-      </div>
-      <span class="font-bold text-white tracking-tight">Menu</span>
-    </div>
-    <button id="mobile-close-btn" class="text-zinc-400 hover:text-white transition-colors">
-      <i class="fa-solid fa-xmark text-xl"></i>
+<main>
+
+<section class="hero">
+  <div class="container">
+    <span class="eyebrow reveal">FAQ</span>
+    <h1 class="reveal reveal-delay-1" style="margin-top: 16px;">
+      Frequently asked<br/>
+      <span class="gradient-text">questions.</span>
+    </h1>
+    <p class="hero-sub reveal reveal-delay-2">
+      Everything you need to know about setting up, running, and customizing JARVIS for your workflow.
+    </p>
+  </div>
+</section>
+
+<div class="search-wrap reveal">
+  <div class="search-box" id="searchBox">
+    <span class="material-symbols-outlined">search</span>
+    <input type="text" id="searchInput" placeholder="Search questions, topics, keywords..." autocomplete="off" />
+    <button class="search-clear" id="searchClear" aria-label="Clear search">
+      <span class="material-symbols-outlined">close</span>
     </button>
   </div>
-  <div class="flex-1 overflow-y-auto p-6 space-y-6">
-    <a href="/" class="block text-lg font-medium text-zinc-300 hover:text-white mobile-link">Home</a>
-    <a href="/documentation" class="block text-lg font-medium text-zinc-300 hover:text-white mobile-link">Documentation</a>
-    <a href="/about" class="block text-lg font-medium text-zinc-300 hover:text-white mobile-link">About</a>
-    <a href="/privacy" class="block text-lg font-medium text-zinc-300 hover:text-white mobile-link">Privacy</a>
+</div>
+
+<div class="categories reveal">
+  <button class="cat-pill active" data-cat="all">
+    <span class="material-symbols-outlined">apps</span>
+    All
+  </button>
+  <button class="cat-pill" data-cat="setup">
+    <span class="material-symbols-outlined">settings</span>
+    Setup
+  </button>
+  <button class="cat-pill" data-cat="privacy">
+    <span class="material-symbols-outlined">shield</span>
+    Privacy
+  </button>
+  <button class="cat-pill" data-cat="hardware">
+    <span class="material-symbols-outlined">developer_board</span>
+    Hardware
+  </button>
+  <button class="cat-pill" data-cat="features">
+    <span class="material-symbols-outlined">auto_awesome</span>
+    Features
+  </button>
+  <button class="cat-pill" data-cat="contributing">
+    <span class="material-symbols-outlined">group</span>
+    Contributing
+  </button>
+</div>
+
+<div class="faq-wrap">
+  <div class="faq-list" id="faqList">
+
+    <details class="faq-item reveal" data-cat="setup" data-search="free cost pricing paid api key">
+      <summary>
+        <span class="faq-q">
+          <span class="faq-q-icon"><span class="material-symbols-outlined">payments</span></span>
+          Is JARVIS completely free to use?
+        </span>
+        <span class="faq-chevron"><span class="material-symbols-outlined">expand_more</span></span>
+      </summary>
+      <div class="faq-answer">
+        <p>Yes, the core JARVIS software is <strong>100% free and open-source</strong> under the <strong>GNU General Public License v3.0 (GPLv3)</strong>.</p>
+        <p>The system can run entirely on local Ollama or LM Studio models for zero API cost. If you use cloud APIs like Groq, Gemini, or Regolo, you may incur standard API usage costs depending on their respective free tiers.</p>
+      </div>
+    </details>
+
+    <details class="faq-item reveal" data-cat="privacy" data-search="offline local private no cloud airgap">
+      <summary>
+        <span class="faq-q">
+          <span class="faq-q-icon"><span class="material-symbols-outlined">wifi_off</span></span>
+          Can I run it completely offline?
+        </span>
+        <span class="faq-chevron"><span class="material-symbols-outlined">expand_more</span></span>
+      </summary>
+      <div class="faq-answer">
+        <p>Absolutely. You can point JARVIS to any local OpenAI-compatible endpoint. By running Ollama or LM Studio locally and updating <code>PRIMARY_BASE_URL</code> and <code>FALLBACK_BASE_URL</code> in your <code>.env</code>, you achieve <strong>100% local, offline inference</strong>.</p>
+        <p>The local embedding model (<code>BAAI/bge-small-en-v1.5</code>) and RapidOCR already run on-device — no cloud calls there either.</p>
+      </div>
+    </details>
+
+    <details class="faq-item reveal" data-cat="hardware" data-search="ram cpu laptop i5 4gb specs requirements gpu hardware">
+      <summary>
+        <span class="faq-q">
+          <span class="faq-q-icon"><span class="material-symbols-outlined">developer_board</span></span>
+          What hardware do I need to run JARVIS?
+        </span>
+        <span class="faq-chevron"><span class="material-symbols-outlined">expand_more</span></span>
+      </summary>
+      <div class="faq-answer">
+        <p>Very little. JARVIS was developed and tested on an <strong>Intel i5-3210M (2012) with 4 GB RAM</strong>.</p>
+        <p>Because JARVIS uses cloud LLM providers by default, you don't need a powerful GPU or 32 GB of RAM. If your machine can run Windows 11 and a browser, it can run JARVIS. More RAM = faster embedding loads and snappier boot.</p>
+      </div>
+    </details>
+
+    <details class="faq-item reveal" data-cat="features" data-search="live correction interrupt mid-execution adaptive re-plan">
+      <summary>
+        <span class="faq-q">
+          <span class="faq-q-icon"><span class="material-symbols-outlined">sync</span></span>
+          What is Live Mid-Execution Correction?
+        </span>
+        <span class="faq-chevron"><span class="material-symbols-outlined">expand_more</span></span>
+      </summary>
+      <div class="faq-answer">
+        <p>The AgenticBrain loop is <strong>interruptible</strong>. If you change your mind mid-task — for example, saying "not WhatsApp, send an email instead" — JARVIS absorbs the correction, revises its plan in-place, and keeps already-completed steps intact.</p>
+        <p>No full restart, no hallucinated apology loop, no lost progress. This runs only in AgenticBrain mode — FastBrain is stateless and doesn't support mid-run re-planning.</p>
+      </div>
+    </details>
+
+    <details class="faq-item reveal" data-cat="contributing" data-search="cla contributor license agreement copyright pull request">
+      <summary>
+        <span class="faq-q">
+          <span class="faq-q-icon"><span class="material-symbols-outlined">handshake</span></span>
+          What is the Contributor License Agreement (CLA)?
+        </span>
+        <span class="faq-chevron"><span class="material-symbols-outlined">expand_more</span></span>
+      </summary>
+      <div class="faq-answer">
+        <p>JARVIS uses a <strong>CLA</strong> to ensure the project can remain open-source while allowing commercial licensing for enterprises.</p>
+        <p>By submitting a Pull Request, you agree to grant the maintainer (Kaif Ansari) the right to use your contribution under both GPLv3 and any future commercial licenses. This keeps the project legally clean and fully funded.</p>
+      </div>
+    </details>
+
+    <details class="faq-item reveal" data-cat="setup" data-search="mac linux windows cross-platform port">
+      <summary>
+        <span class="faq-q">
+          <span class="faq-q-icon"><span class="material-symbols-outlined">devices</span></span>
+          Does it work on Mac and Linux?
+        </span>
+        <span class="faq-chevron"><span class="material-symbols-outlined">expand_more</span></span>
+      </summary>
+      <div class="faq-answer">
+        <p>Currently, JARVIS is <strong>Windows-only (Windows 10/11)</strong>. The GUI automation, PC monitor, and mobile bridge assume Windows paths and APIs (<code>pywin32</code>, <code>comtypes</code>, Windows Registry).</p>
+        <p>Linux and macOS are not currently planned, but community contributions are welcome if you'd like to port it.</p>
+      </div>
+    </details>
+
+    <details class="faq-item reveal" data-cat="features" data-search="mobile android termux ssh tailscale phone control">
+      <summary>
+        <span class="faq-q">
+          <span class="faq-q-icon"><span class="material-symbols-outlined">phone_android</span></span>
+          How does Android control work?
+        </span>
+        <span class="faq-chevron"><span class="material-symbols-outlined">expand_more</span></span>
+      </summary>
+      <div class="faq-answer">
+        <p>Mobile control uses a <strong>persistent WebSocket bridge</strong> over local WiFi — no ADB, no USB cable, no cloud relay.</p>
+        <p>Install Termux + Termux:API from F-Droid, open the bridge dashboard at <code>127.0.0.1:8090</code>, scan the QR code, and you're connected. JARVIS can then control flashlight, vibrate, battery, camera, notifications, and open apps via <code>termux-*</code> API commands.</p>
+      </div>
+    </details>
+
+    <details class="faq-item reveal" data-cat="privacy" data-search="safety files delete rm safe destructive guardrails">
+      <summary>
+        <span class="faq-q">
+          <span class="faq-q-icon"><span class="material-symbols-outlined">verified_user</span></span>
+          Will it accidentally delete my files?
+        </span>
+        <span class="faq-chevron"><span class="material-symbols-outlined">expand_more</span></span>
+      </summary>
+      <div class="faq-answer">
+        <p>JARVIS employs strict <code>shlex</code> tokenization and path canonicalization that <strong>auto-blocks destructive commands</strong> like <code>rm -rf /</code> or <code>del /f /s /q</code> on system paths.</p>
+        <p>Additionally, the Human-in-the-Loop (HITL) system ensures it asks for consent before any major action. You see the exact operation, approve or reject, and nothing happens without your explicit confirmation.</p>
+      </div>
+    </details>
+
+    <details class="faq-item reveal" data-cat="features" data-search="whatsapp telegram baileys telethon messenger">
+      <summary>
+        <span class="faq-q">
+          <span class="faq-q-icon"><span class="material-symbols-outlined">chat</span></span>
+          Why are WhatsApp and Telegram separate systems?
+        </span>
+        <span class="faq-chevron"><span class="material-symbols-outlined">expand_more</span></span>
+      </summary>
+      <div class="faq-answer">
+        <p>WhatsApp uses the <strong>Baileys Node.js WebSocket bridge</strong> for stable connections, requiring a QR code scan once. Telegram uses the native <strong>MTProto API via Telethon</strong> for deeper OS integration and remote bot control.</p>
+        <p>Both are managed safely as background services by the <code>ServiceWatchdog</code>, which auto-restarts them if they crash.</p>
+      </div>
+    </details>
+
+    <details class="faq-item reveal" data-cat="features" data-search="mcp extension protocol tools plugin community">
+      <summary>
+        <span class="faq-q">
+          <span class="faq-q-icon"><span class="material-symbols-outlined">extension</span></span>
+          How does MCP integration work?
+        </span>
+        <span class="faq-chevron"><span class="material-symbols-outlined">expand_more</span></span>
+      </summary>
+      <div class="faq-answer">
+        <p>MCP (Model Context Protocol) lets JARVIS connect to <strong>18,000+ community-built tool servers</strong> — GitHub, Brave Search, SQLite, Notion, Slack, Docker, and more — via a single JSON entry in <code>Data/mcp_servers.json</code>.</p>
+        <p>Tools are auto-discovered at startup and namespaced as <code>mcp__&lt;server&gt;__&lt;tool&gt;</code>. Zero core code changes needed to add new capabilities.</p>
+      </div>
+    </details>
+
+    <details class="faq-item reveal" data-cat="privacy" data-search="data privacy security local storage telemetry tracking">
+      <summary>
+        <span class="faq-q">
+          <span class="faq-q-icon"><span class="material-symbols-outlined">shield</span></span>
+          Is my data safe?
+        </span>
+        <span class="faq-chevron"><span class="material-symbols-outlined">expand_more</span></span>
+      </summary>
+      <div class="faq-answer">
+        <p>Yes. Credentials are <strong>AES-encrypted locally</strong>. Conversation history and memory graphs stay on disk. There's zero telemetry and no analytics — you can audit the entire codebase on <a href="https://github.com/thekaifansari01/Jarvis-OS-Agent" target="_blank" rel="noopener">GitHub</a>.</p>
+        <p>Only LLM API calls leave your machine, and you can switch to local models entirely to eliminate even that. See the full <a href="privacy.html">Privacy Policy</a>.</p>
+      </div>
+    </details>
+
+    <details class="faq-item reveal" data-cat="setup" data-search="install setup quick start clone pip npm">
+      <summary>
+        <span class="faq-q">
+          <span class="faq-q-icon"><span class="material-symbols-outlined">download</span></span>
+          How long does installation take?
+        </span>
+        <span class="faq-chevron"><span class="material-symbols-outlined">expand_more</span></span>
+      </summary>
+      <div class="faq-answer">
+        <p>On a warm connection, the full install takes about <strong>5–10 minutes</strong>: clone, install Python deps, install Node deps for the WhatsApp bridge, register the CLI.</p>
+        <p>Follow the <a href="docs/index.html#quick-start">Quick Start guide</a> for a copy-paste walkthrough.</p>
+      </div>
+    </details>
+
+  </div>
+
+  <div class="empty-state" id="emptyState">
+    <span class="material-symbols-outlined">search_off</span>
+    <h3>No results found</h3>
+    <p>Try different keywords or browse another category.</p>
   </div>
 </div>
 
-<main class="relative z-10 pt-32 pb-24 px-4 sm:px-6 lg:px-8">
-  <div class="max-w-5xl mx-auto">
-
-    <div class="reveal mb-16 text-center">
-      <span class="section-label"><i class="fa-solid fa-circle-question"></i> FAQ</span>
-      <h1 class="text-4xl md:text-5xl font-bold mb-4 tracking-tight">Frequently Asked <span class="text-gradient-accent">Questions</span></h1>
-      <p class="text-lg text-zinc-400 max-w-2xl mx-auto">Everything you need to know about setting up, running, and customizing JARVIS for your workflow.</p>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-
-      <div class="faq-card reveal">
-        <div class="flex items-start gap-3 mb-3">
-          <div class="faq-icon"><i class="fa-solid fa-circle-question text-sm"></i></div>
-          <h3 class="text-lg font-bold text-white pt-1.5">Is JARVIS completely free to use?</h3>
-        </div>
-        <p class="text-sm text-zinc-400 leading-relaxed">
-          Yes, the core JARVIS software is 100% free and open-source under the <strong class="text-white">GNU General Public License v3.0 (GPLv3)</strong>. The system can run entirely on local Ollama or LM Studio models for zero API cost. If you use cloud APIs like Groq, Gemma, or Regolo, you may incur standard API usage costs depending on their respective free tiers.
-        </p>
-      </div>
-
-      <div class="faq-card reveal delay-100">
-        <div class="flex items-start gap-3 mb-3">
-          <div class="faq-icon"><i class="fa-solid fa-circle-question text-sm"></i></div>
-          <h3 class="text-lg font-bold text-white pt-1.5">Can I run it completely offline?</h3>
-        </div>
-        <p class="text-sm text-zinc-400 leading-relaxed">
-          Absolutely. You can point JARVIS to any local OpenAI-compatible endpoint. By running Ollama or LM Studio locally and updating the <code class="code-inline">CUSTOM_BASE_URL</code> in your <code class="code-inline">.env</code>, you can achieve 100% local, offline inference.
-        </p>
-      </div>
-
-      <div class="faq-card reveal">
-        <div class="flex items-start gap-3 mb-3">
-          <div class="faq-icon"><i class="fa-solid fa-circle-question text-sm"></i></div>
-          <h3 class="text-lg font-bold text-white pt-1.5">What hardware do I need to run JARVIS?</h3>
-        </div>
-        <p class="text-sm text-zinc-400 leading-relaxed">
-          Very little. JARVIS was developed and tested on an <strong class="text-white">Intel i5-3210M (2012) with 4 GB RAM</strong>. Because JARVIS uses cloud LLM providers by default, you don't need a powerful GPU or 32 GB of RAM. If your machine can run Windows 11 and a browser, it can run JARVIS. More RAM = faster embedding loads.
-        </p>
-      </div>
-
-      <div class="faq-card reveal delay-100">
-        <div class="flex items-start gap-3 mb-3">
-          <div class="faq-icon"><i class="fa-solid fa-circle-question text-sm"></i></div>
-          <h3 class="text-lg font-bold text-white pt-1.5">What is Live Mid-Execution Correction?</h3>
-        </div>
-        <p class="text-sm text-zinc-400 leading-relaxed">
-          The AgenticBrain loop is <strong class="text-white">interruptible</strong>. If you change your mind mid-task — for example, saying "not WhatsApp, send an email instead" — Jarvis absorbs the correction, revises its plan in-place, and keeps already-completed steps intact. No full restart, no hallucinated apology loop. This runs only in AgenticBrain mode; FastBrain is stateless.
-        </p>
-      </div>
-
-      <div class="faq-card reveal">
-        <div class="flex items-start gap-3 mb-3">
-          <div class="faq-icon"><i class="fa-solid fa-circle-question text-sm"></i></div>
-          <h3 class="text-lg font-bold text-white pt-1.5">What is the Contributor License Agreement (CLA)?</h3>
-        </div>
-        <p class="text-sm text-zinc-400 leading-relaxed">
-          JARVIS uses a <strong class="text-white">CLA</strong> to ensure the project can remain open-source while allowing commercial licensing for enterprises. By submitting a Pull Request, you agree to transfer copyright of your contribution to Kaif Ansari, enabling the project to be distributed under both GPLv3 and proprietary licenses without seeking further permission.
-        </p>
-      </div>
-
-      <div class="faq-card reveal delay-100">
-        <div class="flex items-start gap-3 mb-3">
-          <div class="faq-icon"><i class="fa-solid fa-circle-question text-sm"></i></div>
-          <h3 class="text-lg font-bold text-white pt-1.5">Does it work on Mac and Linux?</h3>
-        </div>
-        <p class="text-sm text-zinc-400 leading-relaxed">
-          Currently, JARVIS is <strong class="text-white">Windows-only (Windows 10/11)</strong>. The GUI automation, PC monitor, and mobile bridge assume Windows paths and APIs (pywin32, comtypes, Windows Registry). Linux and macOS are not currently planned, but community contributions are welcome if you'd like to port it.
-        </p>
-      </div>
-
-      <div class="faq-card reveal delay-100">
-        <div class="flex items-start gap-3 mb-3">
-          <div class="faq-icon"><i class="fa-solid fa-circle-question text-sm"></i></div>
-          <h3 class="text-lg font-bold text-white pt-1.5">How does Mobile Control work?</h3>
-        </div>
-        <p class="text-sm text-zinc-400 leading-relaxed">
-          Mobile control uses <strong class="text-white">Termux SSH over a Tailscale tunnel</strong> — no ADB, no USB cable. Install Termux + Termux:API from F-Droid, configure OpenSSH (<code class="code-inline">sshd</code>) with key-based authentication, connect both devices via Tailscale, and add your device ID to the connected devices file. Jarvis can then control flashlight, vibrate, battery, camera, notifications, and open apps via <code class="code-inline">termux-*</code> API commands.
-        </p>
-      </div>
-
-      <div class="faq-card reveal">
-        <div class="flex items-start gap-3 mb-3">
-          <div class="faq-icon"><i class="fa-solid fa-circle-question text-sm"></i></div>
-          <h3 class="text-lg font-bold text-white pt-1.5">Will it accidentally delete my files?</h3>
-        </div>
-        <p class="text-sm text-zinc-400 leading-relaxed">
-          JARVIS employs a strict <code class="code-inline">shlex</code> tokenization and path canonicalization layer that auto-blocks highly destructive commands (like <code class="code-inline-danger">rm -rf /</code>). Additionally, our Human-in-the-Loop (HITL) system ensures it asks for consent before major actions.
-        </p>
-      </div>
-
-      <div class="faq-card reveal delay-100">
-        <div class="flex items-start gap-3 mb-3">
-          <div class="faq-icon"><i class="fa-solid fa-circle-question text-sm"></i></div>
-          <h3 class="text-lg font-bold text-white pt-1.5">Why are WhatsApp and Telegram separated?</h3>
-        </div>
-        <p class="text-sm text-zinc-400 leading-relaxed">
-          WhatsApp uses the Baileys Node.js web socket bridge for stable connections, requiring a QR code scan. Telegram uses the native MTProto API via Telethon for deeper OS integration and remote bot control. Both are managed safely as background services by the ServiceWatchdog.
-        </p>
-      </div>
-
-    </div>
-
-    <div class="mt-16 reveal delay-200">
-      <div class="cta-card text-center">
-        <p class="text-zinc-400 relative z-10 text-base">
-          Still have questions? Check out the full <a href="/documentation" class="link-accent">Documentation</a> or raise an issue on <a href="https://github.com/thekaifansari01/Jarvis-OS-Agent" target="_blank" class="link-accent">GitHub</a>.
-        </p>
+<section class="section" style="padding-top: 0;">
+  <div class="container">
+    <div class="cta reveal">
+      <h2>Still have <span class="gradient-text">questions?</span></h2>
+      <p>Check out the full documentation or open an issue on GitHub — I respond directly.</p>
+      <div class="cta-actions">
+        <a href="docs/index.html" class="btn btn-primary btn-lg">
+          <span class="material-symbols-outlined">menu_book</span>
+          Read the docs
+        </a>
+        <a href="https://github.com/thekaifansari01/Jarvis-OS-Agent/issues" class="btn btn-ghost btn-lg" target="_blank" rel="noopener">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56v-2c-3.2.69-3.88-1.36-3.88-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.23-1.28-5.23-5.69 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18.92-.26 1.91-.39 2.89-.39.98 0 1.97.13 2.89.39 2.21-1.49 3.18-1.18 3.18-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.42-2.69 5.39-5.25 5.68.41.35.78 1.05.78 2.11v3.13c0 .31.21.68.8.56A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
+          Open an issue
+        </a>
       </div>
     </div>
-
   </div>
+</section>
+
 </main>
 
-<footer class="border-t border-[#1e123c] bg-[#030014]/80 backdrop-blur-sm pt-16 pb-8 relative overflow-hidden">
-  <div class="footer-gradient-line"></div>
-
-  <div class="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-    <div class="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-12 mb-12">
-
-      <div class="md:col-span-5 lg:col-span-5 flex flex-col items-center md:items-start text-center md:text-left">
-        <div class="flex items-center gap-2.5 mb-4">
-          <div class="logo-mark flex h-7 w-7 items-center justify-center rounded-lg text-white">
-            <i class="fa-solid fa-bolt text-[11px]"></i>
-          </div>
-          <span class="text-xl font-bold text-white tracking-tight">JARVIS.</span>
+<footer class="footer">
+  <div class="container">
+    <div class="footer-hero">
+      <div class="footer-brand-block">
+        <a href="index.html" class="brand">
+          <span class="brand-mark"><span class="material-symbols-outlined">deployed_code</span></span>
+          <span class="brand-text">JARVIS</span>
+        </a>
+        <p class="footer-tagline">An open-source autonomous AI operating system for Windows. Built on a 4GB RAM laptop. Free forever, GPLv3, and shipped by one developer.</p>
+        <div class="footer-badges">
+          <span class="footer-badge"><span class="status-dot"></span>GPLv3</span>
+          <span class="footer-badge"><span class="material-symbols-outlined">memory</span>Runs on 4GB RAM</span>
+          <span class="footer-badge"><span class="material-symbols-outlined">desktop_windows</span>Windows 10/11</span>
+          <span class="footer-badge"><span class="material-symbols-outlined">extension</span>MCP Native</span>
         </div>
-        <p class="text-sm text-zinc-400 leading-relaxed max-w-sm">
-          Built by an 18-year-old solo developer. No team. No funding. No high-end hardware — engineered on an Intel i5-3210M with 4 GB RAM to give you complete control over your digital ecosystem.
-        </p>
       </div>
-
-      <div class="md:col-span-7 lg:col-span-7 grid grid-cols-2 sm:grid-cols-3 gap-8 text-center sm:text-left">
-
-        <div class="flex flex-col gap-3">
-          <span class="text-white font-semibold text-[11px] tracking-widest uppercase mb-1">Product</span>
-          <a href="/#features" class="text-sm text-zinc-500 hover:text-indigo-400 transition-colors">Features</a>
-          <a href="/#correction" class="text-sm text-zinc-500 hover:text-cyan-400 transition-colors">Live Correction</a>
-          <a href="/#engine" class="text-sm text-zinc-500 hover:text-violet-400 transition-colors">Engine</a>
-          <a href="/#download" class="text-sm text-zinc-500 hover:text-cyan-400 transition-colors">Download</a>
-        </div>
-
-        <div class="flex flex-col gap-3">
-          <span class="text-white font-semibold text-[11px] tracking-widest uppercase mb-1">Resources</span>
-          <a href="/documentation" class="text-sm text-zinc-500 hover:text-indigo-400 transition-colors">Documentation</a>
-          <a href="/faq" class="text-sm text-zinc-500 hover:text-violet-400 transition-colors">FAQ</a>
-          <a href="/about" class="text-sm text-zinc-500 hover:text-cyan-400 transition-colors">About the Builder</a>
-        </div>
-
-        <div class="flex flex-col gap-3 col-span-2 sm:col-span-1">
-          <span class="text-white font-semibold text-[11px] tracking-widest uppercase mb-1">Legal</span>
-          <a href="/privacy" class="text-sm text-zinc-500 hover:text-indigo-400 transition-colors">Privacy Policy</a>
-          <a href="https://github.com/thekaifansari01/Jarvis-OS-Agent/blob/main/CONTRIBUTING.md" target="_blank" class="text-sm text-zinc-500 hover:text-cyan-400 transition-colors">Contributing</a>
-          <a href="https://github.com/thekaifansari01/Jarvis-OS-Agent/blob/main/LICENSE" target="_blank" class="text-sm text-zinc-500 hover:text-violet-400 transition-colors">GNU GPL v3.0</a>
-        </div>
-
+      <div class="footer-newsletter">
+        <h4>Stay updated</h4>
+        <p>New features, MCP servers, and releases — delivered occasionally. No spam, unsubscribe anytime.</p>
+        <form class="newsletter-form" id="newsletterForm">
+          <input type="email" placeholder="you@example.com" required />
+          <button type="submit">Subscribe</button>
+        </form>
       </div>
     </div>
-
-    <div class="pt-8 border-t border-[#1e123c] flex flex-col md:flex-row justify-between items-center gap-6">
-      <div class="text-xs text-zinc-600 font-medium tracking-wide">
-        &copy; 2026 Kaif Ansari. All systems online.
+    <div class="footer-divider"></div>
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h5>Product</h5>
+        <ul>
+          <li><a href="index.html#how">How it works</a></li>
+          <li><a href="index.html#features">Features</a></li>
+          <li><a href="index.html#architecture">Architecture</a></li>
+          <li><a href="index.html#install">Install</a></li>
+        </ul>
       </div>
-      <div class="flex gap-3">
-        <a href="https://github.com/thekaifansari01/Jarvis-OS-Agent" target="_blank" class="social-circle w-10 h-10 rounded-full bg-[#0a0520] border border-[#2a1e50] flex items-center justify-center text-zinc-400">
-          <i class="fa-brands fa-github text-sm"></i>
-        </a>
-        <a href="https://x.com/thekaifansari01" target="_blank" class="social-circle w-10 h-10 rounded-full bg-[#0a0520] border border-[#2a1e50] flex items-center justify-center text-zinc-400">
-          <i class="fa-brands fa-x-twitter text-sm"></i>
-        </a>
-        <a href="https://linkedin.com/in/thekaifansari01" target="_blank" class="social-circle w-10 h-10 rounded-full bg-[#0a0520] border border-[#2a1e50] flex items-center justify-center text-zinc-400">
-          <i class="fa-brands fa-linkedin-in text-sm"></i>
-        </a>
+      <div class="footer-col">
+        <h5>Resources</h5>
+        <ul>
+          <li><a href="docs/index.html">Documentation</a></li>
+          <li><a href="docs/index.html#troubleshooting">Troubleshooting</a></li>
+          <li><a href="https://registry.modelcontextprotocol.io" target="_blank" rel="noopener">MCP Registry</a></li>
+          <li><a href="https://snakegamebyjarvis.netlify.app/" target="_blank" rel="noopener">Live demo</a></li>
+        </ul>
       </div>
+      <div class="footer-col">
+        <h5>Community</h5>
+        <ul>
+          <li><a href="https://github.com/thekaifansari01/Jarvis-OS-Agent/stargazers" target="_blank" rel="noopener">Stargazers</a></li>
+          <li><a href="https://github.com/thekaifansari01/Jarvis-OS-Agent/forks" target="_blank" rel="noopener">Forks</a></li>
+          <li><a href="https://github.com/thekaifansari01/Jarvis-OS-Agent/issues" target="_blank" rel="noopener">Issues</a></li>
+          <li><a href="https://github.com/thekaifansari01/Jarvis-OS-Agent/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener">Contributing</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Legal</h5>
+        <ul>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+          <li><a href="https://github.com/thekaifansari01/Jarvis-OS-Agent/blob/main/LICENSE" target="_blank" rel="noopener">License (GPLv3)</a></li>
+          <li><a href="https://github.com/thekaifansari01/Jarvis-OS-Agent/blob/main/CODE_OF_CONDUCT.md" target="_blank" rel="noopener">Code of Conduct</a></li>
+          <li><a href="https://github.com/thekaifansari01/Jarvis-OS-Agent/blob/main/SECURITY.md" target="_blank" rel="noopener">Security</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Connect</h5>
+        <div class="footer-social-list">
+          <a href="https://github.com/thekaifansari01" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56v-2c-3.2.69-3.88-1.36-3.88-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.23-1.28-5.23-5.69 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18.92-.26 1.91-.39 2.89-.39.98 0 1.97.13 2.89.39 2.21-1.49 3.18-1.18 3.18-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.42-2.69 5.39-5.25 5.68.41.35.78 1.05.78 2.11v3.13c0 .31.21.68.8.56A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
+            GitHub
+          </a>
+          <a href="https://twitter.com/thekaifansari01" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            X / Twitter
+          </a>
+          <a href="https://linkedin.com/in/thekaifansari01" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.062 2.062 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            LinkedIn
+          </a>
+          <a href="https://instagram.com/thekaifansari01" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            Instagram
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2026 JARVIS OS Agent · Built by <a href="https://github.com/thekaifansari01" target="_blank" rel="noopener">Kaif Ansari</a></div>
+      <div class="footer-status"><span class="status-dot"></span>All systems operational</div>
+      <button class="footer-backtop" id="backtop">
+        <span class="material-symbols-outlined">arrow_upward</span>
+        Back to top
+      </button>
     </div>
   </div>
 </footer>
 
 <script>
-window.addEventListener('scroll', () => {
-  const nav = document.getElementById('navbar');
-  if (window.scrollY > 20) { nav.classList.add('scrolled'); }
-  else { nav.classList.remove('scrolled'); }
-}, { passive: true });
+'use strict';
 
-const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-const mobileCloseBtn = document.getElementById('mobile-close-btn');
-const mobileDrawer = document.getElementById('mobile-drawer');
-const mobileOverlay = document.getElementById('mobile-overlay');
-const mobileLinks = document.querySelectorAll('.mobile-link');
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-function openMobileMenu() {
-  mobileOverlay.classList.remove('hidden');
-  setTimeout(() => { mobileOverlay.classList.remove('opacity-0'); }, 10);
-  mobileDrawer.classList.remove('-translate-x-full');
-  document.body.style.overflow = 'hidden';
-}
-function closeMobileMenu() {
-  mobileDrawer.classList.add('-translate-x-full');
-  mobileOverlay.classList.add('opacity-0');
-  setTimeout(() => { mobileOverlay.classList.add('hidden'); }, 300);
-  document.body.style.overflow = '';
-}
-mobileMenuBtn.addEventListener('click', openMobileMenu);
-mobileCloseBtn.addEventListener('click', closeMobileMenu);
-mobileOverlay.addEventListener('click', closeMobileMenu);
-mobileLinks.forEach(link => { link.addEventListener('click', closeMobileMenu); });
+(function scrollProgress() {
+  const bar = document.getElementById('scrollProgress');
+  if (!bar) return;
+  let raf = null;
+  function update() {
+    const total = document.documentElement.scrollHeight - window.innerHeight;
+    bar.style.width = (total > 0 ? (window.scrollY / total) * 100 : 0) + '%';
+    raf = null;
+  }
+  window.addEventListener('scroll', () => {
+    if (!raf) raf = requestAnimationFrame(update);
+  }, { passive: true });
+})();
 
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
-}, { threshold: 0.1 });
-document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+(function nav() {
+  const nav = document.getElementById('nav');
+  const toggle = document.getElementById('mobileToggle');
+  const links = document.getElementById('navLinks');
+  if (!nav) return;
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 20);
+  }, { passive: true });
+  function setIcon(name) {
+    const icon = toggle.querySelector('.material-symbols-outlined');
+    if (icon) icon.textContent = name;
+  }
+  function closeMenu() {
+    nav.classList.remove('mobile-open');
+    setIcon('menu');
+    document.body.style.overflow = '';
+  }
+  toggle?.addEventListener('click', () => {
+    const isOpen = nav.classList.toggle('mobile-open');
+    setIcon(isOpen ? 'close' : 'menu');
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+  });
+  links?.addEventListener('click', (e) => { if (e.target.tagName === 'A') closeMenu(); });
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 768 && nav.classList.contains('mobile-open')) closeMenu();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && nav.classList.contains('mobile-open')) closeMenu();
+  });
+})();
+
+(function reveals() {
+  const els = document.querySelectorAll('.reveal');
+  if (!els.length) return;
+  if (prefersReducedMotion) {
+    els.forEach(el => el.classList.add('visible'));
+    return;
+  }
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+  els.forEach(el => io.observe(el));
+})();
+
+(function faqSearch() {
+  const input = document.getElementById('searchInput');
+  const clearBtn = document.getElementById('searchClear');
+  const box = document.getElementById('searchBox');
+  const items = document.querySelectorAll('.faq-item');
+  const emptyState = document.getElementById('emptyState');
+  const pills = document.querySelectorAll('.cat-pill');
+  if (!input) return;
+
+  let currentCat = 'all';
+  let currentQuery = '';
+
+  function applyFilters() {
+    const q = currentQuery.trim().toLowerCase();
+    let visibleCount = 0;
+    items.forEach(item => {
+      const cat = item.dataset.cat;
+      const text = (item.dataset.search + ' ' + item.textContent).toLowerCase();
+      const catMatch = currentCat === 'all' || cat === currentCat;
+      const textMatch = !q || text.includes(q);
+      if (catMatch && textMatch) {
+        item.style.display = '';
+        visibleCount++;
+      } else {
+        item.style.display = 'none';
+        if (item.hasAttribute('open')) item.removeAttribute('open');
+      }
+    });
+    if (visibleCount === 0) {
+      emptyState.classList.add('show');
+    } else {
+      emptyState.classList.remove('show');
+    }
+  }
+
+  input.addEventListener('input', () => {
+    currentQuery = input.value;
+    box.classList.toggle('has-value', currentQuery.length > 0);
+    applyFilters();
+  });
+
+  clearBtn?.addEventListener('click', () => {
+    input.value = '';
+    currentQuery = '';
+    box.classList.remove('has-value');
+    applyFilters();
+    input.focus();
+  });
+
+  pills.forEach(pill => {
+    pill.addEventListener('click', () => {
+      pills.forEach(p => p.classList.remove('active'));
+      pill.classList.add('active');
+      currentCat = pill.dataset.cat;
+      applyFilters();
+    });
+  });
+})();
+
+(function accordion() {
+  const items = document.querySelectorAll('.faq-item');
+  items.forEach(item => {
+    item.addEventListener('toggle', () => {
+      if (item.open) {
+        items.forEach(other => { if (other !== item) other.open = false; });
+      }
+    });
+  });
+})();
+
+(function backtop() {
+  const btn = document.getElementById('backtop');
+  if (!btn) return;
+  btn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+  });
+})();
+
+(function newsletter() {
+  const form = document.getElementById('newsletterForm');
+  if (!form) return;
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const btn = form.querySelector('button');
+    const original = btn.textContent;
+    btn.textContent = 'Subscribed ✓';
+    btn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+    form.querySelector('input').value = '';
+    setTimeout(() => {
+      btn.textContent = original;
+      btn.style.background = '';
+    }, 2400);
+  });
+})();
 </script>
 </body>
 </html>
