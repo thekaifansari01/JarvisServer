@@ -170,7 +170,7 @@
       "name": "Can I add capabilities without editing code?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Yes — via MCP (Model Context Protocol). Add a JSON entry to Data/mcp_servers.json, restart once, and the server's tools appear in the Agentic Brain automatically as mcp__<server>__<tool>. Over 18,000 pre-built community servers exist."
+        "text": "Yes — via MCP (Model Context Protocol). Run 'jarvis mcp add <name> <command>' in your terminal or edit Data/mcp_servers.json, and JARVIS hot-reloads the server live with zero restarts. Over 18,000 pre-built community servers exist."
       }
     },
     {
@@ -2333,7 +2333,7 @@ python SetupRegistry.py">
         <div class="install-step reveal reveal-delay-1">
           <div class="install-step-num">02 / OPTIONAL</div>
           <h4>Enable MCP</h4>
-          <p>Drop <code>Data/mcp_servers.json</code> to add 18,000+ tools — GitHub, Brave, SQLite, Notion, Docker, and more.</p>
+          <p>Run <code>jarvis mcp add</code> to hot-load 18,000+ tools live — GitHub, Brave, SQLite, Notion, Docker — with zero restarts.</p>
         </div>
         <div class="install-step reveal reveal-delay-2">
           <div class="install-step-num">03 / READY</div>
@@ -2400,7 +2400,7 @@ python SetupRegistry.py">
       </details>
       <details class="faq-item reveal">
         <summary>Can I add capabilities without editing code?<span class="faq-icon"><span class="material-symbols-outlined">add</span></span></summary>
-        <div class="faq-answer">Yes — via MCP. Add a JSON entry to <code>Data/mcp_servers.json</code>, restart once, and the server's tools appear in the Agentic Brain automatically as <code>mcp__&lt;server&gt;__&lt;tool&gt;</code>. Over 18,000 pre-built community servers exist.</div>
+        <div class="faq-answer">Yes — via MCP. Run <code>jarvis mcp add &lt;name&gt; &lt;command&gt;</code> (or save <code>Data/mcp_servers.json</code>), and JARVIS hot-reloads the server live within 2 seconds without restarting. Tools appear automatically as <code>mcp__&lt;server&gt;__&lt;tool&gt;</code>.</div>
       </details>
       <details class="faq-item reveal">
         <summary>How is this different from ChatGPT or Claude?<span class="faq-icon"><span class="material-symbols-outlined">add</span></span></summary>

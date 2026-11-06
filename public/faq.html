@@ -1099,8 +1099,8 @@ h3 { font-size: clamp(1rem, 1.4vw, 1.1rem); }
         <span class="faq-chevron"><span class="material-symbols-outlined">expand_more</span></span>
       </summary>
       <div class="faq-answer">
-        <p>MCP (Model Context Protocol) lets JARVIS connect to <strong>18,000+ community-built tool servers</strong> — GitHub, Brave Search, SQLite, Notion, Slack, Docker, and more — via a single JSON entry in <code>Data/mcp_servers.json</code>.</p>
-        <p>Tools are auto-discovered at startup and namespaced as <code>mcp__&lt;server&gt;__&lt;tool&gt;</code>. Zero core code changes needed to add new capabilities.</p>
+        <p>MCP (Model Context Protocol) lets JARVIS connect to <strong>18,000+ community-built tool servers</strong> — GitHub, Brave Search, SQLite, Notion, Slack, Docker, and more — using a single terminal command like <code>jarvis mcp add &lt;name&gt; npx &lt;package&gt;</code> or via <code>Data/mcp_servers.json</code>.</p>
+        <p>Servers hot-reload live within 2 seconds without restarting JARVIS, and their tools are automatically namespaced as <code>mcp__&lt;server&gt;__&lt;tool&gt;</code>.</p>
       </div>
     </details>
 

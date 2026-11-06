@@ -1686,8 +1686,29 @@ jarvis</code></pre>
         <li>Exposes them to the agent as <code>mcp__&lt;server&gt;__&lt;tool&gt;</code></li>
       </ul>
 
-      <h2 id="mcp-config">Configuration example<a href="#mcp-config" class="anchor material-symbols-outlined">link</a></h2>
-      <p>Create <code>Data/mcp_servers.json</code>:</p>
+      <h2 id="mcp-cli">One-liner CLI &amp; live hot-reload<a href="#mcp-cli" class="anchor material-symbols-outlined">link</a></h2>
+      <p>Add, remove, test, or toggle MCP servers directly from your terminal. If JARVIS is running, changes are hot-reloaded in the background within 2 seconds with zero restarts:</p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="code-block-lang"><span class="material-symbols-outlined">terminal</span>powershell</span>
+          <button class="code-copy" data-copy-target>Copy</button>
+        </div>
+<pre><code><span class="code-cmt"># Add an NPX or Python MCP server</span>
+jarvis mcp add everything npx @modelcontextprotocol/server-everything
+
+<span class="code-cmt"># Add a server with environment variables</span>
+jarvis mcp add github npx @modelcontextprotocol/server-github -e GITHUB_PERSONAL_ACCESS_TOKEN=ghp_xxx
+
+<span class="code-cmt"># List, test, disable, enable, or remove servers live</span>
+jarvis mcp list
+jarvis mcp test everything
+jarvis mcp disable everything
+jarvis mcp enable everything
+jarvis mcp remove everything</code></pre>
+      </div>
+
+      <h2 id="mcp-config">JSON configuration example<a href="#mcp-config" class="anchor material-symbols-outlined">link</a></h2>
+      <p>You can also edit <code>Data/mcp_servers.json</code> directly (saved changes auto-sync live):</p>
       <div class="code-block">
         <div class="code-block-header">
           <span class="code-block-lang"><span class="material-symbols-outlined">description</span>mcp_servers.json</span>
@@ -1696,21 +1717,21 @@ jarvis</code></pre>
 <pre><code>{
   <span class="code-str">"mcpServers"</span>: {
     <span class="code-str">"github"</span>: {
-      <span class="code-str">"command"</span>: <span class="code-str">"cmd"</span>,
-      <span class="code-str">"args"</span>: [<span class="code-str">"/c"</span>, <span class="code-str">"npx"</span>, <span class="code-str">"-y"</span>, <span class="code-str">"@modelcontextprotocol/server-github"</span>],
+      <span class="code-str">"command"</span>: <span class="code-str">"npx"</span>,
+      <span class="code-str">"args"</span>: [<span class="code-str">"-y"</span>, <span class="code-str">"@modelcontextprotocol/server-github"</span>],
       <span class="code-str">"env"</span>: {
         <span class="code-str">"GITHUB_PERSONAL_ACCESS_TOKEN"</span>: <span class="code-str">"ghp_xxxxxxxxxxxx"</span>
       },
       <span class="code-str">"call_timeout"</span>: 60
     },
     <span class="code-str">"sqlite"</span>: {
-      <span class="code-str">"command"</span>: <span class="code-str">"cmd"</span>,
-      <span class="code-str">"args"</span>: [<span class="code-str">"/c"</span>, <span class="code-str">"npx"</span>, <span class="code-str">"-y"</span>, <span class="code-str">"@modelcontextprotocol/server-sqlite"</span>, <span class="code-str">"C:/data/mydb.sqlite"</span>]
+      <span class="code-str">"command"</span>: <span class="code-str">"npx"</span>,
+      <span class="code-str">"args"</span>: [<span class="code-str">"-y"</span>, <span class="code-str">"@modelcontextprotocol/server-sqlite"</span>, <span class="code-str">"C:/data/mydb.sqlite"</span>]
     }
   }
 }</code></pre>
       </div>
-      <p>Save the file, restart JARVIS once, and check the startup log:</p>
+      <p>Startup or live hot-reload logs confirm the active tools immediately:</p>
       <div class="code-block">
         <div class="code-block-header">
           <span class="code-block-lang"><span class="material-symbols-outlined">terminal</span>startup log</span>
@@ -1721,11 +1742,11 @@ MCP: server <span class="code-str">'sqlite'</span> connected (<span class="code-
 MCP: ready with <span class="code-var">46</span> tools from <span class="code-var">2</span> servers.</code></pre>
       </div>
 
-      <h2 id="mcp-windows">Windows note<a href="#mcp-windows" class="anchor material-symbols-outlined">link</a></h2>
-      <div class="callout warning">
-        <span class="material-symbols-outlined">warning</span>
+      <h2 id="mcp-windows">Native Windows resolution<a href="#mcp-windows" class="anchor material-symbols-outlined">link</a></h2>
+      <div class="callout info">
+        <span class="material-symbols-outlined">info</span>
         <div class="callout-body">
-          <p>On Windows, <code>npx</code> is a <code>.cmd</code> shim that breaks stdio pipe propagation when spawned directly. <strong>Always wrap Node-based servers</strong> with <code>"command": "cmd", "args": ["/c", "npx", "-y", "..."]</code>.</p>
+          <p>JARVIS automatically resolves <code>npx</code> shims on Windows directly to <code>node.exe</code> + <code>npx-cli.js</code> and injects <code>-y</code> automatically — no <code>cmd /c</code> wrapper needed.</p>
         </div>
       </div>
 
@@ -1878,6 +1899,23 @@ jarvis bot --deactivate  <span class="code-cmt"># revoke &amp; offline the bot</
         </table>
       </div>
 
+      <h2 id="cli-mcp">MCP server management (live hot-reload)<a href="#cli-mcp" class="anchor material-symbols-outlined">link</a></h2>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr><th>Command</th><th>Action</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>jarvis mcp list</code></td><td>List all configured MCP servers and their status</td></tr>
+            <tr><td><code>jarvis mcp add &lt;name&gt; &lt;cmd/url&gt; [args...] [-e K=V]</code></td><td>Add or update an MCP server (hot-reloads live if JARVIS is ON)</td></tr>
+            <tr><td><code>jarvis mcp remove &lt;name&gt;</code></td><td>Remove an MCP server and unload its tools immediately</td></tr>
+            <tr><td><code>jarvis mcp enable &lt;name&gt;</code></td><td>Enable a disabled MCP server live</td></tr>
+            <tr><td><code>jarvis mcp disable &lt;name&gt;</code></td><td>Temporarily disable an MCP server without deleting config</td></tr>
+            <tr><td><code>jarvis mcp test &lt;name&gt;</code></td><td>Test connection to a server and list discovered tools</td></tr>
+          </tbody>
+        </table>
+      </div>
+
       <h2 id="cli-bot">Remote bot<a href="#cli-bot" class="anchor material-symbols-outlined">link</a></h2>
       <div class="table-wrap">
         <table class="data-table">
@@ -2019,16 +2057,13 @@ pip install -r requirements.txt</code></pre>
       </ol>
 
       <h2 id="trouble-mcp-win">MCP server logs "Connection closed"<a href="#trouble-mcp-win" class="anchor material-symbols-outlined">link</a></h2>
-      <p><code>npx</code> is a <code>.cmd</code> shim on Windows. Wrap with <code>cmd /c</code>:</p>
+      <p>Run <code>jarvis mcp test &lt;name&gt;</code> to inspect the exact <code>stderr</code> output from the server:</p>
       <div class="code-block">
         <div class="code-block-header">
-          <span class="code-block-lang"><span class="material-symbols-outlined">description</span>json</span>
+          <span class="code-block-lang"><span class="material-symbols-outlined">terminal</span>powershell</span>
           <button class="code-copy" data-copy-target>Copy</button>
         </div>
-<pre><code>{
-  <span class="code-str">"command"</span>: <span class="code-str">"cmd"</span>,
-  <span class="code-str">"args"</span>: [<span class="code-str">"/c"</span>, <span class="code-str">"npx"</span>, <span class="code-str">"-y"</span>, <span class="code-str">"@modelcontextprotocol/server-github"</span>]
-}</code></pre>
+<pre><code>jarvis mcp test everything</code></pre>
       </div>
 
       <h2 id="trouble-rag">RAG indexer stuck<a href="#trouble-rag" class="anchor material-symbols-outlined">link</a></h2>
