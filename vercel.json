@@ -25,6 +25,10 @@
       "use": "@vercel/static"
     },
     {
+      "src": "public/screenshots/**",
+      "use": "@vercel/static"
+    },
+    {
       "src": "public/robots.txt",
       "use": "@vercel/static"
     },
@@ -69,6 +73,10 @@
     {
       "source": "/privacy",
       "destination": "/public/privacy.html"
+    },
+    {
+      "source": "/screenshots/:path*",
+      "destination": "/public/screenshots/:path*"
     },
     {
       "source": "/robots.txt",
