@@ -37,6 +37,10 @@
       "use": "@vercel/static"
     },
     {
+      "src": "api/feedback.js",
+      "use": "@vercel/node"
+    },
+    {
       "src": "api/oauth/start.py",
       "use": "@vercel/python"
     },
@@ -70,6 +74,98 @@
       "destination": "/public/documentation/index.html"
     },
     {
+      "source": "/documentation/introduction",
+      "destination": "/public/documentation/index.html"
+    },
+    {
+      "source": "/documentation/quick-start",
+      "destination": "/public/documentation/index.html"
+    },
+    {
+      "source": "/documentation/installation",
+      "destination": "/public/documentation/index.html"
+    },
+    {
+      "source": "/documentation/environment",
+      "destination": "/public/documentation/index.html"
+    },
+    {
+      "source": "/documentation/voice",
+      "destination": "/public/documentation/index.html"
+    },
+    {
+      "source": "/documentation/memory",
+      "destination": "/public/documentation/index.html"
+    },
+    {
+      "source": "/documentation/mcp",
+      "destination": "/public/documentation/index.html"
+    },
+    {
+      "source": "/documentation/android",
+      "destination": "/public/documentation/index.html"
+    },
+    {
+      "source": "/documentation/telegram",
+      "destination": "/public/documentation/index.html"
+    },
+    {
+      "source": "/documentation/cli",
+      "destination": "/public/documentation/index.html"
+    },
+    {
+      "source": "/documentation/tools",
+      "destination": "/public/documentation/index.html"
+    },
+    {
+      "source": "/documentation/architecture",
+      "destination": "/public/documentation/index.html"
+    },
+    {
+      "source": "/documentation/agent-panel",
+      "destination": "/public/documentation/index.html"
+    },
+    {
+      "source": "/documentation/typing-popup",
+      "destination": "/public/documentation/index.html"
+    },
+    {
+      "source": "/documentation/stt-popup",
+      "destination": "/public/documentation/index.html"
+    },
+    {
+      "source": "/documentation/input-popup",
+      "destination": "/public/documentation/index.html"
+    },
+    {
+      "source": "/documentation/ui-comparison",
+      "destination": "/public/documentation/index.html"
+    },
+    {
+      "source": "/documentation/lifecycle-shutdown",
+      "destination": "/public/documentation/index.html"
+    },
+    {
+      "source": "/documentation/troubleshooting",
+      "destination": "/public/documentation/index.html"
+    },
+    {
+      "source": "/documentation/faq",
+      "destination": "/public/documentation/index.html"
+    },
+    {
+      "source": "/documentation/glossary",
+      "destination": "/public/documentation/index.html"
+    },
+    {
+      "source": "/documentation/limitations",
+      "destination": "/public/documentation/index.html"
+    },
+    {
+      "source": "/documentation/changelog",
+      "destination": "/public/documentation/index.html"
+    },
+    {
       "source": "/documentation/:path*",
       "destination": "/public/documentation/:path*"
     },
@@ -96,6 +192,10 @@
     {
       "source": "/sitemap.xml",
       "destination": "/public/sitemap.xml"
+    },
+    {
+      "source": "/api/feedback",
+      "destination": "/api/feedback.js"
     },
     {
       "source": "/api/oauth/start",

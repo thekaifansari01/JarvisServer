@@ -1935,3 +1935,51 @@ details.faq .faq-body {
   }
   .doc-page.active { animation: none; }
 }
+.page-updated {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  padding: 3px 10px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+}
+
+.breadcrumb-home {
+  color: var(--text-muted);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  transition: color 0.15s;
+  cursor: pointer;
+}
+
+.breadcrumb-home:hover {
+  color: var(--accent);
+}
+
+.code-block.code-pulse,
+.code-tabs.code-pulse {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(0, 212, 255, 0.3), 0 0 24px rgba(0, 212, 255, 0.2);
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.glossary-letter {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--accent);
+  margin: 32px 0 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+  letter-spacing: -0.02em;
+}
+
+.limitation-row td:first-child {
+  font-weight: 600;
+  color: var(--text);
+}
