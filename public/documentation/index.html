@@ -769,7 +769,7 @@
         <h1 id="introduction">Introduction</h1>
         <p class="lead">JARVIS is an open-source autonomous AI operating system for Windows. It reads codebases, sends emails, controls your Android phone, remembers you across months, and re-plans mid-task when you interrupt. This documentation covers everything from installation to advanced configuration.</p>
         <div class="feature-grid">
-          <div class="feature-tile"><span class="material-symbols-outlined">sync</span><h4>Live Correction</h4><p>Interrupt mid-run. Completed steps stay intact.</p></div>
+          <div class="feature-tile"><span class="material-symbols-outlined">sync</span><h4>Live Correction + ask_user</h4><p>Interrupt mid-run. Missing info? The agent pauses and asks.</p></div>
           <div class="feature-tile"><span class="material-symbols-outlined">memory</span><h4>Lifelong Memory</h4><p>Five-tier memory with weighted graph + hybrid RAG.</p></div>
           <div class="feature-tile"><span class="material-symbols-outlined">extension</span><h4>MCP Native</h4><p>18,000+ community servers via a single JSON entry.</p></div>
           <div class="feature-tile"><span class="material-symbols-outlined">record_voice_over</span><h4>Dual-Engine Voice</h4><p>Azure on-device + Vosk fallback, zero cloud round-trip.</p></div>
@@ -2594,29 +2594,30 @@ jarvis bot --deactivate  <span class="code-cmt"># revoke &amp; offline the bot</
         <h1 id="input-popup">Input Popup</h1>
         <div class="ui-hero-banner">
           <div class="badge-row">
-            <span class="ui-hero-badge live"><span class="dot"></span>Live</span>
+            <span class="ui-hero-badge live"><span class="dot"></span>Dual-Mode</span>
             <span class="ui-hero-badge"><span class="material-symbols-outlined">keyboard_command_key</span>Ctrl+Shift+J</span>
+            <span class="ui-hero-badge"><span class="material-symbols-outlined">help</span>ask_user Clarification</span>
             <span class="ui-hero-badge"><span class="material-symbols-outlined">code</span>Subprocess IPC</span>
-            <span class="ui-hero-badge"><span class="material-symbols-outlined">expand_more</span>Auto-Height</span>
           </div>
           <h1>The Input Popup</h1>
-          <p>The Input Popup is JARVIS's keyboard command surface — a premium floating input box that appears at the bottom of your screen when you press Ctrl+Shift+J, accepts a text command, and closes with Enter. It's the "type mode" counterpart to the STT Popup's "voice mode" — same destination, different door. The entire popup is 340ms of animation choreography, from the slide-up entry to the slide-down exit.</p>
+          <p>The Input Popup is JARVIS's dual-mode glassmorphic command surface. In <strong>Command Mode</strong>, it appears at the bottom of your screen when you press Ctrl+Shift+J, accepts a text command, and closes with Enter. In <strong>Clarification Mode</strong>, it's summoned automatically by the AgenticBrain's <code>ask_user</code> tool when critical parameters are missing mid-mission — pausing the loop timeout, muting background STT, and pinning your answer to confirmed facts without restarting the loop.</p>
         </div>
         <div class="ui-feature-grid">
           <div class="ui-feature-card"><div class="icon-wrap"><span class="material-symbols-outlined">bolt</span></div><h4>Global Hotkey</h4><p>Ctrl+Shift+J from anywhere in Windows.</p></div>
+          <div class="ui-feature-card"><div class="icon-wrap"><span class="material-symbols-outlined">help</span></div><h4>Clarification Mode</h4><p><code>ask_user</code> pauses the loop and asks you instead of guessing.</p></div>
           <div class="ui-feature-card"><div class="icon-wrap"><span class="material-symbols-outlined">auto_awesome</span></div><h4>Pulse-on-Type</h4><p>Border glows purple when text is entered.</p></div>
-          <div class="ui-feature-card"><div class="icon-wrap"><span class="material-symbols-outlined">reactive</span></div><h4>Auto-Height</h4><p>Grows to 180px, then scrolls.</p></div>
           <div class="ui-feature-card"><div class="icon-wrap"><span class="material-symbols-outlined">check_circle</span></div><h4>Enter to Send</h4><p>Shift+Enter for newline, Enter to submit.</p></div>
         </div>
         <div class="callout info">
           <span class="material-symbols-outlined">info</span>
-          <div class="callout-body"><p><strong>Modal by design.</strong> Unlike the STT Popup (which is click-through), the Input Popup is modal — it steals focus and blocks interaction with the app underneath until you send or cancel. This is intentional: you're committing to a command, not accidentally pressing a hotkey.</p></div>
+          <div class="callout-body"><p><strong>Modal by design.</strong> Unlike the STT Popup (which is click-through), the Input Popup is modal — it steals focus and blocks interaction with the app underneath until you send, answer, or cancel. This is intentional: you're committing to a command or a clarification answer, not accidentally pressing a hotkey.</p></div>
         </div>
         <figure class="screenshot-frame"><img src="/screenshots/ui/input-popup-hero.png" alt="Input Popup in typing state with pulsing border, enter indicator, and text visible" loading="lazy"><figcaption><span class="badge">Live</span>Input Popup — keyboard command surface</figcaption></figure>
-        <h2 id="input-popup-states">The 2 States<a href="#input-popup-states" class="anchor material-symbols-outlined">link</a></h2>
+        <h2 id="input-popup-states">The States<a href="#input-popup-states" class="anchor material-symbols-outlined">link</a></h2>
         <div class="gallery-row">
           <figure class="screenshot-frame"><img src="/screenshots/ui/input-popup-idle.png" alt="Idle state with static border and placeholder" loading="lazy"><figcaption><span class="badge">Idle</span>Static border, "What do you need?" placeholder</figcaption></figure>
           <figure class="screenshot-frame"><img src="/screenshots/ui/input-popup-typing.png" alt="Typing state with pulsing border and visible enter indicator" loading="lazy"><figcaption><span class="badge">Typing</span>Pulsing border + enter indicator</figcaption></figure>
+          <figure class="screenshot-frame"><img src="/screenshots/ui/input-popup-clarification.png" alt="Clarification mode with cyan-accented ask_user banner" loading="lazy"><figcaption><span class="badge">Clarification</span>ask_user banner, loop paused</figcaption></figure>
           <figure class="screenshot-frame"><img src="/screenshots/ui/input-popup-multiline.png" alt="Multi-line input with auto-expanded height" loading="lazy"><figcaption><span class="badge">Multi-line</span>Auto-expanded to 5 lines</figcaption></figure>
         </div>
         <div class="table-wrap">
@@ -2625,6 +2626,7 @@ jarvis bot --deactivate  <span class="code-cmt"># revoke &amp; offline the bot</
             <tbody>
               <tr><td>Empty</td><td>Idle</td><td>Static 100 alpha</td><td>Hidden (0%)</td><td><code>#BF5AF2</code></td></tr>
               <tr><td>1+ chars</td><td>Typing</td><td>Pulsing 100–190 alpha</td><td>Visible (95%)</td><td><code>#C864FC</code></td></tr>
+              <tr><td>ask_user fired</td><td>Clarification</td><td>Cyan static accent</td><td>Visible (95%)</td><td><code>#00D4FF</code></td></tr>
               <tr><td>Cleared</td><td>Idle</td><td>Returns to static</td><td>Fades to 0%</td><td><code>#BF5AF2</code></td></tr>
             </tbody>
           </table>
@@ -2663,6 +2665,29 @@ jarvis bot --deactivate  <span class="code-cmt"># revoke &amp; offline the bot</
         <div class="callout info">
           <span class="material-symbols-outlined">info</span>
           <div class="callout-body"><p><strong>Only button.</strong> The enter indicator is the popup's only button — no Send/Cancel buttons here, unlike the Agent Panel's HITL cards. Intentional minimalism — you shouldn't have to aim your mouse to send a text command.</p></div>
+        </div>
+        <h2 id="input-popup-clarification">Clarification Mode — the ask_user channel<a href="#input-popup-clarification" class="anchor material-symbols-outlined">link</a></h2>
+        <p>Mid-task, the AgenticBrain sometimes hits a hard stop: it needs a specific phone number, a file path, or a design choice that no amount of reasoning can invent. Instead of hallucinating a value, it calls <code>ask_user</code>. The Input Popup is summoned automatically in Clarification Mode — a cyan-accented variant of the same glassmorphic island.</p>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead><tr><th>Behavior</th><th>Command Mode</th><th>Clarification Mode</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Trigger</strong></td><td>User presses <code>Ctrl+Shift+J</code></td><td>AgenticBrain calls <code>ask_user</code></td></tr>
+              <tr><td><strong>Banner</strong></td><td>None</td><td>Cyan-accented question banner showing the agent's exact question</td></tr>
+              <tr><td><strong>Loop timeout</strong></td><td>Normal</td><td>Paused while you type</td></tr>
+              <tr><td><strong>Background STT</strong></td><td>Active</td><td>Muted (no accidental voice injection)</td></tr>
+              <tr><td><strong>Answer destination</strong></td><td>Router → FastBrain or AgenticBrain</td><td>Current step Observation + <code>&lt;Confirmed_Facts&gt;</code> block, then loop resumes</td></tr>
+              <tr><td><strong>Restart required</strong></td><td>—</td><td>No — loop continues from the same step</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="callout success">
+          <span class="material-symbols-outlined">check_circle</span>
+          <div class="callout-body"><p><strong>Ask, don't guess.</strong> When the agent doesn't know a required value, it's much cheaper to ask once than to hallucinate and fail three steps later. Clarification Mode turns a stuck mission into a 15-second question.</p></div>
+        </div>
+        <div class="callout warning">
+          <span class="material-symbols-outlined">warning</span>
+          <div class="callout-body"><p><strong>AgenticBrain only.</strong> <code>ask_user</code> is only available in AgenticBrain mode. FastBrain is stateless — it can't pause mid-run because it doesn't have a mid-run.</p></div>
         </div>
         <h2 id="input-popup-input">Smart Input Behaviors<a href="#input-popup-input" class="anchor material-symbols-outlined">link</a></h2>
         <h3>Keyboard shortcuts</h3>
