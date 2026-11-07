@@ -9,7 +9,7 @@
       "use": "@vercel/static"
     },
     {
-      "src": "public/documentation.html",
+      "src": "public/documentation/**",
       "use": "@vercel/static"
     },
     {
@@ -49,6 +49,13 @@
       "use": "@vercel/python"
     }
   ],
+  "redirects": [
+    {
+      "source": "/documentation.html",
+      "destination": "/documentation",
+      "permanent": true
+    }
+  ],
   "rewrites": [
     {
       "source": "/google6831778c190e4906.html",
@@ -60,7 +67,11 @@
     },
     {
       "source": "/documentation",
-      "destination": "/public/documentation.html"
+      "destination": "/public/documentation/index.html"
+    },
+    {
+      "source": "/documentation/:path*",
+      "destination": "/public/documentation/:path*"
     },
     {
       "source": "/faq",
