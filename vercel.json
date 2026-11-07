@@ -166,6 +166,18 @@
       "destination": "/public/documentation/index.html"
     },
     {
+      "source": "/documentation/custom-prompt",
+      "destination": "/public/documentation/index.html"
+    },
+    {
+      "source": "/documentation/byo-tool",
+      "destination": "/public/documentation/index.html"
+    },
+    {
+      "source": "/documentation/data-model",
+      "destination": "/public/documentation/index.html"
+    },
+    {
       "source": "/documentation/:path*",
       "destination": "/public/documentation/:path*"
     },

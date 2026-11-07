@@ -55,6 +55,9 @@
     </div>
     <div class="topbar-right">
       <span class="topbar-version">v1.0</span>
+      <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <span class="material-symbols-outlined">light_mode</span>
+      </button>
       <a href="https://github.com/thekaifansari01/Jarvis-OS-Agent" class="topbar-link" target="_blank" rel="noopener noreferrer">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56v-2c-3.2.69-3.88-1.36-3.88-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.23-1.28-5.23-5.69 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18.92-.26 1.91-.39 2.89-.39.98 0 1.97.13 2.89.39 2.21-1.49 3.18-1.18 3.18-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.42-2.69 5.39-5.25 5.68.41.35.78 1.05.78 2.11v3.13c0 .31.21.68.8.56A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
         <span>GitHub</span>
@@ -140,6 +143,17 @@
     <ul class="sidebar-list">
       <li><a href="/documentation/troubleshooting" data-page="troubleshooting"><span class="material-symbols-outlined">bug_report</span>Troubleshooting</a></li>
       <li><a href="/documentation/faq" data-page="faq"><span class="material-symbols-outlined">help</span>FAQ</a></li>
+    </ul>
+  </div>
+  <div class="sidebar-group" data-group="guides">
+    <button type="button" class="sidebar-group-label" aria-expanded="true">
+      <span>Guides</span>
+      <span class="material-symbols-outlined">expand_more</span>
+    </button>
+    <ul class="sidebar-list">
+      <li><a href="/documentation/custom-prompt" data-page="custom-prompt"><span class="material-symbols-outlined">tune</span>Custom Prompt</a></li>
+      <li><a href="/documentation/byo-tool" data-page="byo-tool"><span class="material-symbols-outlined">handyman</span>Bring Your Own Tool</a></li>
+      <li><a href="/documentation/data-model" data-page="data-model"><span class="material-symbols-outlined">storage</span>Data Model</a></li>
     </ul>
   </div>
   <div class="sidebar-group" data-group="reference-extra">
@@ -234,6 +248,18 @@
         </nav>
         <h1 id="quick-start">Quick Start</h1>
         <p class="lead">Get JARVIS running in under five minutes. This section assumes you already have Python 3.10+ and Node.js 18+ installed.</p>
+        <div class="prereq-box">
+          <span class="material-symbols-outlined">checklist</span>
+          <div class="prereq-body">
+            <div class="prereq-label">Before you start</div>
+            <ul class="prereq-list">
+              <li><strong>Python 3.10+</strong> installed and on PATH</li>
+              <li><strong>Node.js 18+</strong> (18.x or newer)</li>
+              <li><strong>PowerShell</strong> (elevated for first install)</li>
+              <li><strong>~2 GB free disk</strong></li>
+            </ul>
+          </div>
+        </div>
         <h2 id="quick-prereqs">Prerequisites<a href="#quick-prereqs" class="anchor material-symbols-outlined">link</a></h2>
         <div class="table-wrap">
           <table class="data-table">
@@ -339,6 +365,19 @@ python SetupRegistry.py</code></pre>
         </nav>
         <h1 id="installation">Installation</h1>
         <p class="lead">Detailed walkthrough for a clean install. Skip this if you completed Quick Start successfully.</p>
+        <div class="prereq-box">
+          <span class="material-symbols-outlined">checklist</span>
+          <div class="prereq-body">
+            <div class="prereq-label">Before you start</div>
+            <ul class="prereq-list">
+              <li><strong>Git</strong> installed</li>
+              <li><strong>Python 3.10+</strong> with <code>pip</code></li>
+              <li><strong>Node.js 18+</strong> with <code>npm</code></li>
+              <li><strong>PowerShell</strong> (elevated)</li>
+              <li><strong>Windows 10 or 11</strong></li>
+            </ul>
+          </div>
+        </div>
         <h2 id="install-clone">1. Clone the repository<a href="#install-clone" class="anchor material-symbols-outlined">link</a></h2>
         <div class="code-block">
           <div class="code-block-header">
@@ -428,6 +467,17 @@ npm install
         </nav>
         <h1 id="environment">Environment Configuration</h1>
         <p class="lead">All API keys and configuration live in a single <code>.env</code> file at the repo root. Copy <code>.env.example</code> to <code>.env</code> and fill in the values you need.</p>
+        <div class="prereq-box">
+          <span class="material-symbols-outlined">checklist</span>
+          <div class="prereq-body">
+            <div class="prereq-label">Before you start</div>
+            <ul class="prereq-list">
+              <li><strong>Text editor</strong> (VS Code recommended)</li>
+              <li><strong>API key</strong> from at least one provider (Groq, OpenRouter, Gemini, or Ollama)</li>
+              <li><strong>Optional:</strong> Deepgram + Tavily keys for voice + search</li>
+            </ul>
+          </div>
+        </div>
         <h2 id="env-required">Required variables<a href="#env-required" class="anchor material-symbols-outlined">link</a></h2>
         <div class="table-wrap">
           <table class="data-table">
@@ -512,6 +562,18 @@ FALLBACK_MODEL=llama3.1</code></pre>
         </nav>
         <h1 id="voice">Voice Setup</h1>
         <p class="lead">JARVIS ships with dual-engine wake word detection, premium STT, and low-latency TTS. Everything runs on-device by default — no cloud round-trip for wake word.</p>
+        <div class="prereq-box">
+          <span class="material-symbols-outlined">checklist</span>
+          <div class="prereq-body">
+            <div class="prereq-label">Before you start</div>
+            <ul class="prereq-list">
+              <li><strong>Working microphone</strong> connected</li>
+              <li><strong>Deepgram API key</strong> for STT</li>
+              <li><strong>Optional:</strong> Azure Speech account (for higher accuracy wake word)</li>
+              <li><strong>Optional:</strong> TTS API key (Sarvam) — falls back to Edge TTS</li>
+            </ul>
+          </div>
+        </div>
         <h2 id="voice-wake">Wake word engines<a href="#voice-wake" class="anchor material-symbols-outlined">link</a></h2>
         <p>Two independent engines, auto-selected on boot:</p>
         <div class="table-wrap">
@@ -649,6 +711,17 @@ jarvis</code></pre>
         </nav>
         <h1 id="mcp">MCP Integration</h1>
         <p class="lead">The Model Context Protocol lets JARVIS plug into 18,000+ community-built tool servers — GitHub, Brave Search, SQLite, Postgres, Notion, Slack, Docker, Puppeteer, and more — via a single JSON file.</p>
+        <div class="prereq-box">
+          <span class="material-symbols-outlined">checklist</span>
+          <div class="prereq-body">
+            <div class="prereq-label">Before you start</div>
+            <ul class="prereq-list">
+              <li><strong>Node.js 18+</strong> (24+ recommended for newest servers)</li>
+              <li><code>pip install mcp</code> completed</li>
+              <li><strong>API keys</strong> only if the chosen MCP server requires them</li>
+            </ul>
+          </div>
+        </div>
         <h2 id="mcp-how">How it works<a href="#mcp-how" class="anchor material-symbols-outlined">link</a></h2>
         <p>When <code>Data/mcp_servers.json</code> exists with valid configs, JARVIS:</p>
         <ul class="bullets">
@@ -764,6 +837,17 @@ MCP: ready with <span class="code-var">46</span> tools from <span class="code-va
         </nav>
         <h1 id="android">Android Bridge</h1>
         <p class="lead">Control your Android phone natively from Windows using Termux and a WebSocket bridge. No SSH required, no cloud relay.</p>
+        <div class="prereq-box">
+          <span class="material-symbols-outlined">checklist</span>
+          <div class="prereq-body">
+            <div class="prereq-label">Before you start</div>
+            <ul class="prereq-list">
+              <li><strong>Android phone</strong> with Termux + Termux:API (from F-Droid)</li>
+              <li><strong>Both devices</strong> on the same WiFi network</li>
+              <li><strong>JARVIS running</strong> on your PC</li>
+            </ul>
+          </div>
+        </div>
         <h2 id="android-setup">Setup<a href="#android-setup" class="anchor material-symbols-outlined">link</a></h2>
         <ol class="steps">
           <li><strong>Install Termux and Termux:API</strong> on your phone via F-Droid (not Google Play — that version is outdated).</li>
@@ -816,6 +900,17 @@ MCP: ready with <span class="code-var">46</span> tools from <span class="code-va
         </nav>
         <h1 id="telegram">Telegram Bot</h1>
         <p class="lead">Trigger silent background PC commands from anywhere via Telegram. Perfect for when you're away from your desk.</p>
+        <div class="prereq-box">
+          <span class="material-symbols-outlined">checklist</span>
+          <div class="prereq-body">
+            <div class="prereq-label">Before you start</div>
+            <ul class="prereq-list">
+              <li><strong>Telegram account</strong> on your phone</li>
+              <li><strong>BotFather bot</strong> created (saves token)</li>
+              <li><strong>JARVIS stopped</strong> for activation</li>
+            </ul>
+          </div>
+        </div>
         <h2 id="telegram-setup">Setup<a href="#telegram-setup" class="anchor material-symbols-outlined">link</a></h2>
         <ol class="steps">
           <li><strong>Create a bot</strong> — message <a href="https://t.me/BotFather" target="_blank" rel="noopener noreferrer">@BotFather</a> on Telegram, send <code>/newbot</code>, follow the prompts, and copy the token.</li>
@@ -2470,6 +2565,111 @@ jarvis bot --deactivate  <span class="code-cmt"># revoke &amp; offline the bot</
         </nav>
         <h1 id="troubleshooting">Troubleshooting</h1>
         <p class="lead">Common issues and their fixes. For anything not listed here, <a href="https://github.com/thekaifansari01/Jarvis-OS-Agent/issues" target="_blank" rel="noopener noreferrer">open an issue on GitHub</a>.</p>
+
+        <h2 id="trouble-tree">Diagnostic decision tree<a href="#trouble-tree" class="anchor material-symbols-outlined">link</a></h2>
+        <p>Start with the symptom you're seeing. Each branch shows the most common cause and the fix.</p>
+        <div class="decision-tree">
+
+          <details class="decision-node">
+            <summary>
+              <span class="material-symbols-outlined">rocket_launch</span>
+              <span>JARVIS won't start</span>
+              <span class="material-symbols-outlined">expand_more</span>
+            </summary>
+            <div class="decision-body">
+              <div class="decision-symptom"><strong>Python not found:</strong> Running <code>jarvis</code> returns "command not recognized".</div>
+              <div class="decision-fix"><strong>Fix:</strong> Run <code>python SetupRegistry.py</code> from the repo root with virtual environment active. Then open a <strong>new</strong> terminal.</div>
+              <div class="decision-symptom"><strong>ModuleNotFoundError:</strong> Missing dependency.</div>
+              <div class="decision-fix"><strong>Fix:</strong> Activate venv, then <code>pip install -r requirements.txt</code>.</div>
+              <div class="decision-symptom"><strong>"Already running":</strong> Lock file is stale from a previous crash.</div>
+              <div class="decision-fix"><strong>Fix:</strong> Delete the lock file in repo root. Check Task Manager for orphan <code>python.exe</code>.</div>
+              <div class="decision-symptom"><strong>Instantly closes:</strong> Some DLL or C extension failed to load.</div>
+              <div class="decision-fix"><strong>Fix:</strong> Run from PowerShell directly (not via .bat) to see the error. Most common cause: missing Visual C++ Redistributable.</div>
+            </div>
+          </details>
+
+          <details class="decision-node">
+            <summary>
+              <span class="material-symbols-outlined">mic</span>
+              <span>Voice not working</span>
+              <span class="material-symbols-outlined">expand_more</span>
+            </summary>
+            <div class="decision-body">
+              <div class="decision-symptom"><strong>No wake word response:</strong> Saying "Jarvis" does nothing.</div>
+              <div class="decision-fix"><strong>Fix:</strong> Check startup logs for <code>Azure keyword recognition started</code> or <code>Vosk initialized</code>. If neither, no wake model is present. Install one at <code>Data/model/azure/jarvis.table</code> OR <code>Data/model/vosk-model-small/</code>.</div>
+              <div class="decision-symptom"><strong>Wake fires but no transcription:</strong> STT popup shows "Listening..." forever.</div>
+              <div class="decision-fix"><strong>Fix:</strong> Verify <code>DEEPGRAM_API_KEY</code> in <code>.env</code>. Check UDP port 5556 not blocked by firewall.</div>
+              <div class="decision-symptom"><strong>High false wake triggers:</strong> JARVIS triggers on random words.</div>
+              <div class="decision-fix"><strong>Fix:</strong> Vosk fallback is ~66% accurate. Build an Azure Custom Keyword model for 97%+ accuracy (see Voice Setup).</div>
+            </div>
+          </details>
+
+          <details class="decision-node">
+            <summary>
+              <span class="material-symbols-outlined">dashboard</span>
+              <span>Agent Panel not appearing</span>
+              <span class="material-symbols-outlined">expand_more</span>
+            </summary>
+            <div class="decision-body">
+              <div class="decision-symptom"><strong>Command runs but no panel:</strong> Response works, no floating UI.</div>
+              <div class="decision-fix"><strong>Fix:</strong> Check startup log for <code>ZmqListener loop error</code>. Verify ports 5555–5557 not firewalled. Whitelist <code>python.exe</code> in Windows Defender.</div>
+              <div class="decision-symptom"><strong>Panel shows stale "Step 03":</strong> Frozen mid-loop.</div>
+              <div class="decision-fix"><strong>Fix:</strong> Agent likely crashed. Restart JARVIS. Panel resets on next status update.</div>
+              <div class="decision-symptom"><strong>Text unreadable:</strong> Thought stream shows boxes or garbled.</div>
+              <div class="decision-fix"><strong>Fix:</strong> Missing fonts. Ensure <code>english.ttf</code>, <code>devangri.ttf</code>, <code>code.ttf</code> exist in <code>Data/fonts/</code>.</div>
+            </div>
+          </details>
+
+          <details class="decision-node">
+            <summary>
+              <span class="material-symbols-outlined">extension</span>
+              <span>MCP tools not appearing</span>
+              <span class="material-symbols-outlined">expand_more</span>
+            </summary>
+            <div class="decision-body">
+              <div class="decision-symptom"><strong>Zero MCP tools:</strong> No <code>mcp__*</code> functions in agent's tool list.</div>
+              <div class="decision-fix"><strong>Fix:</strong> Run <code>jarvis mcp list</code>. Confirm <code>pip install mcp</code> succeeded. Check <code>Data/mcp_servers.json</code> is valid JSON.</div>
+              <div class="decision-symptom"><strong>"Connection closed" in logs:</strong> Server crashes on startup.</div>
+              <div class="decision-fix"><strong>Fix:</strong> Run <code>jarvis mcp test &lt;name&gt;</code> to see exact <code>stderr</code>. Verify Node.js 18+ (24+ for latest servers).</div>
+              <div class="decision-symptom"><strong>Tools appear then disappear:</strong> Server unstable mid-session.</div>
+              <div class="decision-fix"><strong>Fix:</strong> Check <code>MCPWatcher</code> logs. MCP client auto-reconnects once; if it keeps failing, the server has a bug.</div>
+            </div>
+          </details>
+
+          <details class="decision-node">
+            <summary>
+              <span class="material-symbols-outlined">chat</span>
+              <span>WhatsApp / Telegram issues</span>
+              <span class="material-symbols-outlined">expand_more</span>
+            </summary>
+            <div class="decision-body">
+              <div class="decision-symptom"><strong>WhatsApp won't connect:</strong> Baileys subprocess exits immediately.</div>
+              <div class="decision-fix"><strong>Fix:</strong> Verify Node.js 18+. Run <code>npm install</code> inside <code>tools/Messanger/whatsapp/BaileysServer</code>. Port 3000 must be free.</div>
+              <div class="decision-symptom"><strong>Telegram bot unresponsive:</strong> Messages to bot get no reply.</div>
+              <div class="decision-fix"><strong>Fix:</strong> Run <code>jarvis bot --status</code>. If unconfigured, run <code>jarvis bot --activate</code> with JARVIS off.</div>
+              <div class="decision-symptom"><strong>Login popups on every boot:</strong> Annoying QR prompts.</div>
+              <div class="decision-fix"><strong>Fix:</strong> Run <code>jarvis logout --service</code> for unused integrations. Listeners only start if credentials exist.</div>
+            </div>
+          </details>
+
+          <details class="decision-node">
+            <summary>
+              <span class="material-symbols-outlined">speed</span>
+              <span>Performance / slow responses</span>
+              <span class="material-symbols-outlined">expand_more</span>
+            </summary>
+            <div class="decision-body">
+              <div class="decision-symptom"><strong>Every reply takes 30+ seconds:</strong> Timeouts on every command.</div>
+              <div class="decision-fix"><strong>Fix:</strong> Check provider status page. Verify <code>PRIMARY_BASE_URL</code> ends with <code>/v1</code>. FastBrain should respond under 2s — if not, it's a network issue.</div>
+              <div class="decision-symptom"><strong>Cold start is 60+ seconds:</strong> Every reboot is slow.</div>
+              <div class="decision-fix"><strong>Fix:</strong> That's the embedding model load (~14s) + service boots. Disable unused integrations via <code>jarvis logout --service</code> to reduce boot time.</div>
+              <div class="decision-symptom"><strong>CPU pegged at 100%:</strong> System feels sluggish.</div>
+              <div class="decision-fix"><strong>Fix:</strong> Long agentic runs (8+ min reasoning) hog a core. Use FastBrain for quick commands. On 4GB RAM hardware, this is expected.</div>
+            </div>
+          </details>
+
+        </div>
+
         <h2 id="trouble-modules">ModuleNotFoundError on startup<a href="#trouble-modules" class="anchor material-symbols-outlined">link</a></h2>
         <p>Your virtual environment isn't active, or dependencies are missing:</p>
         <div class="code-block">
@@ -2943,6 +3143,549 @@ pip install -r requirements.txt</code></pre>
         </div>
 
         <div class="feedback-bar" data-feedback="changelog">
+          <span class="feedback-label">Was this page helpful?</span>
+          <button type="button" class="feedback-btn" data-value="yes"><span class="material-symbols-outlined">thumb_up</span><span>Yes</span></button>
+          <button type="button" class="feedback-btn" data-value="no"><span class="material-symbols-outlined">thumb_down</span><span>No</span></button>
+        </div>
+        <div class="pager" data-pager></div>
+      </section>
+            <section class="doc-page" data-page="custom-prompt" data-title="Custom Prompt Guide" data-updated="2026-11-07">
+        <nav class="page-breadcrumb" aria-label="Breadcrumb">
+          <div class="breadcrumb-trail">
+            <span class="breadcrumb-group">Guides</span>
+            <span class="breadcrumb-sep">›</span>
+            <strong class="breadcrumb-current">Custom Prompt</strong>
+          </div>
+          <div class="breadcrumb-actions">
+            <span class="page-read" data-read></span>
+            <button type="button" class="copy-page-btn" data-copy-page="custom-prompt">
+              <span class="material-symbols-outlined">content_copy</span>
+              <span class="copy-page-label">Copy as Markdown</span>
+            </button>
+          </div>
+        </nav>
+        <h1 id="custom-prompt">Custom Prompt Guide</h1>
+        <p class="lead">JARVIS's personality, tone, and behavioral rules are controlled by the system prompt. This guide shows you exactly how to change them without breaking safety guarantees.</p>
+
+        <h2 id="custom-prompt-location">Where prompts live</h2>
+        <p>System prompts are stored as plain text files in the <code>prompts/</code> directory at the repo root:</p>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead><tr><th>File</th><th>Used by</th><th>Purpose</th></tr></thead>
+            <tbody>
+              <tr><td><code>prompts/fast_brain.txt</code></td><td>FastBrain</td><td>Compact prompt — tone, language, quick-response style</td></tr>
+              <tr><td><code>prompts/agentic_brain.txt</code></td><td>AgenticBrain</td><td>Full prompt — reasoning rules, tool usage, HITL policy, memory injection</td></tr>
+              <tr><td><code>prompts/router.txt</code></td><td>Semantic Router</td><td>JSON-structured intent classifier (rarely edited)</td></tr>
+              <tr><td><code>prompts/proactive_scout.txt</code></td><td>Proactive Scout</td><td>Background listener evaluation rules</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2 id="custom-prompt-common">Common customizations</h2>
+        <h3>Change tone</h3>
+        <p>Open <code>prompts/fast_brain.txt</code>. Find the line starting with <code>Your tone:</code> and modify it:</p>
+        <div class="code-block">
+          <div class="code-block-header">
+            <span class="code-block-lang"><span class="material-symbols-outlined">description</span>example</span>
+            <button type="button" class="code-copy" data-copy-target>Copy</button>
+          </div>
+<pre><code><span class="code-cmt"># Default</span>
+Your tone: friendly, helpful, conversational. Use Hinglish naturally.
+
+<span class="code-cmt"># Professional</span>
+Your tone: direct, professional, no filler. Address the user as "sir".
+
+<span class="code-cmt"># Playful</span>
+Your tone: witty, playful, use occasional puns. Keep responses concise.
+
+<span class="code-cmt"># Minimal</span>
+Your tone: terse. No pleasantries. One sentence per reply maximum.</code></pre>
+        </div>
+
+        <h3>Change language</h3>
+        <p>JARVIS responds in whatever language you speak. To lock it:</p>
+        <div class="code-block">
+          <div class="code-block-header">
+            <span class="code-block-lang"><span class="material-symbols-outlined">description</span>fast_brain.txt</span>
+            <button type="button" class="code-copy" data-copy-target>Copy</button>
+          </div>
+<pre><code><span class="code-cmt"># English only</span>
+Always respond in English. Never use Hindi or Hinglish.
+
+<span class="code-cmt"># Hindi only</span>
+Always respond in Hindi (Devanagari script). Never use English.
+
+<span class="code-cmt"># Hinglish preferred</span>
+Respond in Hinglish (Hindi + English code-mixing) naturally. Match the user's language.</code></pre>
+        </div>
+
+        <h3>Change verbosity</h3>
+        <p>For a chatty assistant that explains, or a terse one that just acts:</p>
+        <div class="code-block">
+          <div class="code-block-header">
+            <span class="code-block-lang"><span class="material-symbols-outlined">description</span>fast_brain.txt</span>
+            <button type="button" class="code-copy" data-copy-target>Copy</button>
+          </div>
+<pre><code><span class="code-cmt"># Detailed</span>
+Explain your reasoning. Show your work. Break down multi-step answers.
+
+<span class="code-cmt"># Concise</span>
+Answer directly. Skip explanations unless asked. Bullet points over paragraphs.
+
+<span class="code-cmt"># Ultra-brief</span>
+One sentence maximum. No caveats, no disclaimers, no alternatives.</code></pre>
+        </div>
+
+        <h2 id="custom-prompt-examples">Full example personalities</h2>
+        <h3>JARVIS-as-a-butler (formal, proper)</h3>
+        <div class="code-block">
+          <div class="code-block-header">
+            <span class="code-block-lang"><span class="material-symbols-outlined">description</span>butler.txt</span>
+            <button type="button" class="code-copy" data-copy-target>Copy</button>
+          </div>
+<pre><code>You are JARVIS, a formal AI butler for {user_name}.
+Your tone: precise, respectful, understated British professionalism.
+Address the user as "sir" or "ma'am" based on context.
+Never use emoji. Never use slang. Never use casual language.
+Prefer "I shall" over "I'll". Prefer "commencing" over "starting".
+If the user is informal, remain formal — this is your character.</code></pre>
+        </div>
+
+        <h3>JARVIS-as-a-hacker-buddy (casual, technical)</h3>
+        <div class="code-block">
+          <div class="code-block-header">
+            <span class="code-block-lang"><span class="material-symbols-outlined">description</span>hacker.txt</span>
+            <button type="button" class="code-copy" data-copy-target>Copy</button>
+          </div>
+<pre><code>You are JARVIS, a technical co-pilot for a developer.
+Your tone: direct, technical, zero fluff. Talk like a senior engineer.
+Use proper technical terminology — don't dumb down.
+If the user makes a mistake, call it out directly (respectfully).
+Prefer "here's the fix" over "let me walk you through..."
+Never apologize unless you actually caused an error.</code></pre>
+        </div>
+
+        <h2 id="custom-prompt-never">What NOT to change</h2>
+        <div class="callout danger">
+          <span class="material-symbols-outlined">gpp_maybe</span>
+          <div class="callout-body">
+            <p><strong>Never edit these sections.</strong> Modifying them can cause JARVIS to skip HITL confirmations, ignore tool schemas, or corrupt state.</p>
+          </div>
+        </div>
+        <ul class="bullets">
+          <li><strong>HITL consent instructions</strong> — must always require explicit approval for email/WhatsApp/Telegram sends</li>
+          <li><strong>Tool schema references</strong> — the <code>{tools}</code> placeholder must stay in agentic prompt</li>
+          <li><strong>Memory injection markers</strong> — <code>{long_term_memory}</code>, <code>{ephemeral_state}</code> etc. must remain</li>
+          <li><strong>Terminal safety rules</strong> — commands that block <code>rm -rf /</code> etc. must stay intact</li>
+          <li><strong>JSON output format instructions</strong> — router and scout prompts must stay valid JSON-producing</li>
+        </ul>
+
+        <h2 id="custom-prompt-apply">How to apply changes</h2>
+        <ol class="steps">
+          <li><strong>Edit the file</strong> — open <code>prompts/fast_brain.txt</code> or <code>prompts/agentic_brain.txt</code> in your text editor.</li>
+          <li><strong>Save the file</strong> — plain UTF-8 encoding.</li>
+          <li><strong>Restart JARVIS</strong> — prompts are loaded once on boot. Ctrl+C then <code>jarvis</code>.</li>
+          <li><strong>Test it</strong> — use the Input Popup (<code>Ctrl+Shift+J</code>) for quick iteration.</li>
+        </ol>
+
+        <div class="callout info">
+          <span class="material-symbols-outlined">info</span>
+          <div class="callout-body"><p><strong>Hot-reload tip.</strong> FastBrain prompt is cached per-request, so changes are picked up mid-session. AgenticBrain prompt is loaded at loop start — changes take effect on the <em>next</em> command, no restart needed.</p></div>
+        </div>
+
+        <div class="feedback-bar" data-feedback="custom-prompt">
+          <span class="feedback-label">Was this page helpful?</span>
+          <button type="button" class="feedback-btn" data-value="yes"><span class="material-symbols-outlined">thumb_up</span><span>Yes</span></button>
+          <button type="button" class="feedback-btn" data-value="no"><span class="material-symbols-outlined">thumb_down</span><span>No</span></button>
+        </div>
+        <div class="pager" data-pager></div>
+      </section>
+
+      <section class="doc-page" data-page="byo-tool" data-title="Bring Your Own Tool" data-updated="2026-11-07">
+        <nav class="page-breadcrumb" aria-label="Breadcrumb">
+          <div class="breadcrumb-trail">
+            <span class="breadcrumb-group">Guides</span>
+            <span class="breadcrumb-sep">›</span>
+            <strong class="breadcrumb-current">Bring Your Own Tool</strong>
+          </div>
+          <div class="breadcrumb-actions">
+            <span class="page-read" data-read></span>
+            <button type="button" class="copy-page-btn" data-copy-page="byo-tool">
+              <span class="material-symbols-outlined">content_copy</span>
+              <span class="copy-page-label">Copy as Markdown</span>
+            </button>
+          </div>
+        </nav>
+        <h1 id="byo-tool">Bring Your Own Tool</h1>
+        <p class="lead">Extend JARVIS with custom native tools. This guide walks you through adding a new tool that the agent can call autonomously — using the same pattern JARVIS's built-in tools use.</p>
+
+        <div class="prereq-box">
+          <span class="material-symbols-outlined">checklist</span>
+          <div class="prereq-body">
+            <div class="prereq-label">Before you start</div>
+            <ul class="prereq-list">
+              <li><strong>Python 3.10+</strong> installed</li>
+              <li>Basic familiarity with <strong>JSON schemas</strong></li>
+              <li>JARVIS installed and working</li>
+            </ul>
+          </div>
+        </div>
+
+        <h2 id="byo-tool-native-vs-mcp">Native tool vs MCP — which one?</h2>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead><tr><th>Use native tool when…</th><th>Use MCP when…</th></tr></thead>
+            <tbody>
+              <tr><td>You need access to JARVIS internals (memory, session state)</td><td>The functionality is a standalone service</td></tr>
+              <tr><td>The tool is extremely fast (&lt;100ms)</td><td>The tool wraps an API or CLI</td></tr>
+              <tr><td>You want tight integration with HITL gates</td><td>You want it to be reusable across AI agents</td></tr>
+              <tr><td>You need to modify JARVIS state</td><td>The tool doesn't need to touch JARVIS state</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>If you're unsure, start with MCP. Only write a native tool when MCP doesn't fit.</p>
+
+        <h2 id="byo-tool-anatomy">Tool anatomy</h2>
+        <p>A native tool is a Python class with three parts:</p>
+        <ol class="steps">
+          <li><strong>Schema</strong> — a JSON schema describing parameters (sent to the LLM)</li>
+          <li><strong>Handler</strong> — a method that executes the tool and returns an observation string</li>
+          <li><strong>Registration</strong> — an entry in <code>tools/registry.py</code> so the executor knows about it</li>
+        </ol>
+
+        <h2 id="byo-tool-example">Minimal example — Weather tool</h2>
+        <p>Create <code>tools/custom/weather_tool.py</code>:</p>
+        <div class="code-block">
+          <div class="code-block-header">
+            <span class="code-block-lang"><span class="material-symbols-outlined">description</span>weather_tool.py</span>
+            <button type="button" class="code-copy" data-copy-target>Copy</button>
+          </div>
+<pre><code><span class="code-kw">import</span> requests
+
+<span class="code-kw">class</span> <span class="code-fn">WeatherTool</span>:
+    NAME = <span class="code-str">"weather_action"</span>
+
+    SCHEMA = {
+        <span class="code-str">"name"</span>: <span class="code-str">"weather_action"</span>,
+        <span class="code-str">"description"</span>: <span class="code-str">"Get current weather for a city."</span>,
+        <span class="code-str">"parameters"</span>: {
+            <span class="code-str">"type"</span>: <span class="code-str">"object"</span>,
+            <span class="code-str">"properties"</span>: {
+                <span class="code-str">"city"</span>: {
+                    <span class="code-str">"type"</span>: <span class="code-str">"string"</span>,
+                    <span class="code-str">"description"</span>: <span class="code-str">"City name, e.g. Mumbai"</span>
+                },
+                <span class="code-str">"unit"</span>: {
+                    <span class="code-str">"type"</span>: <span class="code-str">"string"</span>,
+                    <span class="code-str">"enum"</span>: [<span class="code-str">"celsius"</span>, <span class="code-str">"fahrenheit"</span>],
+                    <span class="code-str">"default"</span>: <span class="code-str">"celsius"</span>
+                }
+            },
+            <span class="code-str">"required"</span>: [<span class="code-str">"city"</span>]
+        }
+    }
+
+    <span class="code-kw">def</span> <span class="code-fn">execute</span>(self, city, unit=<span class="code-str">"celsius"</span>):
+        <span class="code-kw">try</span>:
+            url = <span class="code-str">f"https://wttr.in/{city}?format=j1"</span>
+            response = requests.get(url, timeout=<span class="code-var">10</span>)
+            data = response.json()
+            temp_c = data[<span class="code-str">"current_condition"</span>][<span class="code-var">0</span>][<span class="code-str">"temp_C"</span>]
+            desc = data[<span class="code-str">"current_condition"</span>][<span class="code-var">0</span>][<span class="code-str">"weatherDesc"</span>][<span class="code-var">0</span>][<span class="code-str">"value"</span>]
+
+            <span class="code-kw">if</span> unit == <span class="code-str">"fahrenheit"</span>:
+                temp = round(<span class="code-fn">float</span>(temp_c) * <span class="code-var">9</span>/<span class="code-var">5</span> + <span class="code-var">32</span>)
+                <span class="code-kw">return</span> <span class="code-str">f"[OK] {city}: {temp}°F, {desc}"</span>
+            <span class="code-kw">return</span> <span class="code-str">f"[OK] {city}: {temp_c}°C, {desc}"</span>
+        <span class="code-kw">except</span> Exception <span class="code-kw">as</span> e:
+            <span class="code-kw">return</span> <span class="code-str">f"[ERROR] Weather lookup failed: {e}"</span></code></pre>
+        </div>
+
+        <h2 id="byo-tool-register">Register the tool</h2>
+        <p>Open <code>tools/registry.py</code> and find the list of tools. Add:</p>
+        <div class="code-block">
+          <div class="code-block-header">
+            <span class="code-block-lang"><span class="material-symbols-outlined">description</span>registry.py</span>
+            <button type="button" class="code-copy" data-copy-target>Copy</button>
+          </div>
+<pre><code><span class="code-kw">from</span> tools.custom.weather_tool <span class="code-kw">import</span> WeatherTool
+
+<span class="code-fn">AGENTIC_TOOLS</span> = [
+    <span class="code-cmt"># ... existing tools</span>
+    WeatherTool(),
+]</code></pre>
+        </div>
+        <p>That's it. On the next JARVIS restart, the LLM sees <code>weather_action</code> in its tool list and can call it autonomously.</p>
+
+        <h2 id="byo-tool-conventions">Conventions &amp; best practices</h2>
+        <ul class="bullets">
+          <li><strong>Return format:</strong> Always return a string starting with <code>[OK]</code> or <code>[ERROR]</code> so the LLM can parse success vs failure.</li>
+          <li><strong>Timeout:</strong> Wrap network calls with explicit <code>timeout=</code> — never hang the agent loop.</li>
+          <li><strong>Idempotency:</strong> If the tool modifies state, make it reversible.</li>
+          <li><strong>HITL:</strong> If the tool is irreversible (sends money, deletes data, sends external messages), it <strong>must</strong> raise a HITL confirmation before executing.</li>
+          <li><strong>No side effects in schema:</strong> Schema should be a pure data description, no logic.</li>
+        </ul>
+
+        <h2 id="byo-tool-hitl">Adding HITL to your tool</h2>
+        <p>For destructive tools, request confirmation before executing:</p>
+        <div class="code-block">
+          <div class="code-block-header">
+            <span class="code-block-lang"><span class="material-symbols-outlined">description</span>example</span>
+            <button type="button" class="code-copy" data-copy-target>Copy</button>
+          </div>
+<pre><code><span class="code-kw">from</span> core.hitl <span class="code-kw">import</span> request_confirmation
+
+<span class="code-kw">def</span> <span class="code-fn">execute</span>(self, path):
+    confirmed = <span class="code-fn">request_confirmation</span>(
+        platform=<span class="code-str">"file"</span>,
+        title=<span class="code-str">"Delete file?"</span>,
+        body=<span class="code-str">f"Permanently delete {path}?"</span>,
+        timeout=<span class="code-var">90</span>
+    )
+    <span class="code-kw">if not</span> confirmed:
+        <span class="code-kw">return</span> <span class="code-str">"[CANCELLED] User rejected the action."</span>
+    <span class="code-cmt"># ... proceed with deletion</span></code></pre>
+        </div>
+
+        <h2 id="byo-tool-test">Testing your tool</h2>
+        <p>Before wiring it into the agent loop, test it standalone:</p>
+        <div class="code-block">
+          <div class="code-block-header">
+            <span class="code-block-lang"><span class="material-symbols-outlined">terminal</span>powershell</span>
+            <button type="button" class="code-copy" data-copy-target>Copy</button>
+          </div>
+<pre><code>python -c <span class="code-str">"from tools.custom.weather_tool import WeatherTool; print(WeatherTool().execute('Mumbai'))"</span></code></pre>
+        </div>
+        <p>If that works, restart JARVIS and try a voice command:</p>
+        <div class="demo-quote" style="margin: 12px 0; padding: 12px 14px; background: rgba(255,255,255,0.02); border-left: 2px solid var(--accent); border-radius: 6px; font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; color: var(--text-dim); font-style: italic; line-height: 1.5;">"Jarvis, what's the weather in Mumbai?"</div>
+        <p>Check the Agent Panel — you should see <code>weather_action</code> execute and return the observation.</p>
+
+        <div class="feedback-bar" data-feedback="byo-tool">
+          <span class="feedback-label">Was this page helpful?</span>
+          <button type="button" class="feedback-btn" data-value="yes"><span class="material-symbols-outlined">thumb_up</span><span>Yes</span></button>
+          <button type="button" class="feedback-btn" data-value="no"><span class="material-symbols-outlined">thumb_down</span><span>No</span></button>
+        </div>
+        <div class="pager" data-pager></div>
+      </section>
+
+      <section class="doc-page" data-page="data-model" data-title="Data Model Reference" data-updated="2026-11-07">
+        <nav class="page-breadcrumb" aria-label="Breadcrumb">
+          <div class="breadcrumb-trail">
+            <span class="breadcrumb-group">Guides</span>
+            <span class="breadcrumb-sep">›</span>
+            <strong class="breadcrumb-current">Data Model</strong>
+          </div>
+          <div class="breadcrumb-actions">
+            <span class="page-read" data-read></span>
+            <button type="button" class="copy-page-btn" data-copy-page="data-model">
+              <span class="material-symbols-outlined">content_copy</span>
+              <span class="copy-page-label">Copy as Markdown</span>
+            </button>
+          </div>
+        </nav>
+        <h1 id="data-model">Data Model Reference</h1>
+        <p class="lead">Everything JARVIS stores lives under <code>Data/</code>. This page documents every file, its schema, and how to back up or migrate your data safely.</p>
+
+        <h2 id="data-model-directory">Directory map</h2>
+        <div class="code-block">
+          <div class="code-block-header">
+            <span class="code-block-lang"><span class="material-symbols-outlined">folder</span>tree</span>
+            <button type="button" class="code-copy" data-copy-target>Copy</button>
+          </div>
+<pre><code>Data/
+├── jarvis_memory/
+│   ├── lifetime_graph.json          <span class="code-cmt"># LTM semantic graph</span>
+│   ├── behavioral_patterns.jsonl    <span class="code-cmt"># Behavioral engine</span>
+│   ├── chat_history.jsonl           <span class="code-cmt"># Last 2 days raw</span>
+│   ├── daily_summaries.jsonl        <span class="code-cmt"># 3–15 days compressed</span>
+│   ├── rag_chroma_db/               <span class="code-cmt"># Vector index</span>
+│   ├── rag_hashes.json              <span class="code-cmt"># Change detection</span>
+│   └── session_state.json           <span class="code-cmt"># Ephemeral state</span>
+├── jarvis_indexer/
+│   ├── folders.json                 <span class="code-cmt"># Indexed folders</span>
+│   ├── filters.json                 <span class="code-cmt"># Exclusion rules</span>
+│   └── settings.json                <span class="code-cmt"># Indexer config</span>
+├── sessions/
+│   ├── gmail_token.enc              <span class="code-cmt"># AES-encrypted</span>
+│   ├── calendar_token.enc
+│   └── telegram_bot_token.enc
+├── cache/
+│   └── meta_cache.json              <span class="code-cmt"># Link preview metadata</span>
+├── fonts/
+│   ├── english.ttf
+│   ├── devangri.ttf
+│   └── code.ttf
+├── model/
+│   ├── azure/jarvis.table           <span class="code-cmt"># Wake word model</span>
+│   └── vosk-model-small/            <span class="code-cmt"># Fallback</span>
+├── typing_status.json               <span class="code-cmt"># File IPC</span>
+├── tts_status.json
+├── tts_word_sync.json
+├── tts_command.json
+└── mcp_servers.json                 <span class="code-cmt"># MCP config</span></code></pre>
+        </div>
+
+        <h2 id="data-model-memory-graph">Memory graph schema</h2>
+        <p><code>jarvis_memory/lifetime_graph.json</code> is a NetworkX-serialized graph:</p>
+        <div class="code-block">
+          <div class="code-block-header">
+            <span class="code-block-lang"><span class="material-symbols-outlined">description</span>structure</span>
+            <button type="button" class="code-copy" data-copy-target>Copy</button>
+          </div>
+<pre><code>{
+  <span class="code-str">"nodes"</span>: [
+    {
+      <span class="code-str">"id"</span>: <span class="code-str">"Kaif"</span>,
+      <span class="code-str">"type"</span>: <span class="code-str">"person"</span>,
+      <span class="code-str">"embedding"</span>: [<span class="code-var">0.123</span>, <span class="code-var">-0.456</span>, <span class="code-var">...</span>],
+      <span class="code-str">"created_at"</span>: <span class="code-str">"2026-03-15T10:22:00Z"</span>,
+      <span class="code-str">"metadata"</span>: { <span class="code-str">"aliases"</span>: [<span class="code-str">"Kaif"</span>, <span class="code-str">"Kaif Ansari"</span>] }
+    }
+  ],
+  <span class="code-str">"edges"</span>: [
+    {
+      <span class="code-str">"source"</span>: <span class="code-str">"Kaif"</span>,
+      <span class="code-str">"target"</span>: <span class="code-str">"JARVIS"</span>,
+      <span class="code-str">"relation"</span>: <span class="code-str">"CREATED"</span>,
+      <span class="code-str">"weight"</span>: <span class="code-var">1.0</span>,
+      <span class="code-str">"confidence"</span>: <span class="code-var">0.95</span>,
+      <span class="code-str">"source_message"</span>: <span class="code-str">"I built JARVIS on my old laptop"</span>,
+      <span class="code-str">"last_seen"</span>: <span class="code-str">"2026-10-01T14:30:00Z"</span>,
+      <span class="code-str">"decay_at"</span>: <span class="code-str">"2027-04-01T00:00:00Z"</span>
+    }
+  ]
+}</code></pre>
+        </div>
+        <p><strong>Weight decay:</strong> Edges older than 6 months auto-decay to 0.5× weight and eventually archive. Bump by re-mentioning the fact.</p>
+
+        <h2 id="data-model-behavioral">Behavioral patterns</h2>
+        <p><code>jarvis_memory/behavioral_patterns.jsonl</code> — one JSON object per line:</p>
+        <div class="code-block">
+          <div class="code-block-header">
+            <span class="code-block-lang"><span class="material-symbols-outlined">description</span>example line</span>
+            <button type="button" class="code-copy" data-copy-target>Copy</button>
+          </div>
+<pre><code>{
+  <span class="code-str">"id"</span>: <span class="code-str">"bp_2026_03_15_01"</span>,
+  <span class="code-str">"type"</span>: <span class="code-str">"routine"</span>,
+  <span class="code-str">"raw_statement"</span>: <span class="code-str">"Main roz subah 8 baje gym jaata hoon"</span>,
+  <span class="code-str">"meaning"</span>: <span class="code-str">"User typically goes to the gym at 8 AM daily"</span>,
+  <span class="code-str">"trigger_contexts"</span>: [<span class="code-str">"morning"</span>, <span class="code-str">"fitness"</span>, <span class="code-str">"schedule"</span>],
+  <span class="code-str">"confidence"</span>: <span class="code-var">0.87</span>,
+  <span class="code-str">"evidence_count"</span>: <span class="code-var">4</span>,
+  <span class="code-str">"embedding"</span>: [<span class="code-var">0.234</span>, <span class="code-var">-0.567</span>, <span class="code-var">...</span>],
+  <span class="code-str">"first_mentioned"</span>: <span class="code-str">"2026-03-15"</span>,
+  <span class="code-str">"last_mentioned"</span>: <span class="code-str">"2026-10-20"</span>
+}</code></pre>
+        </div>
+        <p>Retrieved via cosine similarity against the current command + last 2 user turns. Top-K above threshold auto-injected into prompt.</p>
+
+        <h2 id="data-model-rag">RAG chunk metadata</h2>
+        <p>ChromaDB chunks carry metadata for incremental reindexing:</p>
+        <div class="code-block">
+          <div class="code-block-header">
+            <span class="code-block-lang"><span class="material-symbols-outlined">description</span>chunk metadata</span>
+            <button type="button" class="code-copy" data-copy-target>Copy</button>
+          </div>
+<pre><code>{
+  <span class="code-str">"file_path"</span>: <span class="code-str">"C:\\Users\\Kaif\\Documents\\notes.md"</span>,
+  <span class="code-str">"chunk_index"</span>: <span class="code-var">3</span>,
+  <span class="code-str">"total_chunks"</span>: <span class="code-var">12</span>,
+  <span class="code-str">"content"</span>: <span class="code-str">"...chunk text..."</span>,
+  <span class="code-str">"file_hash"</span>: <span class="code-str">"sha256:abc123..."</span>,
+  <span class="code-str">"embedding_model"</span>: <span class="code-str">"BAAI/bge-small-en-v1.5"</span>,
+  <span class="code-str">"chunk_type"</span>: <span class="code-str">"text"</span>,  <span class="code-cmt">// or "code"</span>
+  <span class="code-str">"file_modified"</span>: <span class="code-str">"2026-10-15T10:22:00Z"</span>
+}</code></pre>
+        </div>
+        <p><code>rag_hashes.json</code> stores <code>file_path</code> → <code>hash</code> mapping for incremental scans. If the model changes, hashes are compared against model-embedded markers and the index auto-purges.</p>
+
+        <h2 id="data-model-history">Rolling history</h2>
+        <p><code>chat_history.jsonl</code> (raw, last 2 days):</p>
+        <div class="code-block">
+          <div class="code-block-header">
+            <span class="code-block-lang"><span class="material-symbols-outlined">description</span>entry</span>
+            <button type="button" class="code-copy" data-copy-target>Copy</button>
+          </div>
+<pre><code>{
+  <span class="code-str">"timestamp"</span>: <span class="code-str">"2026-11-06T17:32:11Z"</span>,
+  <span class="code-str">"role"</span>: <span class="code-str">"user"</span>,
+  <span class="code-str">"content"</span>: <span class="code-str">"build a todo app"</span>,
+  <span class="code-str">"system_log"</span>: {
+    <span class="code-str">"apps_opened"</span>: [<span class="code-str">"code.exe"</span>],
+    <span class="code-str">"apps_closed"</span>: [],
+    <span class="code-str">"files_touched"</span>: [<span class="code-str">"tasks.py"</span>, <span class="code-str">"test_tasks.py"</span>],
+    <span class="code-str">"system_events"</span>: [<span class="code-str">"pytest_passed"</span>]
+  }
+}</code></pre>
+        </div>
+        <p><code>daily_summaries.jsonl</code> (compressed, days 3–15):</p>
+        <div class="code-block">
+          <div class="code-block-header">
+            <span class="code-block-lang"><span class="material-symbols-outlined">description</span>entry</span>
+            <button type="button" class="code-copy" data-copy-target>Copy</button>
+          </div>
+<pre><code>{
+  <span class="code-str">"date"</span>: <span class="code-str">"2026-10-25"</span>,
+  <span class="code-str">"summary"</span>: <span class="code-str">"User built a SQLite CLI todo app and iterated on pytest failures..."</span>,
+  <span class="code-str">"keywords"</span>: [<span class="code-str">"python"</span>, <span class="code-str">"pytest"</span>, <span class="code-str">"sqlite"</span>],
+  <span class="code-str">"message_count"</span>: <span class="code-var">14</span>
+}</code></pre>
+        </div>
+
+        <h2 id="data-model-backup">Backup &amp; restore</h2>
+        <h3>What to back up</h3>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead><tr><th>Path</th><th>Priority</th><th>Notes</th></tr></thead>
+            <tbody>
+              <tr><td><code>jarvis_memory/</code></td><td>🔥 Critical</td><td>All your memory, chat history, RAG index</td></tr>
+              <tr><td><code>sessions/*.enc</code></td><td>🔥 Critical</td><td>OAuth tokens — re-auth possible but painful</td></tr>
+              <tr><td><code>model/</code></td><td>⚠️ Recommended</td><td>Wake word models — re-downloadable but slow</td></tr>
+              <tr><td><code>mcp_servers.json</code></td><td>⚠️ Recommended</td><td>MCP configs with API keys</td></tr>
+              <tr><td><code>jarvis_indexer/</code></td><td>✅ Nice-to-have</td><td>Can be rebuilt from scratch</td></tr>
+              <tr><td><code>cache/</code></td><td>❌ Skip</td><td>Regenerated on demand</td></tr>
+              <tr><td><code>typing_status.json</code> etc.</td><td>❌ Skip</td><td>Ephemeral IPC files</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Backup command</h3>
+        <div class="code-block">
+          <div class="code-block-header">
+            <span class="code-block-lang"><span class="material-symbols-outlined">terminal</span>powershell</span>
+            <button type="button" class="code-copy" data-copy-target>Copy</button>
+          </div>
+<pre><code><span class="code-cmt"># Stop JARVIS first</span>
+Compress-Archive -Path Data\jarvis_memory, Data\sessions, Data\mcp_servers.json -DestinationPath jarvis-backup-$(Get-Date -Format yyyyMMdd).zip</code></pre>
+        </div>
+
+        <h3>Restore command</h3>
+        <div class="code-block">
+          <div class="code-block-header">
+            <span class="code-block-lang"><span class="material-symbols-outlined">terminal</span>powershell</span>
+            <button type="button" class="code-copy" data-copy-target>Copy</button>
+          </div>
+<pre><code><span class="code-cmt"># Extract over existing Data/ folder</span>
+Expand-Archive -Path jarvis-backup-20261107.zip -DestinationPath . -Force</code></pre>
+        </div>
+
+        <div class="callout warning">
+          <span class="material-symbols-outlined">warning</span>
+          <div class="callout-body"><p><strong>Encrypted tokens are machine-bound.</strong> The <code>.enc</code> files use Windows DPAPI, which keys on your Windows user account. Restoring to a different machine or user will require re-authentication via <code>jarvis login --service</code>.</p></div>
+        </div>
+
+        <h2 id="data-model-migrate">Migrating between machines</h2>
+        <ol class="steps">
+          <li><strong>On old machine</strong> — run the backup command above.</li>
+          <li><strong>On new machine</strong> — install JARVIS, then <code>jarvis reset --hard</code> to clear any auto-generated data.</li>
+          <li><strong>Extract backup</strong> — copy the zip and extract into <code>Data/</code>.</li>
+          <li><strong>Re-authenticate</strong> — run <code>jarvis login --all</code> because tokens are machine-bound.</li>
+          <li><strong>Rebuild RAG index</strong> — delete <code>Data/jarvis_memory/rag_chroma_db</code> and <code>rag_hashes.json</code>, then restart JARVIS. It rebuilds automatically.</li>
+          <li><strong>Verify</strong> — check that memory recall works: <em>"What do you know about me?"</em></li>
+        </ol>
+
+        <div class="feedback-bar" data-feedback="data-model">
           <span class="feedback-label">Was this page helpful?</span>
           <button type="button" class="feedback-btn" data-value="yes"><span class="material-symbols-outlined">thumb_up</span><span>Yes</span></button>
           <button type="button" class="feedback-btn" data-value="no"><span class="material-symbols-outlined">thumb_down</span><span>No</span></button>

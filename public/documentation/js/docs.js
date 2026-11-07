@@ -9,6 +9,7 @@
     'memory', 'mcp', 'android', 'telegram', 'cli', 'tools', 'architecture',
     'agent-panel', 'typing-popup', 'stt-popup', 'input-popup',
     'ui-comparison', 'lifecycle-shutdown', 'troubleshooting', 'faq',
+    'custom-prompt', 'byo-tool', 'data-model',
     'glossary', 'limitations', 'changelog'
   ];
 
@@ -33,6 +34,9 @@
     'lifecycle-shutdown': 'Lifecycle & Shutdown',
     'troubleshooting': 'Troubleshooting',
     'faq': 'Frequently Asked Questions',
+    'custom-prompt': 'Custom Prompt Guide',
+    'byo-tool': 'Bring Your Own Tool',
+    'data-model': 'Data Model Reference',
     'glossary': 'Glossary',
     'limitations': 'Known Limitations',
     'changelog': 'Changelog'
@@ -320,8 +324,8 @@
     }
 
     const actions = page.querySelector('.breadcrumb-actions');
-    const updated = page.dataset.updated;
-    if (actions && updated && !actions.querySelector('.page-updated')) {
+    const updated = page.dataset.updated || '2026-11-07';
+    if (actions && !actions.querySelector('.page-updated')) {
       const date = new Date(updated);
       const formatted = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
       const span = document.createElement('span');
@@ -1216,6 +1220,11 @@
     document.addEventListener('keydown', function (e) {
       if (e.target.matches('input, textarea, [contenteditable]')) return;
       if (e.ctrlKey || e.metaKey || e.altKey) return;
+      if (e.key === 't' && !e.shiftKey) {
+        const btn = document.getElementById('themeToggle');
+        if (btn) btn.click();
+        return;
+      }
       if (e.key === '[') {
         const idx = PAGES.indexOf(state.currentPage);
         if (idx > 0) showPage(PAGES[idx - 1], { anchorId: null });
@@ -1245,7 +1254,57 @@
     }
   }
 
+  function initThemeToggle() {
+    const btn = document.getElementById('themeToggle');
+    if (!btn) return;
+    const icon = btn.querySelector('.material-symbols-outlined');
+
+    function applyTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      if (icon) icon.textContent = theme === 'light' ? 'dark_mode' : 'light_mode';
+      try {
+        localStorage.setItem('jarvis-docs-theme', theme);
+      } catch (e) {}
+    }
+
+    let stored = null;
+    try {
+      stored = localStorage.getItem('jarvis-docs-theme');
+    } catch (e) {}
+
+    if (stored === 'light' || stored === 'dark') {
+      applyTheme(stored);
+    } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+      applyTheme('light');
+    }
+
+    btn.addEventListener('click', function () {
+      const current = document.documentElement.getAttribute('data-theme') || 'dark';
+      applyTheme(current === 'light' ? 'dark' : 'light');
+    });
+  }
+
+  function initPrintExpansion() {
+    window.addEventListener('beforeprint', function () {
+      document.querySelectorAll('details').forEach(function (d) {
+        if (!d.open) {
+          d.dataset.wasClosed = '1';
+          d.open = true;
+        }
+      });
+    });
+
+    window.addEventListener('afterprint', function () {
+      document.querySelectorAll('details[data-was-closed="1"]').forEach(function (d) {
+        d.open = false;
+        delete d.dataset.wasClosed;
+      });
+    });
+  }
+
   function init() {
+    initThemeToggle();
+    initPrintExpansion();
     initReadTimes();
     initRouter();
     initSidebar();
