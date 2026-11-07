@@ -1215,20 +1215,25 @@ FALLBACK_MODEL=llama3.1</code></pre>
             </tbody>
           </table>
         </div>
-        <h2 id="memory-dashboard">RAG Indexer Dashboard<a href="#memory-dashboard" class="anchor material-symbols-outlined">link</a></h2>
-        <p>JARVIS ships with a web dashboard for managing indexed folders and filters. Open it after launching:</p>
+        <h2 id="memory-dashboard">Unified Portal — Knowledge Indexer<a href="#memory-dashboard" class="anchor material-symbols-outlined">link</a></h2>
+        <p>JARVIS ships a single <strong>Unified Portal</strong> at one URL that serves all web UIs — Knowledge Indexer, Mobile Bridge, and more — as tabs. Open it after launching:</p>
         <div class="code-block">
           <div class="code-block-header">
             <span class="code-block-lang"><span class="material-symbols-outlined">language</span>browser</span>
             <button type="button" class="code-copy" data-copy-target>Copy</button>
           </div>
-<pre><code>http://127.0.0.1:8080</code></pre>
+<pre><code>http://127.0.0.1:8000</code></pre>
         </div>
-        <p>On first boot, the indexer auto-adds your <code>Documents</code> folder. You can add more from the <strong>Folders</strong> tab — paste any absolute path and click <strong>Add &amp; Index</strong>.</p>
+        <p>Switch to the <strong>Knowledge Indexer</strong> tab in the portal sidebar. On first boot, the indexer auto-adds your <code>Documents</code> folder. You can add more from the <strong>Folders</strong> sub-tab — paste any absolute path and click <strong>Add &amp; Index</strong>.</p>
+        <div class="callout info">
+          <span class="material-symbols-outlined">info</span>
+          <div class="callout-body"><p><strong>Internal ports still active.</strong> Behind the portal, the Indexer API runs on <code>127.0.0.1:8080</code> and the Mobile Bridge on <code>127.0.0.1:8090</code>. The portal aggregates both — you only need to remember <code>8000</code>.</p></div>
+        </div>
         <h2 id="memory-add-folder">Adding a new folder<a href="#memory-add-folder" class="anchor material-symbols-outlined">link</a></h2>
         <ol class="steps">
-          <li><strong>Open the dashboard</strong> at <code>127.0.0.1:8080</code>.</li>
-          <li><strong>Go to Folders tab.</strong></li>
+          <li><strong>Open the Unified Portal</strong> at <code>http://127.0.0.1:8000</code>.</li>
+          <li><strong>Click the Knowledge Indexer tab</strong> in the sidebar.</li>
+          <li><strong>Go to the Folders sub-tab.</strong></li>
           <li><strong>Paste an absolute path</strong>, e.g. <code>D:/Projects</code> or <code>C:\Users\You\Desktop\notes</code>.</li>
           <li><strong>Click Add &amp; Index.</strong> Progress streams live.</li>
         </ol>
@@ -1423,7 +1428,7 @@ MCP: ready with <span class="code-var">46</span> tools from <span class="code-va
         <ol class="steps">
           <li><strong>Install Termux and Termux:API</strong> on your phone via F-Droid (not Google Play — that version is outdated).</li>
           <li><strong>Connect both devices to the same WiFi.</strong> The bridge runs over local network only.</li>
-          <li><strong>Open the bridge dashboard</strong> on your PC: <code>http://127.0.0.1:8090</code>.</li>
+          <li><strong>Open the Unified Portal</strong> on your PC: <code>http://127.0.0.1:8000</code> → click the <strong>Mobile Bridge</strong> tab.</li>
           <li><strong>Scan the QR code</strong> with your phone, or copy the setup command into Termux.</li>
           <li><strong>Approve Termux:API prompts</strong> as they appear — SMS, contacts, storage, location.</li>
         </ol>
@@ -1695,8 +1700,9 @@ jarvis bot --deactivate  <span class="code-cmt"># revoke &amp; offline the bot</
           <li>STT Popup, Baileys WhatsApp server</li>
           <li>Mobile Bridge (<code>:8090</code>), Telegram bot</li>
           <li>Indexer Dashboard (<code>:8080</code>), MCP Manager</li>
+          <li><strong>Unified Portal</strong> (<code>:8000</code>) — gated on both backends being healthy</li>
         </ul>
-        <p>Crashes trigger a cooldown backoff. Unauthenticated services are skipped, not restarted endlessly.</p>
+        <p>Crashes trigger a cooldown backoff. Unauthenticated services are skipped, not restarted endlessly. The Unified Portal will not restart if either backend is down.</p>
         <div class="feedback-bar" data-feedback="architecture">
           <span class="feedback-label">Was this page helpful?</span>
           <button type="button" class="feedback-btn" data-value="yes"><span class="material-symbols-outlined">thumb_up</span><span>Yes</span></button>
@@ -2907,13 +2913,13 @@ jarvis bot --deactivate  <span class="code-cmt"># revoke &amp; offline the bot</
             <span class="ui-hero-badge"><span class="material-symbols-outlined">restart_alt</span>Auto-Recovery</span>
           </div>
           <h1>Lifecycle &amp; Shutdown</h1>
-          <p>JARVIS ships 7 background services, 3 Qt overlays, a Node.js bridge, and dozens of subprocesses. Every one of them needs to die cleanly — but the memory graph, behavioral patterns, and session state must survive. The lifecycle system is a 14-step graceful shutdown choreography guarded by an idempotent flag, 7 signal handlers, and a parallel service-teardown that completes in ~2.6 seconds.</p>
+          <p>JARVIS ships 8 background services (including the Unified Portal), 3 Qt overlays, a Node.js bridge, and dozens of subprocesses. Every one of them needs to die cleanly — but the memory graph, behavioral patterns, and session state must survive. The lifecycle system is a 14-step graceful shutdown choreography guarded by an idempotent flag, 7 signal handlers, and a parallel service-teardown that completes in ~2.6 seconds.</p>
         </div>
         <div class="ui-feature-grid">
           <div class="ui-feature-card"><div class="icon-wrap"><span class="material-symbols-outlined">lock</span></div><h4>Idempotent Guard</h4><p>Double Ctrl+C is safe — the second press returns instantly.</p></div>
           <div class="ui-feature-card"><div class="icon-wrap"><span class="material-symbols-outlined">notifications_active</span></div><h4>7 Exit Paths</h4><p>Ctrl+C, Ctrl+Break, window close, logoff, shutdown — all covered.</p></div>
           <div class="ui-feature-card"><div class="icon-wrap"><span class="material-symbols-outlined">save</span></div><h4>State Preserved</h4><p>LTM graph and behavioral engine save before any process is killed.</p></div>
-          <div class="ui-feature-card"><div class="icon-wrap"><span class="material-symbols-outlined">speed</span></div><h4>2.6s Total</h4><p>7 services tear down in parallel, not sequentially.</p></div>
+          <div class="ui-feature-card"><div class="icon-wrap"><span class="material-symbols-outlined">speed</span></div><h4>2.6s Total</h4><p>8 services tear down in parallel, not sequentially.</p></div>
         </div>
         <h2 id="lifecycle-triggers">When Shutdown Triggers<a href="#lifecycle-triggers" class="anchor material-symbols-outlined">link</a></h2>
         <p>JARVIS registers handlers for every standard exit path — plus a few Windows-specific ones that signals alone can't catch:</p>
@@ -2949,7 +2955,7 @@ jarvis bot --deactivate  <span class="code-cmt"># revoke &amp; offline the bot</
         </div>
         <div class="callout success">
           <span class="material-symbols-outlined">bolt</span>
-          <div class="callout-body"><p><strong>Parallel teardown = 7× speedup.</strong> 7 services × 2.5s timeout = 17.5s if sequential. But <code>stop_all_services()</code> spawns 7 threads — total wall-clock is ~2.5s regardless of count. Shutdown stays under 3 seconds on any hardware.</p></div>
+          <div class="callout-body"><p><strong>Parallel teardown = 8× speedup.</strong> 8 services × 2.5s timeout = 20s if sequential. But <code>stop_all_services()</code> spawns 8 threads — total wall-clock is ~2.5s regardless of count. Shutdown stays under 3 seconds on any hardware.</p></div>
         </div>
         <div class="callout info">
           <span class="material-symbols-outlined">info</span>
@@ -3022,8 +3028,9 @@ jarvis bot --deactivate  <span class="code-cmt"># revoke &amp; offline the bot</
               <tr><td><strong>Baileys (WhatsApp)</strong></td><td><code>:3000</code></td><td>—</td><td><code>auth_info_baileys/creds.json</code></td></tr>
               <tr><td><strong>STT Popup</strong></td><td>UDP <code>:5556</code></td><td>—</td><td>Microphone available</td></tr>
               <tr><td><strong>Mobile Bridge</strong></td><td><code>:8090</code></td><td>—</td><td>Always true</td></tr>
-              <tr><td><strong>Telegram Remote</strong></td><td>—</td><td><code>is_telegram_remote_init_started</code></td><td><code>telegram_bot_token.enc</code></td></tr>
               <tr><td><strong>Indexer Dashboard</strong></td><td><code>:8080</code></td><td><code>is_rag_engine_init_started</code></td><td>Always true</td></tr>
+              <tr><td><strong>Unified Portal</strong></td><td><code>:8000</code></td><td><code>is_rag_engine_init_started</code> AND bridge running</td><td>Both backends reachable</td></tr>
+              <tr><td><strong>Telegram Remote</strong></td><td>—</td><td><code>is_telegram_remote_init_started</code></td><td><code>telegram_bot_token.enc</code></td></tr>
               <tr><td><strong>MCP Manager</strong></td><td>—</td><td><code>is_mcp_ready</code></td><td><code>is_mcp_enabled</code></td></tr>
             </tbody>
           </table>
@@ -3298,16 +3305,16 @@ pip install -r requirements.txt</code></pre>
         </ul>
         <h2 id="trouble-correction">Live correction is ignored<a href="#trouble-correction" class="anchor material-symbols-outlined">link</a></h2>
         <p>Live correction only works in <strong>AgenticBrain</strong> mode. FastBrain is stateless and doesn't support mid-run re-planning. Check the router decision at the top of any log — you'll see <code>Decision -&gt; AGENTIC</code> when the agentic loop is active.</p>
-        <h2 id="trouble-dashboard">Dashboard won't open<a href="#trouble-dashboard" class="anchor material-symbols-outlined">link</a></h2>
-        <p>Confirm Flask is installed:</p>
+        <h2 id="trouble-dashboard">Portal won't open<a href="#trouble-dashboard" class="anchor material-symbols-outlined">link</a></h2>
+        <p>The Unified Portal at <code>http://127.0.0.1:8000</code> needs both the Indexer Dashboard (Flask, port 8080) and Mobile Bridge (FastAPI, port 8090) alive. Verify all three Python dependencies:</p>
         <div class="code-block">
           <div class="code-block-header">
             <span class="code-block-lang"><span class="material-symbols-outlined">terminal</span>powershell</span>
             <button type="button" class="code-copy" data-copy-target>Copy</button>
           </div>
-<pre><code>pip install flask</code></pre>
+<pre><code>pip install flask fastapi uvicorn httpx jinja2</code></pre>
         </div>
-        <p>If port 8080 is busy, JARVIS auto-shifts to <code>8081–8095</code>. Check startup logs for the actual port.</p>
+        <p>If ports <code>8000</code>, <code>8080</code>, or <code>8090</code> are busy, JARVIS auto-shifts them (8080→8081–8095). Check startup logs for actual ports. Symptom of only one backend being down: portal loads, but one status pill shows <strong>Down</strong> and its tab shows an offline overlay.</p>
         <div class="feedback-bar" data-feedback="troubleshooting">
           <span class="feedback-label">Was this page helpful?</span>
           <button type="button" class="feedback-btn" data-value="yes"><span class="material-symbols-outlined">thumb_up</span><span>Yes</span></button>

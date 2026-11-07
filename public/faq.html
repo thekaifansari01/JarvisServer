@@ -1147,7 +1147,7 @@ h3 { font-size: clamp(1rem, 1.4vw, 1.1rem); }
       </div>
     </details>
 
-    <details class="faq-item reveal" data-cat="features" data-search="mobile android termux ssh tailscale phone control">
+    <details class="faq-item reveal" data-cat="features" data-search="mobile android termux ssh tailscale phone control unified portal">
       <summary>
         <span class="faq-q">
           <span class="faq-q-icon"><span class="material-symbols-outlined">phone_android</span></span>
@@ -1157,7 +1157,8 @@ h3 { font-size: clamp(1rem, 1.4vw, 1.1rem); }
       </summary>
       <div class="faq-answer">
         <p>Mobile control uses a <strong>persistent WebSocket bridge</strong> over local WiFi — no ADB, no USB cable, no cloud relay.</p>
-        <p>Install Termux + Termux:API from F-Droid, open the bridge dashboard at <code>127.0.0.1:8090</code>, scan the QR code, and you're connected. JARVIS can then control flashlight, vibrate, battery, camera, notifications, and open apps via <code>termux-*</code> API commands.</p>
+        <p>Install Termux + Termux:API from F-Droid, open the <strong>Unified Portal</strong> at <code>http://127.0.0.1:8000</code>, click the <strong>Mobile Bridge</strong> tab, scan the QR code, and you're connected. JARVIS can then control flashlight, vibrate, battery, camera, notifications, and open apps via <code>termux-*</code> API commands.</p>
+        <p>Behind the portal, the bridge still runs on <code>127.0.0.1:8090</code> — you just never need to type that URL yourself.</p>
       </div>
     </details>
 
