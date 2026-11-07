@@ -2145,10 +2145,20 @@ h3 { font-size: clamp(1.15rem, 1.6vw, 1.4rem); letter-spacing: -0.02em; }
     </div>
 
     <div class="bento">
-      <details class="faq-item reveal">
-        <summary>How is this different from ChatGPT or Claude?<span class="faq-icon"><span class="material-symbols-outlined">add</span></span></summary>
-        <div class="faq-answer">Those are chat interfaces. JARVIS is an <em>agent</em> — it takes actions on your actual system, remembers you across months, corrects itself mid-task, pauses to ask when a critical parameter is missing (<code>ask_user</code>), and reaches out proactively. It doesn't just answer; it does.</div>
-      </details>
+      <div class="bento-card span-8 signature reveal">
+        <span class="bento-tag">Signature</span>
+        <div class="bento-icon">
+          <span class="material-symbols-outlined">sync</span>
+        </div>
+        <h3>Live Correction + Mid-Task Clarification</h3>
+        <p>The agent loop is genuinely interruptible. Change your mind mid-task — JARVIS re-plans in-place, keeps completed steps intact, and never restarts from scratch. When critical parameters are missing, it pauses and asks you via <code>ask_user</code> instead of guessing.</p>
+        <div class="signature-log">
+          <div class="l"><span class="t">17:28</span><span class="msg warn">🚨 User injected: "add a priority field and sort list by it"</span></div>
+          <div class="l"><span class="t">17:29</span><span class="msg">🧠 Re-planning: install pytest → add priority column → extend tests</span></div>
+          <div class="l"><span class="t">17:30</span><span class="msg">❓ ask_user: "Which email should I send the summary to?" → loop paused</span></div>
+          <div class="l"><span class="t">17:31</span><span class="msg ok">✓ 12/12 tests passed — 4 new ones from the override</span></div>
+        </div>
+      </div>
 
       <div class="bento-card span-4 reveal reveal-delay-1">
         <span class="bento-tag">Memory</span>
