@@ -11,6 +11,20 @@
 <meta name="googlebot" content="index, follow" />
 <meta name="theme-color" content="#05050a" />
 <meta name="color-scheme" content="dark" />
+<script>
+(function(){
+  try {
+    var t = localStorage.getItem('jarvis-theme') || 'dark';
+    document.documentElement.dataset.jarvisTheme = t;
+    if (t === 'light') {
+      var m = document.querySelector('meta[name="theme-color"]');
+      if (m) m.setAttribute('content', '#f4f4f9');
+    }
+  } catch(e) {
+    document.documentElement.dataset.jarvisTheme = 'dark';
+  }
+})();
+</script>
 <meta name="format-detection" content="telephone=no" />
 <meta name="mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-capable" content="yes" />

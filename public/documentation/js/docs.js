@@ -1258,18 +1258,20 @@
     const btn = document.getElementById('themeToggle');
     if (!btn) return;
     const icon = btn.querySelector('.material-symbols-outlined');
+    const meta = document.querySelector('meta[name="theme-color"]');
 
     function applyTheme(theme) {
-      document.documentElement.setAttribute('data-theme', theme);
+      document.documentElement.setAttribute('data-jarvis-theme', theme);
       if (icon) icon.textContent = theme === 'light' ? 'dark_mode' : 'light_mode';
+      if (meta) meta.setAttribute('content', theme === 'light' ? '#f4f4f9' : '#05050a');
       try {
-        localStorage.setItem('jarvis-docs-theme', theme);
+        localStorage.setItem('jarvis-theme', theme);
       } catch (e) {}
     }
 
     let stored = null;
     try {
-      stored = localStorage.getItem('jarvis-docs-theme');
+      stored = localStorage.getItem('jarvis-theme');
     } catch (e) {}
 
     if (stored === 'light' || stored === 'dark') {
@@ -1279,7 +1281,7 @@
     }
 
     btn.addEventListener('click', function () {
-      const current = document.documentElement.getAttribute('data-theme') || 'dark';
+      const current = document.documentElement.getAttribute('data-jarvis-theme') || 'dark';
       applyTheme(current === 'light' ? 'dark' : 'light');
     });
   }

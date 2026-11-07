@@ -6,6 +6,16 @@
 <title>About the Builder — JARVIS OS Agent</title>
 <meta name="description" content="Meet Kaif Ansari — the 18-year-old solo developer behind JARVIS OS Agent. Built on a 4GB RAM laptop with no team, no funding, no high-end hardware." />
 <meta name="theme-color" content="#05050a" />
+<script>
+(function(){
+  try {
+    var t = localStorage.getItem('jarvis-theme') || 'dark';
+    document.documentElement.dataset.jarvisTheme = t;
+  } catch(e) {
+    document.documentElement.dataset.jarvisTheme = 'dark';
+  }
+})();
+</script>
 <meta property="og:title" content="About the Builder — JARVIS OS Agent" />
 <meta property="og:description" content="The story behind an autonomous AI operating system. Solo-built on a 2012 laptop." />
 <meta property="og:type" content="website" />
@@ -1141,6 +1151,9 @@ h3 { font-size: clamp(1.1rem, 1.6vw, 1.3rem); }
         <span>Star</span>
       </a>
       <a href="/#install" class="btn btn-primary nav-cta">Get started</a>
+      <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <span class="material-symbols-outlined">light_mode</span>
+      </button>
       <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle menu">
         <span class="material-symbols-outlined">menu</span>
       </button>
@@ -1680,6 +1693,26 @@ const isTouchDevice = window.matchMedia('(hover: none)').matches;
       window.scrollTo({ top, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
     });
   });
+})();
+
+(function themeToggle() {
+  const btn = document.getElementById('themeToggle');
+  if (!btn) return;
+  const icon = btn.querySelector('.material-symbols-outlined');
+  const root = document.documentElement;
+  const meta = document.querySelector('meta[name="theme-color"]');
+  function apply(theme) {
+    root.dataset.jarvisTheme = theme;
+    if (icon) icon.textContent = theme === 'light' ? 'dark_mode' : 'light_mode';
+    if (meta) meta.setAttribute('content', theme === 'light' ? '#f4f4f9' : '#05050a');
+  }
+  apply(root.dataset.jarvisTheme || 'dark');
+  btn.addEventListener('click', function(e) {
+    e.stopImmediatePropagation();
+    const next = root.dataset.jarvisTheme === 'light' ? 'dark' : 'light';
+    try { localStorage.setItem('jarvis-theme', next); } catch(err) {}
+    apply(next);
+  }, true);
 })();
 </script>
 </body>

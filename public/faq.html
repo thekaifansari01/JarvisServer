@@ -6,6 +6,16 @@
 <title>FAQ — JARVIS OS Agent</title>
 <meta name="description" content="Answers to the most common questions about JARVIS — cost, hardware, offline mode, privacy, mobile control, file safety, and more." />
 <meta name="theme-color" content="#05050a" />
+<script>
+(function(){
+  try {
+    var t = localStorage.getItem('jarvis-theme') || 'dark';
+    document.documentElement.dataset.jarvisTheme = t;
+  } catch(e) {
+    document.documentElement.dataset.jarvisTheme = 'dark';
+  }
+})();
+</script>
 <meta property="og:title" content="FAQ — JARVIS OS Agent" />
 <meta property="og:description" content="Everything you need to know about setting up, running, and customizing JARVIS." />
 <meta property="og:type" content="website" />
@@ -865,6 +875,92 @@ h3 { font-size: clamp(1rem, 1.4vw, 1.1rem); }
   .reveal { opacity: 1; transform: none; }
   .gradient-text { animation: none; }
 }
+
+/* ============================================================
+   THEME TOGGLE BUTTON
+   ============================================================ */
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  color: var(--text-dim);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+.theme-toggle:hover {
+  color: var(--text);
+  background: var(--surface-hover);
+  border-color: var(--border-strong);
+}
+.theme-toggle .material-symbols-outlined { font-size: 20px; }
+@media (max-width: 480px) {
+  .theme-toggle { width: 32px; height: 32px; }
+  .theme-toggle .material-symbols-outlined { font-size: 18px; }
+}
+
+/* ============================================================
+   LIGHT THEME OVERRIDES
+   ============================================================ */
+:root[data-jarvis-theme="light"] {
+  color-scheme: light;
+  --bg: #f4f4f9;
+  --bg-2: #ffffff;
+  --bg-elev: #fafafd;
+  --surface: rgba(10, 10, 30, 0.03);
+  --surface-hover: rgba(10, 10, 30, 0.06);
+  --border: rgba(10, 10, 30, 0.08);
+  --border-strong: rgba(10, 10, 30, 0.14);
+  --text: #0a0a15;
+  --text-dim: #3a3a4a;
+  --text-muted: #6b6b80;
+  --success: #059669;
+  --warning: #d97706;
+  --danger: #dc2626;
+}
+:root[data-jarvis-theme="light"] body { background: var(--bg); color: var(--text); }
+:root[data-jarvis-theme="light"] .bg-grid {
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
+}
+:root[data-jarvis-theme="light"] .bg-noise { opacity: 0.018; }
+:root[data-jarvis-theme="light"] .orb { opacity: 0.25; }
+:root[data-jarvis-theme="light"] .nav.scrolled {
+  background: rgba(244, 244, 249, 0.85);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+}
+:root[data-jarvis-theme="light"] .brand-mark .material-symbols-outlined { color: #ffffff; }
+:root[data-jarvis-theme="light"] .code-block { background: #f8f8fc; }
+:root[data-jarvis-theme="light"] .code-header { background: rgba(0, 0, 0, 0.02); }
+:root[data-jarvis-theme="light"] .code-body { color: var(--text-dim); }
+:root[data-jarvis-theme="light"] .code-body .cmt { color: var(--text-muted); }
+:root[data-jarvis-theme="light"] .code-body .kw { color: #0284c7; }
+:root[data-jarvis-theme="light"] .code-body .fn { color: #7c3aed; }
+:root[data-jarvis-theme="light"] .demo-quote { background: rgba(0, 0, 0, 0.03); color: var(--text-dim); }
+:root[data-jarvis-theme="light"] .story-quote { background: rgba(0, 0, 0, 0.03); }
+:root[data-jarvis-theme="light"] .faq-answer code,
+:root[data-jarvis-theme="light"] .step code,
+:root[data-jarvis-theme="light"] .install-step code {
+  background: rgba(2, 132, 199, 0.08);
+  color: #0284c7;
+  border-color: rgba(2, 132, 199, 0.15);
+}
+:root[data-jarvis-theme="light"] ::selection { background: rgba(0, 212, 255, 0.35); color: var(--text); }
+:root[data-jarvis-theme="light"] .gradient-text {
+  background: linear-gradient(135deg, #0a0a15 0%, var(--accent) 45%, var(--accent-2) 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+:root[data-jarvis-theme="light"] .footer::after {
+  background: radial-gradient(ellipse at center, rgba(0, 212, 255, 0.06), transparent 60%);
+}
 </style>
 </head>
 <body>
@@ -902,6 +998,9 @@ h3 { font-size: clamp(1rem, 1.4vw, 1.1rem); }
         <span>Star</span>
       </a>
       <a href="/#install" class="btn btn-primary nav-cta">Get started</a>
+      <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <span class="material-symbols-outlined">light_mode</span>
+      </button>
       <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle menu">
         <span class="material-symbols-outlined">menu</span>
       </button>
@@ -1419,6 +1518,26 @@ const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)
       btn.style.background = '';
     }, 2400);
   });
+})();
+
+(function themeToggle() {
+  const btn = document.getElementById('themeToggle');
+  if (!btn) return;
+  const icon = btn.querySelector('.material-symbols-outlined');
+  const root = document.documentElement;
+  const meta = document.querySelector('meta[name="theme-color"]');
+  function apply(theme) {
+    root.dataset.jarvisTheme = theme;
+    if (icon) icon.textContent = theme === 'light' ? 'dark_mode' : 'light_mode';
+    if (meta) meta.setAttribute('content', theme === 'light' ? '#f4f4f9' : '#05050a');
+  }
+  apply(root.dataset.jarvisTheme || 'dark');
+  btn.addEventListener('click', function(e) {
+    e.stopImmediatePropagation();
+    const next = root.dataset.jarvisTheme === 'light' ? 'dark' : 'light';
+    try { localStorage.setItem('jarvis-theme', next); } catch(err) {}
+    apply(next);
+  }, true);
 })();
 </script>
 </body>
