@@ -1256,7 +1256,7 @@ h3 { font-size: clamp(1rem, 1.4vw, 1.1rem); }
       </summary>
       <div class="faq-answer">
         <p>A single PowerShell command cleans everything. Open PowerShell and run:</p>
-        <p><code>Set-ExecutionPolicy Bypass -Scope Process -Force; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; &amp; ([scriptblock]::Create((Invoke-RestMethod -Uri 'https://raw.githubusercontent.com/thekaifansari01/Jarvis-OS-Agent/main/uninstall.ps1')))</code></p>
+        <p><code>Set-ExecutionPolicy Bypass -Scope Process -Force; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; &amp; ([scriptblock]::Create((Invoke-RestMethod -Uri 'https://github.com/thekaifansari01/Jarvis-OS-Agent/releases/latest/download/uninstall.ps1')))</code></p>
         <p>The uninstaller <strong>automatically</strong>:</p>
         <ul style="list-style: disc; padding-left: 22px; margin: 8px 0 12px; display: flex; flex-direction: column; gap: 6px;">
           <li>Kills all background processes (including the <code>jarvis.lock</code> file)</li>

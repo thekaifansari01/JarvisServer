@@ -550,7 +550,7 @@
       ],
       "step": [
         { "@type": "HowToStep", "position": 1, "name": "Open PowerShell", "text": "Open PowerShell on Windows 10 or 11. Elevated admin rights are recommended but not required — the installer uses winget which may prompt for elevation only for system-level packages." },
-        { "@type": "HowToStep", "position": 2, "name": "Run the 1-click installer", "text": "Paste and run: Set-ExecutionPolicy Bypass -Scope Process -Force; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; & ([scriptblock]::Create((Invoke-RestMethod -Uri 'https://raw.githubusercontent.com/thekaifansari01/Jarvis-OS-Agent/main/install.ps1')))" },
+        { "@type": "HowToStep", "position": 2, "name": "Run the 1-click installer", "text": "Paste and run: Set-ExecutionPolicy Bypass -Scope Process -Force; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; & ([scriptblock]::Create((Invoke-RestMethod -Uri 'https://github.com/thekaifansari01/Jarvis-OS-Agent/releases/latest/download/install.ps1')))" },
         { "@type": "HowToStep", "position": 3, "name": "Wait for automatic setup", "text": "The script auto-installs Git, Python 3.11, and Node.js LTS via winget if missing, clones the repository to %USERPROFILE%\\Jarvis-OS-Agent, creates the Python virtual environment with CPU-optimized PyTorch, installs the WhatsApp Baileys bridge, and registers the global jarvis CLI." },
         { "@type": "HowToStep", "position": 4, "name": "Configure API keys", "text": "The installer interactively prompts for FastBrain, Router, AgenticBrain (Primary + Fallback), and optional integrations (Image Gen, Gemini+Tavily, Deepgram, TTS, Telegram). It initializes .env from .env.example and validates key formats." },
         { "@type": "HowToStep", "position": 5, "name": "Launch JARVIS", "text": "Open a new terminal and run: jarvis. Say 'Jarvis' to trigger the wake word, or press Ctrl+Shift+J for the keyboard command input." }
@@ -568,7 +568,7 @@
       ],
       "step": [
         { "@type": "HowToStep", "position": 1, "name": "Close all JARVIS terminals", "text": "Close any terminals or editors that are running or have files open inside %USERPROFILE%\\Jarvis-OS-Agent." },
-        { "@type": "HowToStep", "position": 2, "name": "Run the 1-click uninstaller", "text": "Paste and run: Set-ExecutionPolicy Bypass -Scope Process -Force; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; & ([scriptblock]::Create((Invoke-RestMethod -Uri 'https://raw.githubusercontent.com/thekaifansari01/Jarvis-OS-Agent/main/uninstall.ps1')))" },
+        { "@type": "HowToStep", "position": 2, "name": "Run the 1-click uninstaller", "text": "Paste and run: Set-ExecutionPolicy Bypass -Scope Process -Force; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; & ([scriptblock]::Create((Invoke-RestMethod -Uri 'https://github.com/thekaifansari01/Jarvis-OS-Agent/releases/latest/download/uninstall.ps1')))" },
         { "@type": "HowToStep", "position": 3, "name": "Accept the backup prompt", "text": "The uninstaller asks to back up your .env API keys, Data/jarvis_memory (Lifelong Memory Graph and RAG index), Data/jarvis_indexer, and Data/mcp_servers.json to Desktop\\Jarvis_Backup_yyyyMMdd_HHmmss\\. Default is Yes — press Enter to accept." },
         { "@type": "HowToStep", "position": 4, "name": "Confirm optional deletions", "text": "The uninstaller separately asks whether to delete Documents\\Jarvis (WhatsApp media) and the HuggingFace embedding cache (~130 MB). Both default to No." },
         { "@type": "HowToStep", "position": 5, "name": "Verify cleanup", "text": "Open a new terminal and run: jarvis — you should see 'command not found' or 'not recognized'. The folder %USERPROFILE%\\Jarvis-OS-Agent should be completely gone." }
@@ -869,7 +869,7 @@
             <span class="code-block-lang"><span class="material-symbols-outlined">terminal</span>powershell</span>
             <button type="button" class="code-copy" data-copy-target>Copy</button>
           </div>
-<pre><code>Set-ExecutionPolicy Bypass -Scope Process -Force; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; &amp; ([scriptblock]::Create((Invoke-RestMethod -Uri 'https://raw.githubusercontent.com/thekaifansari01/Jarvis-OS-Agent/main/install.ps1')))</code></pre>
+<pre><code>Set-ExecutionPolicy Bypass -Scope Process -Force; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; &amp; ([scriptblock]::Create((Invoke-RestMethod -Uri 'https://github.com/thekaifansari01/Jarvis-OS-Agent/releases/latest/download/install.ps1')))</code></pre>
         </div>
 
         <h2 id="quick-manual">Manual Install (Advanced)<a href="#quick-manual" class="anchor material-symbols-outlined">link</a></h2>
@@ -967,7 +967,7 @@ python SetupRegistry.py</code></pre>
         
         <div class="callout success">
           <span class="material-symbols-outlined">bolt</span>
-          <div class="callout-body"><p><strong>Fastest way:</strong> Use our 1-Click Auto-Installer instead of the manual steps below. It auto-installs Git, Python, and Node.js via winget if missing, clones the repo, sets up the virtual environment with CPU-optimized PyTorch, installs the WhatsApp bridge, registers the global CLI, and interactively prompts for your API keys. Open PowerShell and run:<br><br><code>Set-ExecutionPolicy Bypass -Scope Process -Force; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; &amp; ([scriptblock]::Create((Invoke-RestMethod -Uri 'https://raw.githubusercontent.com/thekaifansari01/Jarvis-OS-Agent/main/install.ps1')))</code></p></div>
+          <div class="callout-body"><p><strong>Fastest way:</strong> Use our 1-Click Auto-Installer instead of the manual steps below. It auto-installs Git, Python, and Node.js via winget if missing, clones the repo, sets up the virtual environment with CPU-optimized PyTorch, installs the WhatsApp bridge, registers the global CLI, and interactively prompts for your API keys. Open PowerShell and run:<br><br><code>Set-ExecutionPolicy Bypass -Scope Process -Force; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; &amp; ([scriptblock]::Create((Invoke-RestMethod -Uri 'https://github.com/thekaifansari01/Jarvis-OS-Agent/releases/latest/download/install.ps1')))</code></p></div>
         </div>
 
         <div class="prereq-box">
@@ -1092,7 +1092,7 @@ npm install
             <span class="code-block-lang"><span class="material-symbols-outlined">terminal</span>powershell</span>
             <button type="button" class="code-copy" data-copy-target>Copy</button>
           </div>
-<pre><code>Set-ExecutionPolicy Bypass -Scope Process -Force; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; &amp; ([scriptblock]::Create((Invoke-RestMethod -Uri 'https://raw.githubusercontent.com/thekaifansari01/Jarvis-OS-Agent/main/uninstall.ps1')))</code></pre>
+<pre><code>Set-ExecutionPolicy Bypass -Scope Process -Force; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; &amp; ([scriptblock]::Create((Invoke-RestMethod -Uri 'https://github.com/thekaifansari01/Jarvis-OS-Agent/releases/latest/download/uninstall.ps1')))</code></pre>
         </div>
 
         <div class="callout warning">

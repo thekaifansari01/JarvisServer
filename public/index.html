@@ -2430,14 +2430,14 @@ h3 { font-size: clamp(1.15rem, 1.6vw, 1.4rem); letter-spacing: -0.02em; }
             <span class="material-symbols-outlined">terminal</span>
             PowerShell (1-Click Installer)
           </div>
-          <button class="copy-btn" data-copy="Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/thekaifansari01/Jarvis-OS-Agent/main/install.ps1'))">
+          <button class="copy-btn" data-copy="Set-ExecutionPolicy Bypass -Scope Process -Force; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; &amp; ([scriptblock]::Create((Invoke-RestMethod -Uri 'https://github.com/thekaifansari01/Jarvis-OS-Agent/releases/latest/download/install.ps1')))">
             <span class="material-symbols-outlined">content_copy</span>
             Copy
           </button>
         </div>
         <div class="code-body">
 <span class="cmt"># Paste this in PowerShell and press Enter</span><br/>
-<span class="kw">Set-ExecutionPolicy</span> Bypass -Scope Process -Force; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; &amp; ([scriptblock]::Create((Invoke-RestMethod -Uri 'https://raw.githubusercontent.com/thekaifansari01/Jarvis-OS-Agent/main/install.ps1')))
+<span class="kw">Set-ExecutionPolicy</span> Bypass -Scope Process -Force; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; &amp; ([scriptblock]::Create((Invoke-RestMethod -Uri 'https://github.com/thekaifansari01/Jarvis-OS-Agent/releases/latest/download/install.ps1')))
         </div>
       </div>
       <div class="install-steps">
@@ -2464,7 +2464,7 @@ h3 { font-size: clamp(1.15rem, 1.6vw, 1.4rem); letter-spacing: -0.02em; }
             <span class="material-symbols-outlined">delete_sweep</span>
             PowerShell (1-Click Uninstaller)
           </div>
-          <button class="copy-btn" data-copy="Set-ExecutionPolicy Bypass -Scope Process -Force; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; &amp; ([scriptblock]::Create((Invoke-RestMethod -Uri 'https://raw.githubusercontent.com/thekaifansari01/Jarvis-OS-Agent/main/uninstall.ps1')))">
+          <button class="copy-btn" data-copy="Set-ExecutionPolicy Bypass -Scope Process -Force; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; &amp; ([scriptblock]::Create((Invoke-RestMethod -Uri 'https://github.com/thekaifansari01/Jarvis-OS-Agent/releases/latest/download/uninstall.ps1')))">
             <span class="material-symbols-outlined">content_copy</span>
             Copy
           </button>
@@ -2472,7 +2472,7 @@ h3 { font-size: clamp(1.15rem, 1.6vw, 1.4rem); letter-spacing: -0.02em; }
         <div class="code-body">
 <span class="cmt"># Complete uninstall — stops services, cleans registry, removes PATH, deletes folders</span><br/>
 <span class="cmt"># Backs up .env, memory graph, MCP config to Desktop first (prompt — default Yes)</span><br/>
-<span class="kw">Set-ExecutionPolicy</span> Bypass -Scope Process -Force; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; &amp; ([scriptblock]::Create((Invoke-RestMethod -Uri 'https://raw.githubusercontent.com/thekaifansari01/Jarvis-OS-Agent/main/uninstall.ps1')))
+<span class="kw">Set-ExecutionPolicy</span> Bypass -Scope Process -Force; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; &amp; ([scriptblock]::Create((Invoke-RestMethod -Uri 'https://github.com/thekaifansari01/Jarvis-OS-Agent/releases/latest/download/uninstall.ps1')))
         </div>
       </div>
     </div>
