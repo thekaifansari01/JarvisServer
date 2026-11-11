@@ -1241,8 +1241,33 @@ h3 { font-size: clamp(1rem, 1.4vw, 1.1rem); }
         <span class="faq-chevron"><span class="material-symbols-outlined">expand_more</span></span>
       </summary>
       <div class="faq-answer">
-        <p>On a warm connection, the full install takes about <strong>5–10 minutes</strong>: clone, install Python deps, install Node deps for the WhatsApp bridge, register the CLI.</p>
+        <p>On a warm connection, the full install takes about <strong>5–10 minutes</strong>: the 1-click installer auto-installs Git/Python/Node via winget, clones the repo, sets up Python and Node environments, and registers the CLI.</p>
         <p>Follow the <a href="/documentation#quick-start">Quick Start guide</a> for a copy-paste walkthrough.</p>
+      </div>
+    </details>
+
+    <details class="faq-item reveal" data-cat="setup" data-search="uninstall remove delete cleanup reset factory completely wipe">
+      <summary>
+        <span class="faq-q">
+          <span class="faq-q-icon"><span class="material-symbols-outlined">delete_sweep</span></span>
+          How do I completely uninstall JARVIS?
+        </span>
+        <span class="faq-chevron"><span class="material-symbols-outlined">expand_more</span></span>
+      </summary>
+      <div class="faq-answer">
+        <p>A single PowerShell command cleans everything. Open PowerShell and run:</p>
+        <p><code>Set-ExecutionPolicy Bypass -Scope Process -Force; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; &amp; ([scriptblock]::Create((Invoke-RestMethod -Uri 'https://raw.githubusercontent.com/thekaifansari01/Jarvis-OS-Agent/main/uninstall.ps1')))</code></p>
+        <p>The uninstaller <strong>automatically</strong>:</p>
+        <ul style="list-style: disc; padding-left: 22px; margin: 8px 0 12px; display: flex; flex-direction: column; gap: 6px;">
+          <li>Kills all background processes (including the <code>jarvis.lock</code> file)</li>
+          <li>Deletes JARVIS registry keys from Windows</li>
+          <li>Removes JARVIS entries from User PATH</li>
+          <li>Deletes global <code>jarvis</code> CLI shims (<code>.cmd</code>, <code>.bat</code>, <code>.ps1</code>)</li>
+          <li>Deletes the install folder — <code>.venv</code>, <code>node_modules</code>, codebase and all</li>
+          <li>Optional: HuggingFace embedding cache (~130 MB) and <code>Documents\Jarvis</code> media</li>
+        </ul>
+        <p><strong>Backup prompt (default Yes):</strong> Before deleting, it offers to back up <code>.env</code> API keys, Lifelong Memory Graph, indexer data, and MCP config to <code>Desktop\Jarvis_Backup_yyyyMMdd_HHmmss\</code>. Press <strong>Enter</strong> to accept the backup, or <strong>n</strong> to skip (permanent delete).</p>
+        <p>Full step-by-step guide: <a href="/documentation/uninstall">Uninstall documentation</a>.</p>
       </div>
     </details>
 

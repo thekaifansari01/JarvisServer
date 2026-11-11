@@ -538,24 +538,40 @@
       "inLanguage": "en-US",
       "proficiencyLevel": "Advanced"
     },
-    {
+        {
       "@type": "HowTo",
       "@id": "https://jarvis-os-agent.vercel.app/documentation#howto-install",
       "name": "How to Install JARVIS OS Agent on Windows",
-      "description": "Install JARVIS OS Agent on Windows 10 or 11 in five steps.",
+      "description": "Install JARVIS OS Agent on Windows 10 or 11 in one PowerShell command. The installer auto-installs Git, Python, and Node.js via winget, sets up the virtual environment with CPU-optimized PyTorch, and interactively prompts for API keys.",
       "totalTime": "PT10M",
       "tool": [
         { "@type": "HowToTool", "name": "Windows 10 or 11" },
-        { "@type": "HowToTool", "name": "Python 3.10+" },
-        { "@type": "HowToTool", "name": "Node.js 18+" },
-        { "@type": "HowToTool", "name": "Git" }
+        { "@type": "HowToTool", "name": "PowerShell" }
       ],
       "step": [
-        { "@type": "HowToStep", "position": 1, "name": "Clone the repository", "text": "Run git clone https://github.com/thekaifansari01/Jarvis-OS-Agent.git and cd into the folder." },
-        { "@type": "HowToStep", "position": 2, "name": "Create virtual environment", "text": "Run python -m venv .venv and activate with .\\.venv\\Scripts\\Activate.ps1." },
-        { "@type": "HowToStep", "position": 3, "name": "Install Python packages", "text": "Run pip install --upgrade pip, pip install -r requirements.txt, and pip install mcp." },
-        { "@type": "HowToStep", "position": 4, "name": "Install WhatsApp bridge", "text": "Run npm install inside tools/Messanger/whatsapp/BaileysServer." },
-        { "@type": "HowToStep", "position": 5, "name": "Register global CLI", "text": "Run python SetupRegistry.py to make the jarvis command available system-wide." }
+        { "@type": "HowToStep", "position": 1, "name": "Open PowerShell", "text": "Open PowerShell on Windows 10 or 11. Elevated admin rights are recommended but not required — the installer uses winget which may prompt for elevation only for system-level packages." },
+        { "@type": "HowToStep", "position": 2, "name": "Run the 1-click installer", "text": "Paste and run: Set-ExecutionPolicy Bypass -Scope Process -Force; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; & ([scriptblock]::Create((Invoke-RestMethod -Uri 'https://raw.githubusercontent.com/thekaifansari01/Jarvis-OS-Agent/main/install.ps1')))" },
+        { "@type": "HowToStep", "position": 3, "name": "Wait for automatic setup", "text": "The script auto-installs Git, Python 3.11, and Node.js LTS via winget if missing, clones the repository to %USERPROFILE%\\Jarvis-OS-Agent, creates the Python virtual environment with CPU-optimized PyTorch, installs the WhatsApp Baileys bridge, and registers the global jarvis CLI." },
+        { "@type": "HowToStep", "position": 4, "name": "Configure API keys", "text": "The installer interactively prompts for FastBrain, Router, AgenticBrain (Primary + Fallback), and optional integrations (Image Gen, Gemini+Tavily, Deepgram, TTS, Telegram). It initializes .env from .env.example and validates key formats." },
+        { "@type": "HowToStep", "position": 5, "name": "Launch JARVIS", "text": "Open a new terminal and run: jarvis. Say 'Jarvis' to trigger the wake word, or press Ctrl+Shift+J for the keyboard command input." }
+      ]
+    },
+    {
+      "@type": "HowTo",
+      "@id": "https://jarvis-os-agent.vercel.app/documentation#howto-uninstall",
+      "name": "How to Uninstall JARVIS OS Agent on Windows",
+      "description": "Completely remove JARVIS OS Agent with a single PowerShell command. The uninstaller stops services, cleans the registry and PATH, removes the global CLI, deletes install folders, and prompts to back up your .env, memory graph, and MCP config first.",
+      "totalTime": "PT2M",
+      "tool": [
+        { "@type": "HowToTool", "name": "Windows 10 or 11" },
+        { "@type": "HowToTool", "name": "PowerShell" }
+      ],
+      "step": [
+        { "@type": "HowToStep", "position": 1, "name": "Close all JARVIS terminals", "text": "Close any terminals or editors that are running or have files open inside %USERPROFILE%\\Jarvis-OS-Agent." },
+        { "@type": "HowToStep", "position": 2, "name": "Run the 1-click uninstaller", "text": "Paste and run: Set-ExecutionPolicy Bypass -Scope Process -Force; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; & ([scriptblock]::Create((Invoke-RestMethod -Uri 'https://raw.githubusercontent.com/thekaifansari01/Jarvis-OS-Agent/main/uninstall.ps1')))" },
+        { "@type": "HowToStep", "position": 3, "name": "Accept the backup prompt", "text": "The uninstaller asks to back up your .env API keys, Data/jarvis_memory (Lifelong Memory Graph and RAG index), Data/jarvis_indexer, and Data/mcp_servers.json to Desktop\\Jarvis_Backup_yyyyMMdd_HHmmss\\. Default is Yes — press Enter to accept." },
+        { "@type": "HowToStep", "position": 4, "name": "Confirm optional deletions", "text": "The uninstaller separately asks whether to delete Documents\\Jarvis (WhatsApp media) and the HuggingFace embedding cache (~130 MB). Both default to No." },
+        { "@type": "HowToStep", "position": 5, "name": "Verify cleanup", "text": "Open a new terminal and run: jarvis — you should see 'command not found' or 'not recognized'. The folder %USERPROFILE%\\Jarvis-OS-Agent should be completely gone." }
       ]
     },
     {
@@ -569,7 +585,8 @@
         { "@type": "Question", "name": "Does RAG or memory need API keys?", "acceptedAnswer": { "@type": "Answer", "text": "No. Both the LTM semantic graph and RAG index use the local BAAI/bge-small-en-v1.5 model at 33M parameters. Embeddings run on CPU with zero cloud calls." } },
         { "@type": "Question", "name": "Which LLMs does JARVIS support?", "acceptedAnswer": { "@type": "Answer", "text": "Any OpenAI-compatible endpoint. Groq, Regolo, OpenRouter, Gemini, Ollama, LM Studio, vLLM, or any OpenAI-schema API. Configure PRIMARY_ and FALLBACK_ providers and JARVIS auto-routes on failure." } },
         { "@type": "Question", "name": "Can I add capabilities without editing code?", "acceptedAnswer": { "@type": "Answer", "text": "Yes via MCP. Add a JSON entry to Data/mcp_servers.json or run jarvis mcp add and the server tools appear in the Agentic Brain automatically as mcp__server__tool with hot-reload." } },
-        { "@type": "Question", "name": "How is this different from ChatGPT or Claude?", "acceptedAnswer": { "@type": "Answer", "text": "Those are chat interfaces. JARVIS is an agent. It takes actions on your actual system, remembers you across months, corrects itself mid-task, and reaches out proactively." } }
+        { "@type": "Question", "name": "How is this different from ChatGPT or Claude?", "acceptedAnswer": { "@type": "Answer", "text": "Those are chat interfaces. JARVIS is an agent. It takes actions on your actual system, remembers you across months, corrects itself mid-task, and reaches out proactively." } },
+        { "@type": "Question", "name": "How do I uninstall JARVIS?", "acceptedAnswer": { "@type": "Answer", "text": "Single PowerShell command. The uninstaller stops all background services, cleans the Windows registry and PATH, removes the global CLI, and deletes the install folder including .venv, node_modules, and cached embedding models. It automatically prompts to back up your .env API keys, Lifelong Memory Graph, and MCP config to the Desktop first (default Yes). Full guide at /documentation/uninstall." } }
       ]
     },
     {
@@ -649,6 +666,7 @@
       <li><a href="/documentation/introduction" data-page="introduction"><span class="material-symbols-outlined">home</span>Introduction</a></li>
       <li><a href="/documentation/quick-start" data-page="quick-start"><span class="material-symbols-outlined">bolt</span>Quick Start</a></li>
       <li><a href="/documentation/installation" data-page="installation"><span class="material-symbols-outlined">download</span>Installation</a></li>
+      <li><a href="/documentation/uninstall" data-page="uninstall"><span class="material-symbols-outlined">delete_sweep</span>Uninstall</a></li>
     </ul>
   </div>
   <div class="sidebar-group" data-group="configuration">
@@ -851,7 +869,7 @@
             <span class="code-block-lang"><span class="material-symbols-outlined">terminal</span>powershell</span>
             <button type="button" class="code-copy" data-copy-target>Copy</button>
           </div>
-<pre><code>Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/thekaifansari01/Jarvis-OS-Agent/main/install.ps1'))</code></pre>
+<pre><code>Set-ExecutionPolicy Bypass -Scope Process -Force; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; &amp; ([scriptblock]::Create((Invoke-RestMethod -Uri 'https://raw.githubusercontent.com/thekaifansari01/Jarvis-OS-Agent/main/install.ps1')))</code></pre>
         </div>
 
         <h2 id="quick-manual">Manual Install (Advanced)<a href="#quick-manual" class="anchor material-symbols-outlined">link</a></h2>
@@ -949,7 +967,7 @@ python SetupRegistry.py</code></pre>
         
         <div class="callout success">
           <span class="material-symbols-outlined">bolt</span>
-          <div class="callout-body"><p><strong>Fastest way:</strong> Use our 1-Click Auto-Installer instead of the manual steps below. Open PowerShell and run:<br><br><code>Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/thekaifansari01/Jarvis-OS-Agent/main/install.ps1'))</code></p></div>
+          <div class="callout-body"><p><strong>Fastest way:</strong> Use our 1-Click Auto-Installer instead of the manual steps below. It auto-installs Git, Python, and Node.js via winget if missing, clones the repo, sets up the virtual environment with CPU-optimized PyTorch, installs the WhatsApp bridge, registers the global CLI, and interactively prompts for your API keys. Open PowerShell and run:<br><br><code>Set-ExecutionPolicy Bypass -Scope Process -Force; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; &amp; ([scriptblock]::Create((Invoke-RestMethod -Uri 'https://raw.githubusercontent.com/thekaifansari01/Jarvis-OS-Agent/main/install.ps1')))</code></p></div>
         </div>
 
         <div class="prereq-box">
@@ -1030,6 +1048,120 @@ npm install
         <h2 id="install-mcp">6. Enable MCP (optional)<a href="#install-mcp" class="anchor material-symbols-outlined">link</a></h2>
         <p>To add external tools via the Model Context Protocol, create <code>Data/mcp_servers.json</code>. See the <a href="#mcp">MCP section</a> for full details.</p>
         <div class="feedback-bar" data-feedback="installation">
+          <span class="feedback-label">Was this page helpful?</span>
+          <button type="button" class="feedback-btn" data-value="yes"><span class="material-symbols-outlined">thumb_up</span><span>Yes</span></button>
+          <button type="button" class="feedback-btn" data-value="no"><span class="material-symbols-outlined">thumb_down</span><span>No</span></button>
+        </div>
+        <div class="pager" data-pager></div>
+      </section>
+
+      <section class="doc-page" data-page="uninstall" data-title="Uninstall" data-updated="2026-11-11">
+        <nav class="page-breadcrumb" aria-label="Breadcrumb">
+          <div class="breadcrumb-trail">
+            <span class="breadcrumb-group">Getting Started</span>
+            <span class="breadcrumb-sep">›</span>
+            <strong class="breadcrumb-current">Uninstall</strong>
+          </div>
+          <div class="breadcrumb-actions">
+            <span class="page-read" data-read></span>
+            <button type="button" class="copy-page-btn" data-copy-page="uninstall">
+              <span class="material-symbols-outlined">content_copy</span>
+              <span class="copy-page-label">Copy as Markdown</span>
+            </button>
+          </div>
+        </nav>
+        <h1 id="uninstall">Uninstall</h1>
+        <p class="lead">Complete removal of JARVIS with a single PowerShell command. The uninstaller stops all background services, cleans the Windows registry and PATH, removes the global CLI, and deletes the install folder. It also prompts to back up your <code>.env</code> API keys, Lifelong Memory Graph, and MCP config to the Desktop <em>before</em> deleting anything.</p>
+
+        <div class="prereq-box">
+          <span class="material-symbols-outlined">checklist</span>
+          <div class="prereq-body">
+            <div class="prereq-label">Before you start</div>
+            <ul class="prereq-list">
+              <li><strong>PowerShell</strong> (elevated not required, but recommended)</li>
+              <li><strong>Close all terminals</strong> running JARVIS</li>
+              <li><strong>Backup decision ready</strong> — uninstaller will ask</li>
+            </ul>
+          </div>
+        </div>
+
+        <h2 id="uninstall-run">Run the uninstaller<a href="#uninstall-run" class="anchor material-symbols-outlined">link</a></h2>
+        <p>Open PowerShell and paste this single command. The script downloads fresh from the main branch and runs in-process:</p>
+        <div class="code-block">
+          <div class="code-block-header">
+            <span class="code-block-lang"><span class="material-symbols-outlined">terminal</span>powershell</span>
+            <button type="button" class="code-copy" data-copy-target>Copy</button>
+          </div>
+<pre><code>Set-ExecutionPolicy Bypass -Scope Process -Force; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; &amp; ([scriptblock]::Create((Invoke-RestMethod -Uri 'https://raw.githubusercontent.com/thekaifansari01/Jarvis-OS-Agent/main/uninstall.ps1')))</code></pre>
+        </div>
+
+        <div class="callout warning">
+          <span class="material-symbols-outlined">warning</span>
+          <div class="callout-body"><p><strong>Backup prompt is default Yes.</strong> When the uninstaller finds <code>.env</code>, <code>Data/jarvis_memory/</code>, or <code>Data/mcp_servers.json</code>, it will ask to back them up to <code>Desktop\Jarvis_Backup_yyyyMMdd_HHmmss\</code>. Press <strong>Enter</strong> to accept the backup, or <strong>n</strong> to skip (data will be permanently deleted).</p></div>
+        </div>
+
+        <h2 id="uninstall-what-removes">What gets removed<a href="#uninstall-what-removes" class="anchor material-symbols-outlined">link</a></h2>
+        <ul class="bullets">
+          <li><strong>Running processes</strong> — kills all JARVIS-related Python/Node processes, plus the <code>jarvis.lock</code> file</li>
+          <li><strong>User PATH entries</strong> — removes <code>~/.local/bin</code>, WindowsApps shims, and any entry containing <code>jarvis-os-agent</code></li>
+          <li><strong>CLI shims</strong> — <code>jarvis.cmd</code>, <code>jarvis.bat</code>, <code>jarvis.ps1</code> from common install paths</li>
+          <li><strong>Registry keys</strong> — <code>App Paths\jarvis.*</code> and <code>HKCU:\Software\Classes\jarvis</code></li>
+          <li><strong>Install folder</strong> — <code>%USERPROFILE%\Jarvis-OS-Agent</code> including <code>.venv</code>, <code>node_modules</code>, and codebase</li>
+          <li><strong>HuggingFace cache</strong> — <code>~/.cache/huggingface/hub/models--BAAI--bge-small-en-v1.5</code> (~130 MB, optional prompt)</li>
+          <li><strong>Documents media</strong> — <code>Documents\Jarvis</code> (WhatsApp downloads, shared files) — optional prompt</li>
+        </ul>
+
+        <h2 id="uninstall-what-preserves">What gets backed up first<a href="#uninstall-what-preserves" class="anchor material-symbols-outlined">link</a></h2>
+        <div class="callout success">
+          <span class="material-symbols-outlined">save</span>
+          <div class="callout-body"><p>Before deleting the install folder, the uninstaller prompts to copy these to <code>Desktop\Jarvis_Backup_yyyyMMdd_HHmmss\</code>:</p></div>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead><tr><th>File</th><th>What it holds</th></tr></thead>
+            <tbody>
+              <tr><td><code>.env</code></td><td>All your API keys and provider config</td></tr>
+              <tr><td><code>Data\jarvis_memory\</code></td><td>Lifelong memory graph, behavioral patterns, RAG index, chat history</td></tr>
+              <tr><td><code>Data\jarvis_indexer\</code></td><td>Indexer folder list, filters, and settings</td></tr>
+              <tr><td><code>Data\mcp_servers.json</code></td><td>MCP server configs (including any tokens/keys)</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="callout info">
+          <span class="material-symbols-outlined">info</span>
+          <div class="callout-body"><p><strong>Encrypted tokens are machine-bound.</strong> Session tokens (<code>sessions/*.enc</code>) use Windows DPAPI and are <em>not</em> backed up — they won't work on a different machine anyway. You'll need to re-authenticate via <code>jarvis login --all</code> after a fresh install on another PC.</p></div>
+        </div>
+
+        <h2 id="uninstall-sequence">What happens step by step<a href="#uninstall-sequence" class="anchor material-symbols-outlined">link</a></h2>
+        <ol class="steps">
+          <li><strong>Stopping processes</strong> — scans <code>Win32_Process</code> for anything with executable path or command line inside <code>%USERPROFILE%\Jarvis-OS-Agent</code> and kills them (2s wait for handles to release).</li>
+          <li><strong>Backup prompt</strong> — if <code>.env</code>, memory, or MCP config exists, asks to back up to Desktop (default Yes).</li>
+          <li><strong>Registry + PATH cleanup</strong> — removes User PATH entries matching JARVIS folders or <code>jarvis-os-agent</code>, deletes CLI shims, and cleans <code>App Paths</code> + <code>Classes\jarvis</code> registry keys.</li>
+          <li><strong>Core folder deletion</strong> — uses <code>Remove-Item -Recurse -Force</code> with read-only bit clearing. Falls back to <code>cmd /c rmdir /s /q</code> for stubborn locked files.</li>
+          <li><strong>External media prompt</strong> — asks whether to also delete <code>Documents\Jarvis</code> (default No).</li>
+          <li><strong>Embedding cache prompt</strong> — asks to remove <code>~/.cache/huggingface/hub/models--BAAI--bge-small-en-v1.5</code> (~130 MB, default No).</li>
+          <li><strong>Success banner</strong> — "J.A.R.V.I.S. OS Agent Uninstalled Successfully!"</li>
+        </ol>
+
+        <h2 id="uninstall-trouble">Troubleshooting<a href="#uninstall-trouble" class="anchor material-symbols-outlined">link</a></h2>
+        <details class="faq">
+          <summary>Some files in <code>Jarvis-OS-Agent</code> couldn't be deleted<span class="material-symbols-outlined">add</span></summary>
+          <div class="faq-body">A process is still holding the files (usually <code>python.exe</code> or <code>node.exe</code>). Close all terminals and editors (VS Code, Notepad++) that have files open inside that folder. Then manually delete <code>%USERPROFILE%\Jarvis-OS-Agent</code> via File Explorer — the uninstaller already cleaned everything else.</div>
+        </details>
+        <details class="faq">
+          <summary><code>jarvis</code> command still works after uninstall<span class="material-symbols-outlined">add</span></summary>
+          <div class="faq-body">Open a <strong>new</strong> terminal — the old one still has the stale PATH in memory. If it still runs, check <code>Get-Command jarvis</code> to find the shim location and delete it manually.</div>
+        </details>
+        <details class="faq">
+          <summary>Windows Defender blocked the script<span class="material-symbols-outlined">add</span></summary>
+          <div class="faq-body">Antivirus flags <code>Invoke-RestMethod</code> + <code>scriptblock</code> patterns sometimes. Add PowerShell to the exclusion list temporarily, or download the raw script manually and run it with <code>&amp; .\uninstall.ps1</code>.</div>
+        </details>
+        <details class="faq">
+          <summary>I skipped the backup by mistake<span class="material-symbols-outlined">add</span></summary>
+          <div class="faq-body">If the install folder is already gone, your <code>.env</code> and memory graph are unrecoverable — they were stored <em>inside</em> that folder. Next time, accept the backup prompt (default Yes) before proceeding.</div>
+        </details>
+
+        <div class="feedback-bar" data-feedback="uninstall">
           <span class="feedback-label">Was this page helpful?</span>
           <button type="button" class="feedback-btn" data-value="yes"><span class="material-symbols-outlined">thumb_up</span><span>Yes</span></button>
           <button type="button" class="feedback-btn" data-value="no"><span class="material-symbols-outlined">thumb_down</span><span>No</span></button>
@@ -3413,6 +3545,10 @@ pip install -r requirements.txt</code></pre>
           <summary>How is this different from ChatGPT or Claude?<span class="material-symbols-outlined">add</span></summary>
           <div class="faq-body">Those are chat interfaces. JARVIS is an <em>agent</em> — it takes actions on your actual system, remembers you across months, corrects itself mid-task, and reaches out proactively. It doesn't just answer; it does.</div>
         </details>
+        <details class="faq">
+          <summary>How do I uninstall JARVIS?<span class="material-symbols-outlined">add</span></summary>
+          <div class="faq-body">Single PowerShell command (one-liner). It stops all background services, cleans the registry and PATH, removes the global CLI, and deletes the install folder. It also prompts to back up your <code>.env</code>, memory graph, and MCP config to Desktop first. See the <a href="#uninstall">Uninstall</a> page for the exact command and step-by-step walkthrough.</div>
+        </details>
         <div class="feedback-bar" data-feedback="faq">
           <span class="feedback-label">Was this page helpful?</span>
           <button type="button" class="feedback-btn" data-value="yes"><span class="material-symbols-outlined">thumb_up</span><span>Yes</span></button>
@@ -3718,6 +3854,8 @@ pip install -r requirements.txt</code></pre>
 
         <h3>Added</h3>
         <ul class="bullets">
+          <li>One-command PowerShell installer (<code>install.ps1</code>) — auto-installs Git, Python, and Node.js via winget, sets up the virtual environment with CPU-optimized PyTorch, installs the WhatsApp Baileys bridge, and interactively prompts for API keys</li>
+          <li>One-command PowerShell uninstaller (<code>uninstall.ps1</code>) — stops services, cleans registry and PATH, removes the global CLI, and deletes folders, with automatic Desktop backup prompt for <code>.env</code>, memory graph, and MCP config</li>
           <li>Dual-brain routing (FastBrain + AgenticBrain)</li>
           <li>Live mid-execution correction</li>
           <li>5-tier memory (Episodic, Semantic, RAG, Ephemeral, Behavioral)</li>
@@ -4340,7 +4478,7 @@ TOOL_HANDLERS = {
 <pre><code>{
   "id": "bp_2026_03_15_01",
   "type": "routine",
-  "raw_statement": "Main roz subah 8 baje gym jaata hoon",
+  "raw_statement": "I go to the gym at 8 AM every morning",
   "meaning": "User typically goes to the gym at 8 AM daily",
   "trigger_contexts": ["morning", "fitness", "schedule"],
   "confidence": 0.87,

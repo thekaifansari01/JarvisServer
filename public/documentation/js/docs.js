@@ -5,7 +5,7 @@
   const scrollBehavior = prefersReducedMotion ? 'auto' : 'smooth';
 
   const PAGES = [
-    'introduction', 'quick-start', 'installation', 'environment', 'voice',
+    'introduction', 'quick-start', 'installation', 'uninstall', 'environment', 'voice',
     'memory', 'mcp', 'android', 'telegram', 'cli', 'tools', 'architecture',
     'agent-panel', 'typing-popup', 'stt-popup', 'input-popup',
     'ui-comparison', 'lifecycle-shutdown', 'troubleshooting', 'faq',
@@ -17,6 +17,7 @@
     'introduction': 'Introduction',
     'quick-start': 'Quick Start',
     'installation': 'Installation',
+    'uninstall': 'Uninstall',
     'environment': 'Environment Configuration',
     'voice': 'Voice Setup',
     'memory': 'Memory & RAG',

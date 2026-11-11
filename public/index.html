@@ -190,6 +190,14 @@
         "@type": "Answer",
         "text": "Those are chat interfaces. JARVIS is an agent — it takes actions on your actual system, remembers you across months, corrects itself mid-task, and reaches out proactively. It doesn't just answer; it does."
       }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I uninstall JARVIS?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "One PowerShell command. The uninstaller stops all background services, cleans the Windows registry, removes PATH entries and CLI shims, and deletes the install folder including .venv, node_modules, and cached embedding models. It automatically prompts to back up your .env API keys, Lifelong Memory Graph, and MCP config to the Desktop first (default Yes). Full guide at /documentation/uninstall."
+      }
     }
   ]
 }
@@ -2429,14 +2437,14 @@ h3 { font-size: clamp(1.15rem, 1.6vw, 1.4rem); letter-spacing: -0.02em; }
         </div>
         <div class="code-body">
 <span class="cmt"># Paste this in PowerShell and press Enter</span><br/>
-<span class="kw">Set-ExecutionPolicy</span> Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/thekaifansari01/Jarvis-OS-Agent/main/install.ps1'))
+<span class="kw">Set-ExecutionPolicy</span> Bypass -Scope Process -Force; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; &amp; ([scriptblock]::Create((Invoke-RestMethod -Uri 'https://raw.githubusercontent.com/thekaifansari01/Jarvis-OS-Agent/main/install.ps1')))
         </div>
       </div>
       <div class="install-steps">
         <div class="install-step reveal">
           <div class="install-step-num">01 / CONFIG</div>
-          <h4>Copy <code>.env.example</code></h4>
-          <p>Add API keys for your LLM provider. Works with Groq, Regolo, OpenRouter, Ollama, LM Studio, or any OpenAI-compatible endpoint.</p>
+          <h4>API keys prompt</h4>
+          <p>The installer creates <code>.env</code> automatically and interactively prompts for API keys. Works with Groq, Regolo, OpenRouter, Ollama, LM Studio, or any OpenAI-compatible endpoint.</p>
         </div>
         <div class="install-step reveal reveal-delay-1">
           <div class="install-step-num">02 / OPTIONAL</div>
@@ -2447,6 +2455,24 @@ h3 { font-size: clamp(1.15rem, 1.6vw, 1.4rem); letter-spacing: -0.02em; }
           <div class="install-step-num">03 / READY</div>
           <h4>Say <span style="color: var(--accent);">"Jarvis"</span></h4>
           <p>Wake word is on-device. Say it, and start talking. Or hit <code>Ctrl+Shift+J</code> for text mode.</p>
+        </div>
+      </div>
+
+      <div class="code-block reveal" style="margin-top: 24px;">
+        <div class="code-header">
+          <div class="code-header-left">
+            <span class="material-symbols-outlined">delete_sweep</span>
+            PowerShell (1-Click Uninstaller)
+          </div>
+          <button class="copy-btn" data-copy="Set-ExecutionPolicy Bypass -Scope Process -Force; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; &amp; ([scriptblock]::Create((Invoke-RestMethod -Uri 'https://raw.githubusercontent.com/thekaifansari01/Jarvis-OS-Agent/main/uninstall.ps1')))">
+            <span class="material-symbols-outlined">content_copy</span>
+            Copy
+          </button>
+        </div>
+        <div class="code-body">
+<span class="cmt"># Complete uninstall — stops services, cleans registry, removes PATH, deletes folders</span><br/>
+<span class="cmt"># Backs up .env, memory graph, MCP config to Desktop first (prompt — default Yes)</span><br/>
+<span class="kw">Set-ExecutionPolicy</span> Bypass -Scope Process -Force; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; &amp; ([scriptblock]::Create((Invoke-RestMethod -Uri 'https://raw.githubusercontent.com/thekaifansari01/Jarvis-OS-Agent/main/uninstall.ps1')))
         </div>
       </div>
     </div>
@@ -2513,6 +2539,10 @@ h3 { font-size: clamp(1.15rem, 1.6vw, 1.4rem); letter-spacing: -0.02em; }
       <details class="faq-item reveal">
         <summary>How is this different from ChatGPT or Claude?<span class="faq-icon"><span class="material-symbols-outlined">add</span></span></summary>
         <div class="faq-answer">Those are chat interfaces. JARVIS is an <em>agent</em> — it takes actions on your actual system, remembers you across months, corrects itself mid-task, and reaches out proactively. It doesn't just answer; it does.</div>
+      </details>
+      <details class="faq-item reveal">
+        <summary>How do I uninstall JARVIS?<span class="faq-icon"><span class="material-symbols-outlined">add</span></span></summary>
+        <div class="faq-answer">A single PowerShell command. It stops all background services, cleans the registry, removes PATH entries, and deletes the install folder. The uninstaller first prompts to <strong>back up</strong> your <code>.env</code>, Lifelong Memory Graph, and MCP config to the Desktop (default Yes). See the <a href="/documentation/uninstall">Uninstall guide</a> for full details.</div>
       </details>
     </div>
     <div class="faq-footer">
@@ -2592,6 +2622,7 @@ h3 { font-size: clamp(1.15rem, 1.6vw, 1.4rem); letter-spacing: -0.02em; }
         <h5>Resources</h5>
         <ul>
           <li><a href="/documentation">Documentation</a></li>
+          <li><a href="/documentation/uninstall">Uninstall</a></li>
           <li><a href="/documentation#troubleshooting">Troubleshooting</a></li>
           <li><a href="/documentation#lifecycle-shutdown">Lifecycle &amp; Shutdown</a></li>
           <li><a href="/faq">FAQ</a></li>
