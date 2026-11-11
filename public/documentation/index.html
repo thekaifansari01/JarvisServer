@@ -844,8 +844,18 @@
             </tbody>
           </table>
         </div>
-        <h2 id="quick-install">One-block install<a href="#quick-install" class="anchor material-symbols-outlined">link</a></h2>
-        <p>Run this from an elevated PowerShell terminal:</p>
+        <h2 id="quick-install">1-Click Install (Recommended)<a href="#quick-install" class="anchor material-symbols-outlined">link</a></h2>
+        <p>Run this single command from an elevated PowerShell terminal. The script will automatically clone the repo, set up Python and Node environments (with CPU-optimized PyTorch), and register the CLI:</p>
+        <div class="code-block">
+          <div class="code-block-header">
+            <span class="code-block-lang"><span class="material-symbols-outlined">terminal</span>powershell</span>
+            <button type="button" class="code-copy" data-copy-target>Copy</button>
+          </div>
+<pre><code>Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/thekaifansari01/Jarvis-OS-Agent/main/install.ps1'))</code></pre>
+        </div>
+
+        <h2 id="quick-manual">Manual Install (Advanced)<a href="#quick-manual" class="anchor material-symbols-outlined">link</a></h2>
+        <p>If you prefer to set up everything manually, run these commands block-by-block:</p>
         <div class="code-tabs" data-tabs>
           <div class="code-tabs-header">
             <button type="button" class="code-tab active" data-tab="0">PowerShell</button>
@@ -936,6 +946,12 @@ python SetupRegistry.py</code></pre>
         </nav>
         <h1 id="installation">Installation</h1>
         <p class="lead">Detailed walkthrough for a clean install. Skip this if you completed Quick Start successfully.</p>
+        
+        <div class="callout success">
+          <span class="material-symbols-outlined">bolt</span>
+          <div class="callout-body"><p><strong>Fastest way:</strong> Use our 1-Click Auto-Installer instead of the manual steps below. Open PowerShell and run:<br><br><code>Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/thekaifansari01/Jarvis-OS-Agent/main/install.ps1'))</code></p></div>
+        </div>
+
         <div class="prereq-box">
           <span class="material-symbols-outlined">checklist</span>
           <div class="prereq-body">

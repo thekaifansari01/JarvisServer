@@ -2412,46 +2412,24 @@ h3 { font-size: clamp(1.15rem, 1.6vw, 1.4rem); letter-spacing: -0.02em; }
   <div class="container">
     <div class="section-head reveal">
       <span class="eyebrow">Get running</span>
-      <h2>Up and running in <span class="gradient-text">five commands.</span></h2>
-      <p>Windows 10/11 · Python 3.10+ · Node 18+. One-block setup. Zero cloud setup required for local mode.</p>
+      <h2>Up and running in <span class="gradient-text">one command.</span></h2>
+      <p>Windows 10/11. Sit back, relax, and let the automated installer set everything up for you.</p>
     </div>
     <div class="install-wrap">
       <div class="code-block reveal">
         <div class="code-header">
           <div class="code-header-left">
             <span class="material-symbols-outlined">terminal</span>
-            PowerShell
+            PowerShell (1-Click Installer)
           </div>
-          <button class="copy-btn" data-copy="git clone https://github.com/thekaifansari01/Jarvis-OS-Agent.git
-cd Jarvis-OS-Agent
-python -m venv .venv
-.\.venv\Scripts\Activate.ps1
-pip install -r requirements.txt
-pip install mcp
-cd tools/Messanger/whatsapp/BaileysServer && npm install && cd ../../../..
-python SetupRegistry.py">
+          <button class="copy-btn" data-copy="Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/thekaifansari01/Jarvis-OS-Agent/main/install.ps1'))">
             <span class="material-symbols-outlined">content_copy</span>
             Copy
           </button>
         </div>
         <div class="code-body">
-<span class="cmt"># 1. Clone</span><br/>
-<span class="kw">git clone</span> https://github.com/thekaifansari01/Jarvis-OS-Agent.git<br/>
-<span class="kw">cd</span> Jarvis-OS-Agent<br/><br/>
-<span class="cmt"># 2. Virtual env</span><br/>
-<span class="kw">python -m venv</span> .venv<br/>
-<span class="kw">.\.venv\Scripts\Activate.ps1</span><br/><br/>
-<span class="cmt"># 3. Install</span><br/>
-<span class="kw">pip install</span> -r requirements.txt<br/>
-<span class="kw">pip install</span> mcp<br/><br/>
-<span class="cmt"># 4. WhatsApp bridge</span><br/>
-<span class="kw">cd</span> tools/Messanger/whatsapp/BaileysServer<br/>
-<span class="kw">npm install</span><br/>
-<span class="kw">cd</span> ../../../..<br/><br/>
-<span class="cmt"># 5. Register global CLI</span><br/>
-<span class="kw">python SetupRegistry.py</span><br/><br/>
-<span class="cmt"># 6. Launch</span><br/>
-<span class="fn">jarvis</span>
+<span class="cmt"># Paste this in PowerShell and press Enter</span><br/>
+<span class="kw">Set-ExecutionPolicy</span> Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/thekaifansari01/Jarvis-OS-Agent/main/install.ps1'))
         </div>
       </div>
       <div class="install-steps">
