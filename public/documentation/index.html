@@ -14,7 +14,10 @@
 <script>
 (function(){
   try {
-    var t = localStorage.getItem('jarvis-theme') || 'dark';
+    var t = localStorage.getItem('jarvis-theme');
+    if (!t) {
+      t = (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) ? 'light' : 'dark';
+    }
     document.documentElement.dataset.jarvisTheme = t;
     if (t === 'light') {
       var m = document.querySelector('meta[name="theme-color"]');
@@ -518,7 +521,7 @@
       "headline": "Custom Prompt Guide",
       "description": "How to customize JARVIS personality, tone, language, and behavioral rules by editing SYSTEM_PROMPT and AGENT_SYSTEM_PROMPT in core/brain/Processor/Prompts.py. Includes what not to change.",
       "articleSection": "Guides",
-      "position": 24,
+      "position": 25,
       "isPartOf": { "@id": "https://jarvis-os-agent.vercel.app/documentation#webpage" },
       "author": { "@id": "https://jarvis-os-agent.vercel.app/#organization" },
       "datePublished": "2026-11-01",
@@ -532,7 +535,7 @@
       "headline": "Bring Your Own Tool",
       "description": "Two ways to extend JARVIS: MCP servers via Data/mcp_servers.json or jarvis mcp CLI with hot-reload, or native tools by editing get_native_tools() in Prompts.py and handlers in executor.py.",
       "articleSection": "Guides",
-      "position": 25,
+      "position": 26,
       "isPartOf": { "@id": "https://jarvis-os-agent.vercel.app/documentation#webpage" },
       "author": { "@id": "https://jarvis-os-agent.vercel.app/#organization" },
       "datePublished": "2026-11-01",
@@ -546,7 +549,7 @@
       "headline": "Data Model Reference",
       "description": "Complete JARVIS data storage reference: jarvis_memory, lifetime graph schema, behavioral patterns JSONL, RAG chunk metadata, rolling history, backup and restore commands, and migration between machines.",
       "articleSection": "Guides",
-      "position": 26,
+      "position": 27,
       "isPartOf": { "@id": "https://jarvis-os-agent.vercel.app/documentation#webpage" },
       "author": { "@id": "https://jarvis-os-agent.vercel.app/#organization" },
       "datePublished": "2026-11-01",
@@ -554,7 +557,7 @@
       "inLanguage": "en-US",
       "proficiencyLevel": "Advanced"
     },
-        {
+    {
       "@type": "HowTo",
       "@id": "https://jarvis-os-agent.vercel.app/documentation#howto-install",
       "name": "How to Install JARVIS OS Agent on Windows",
@@ -2156,7 +2159,6 @@ class node_proactive,node_events,node_channels toneIndigo</pre>
             <pre><code></code></pre>
           </div>
         </div>
-        <figure class="screenshot-frame" style="display:none"></figure>
         <p>Colors follow the code-level architecture: <strong>runtime</strong> in blue, <strong>memory</strong> in amber, <strong>voice and interfaces</strong> in mint, <strong>tools and integrations</strong> in rose, <strong>proactive services</strong> in indigo. Click any node to open its file on GitHub.</p>
         <div class="feedback-bar" data-feedback="architecture">
           <span class="feedback-label">Was this page helpful?</span>
@@ -2189,7 +2191,7 @@ class node_proactive,node_events,node_channels toneIndigo</pre>
             <span class="ui-hero-badge"><span class="material-symbols-outlined">verified_user</span>HITL Gates</span>
             <span class="ui-hero-badge"><span class="material-symbols-outlined">palette</span>16 Orb Modes</span>
           </div>
-          <h1>The Agent Panel</h1>
+          <div class="ui-hero-title">The Agent Panel</div>
           <p>The Agent Panel is JARVIS's floating command center — a premium always-on-top overlay that shows exactly what the agent is thinking, which tool it's running, how many tokens it has consumed, and when it needs your permission before doing something irreversible. It is not a chat window. It is a live observability layer over the autonomous loop.</p>
         </div>
         <div class="ui-feature-grid">
@@ -2551,7 +2553,7 @@ class node_proactive,node_events,node_channels toneIndigo</pre>
             <span class="ui-hero-badge"><span class="material-symbols-outlined">graphic_eq</span>TTS Word Sync</span>
             <span class="ui-hero-badge"><span class="material-symbols-outlined">image</span>Async Previews</span>
           </div>
-          <h1>The Typing Popup</h1>
+          <div class="ui-hero-title">The Typing Popup</div>
           <p>The Typing Popup is JARVIS's response surface — the premium floating window where the agent's final answer streams in character-by-character, with live markdown rendering, syntax-highlighted code blocks, async image previews, and word-by-word text-to-speech highlighting. Where the Agent Panel shows what JARVIS is thinking, the Typing Popup shows what it's saying.</p>
         </div>
         <div class="ui-feature-grid">
@@ -2868,7 +2870,7 @@ class node_proactive,node_events,node_channels toneIndigo</pre>
             <span class="ui-hero-badge"><span class="material-symbols-outlined">touch_app</span>Click-Through</span>
             <span class="ui-hero-badge"><span class="material-symbols-outlined">translate</span>Hinglish Ready</span>
           </div>
-          <h1>The STT Popup</h1>
+          <div class="ui-hero-title">The STT Popup</div>
           <p>The STT Popup is JARVIS's live voice input surface — a small floating pill at the bottom of your screen that shows exactly what the speech-to-text engine is hearing, in real time, with a state-aware animated waveform. It's the only JARVIS UI component that is completely transparent to clicks — you can keep typing in your IDE while the waveform dances at the bottom of your screen.</p>
         </div>
         <div class="ui-feature-grid">
@@ -3054,7 +3056,7 @@ class node_proactive,node_events,node_channels toneIndigo</pre>
             <span class="ui-hero-badge"><span class="material-symbols-outlined">help</span>ask_user Clarification</span>
             <span class="ui-hero-badge"><span class="material-symbols-outlined">code</span>Subprocess IPC</span>
           </div>
-          <h1>The Input Popup</h1>
+          <div class="ui-hero-title">The Input Popup</div>
           <p>The Input Popup is JARVIS's dual-mode glassmorphic command surface. In <strong>Command Mode</strong>, it appears at the bottom of your screen when you press Ctrl+Shift+J, accepts a text command, and closes with Enter. In <strong>Clarification Mode</strong>, it's summoned automatically by the AgenticBrain's <code>ask_user</code> tool when critical parameters are missing mid-mission — pausing the loop timeout, muting background STT, and pinning your answer to confirmed facts without restarting the loop.</p>
         </div>
         <div class="ui-feature-grid">
@@ -3392,7 +3394,7 @@ class node_proactive,node_events,node_channels toneIndigo</pre>
             <span class="ui-hero-badge"><span class="material-symbols-outlined">monitor_heart</span>Watchdog</span>
             <span class="ui-hero-badge"><span class="material-symbols-outlined">restart_alt</span>Auto-Recovery</span>
           </div>
-          <h1>Lifecycle &amp; Shutdown</h1>
+          <div class="ui-hero-title">Lifecycle &amp; Shutdown</div>
           <p>JARVIS ships 8 background services (including the Unified Portal), 3 Qt overlays, a Node.js bridge, and dozens of subprocesses. Every one of them needs to die cleanly — but the memory graph, behavioral patterns, and session state must survive. The lifecycle system is a 14-step graceful shutdown choreography guarded by an idempotent flag, 7 signal handlers, and a parallel service-teardown that completes in ~2.6 seconds.</p>
         </div>
         <div class="ui-feature-grid">

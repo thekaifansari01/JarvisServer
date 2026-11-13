@@ -84,7 +84,6 @@ img, svg { display: block; max-width: 100%; }
   background: linear-gradient(90deg, var(--accent), var(--accent-2));
   z-index: 100;
   box-shadow: 0 0 12px rgba(0, 212, 255, 0.6);
-  transition: width 0.05s linear;
 }
 
 .topbar {
@@ -191,7 +190,7 @@ img, svg { display: block; max-width: 100%; }
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.68rem;
   padding: 2px 6px;
-  background: rgba(255, 255, 255, 0.06);
+  background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 4px;
   color: var(--text-muted);
@@ -245,6 +244,7 @@ img, svg { display: block; max-width: 100%; }
   background: var(--bg-2);
   border-right: 1px solid var(--border);
   overflow-y: auto;
+  overscroll-behavior: contain;
   padding: 20px 14px 32px;
   z-index: 80;
   scrollbar-width: thin;
@@ -976,6 +976,7 @@ details.faq .faq-body {
   top: calc(var(--nav-h) + 32px);
   max-height: calc(100vh - var(--nav-h) - 64px);
   overflow-y: auto;
+  overscroll-behavior: contain;
   padding: 32px 20px 32px 0;
   font-size: 0.8rem;
   scrollbar-width: thin;
@@ -1268,8 +1269,8 @@ details.faq .faq-body {
   align-items: center;
   gap: 6px;
   padding: 5px 12px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: 999px;
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.68rem;
@@ -1289,10 +1290,18 @@ details.faq .faq-body {
   0%, 100% { opacity: 1; transform: scale(1); }
   50% { opacity: 0.5; transform: scale(0.85); }
 }
-.ui-hero-banner h1 {
+.ui-hero-banner h1,
+.ui-hero-banner .ui-hero-title {
   position: relative;
   z-index: 1;
   margin-bottom: 16px;
+}
+.ui-hero-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(1.9rem, 3.5vw, 2.6rem);
+  font-weight: 600;
+  letter-spacing: -0.035em;
+  line-height: 1.15;
 }
 .ui-hero-banner p {
   position: relative;
@@ -1816,6 +1825,7 @@ details.faq .faq-body {
   border-radius: 20px 20px 0 0;
   padding: 20px 24px 32px;
   overflow-y: auto;
+  overscroll-behavior: contain;
   z-index: 200;
   transform: translateY(100%);
   transition: transform 0.3s var(--ease-out);
@@ -1935,7 +1945,8 @@ details.faq .faq-body {
   table.data-table th,
   table.data-table td { padding: 9px 12px; }
   .ui-hero-banner { padding: 20px; }
-  .ui-hero-banner h1 { font-size: 1.6rem; }
+  .ui-hero-banner h1,
+  .ui-hero-banner .ui-hero-title { font-size: 1.6rem; }
   .gallery-row { grid-template-columns: 1fr; }
   .anatomy-legend { grid-template-columns: 1fr; }
   .ui-mode-grid { grid-template-columns: repeat(auto-fit, minmax(95px, 1fr)); }
@@ -1969,6 +1980,7 @@ details.faq .faq-body {
   }
   .doc-page.active { animation: none; }
 }
+
 .page-updated {
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.72rem;
@@ -2239,6 +2251,11 @@ details.faq .faq-body {
 
 [data-jarvis-theme="light"] .sidebar {
   background: var(--bg-2);
+}
+
+[data-jarvis-theme="light"] .ui-hero-badge {
+  background: rgba(0, 0, 0, 0.04);
+  border-color: rgba(0, 0, 0, 0.12);
 }
 
 [data-jarvis-theme="light"] .code-block,
@@ -2695,6 +2712,7 @@ details.faq .faq-body {
     margin: 16pt 0;
   }
 }
+
 .mermaid-wrapper {
   position: relative;
   background: var(--bg-2);
@@ -2754,6 +2772,11 @@ details.faq .faq-body {
   min-height: 200px;
   scrollbar-width: thin;
 }
+.mermaid-diagram.is-fallback {
+  display: none;
+  min-height: 0;
+  padding: 0;
+}
 .mermaid-diagram::-webkit-scrollbar { height: 6px; }
 .mermaid-diagram::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 3px; }
 .mermaid-diagram svg {
@@ -2807,29 +2830,5 @@ details.faq .faq-body {
     background: #f5f5f5 !important;
     color: #000 !important;
     border: none !important;
-  }
-}
-@media (max-width: 900px) {
-  .copy-page-btn { position: relative; }
-  .copy-page-btn::after {
-    content: attr(data-tooltip);
-    position: absolute;
-    bottom: -32px;
-    right: 0;
-    padding: 4px 8px;
-    background: var(--bg-elev);
-    border: 1px solid var(--border-strong);
-    border-radius: 5px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.65rem;
-    color: var(--text-dim);
-    white-space: nowrap;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.2s;
-    z-index: 10;
-  }
-  .copy-page-btn:active::after {
-    opacity: 1;
   }
 }
