@@ -4,8 +4,8 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <title>Documentation — JARVIS OS Agent | Complete Developer Guide</title>
-<meta name="description" content="Complete documentation for JARVIS OS Agent — installation, environment, voice setup, memory and RAG, MCP integration, Android bridge, Telegram bot, CLI reference, Agent Panel, Typing Popup, STT Popup, Input Popup, lifecycle and shutdown, troubleshooting, FAQ, glossary, and developer guides." />
-<meta name="keywords" content="JARVIS documentation, JARVIS OS Agent docs, AI agent documentation, Windows AI assistant, autonomous AI operating system, MCP integration, dual-engine voice, AgenticBrain, FastBrain, memory RAG, Android bridge, Telegram bot, agent panel, lifecycle shutdown" />
+<meta name="description" content="Complete documentation for JARVIS OS Agent — installation, update and rollback, environment, voice setup, memory and RAG, MCP integration, Android bridge, Telegram bot, CLI reference, Agent Panel, Typing Popup, STT Popup, Input Popup, lifecycle and shutdown, troubleshooting, FAQ, glossary, and developer guides." />
+<meta name="keywords" content="JARVIS documentation, JARVIS OS Agent docs, AI agent documentation, Windows AI assistant, autonomous AI operating system, jarvis update, jarvis rollback, update channel, MCP integration, dual-engine voice, AgenticBrain, FastBrain, memory RAG, Android bridge, Telegram bot, agent panel, lifecycle shutdown" />
 <meta name="author" content="Kaif Ansari" />
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
 <meta name="googlebot" content="index, follow" />
@@ -40,7 +40,7 @@
 <meta property="og:site_name" content="JARVIS OS Agent" />
 <meta property="og:locale" content="en_US" />
 <meta property="og:title" content="Documentation — JARVIS OS Agent | Complete Developer Guide" />
-<meta property="og:description" content="Complete documentation for JARVIS OS Agent — from installation to advanced configuration. 26 topics: setup, voice, memory, MCP, Android bridge, all four premium UIs, lifecycle, troubleshooting, and developer guides." />
+<meta property="og:description" content="Complete documentation for JARVIS OS Agent — from installation and update to advanced configuration. 27 topics: setup, update and rollback, voice, memory, MCP, Android bridge, all four premium UIs, lifecycle, troubleshooting, and developer guides." />
 <meta property="og:url" content="https://jarvis-os-agent.vercel.app/documentation" />
 <meta property="og:image" content="https://jarvis-os-agent.vercel.app/screenshots/ui/agent-panel-hero.png" />
 <meta property="og:image:width" content="1200" />
@@ -51,7 +51,7 @@
 <meta name="twitter:site" content="@thekaifansari01" />
 <meta name="twitter:creator" content="@thekaifansari01" />
 <meta name="twitter:title" content="Documentation — JARVIS OS Agent | Complete Developer Guide" />
-<meta name="twitter:description" content="Complete documentation for JARVIS OS Agent — from installation to advanced configuration. 26 topics: setup, voice, memory, MCP, Android bridge, all four premium UIs, lifecycle, troubleshooting, and developer guides." />
+<meta name="twitter:description" content="Complete documentation for JARVIS OS Agent — from installation and update to advanced configuration. 27 topics: setup, update and rollback, voice, memory, MCP, Android bridge, all four premium UIs, lifecycle, troubleshooting, and developer guides." />
 <meta name="twitter:image" content="https://jarvis-os-agent.vercel.app/screenshots/ui/agent-panel-hero.png" />
 <meta name="twitter:image:alt" content="JARVIS Agent Panel showing live thought stream via ZMQ" />
 
@@ -66,6 +66,8 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" />
 <link rel="preload" as="style" href="/documentation/css/docs.css" />
 <link rel="stylesheet" href="/documentation/css/docs.css" />
+
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js" defer></script>
 
 <script type="application/ld+json">
 {
@@ -498,6 +500,20 @@
     },
     {
       "@type": "TechArticle",
+      "@id": "https://jarvis-os-agent.vercel.app/documentation#update",
+      "headline": "Updating JARVIS",
+      "description": "How to update JARVIS OS Agent using the jarvis update CLI, the PowerShell update.ps1 one-liner, and channel switching. Includes rollback and what state is preserved during upgrades.",
+      "articleSection": "Help",
+      "position": 24,
+      "isPartOf": { "@id": "https://jarvis-os-agent.vercel.app/documentation#webpage" },
+      "author": { "@id": "https://jarvis-os-agent.vercel.app/#organization" },
+      "datePublished": "2026-11-13",
+      "dateModified": "2026-11-13",
+      "inLanguage": "en-US",
+      "proficiencyLevel": "Beginner"
+    },
+    {
+      "@type": "TechArticle",
       "@id": "https://jarvis-os-agent.vercel.app/documentation#custom-prompt",
       "headline": "Custom Prompt Guide",
       "description": "How to customize JARVIS personality, tone, language, and behavioral rules by editing SYSTEM_PROMPT and AGENT_SYSTEM_PROMPT in core/brain/Processor/Prompts.py. Includes what not to change.",
@@ -572,6 +588,23 @@
         { "@type": "HowToStep", "position": 3, "name": "Accept the backup prompt", "text": "The uninstaller asks to back up your .env API keys, Data/jarvis_memory (Lifelong Memory Graph and RAG index), Data/jarvis_indexer, and Data/mcp_servers.json to Desktop\\Jarvis_Backup_yyyyMMdd_HHmmss\\. Default is Yes — press Enter to accept." },
         { "@type": "HowToStep", "position": 4, "name": "Confirm optional deletions", "text": "The uninstaller separately asks whether to delete Documents\\Jarvis (WhatsApp media) and the HuggingFace embedding cache (~130 MB). Both default to No." },
         { "@type": "HowToStep", "position": 5, "name": "Verify cleanup", "text": "Open a new terminal and run: jarvis — you should see 'command not found' or 'not recognized'. The folder %USERPROFILE%\\Jarvis-OS-Agent should be completely gone." }
+      ]
+    },
+    {
+      "@type": "HowTo",
+      "@id": "https://jarvis-os-agent.vercel.app/documentation#howto-update",
+      "name": "How to Update JARVIS OS Agent on Windows",
+      "description": "Update JARVIS OS Agent to the latest release with a single CLI command or PowerShell one-liner. Automatically backs up current state and preserves memory graph, .env, and MCP config.",
+      "totalTime": "PT2M",
+      "tool": [
+        { "@type": "HowToTool", "name": "Windows 10 or 11" },
+        { "@type": "HowToTool", "name": "PowerShell" }
+      ],
+      "step": [
+        { "@type": "HowToStep", "position": 1, "name": "Close all JARVIS terminals", "text": "Stop any running jarvis processes with Ctrl+C. The updater requires JARVIS to be offline." },
+        { "@type": "HowToStep", "position": 2, "name": "Run the updater", "text": "Open PowerShell and run: jarvis update — or paste the update.ps1 one-liner to fetch and execute the latest updater." },
+        { "@type": "HowToStep", "position": 3, "name": "Wait for automatic backup", "text": "The updater backs up .env, Data/jarvis_memory, Data/jarvis_indexer, and Data/mcp_servers.json to Desktop before pulling the new version." },
+        { "@type": "HowToStep", "position": 4, "name": "Verify", "text": "Run jarvis --help and check startup logs to confirm the new version is active. Run jarvis update --check to see the current release." }
       ]
     },
     {
@@ -731,6 +764,7 @@
     <ul class="sidebar-list">
       <li><a href="/documentation/troubleshooting" data-page="troubleshooting"><span class="material-symbols-outlined">bug_report</span>Troubleshooting</a></li>
       <li><a href="/documentation/faq" data-page="faq"><span class="material-symbols-outlined">help</span>FAQ</a></li>
+      <li><a href="/documentation/update" data-page="update"><span class="material-symbols-outlined">system_update</span>Update</a></li>
       <li><a href="/documentation/uninstall" data-page="uninstall"><span class="material-symbols-outlined">delete_sweep</span>Uninstall</a></li>
     </ul>
   </div>
@@ -878,6 +912,10 @@
           <div class="callout-body"><p><strong>Done.</strong> The next sections cover each subsystem in detail. If you hit an error, jump to <a href="#troubleshooting">Troubleshooting</a>.</p></div>
         </div>
         <div class="callout info">
+          <span class="material-symbols-outlined">system_update</span>
+          <div class="callout-body"><p><strong>Keeping JARVIS current.</strong> Run <code>jarvis update</code> — or paste the <a href="#update">update.ps1 one-liner</a> — to fetch the latest release. Your <code>.env</code>, memory graph, and MCP config are automatically backed up before any change. Full guide: <a href="#update">Update &amp; Rollback</a>.</p></div>
+        </div>
+        <div class="callout info">
           <span class="material-symbols-outlined">info</span>
           <div class="callout-body"><p><strong>Prefer manual setup?</strong> See the <a href="#installation">Installation</a> page for step-by-step instructions if you need a custom install path, are offline, or the 1-click installer failed.</p></div>
         </div>
@@ -1011,7 +1049,171 @@ npm install
         <h2 id="install-mcp">Enable MCP (optional)<a href="#install-mcp" class="anchor material-symbols-outlined">link</a></h2>
         <p>To add external tools via the Model Context Protocol, create <code>Data/mcp_servers.json</code>. See the <a href="#mcp">MCP section</a> for full details.</p>
 
+        <h2 id="install-update">Updating JARVIS<a href="#install-update" class="anchor material-symbols-outlined">link</a></h2>
+        <p>Once installed, keep JARVIS current in one of two ways. Both fetch the latest release from GitHub, back up your <code>.env</code>, memory graph, indexer data, and MCP config to the Desktop, then update in place.</p>
+        <h3 id="install-update-cli">Option 1 — CLI (recommended)</h3>
+        <div class="code-block">
+          <div class="code-block-header">
+            <span class="code-block-lang"><span class="material-symbols-outlined">terminal</span>powershell</span>
+            <button type="button" class="code-copy" data-copy-target>Copy</button>
+          </div>
+<pre><code>jarvis update</code></pre>
+        </div>
+        <p>Variants: <code>jarvis update --check</code> (status only, no changes), <code>jarvis update --channel edge</code> (switch channels), <code>jarvis update --rollback</code> (restore last working version).</p>
+
+        <h3 id="install-update-ps">Option 2 — PowerShell one-liner</h3>
+        <div class="code-block">
+          <div class="code-block-header">
+            <span class="code-block-lang"><span class="material-symbols-outlined">terminal</span>powershell</span>
+            <button type="button" class="code-copy" data-copy-target>Copy</button>
+          </div>
+<pre><code>Set-ExecutionPolicy Bypass -Scope Process -Force; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; &amp; ([scriptblock]::Create((Invoke-RestMethod -Uri 'https://github.com/thekaifansari01/Jarvis-OS-Agent/releases/latest/download/update.ps1')))</code></pre>
+        </div>
+        <p>Run this if the CLI is broken or you have not yet registered <code>jarvis</code>. Full details: <a href="#update">Update &amp; Rollback</a>.</p>
+
         <div class="feedback-bar" data-feedback="installation">
+          <span class="feedback-label">Was this page helpful?</span>
+          <button type="button" class="feedback-btn" data-value="yes"><span class="material-symbols-outlined">thumb_up</span><span>Yes</span></button>
+          <button type="button" class="feedback-btn" data-value="no"><span class="material-symbols-outlined">thumb_down</span><span>No</span></button>
+        </div>
+        <div class="pager" data-pager></div>
+      </section>
+
+      <section class="doc-page" data-page="update" data-title="Update &amp; Rollback" data-updated="2026-11-13">
+        <nav class="page-breadcrumb" aria-label="Breadcrumb">
+          <div class="breadcrumb-trail">
+            <span class="breadcrumb-group">Help</span>
+            <span class="breadcrumb-sep">›</span>
+            <strong class="breadcrumb-current">Update &amp; Rollback</strong>
+          </div>
+          <div class="breadcrumb-actions">
+            <span class="page-read" data-read></span>
+            <button type="button" class="copy-page-btn" data-copy-page="update">
+              <span class="material-symbols-outlined">content_copy</span>
+              <span class="copy-page-label">Copy as Markdown</span>
+            </button>
+          </div>
+        </nav>
+        <h1 id="update">Update &amp; Rollback</h1>
+        <p class="lead">Keep JARVIS current with a single command. Every update automatically backs up your <code>.env</code>, lifelong memory graph, indexer settings, and MCP config to the Desktop — then updates the code and dependencies in place. Rollback is one command away if anything breaks.</p>
+
+        <div class="prereq-box">
+          <span class="material-symbols-outlined">checklist</span>
+          <div class="prereq-body">
+            <div class="prereq-label">Before you start</div>
+            <ul class="prereq-list">
+              <li><strong>Stop JARVIS</strong> (Ctrl+C in the running terminal)</li>
+              <li><strong>~2 GB free disk</strong> for the new release + backup</li>
+              <li><strong>Internet connection</strong> to reach GitHub</li>
+            </ul>
+          </div>
+        </div>
+
+        <h2 id="update-cli">Update via CLI (recommended)<a href="#update-cli" class="anchor material-symbols-outlined">link</a></h2>
+        <p>The <code>jarvis update</code> command is the safest path. It checks for a newer release, runs the backup, and updates in place. All subcommands are safe to re-run.</p>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead><tr><th>Command</th><th>What it does</th></tr></thead>
+            <tbody>
+              <tr><td><code>jarvis update</code></td><td>Check for updates and upgrade to the latest release</td></tr>
+              <tr><td><code>jarvis update --check</code></td><td>Print current version + latest version without changing anything</td></tr>
+              <tr><td><code>jarvis update --channel stable</code></td><td>Track the stable release channel (default)</td></tr>
+              <tr><td><code>jarvis update --channel edge</code></td><td>Track edge builds — features land earlier, minor bugs possible</td></tr>
+              <tr><td><code>jarvis update --channel pinned</code></td><td>Pin to a specific version, no automatic upgrades</td></tr>
+              <tr><td><code>jarvis update --rollback</code></td><td>Restore the previous working version and its backup</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2 id="update-powershell">Update via PowerShell one-liner<a href="#update-powershell" class="anchor material-symbols-outlined">link</a></h2>
+        <p>Use this if the <code>jarvis</code> CLI is not on PATH, or you want to update without entering the virtual environment. The script is downloaded from the latest GitHub release and executed in-process:</p>
+        <div class="code-block">
+          <div class="code-block-header">
+            <span class="code-block-lang"><span class="material-symbols-outlined">terminal</span>powershell</span>
+            <button type="button" class="code-copy" data-copy-target>Copy</button>
+          </div>
+<pre><code>Set-ExecutionPolicy Bypass -Scope Process -Force; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; &amp; ([scriptblock]::Create((Invoke-RestMethod -Uri 'https://github.com/thekaifansari01/Jarvis-OS-Agent/releases/latest/download/update.ps1')))</code></pre>
+        </div>
+        <div class="callout info">
+          <span class="material-symbols-outlined">info</span>
+          <div class="callout-body"><p><strong>Same behavior as the CLI.</strong> The one-liner runs the exact same update logic as <code>jarvis update</code> — backup prompt, dependency refresh, and rollback safety net included. No admin rights required.</p></div>
+        </div>
+
+        <h2 id="update-channels">Update channels<a href="#update-channels" class="anchor material-symbols-outlined">link</a></h2>
+        <p>Channels let you trade stability for bleeding-edge features. Switch any time — your data is preserved.</p>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead><tr><th>Channel</th><th>Best for</th><th>Frequency</th></tr></thead>
+            <tbody>
+              <tr><td><strong>stable</strong></td><td>Everyday use — tested, tagged releases</td><td>Weekly to monthly</td></tr>
+              <tr><td><strong>edge</strong></td><td>Early adopters — latest features, minor regressions possible</td><td>Daily to weekly</td></tr>
+              <tr><td><strong>pinned</strong></td><td>Air-gapped installs, frozen deployments</td><td>Manual only</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2 id="update-what-preserved">What gets preserved<a href="#update-what-preserved" class="anchor material-symbols-outlined">link</a></h2>
+        <p>The updater never touches your personal data. Before any file is changed, everything below is copied to <code>Desktop\Jarvis_Backup_yyyyMMdd_HHmmss\</code>:</p>
+        <ul class="bullets">
+          <li><strong><code>.env</code></strong> — all your API keys and provider config</li>
+          <li><strong><code>Data\jarvis_memory\</code></strong> — lifelong memory graph, behavioral patterns, RAG index, chat history, retry queue</li>
+          <li><strong><code>Data\jarvis_indexer\</code></strong> — indexer folders, filters, settings</li>
+          <li><strong><code>Data\mcp_servers.json</code></strong> — MCP configs, including tokens</li>
+          <li><strong><code>Data\model\</code></strong> — wake word models (Azure + Vosk)</li>
+          <li><strong><code>Data\fonts\</code></strong> — custom fonts for the UI</li>
+        </ul>
+        <p>Only the <code>.venv</code>, <code>node_modules</code>, and source code are replaced. Dependencies are reinstalled fresh on the new release.</p>
+
+        <h2 id="update-rollback">Rolling back<a href="#update-rollback" class="anchor material-symbols-outlined">link</a></h2>
+        <p>If the new version introduces a regression, rollback is a single command:</p>
+        <div class="code-block">
+          <div class="code-block-header">
+            <span class="code-block-lang"><span class="material-symbols-outlined">terminal</span>powershell</span>
+            <button type="button" class="code-copy" data-copy-target>Copy</button>
+          </div>
+<pre><code>jarvis update --rollback</code></pre>
+        </div>
+        <p>This restores the last known-good version from the most recent backup, then reinstalls dependencies against the previous <code>requirements.txt</code>. State files are restored from the backup taken during the original update.</p>
+        <div class="callout warning">
+          <span class="material-symbols-outlined">warning</span>
+          <div class="callout-body"><p><strong>Only one step back.</strong> Rollback restores the single previous version, not a full history. For older states, unpack a manual backup from <code>Desktop\Jarvis_Backup_*</code>.</p></div>
+        </div>
+
+        <h2 id="update-sequence">What happens step by step<a href="#update-sequence" class="anchor material-symbols-outlined">link</a></h2>
+        <ol class="steps">
+          <li><strong>Version check</strong> — queries the latest GitHub release and compares against local version.</li>
+          <li><strong>Backup</strong> — copies <code>.env</code>, memory, indexer, MCP config, models, and fonts to a timestamped Desktop folder.</li>
+          <li><strong>Fetch</strong> — downloads the new release archive and verifies its checksum.</li>
+          <li><strong>Replace code</strong> — swaps source files, preserves user data directories.</li>
+          <li><strong>Refresh Python env</strong> — reinstalls <code>requirements.txt</code> against the existing venv (CPU-optimized PyTorch re-applied).</li>
+          <li><strong>Refresh Node bridge</strong> — runs <code>npm install</code> inside <code>tools/Messanger/whatsapp/BaileysServer</code>.</li>
+          <li><strong>Sanity check</strong> — imports the new code and validates all required modules load.</li>
+          <li><strong>Success banner</strong> — prints the new version and reminder to restart.</li>
+        </ol>
+
+        <h2 id="update-trouble">Troubleshooting<a href="#update-trouble" class="anchor material-symbols-outlined">link</a></h2>
+        <details class="faq">
+          <summary>Update fails with "JARVIS is still running"<span class="material-symbols-outlined">add</span></summary>
+          <div class="faq-body">Stop JARVIS with <code>Ctrl+C</code> first. The updater refuses to touch files while the process tree is alive. If Ctrl+C hangs, close the terminal window — the lock file will be cleared on the next successful update.</div>
+        </details>
+        <details class="faq">
+          <summary>Rollback restores code but dependencies still broken<span class="material-symbols-outlined">add</span></summary>
+          <div class="faq-body">Manually activate the venv and run <code>pip install -r requirements.txt</code>. In rare cases, a transitive dependency cache becomes stale — delete <code>.venv</code> and re-run the installer.</div>
+        </details>
+        <details class="faq">
+          <summary>Backup folder is huge on Desktop<span class="material-symbols-outlined">add</span></summary>
+          <div class="faq-body">Backups include the full memory graph and models. After a successful update, old <code>Jarvis_Backup_*</code> folders can be safely deleted — keep only the most recent one for rollback safety.</div>
+        </details>
+        <details class="faq">
+          <summary>Update downloaded but JARVIS won't start<span class="material-symbols-outlined">add</span></summary>
+          <div class="faq-body">Check the startup error. Most failures are missing Python packages. Run <code>.\.venv\Scripts\Activate.ps1</code> then <code>pip install -r requirements.txt</code>. If persistent, run <code>jarvis update --rollback</code> to restore the previous version.</div>
+        </details>
+        <details class="faq">
+          <summary>PowerShell one-liner is blocked by antivirus<span class="material-symbols-outlined">add</span></summary>
+          <div class="faq-body">Add PowerShell to the exclusion list temporarily, or download <code>update.ps1</code> manually from the latest GitHub release and run <code>&amp; .\update.ps1</code>. Same script, just bypasses the Invoke-RestMethod pattern that AV flags.</div>
+        </details>
+
+        <div class="feedback-bar" data-feedback="update">
           <span class="feedback-label">Was this page helpful?</span>
           <button type="button" class="feedback-btn" data-value="yes"><span class="material-symbols-outlined">thumb_up</span><span>Yes</span></button>
           <button type="button" class="feedback-btn" data-value="no"><span class="material-symbols-outlined">thumb_down</span><span>No</span></button>
@@ -1047,6 +1249,11 @@ npm install
               <li><strong>Backup decision ready</strong> — uninstaller will ask</li>
             </ul>
           </div>
+        </div>
+
+        <div class="callout info">
+          <span class="material-symbols-outlined">terminal</span>
+          <div class="callout-body"><p><strong>Prefer the CLI?</strong> Run <code>jarvis uninstall</code> — same behavior as the PowerShell one-liner below, including the backup prompt. Use this if the <code>jarvis</code> command is still working.</p></div>
         </div>
 
         <h2 id="uninstall-run">Run the uninstaller<a href="#uninstall-run" class="anchor material-symbols-outlined">link</a></h2>
@@ -1717,6 +1924,20 @@ jarvis bot --deactivate  <span class="code-cmt"># revoke &amp; offline the bot</
             </tbody>
           </table>
         </div>
+        <h2 id="cli-update">Update &amp; maintenance<a href="#cli-update" class="anchor material-symbols-outlined">link</a></h2>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead><tr><th>Command</th><th>Action</th></tr></thead>
+            <tbody>
+              <tr><td><code>jarvis update</code></td><td>Check for updates and upgrade to the latest release</td></tr>
+              <tr><td><code>jarvis update --check</code></td><td>Check update status without applying changes</td></tr>
+              <tr><td><code>jarvis update --channel &lt;stable|edge|pinned&gt;</code></td><td>Switch update release channel</td></tr>
+              <tr><td><code>jarvis update --rollback</code></td><td>Roll back to the previous working version and restore backup</td></tr>
+              <tr><td><code>jarvis uninstall</code></td><td>Run the complete system uninstaller</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Full walkthrough: <a href="#update">Update &amp; Rollback</a>. None of these commands corrupt state — the updater performs a Desktop backup of <code>.env</code>, memory graph, and MCP config before touching any file.</p>
         <div class="feedback-bar" data-feedback="cli">
           <span class="feedback-label">Was this page helpful?</span>
           <button type="button" class="feedback-btn" data-value="yes"><span class="material-symbols-outlined">thumb_up</span><span>Yes</span></button>
@@ -1815,6 +2036,128 @@ jarvis bot --deactivate  <span class="code-cmt"># revoke &amp; offline the bot</
           <li><strong>Unified Portal</strong> (<code>:8000</code>) — gated on both backends being healthy</li>
         </ul>
         <p>Crashes trigger a cooldown backoff. Unauthenticated services are skipped, not restarted endlessly. The Unified Portal will not restart if either backend is down.</p>
+
+        <h2 id="arch-flow">System flow diagram<a href="#arch-flow" class="anchor material-symbols-outlined">link</a></h2>
+        <p>The complete end-to-end wiring — command runtime, memory, voice interfaces, tools, and proactive services — rendered from source. Every node is clickable and jumps to its file on GitHub. Colors are action-coded: blue for runtime, amber for memory, mint for voice and interfaces, rose for tools and integrations, indigo for proactive.</p>
+        <div class="mermaid-wrapper">
+          <div class="mermaid-toolbar">
+            <span class="mermaid-label"><span class="material-symbols-outlined">account_tree</span>System Flow Diagram</span>
+            <button type="button" class="mermaid-btn" data-mermaid-copy><span class="material-symbols-outlined">content_copy</span>Copy source</button>
+            <button type="button" class="mermaid-btn" data-mermaid-fullscreen><span class="material-symbols-outlined">fullscreen</span>Fullscreen</button>
+          </div>
+          <pre class="mermaid-src">flowchart TD
+
+subgraph group_runtime["Command Runtime"]
+  node_main["Application Startup<br/>[main.py]"]
+  node_handler["Command Handler<br/>[CommandHandler.py]"]
+  node_processor["Command Processor<br/>[Processor.py]"]
+  node_agentbrain["Agentic Brain<br/>[AgenticBrain.py]"]
+  node_fastbrain["Fast Brain<br/>[FastBrain.py]"]
+  node_executor["Action Executor<br/>[executor.py]"]
+end
+
+subgraph group_memory["Memory and Retrieval"]
+  node_memory[("Context Memory<br/>[Memory.py]")]
+  node_ltm[("Lifetime Memory<br/>[LifetimeMemory.py]")]
+  node_behavior[("Behavior Patterns")]
+  node_rag[("Hybrid RAG<br/>[RagEngine.py]")]
+  node_indexer["Knowledge Indexer"]
+end
+
+subgraph group_voice["Voice and Interfaces"]
+  node_voicein["Voice Input<br/>[stt.py]"]
+  node_hotkey["Keyboard Input<br/>[HotKeyManager.py]"]
+  node_remote["Telegram Remote"]
+  node_tts["Speech Output<br/>[tts.py]"]
+  node_ui["Desktop Interfaces"]
+end
+
+subgraph group_actions["Tools and Integrations"]
+  node_tools["Native Tools"]
+  node_mcp["MCP Manager<br/>[MCPManager.py]"]
+  node_mobile["Mobile Bridge<br/>[server.py]"]
+end
+
+subgraph group_proactive["Proactive Services"]
+  node_proactive["Proactive Agent<br/>[proactive_agent.py]"]
+  node_events["Event Queue<br/>[event_queue.py]"]
+  node_channels["Proactive Channels"]
+end
+
+node_user(("User"))
+
+node_user -->|"speaks to"| node_voicein
+node_user -->|"types via"| node_hotkey
+node_user -->|"commands via"| node_remote
+node_main -->|"starts"| node_handler
+node_main -->|"starts"| node_voicein
+node_voicein -->|"submits command"| node_handler
+node_hotkey -->|"dispatches command"| node_handler
+node_remote -->|"routes command"| node_handler
+node_handler -->|"processes command"| node_processor
+node_processor -->|"selects complex tasks"| node_agentbrain
+node_processor -->|"selects simple tasks"| node_fastbrain
+node_handler -->|"executes actions"| node_executor
+node_handler -->|"records exchange"| node_memory
+node_agentbrain -->|"uses memory"| node_memory
+node_fastbrain -->|"uses memory"| node_memory
+node_memory -->|"uses lifetime store"| node_ltm
+node_memory -->|"uses patterns"| node_behavior
+node_agentbrain -->|"invokes tools"| node_tools
+node_fastbrain -->|"invokes tools"| node_tools
+node_agentbrain -.->|"uses MCP tools"| node_mcp
+node_main -->|"starts service"| node_rag
+node_rag -->|"loads index settings"| node_indexer
+node_main -->|"starts"| node_proactive
+node_proactive -->|"queues events"| node_events
+node_proactive -->|"dispatches outreach"| node_channels
+node_main -->|"starts service"| node_mcp
+node_tools -.->|"includes bridge"| node_mobile
+node_handler -.->|"speaks response"| node_tts
+node_main -.->|"starts interfaces"| node_ui
+
+click node_main "https://github.com/thekaifansari01/jarvis-os-agent/blob/main/main.py"
+click node_voicein "https://github.com/thekaifansari01/jarvis-os-agent/blob/main/core/voice/stt.py"
+click node_hotkey "https://github.com/thekaifansari01/jarvis-os-agent/blob/main/core/main/HotKeyManager.py"
+click node_remote "https://github.com/thekaifansari01/jarvis-os-agent/blob/main/core/main/TelegramRemoteBot.py"
+click node_handler "https://github.com/thekaifansari01/jarvis-os-agent/blob/main/core/main/CommandHandler.py"
+click node_processor "https://github.com/thekaifansari01/jarvis-os-agent/blob/main/core/brain/Processor/Processor.py"
+click node_agentbrain "https://github.com/thekaifansari01/jarvis-os-agent/blob/main/core/brain/Processor/AgenticBrain.py"
+click node_fastbrain "https://github.com/thekaifansari01/jarvis-os-agent/blob/main/core/brain/Processor/FastBrain.py"
+click node_executor "https://github.com/thekaifansari01/jarvis-os-agent/blob/main/core/brain/executor.py"
+click node_memory "https://github.com/thekaifansari01/jarvis-os-agent/blob/main/core/brain/Memory/Memory.py"
+click node_ltm "https://github.com/thekaifansari01/jarvis-os-agent/blob/main/core/brain/Memory/LifetimeMemory.py"
+click node_behavior "https://github.com/thekaifansari01/jarvis-os-agent/blob/main/core/brain/Memory/BehavioralEngine.py"
+click node_rag "https://github.com/thekaifansari01/jarvis-os-agent/blob/main/core/brain/RagEngine.py"
+click node_indexer "https://github.com/thekaifansari01/jarvis-os-agent/tree/main/core/brain/Indexer"
+click node_tools "https://github.com/thekaifansari01/jarvis-os-agent/tree/main/tools"
+click node_mcp "https://github.com/thekaifansari01/jarvis-os-agent/blob/main/core/mcp/MCPManager.py"
+click node_mobile "https://github.com/thekaifansari01/jarvis-os-agent/blob/main/tools/MobileBridge/server.py"
+click node_proactive "https://github.com/thekaifansari01/jarvis-os-agent/blob/main/Proactive/proactive_agent.py"
+click node_events "https://github.com/thekaifansari01/jarvis-os-agent/blob/main/Proactive/event_queue.py"
+click node_channels "https://github.com/thekaifansari01/jarvis-os-agent/tree/main/Proactive"
+click node_tts "https://github.com/thekaifansari01/jarvis-os-agent/blob/main/core/voice/tts.py"
+click node_ui "https://github.com/thekaifansari01/jarvis-os-agent/tree/main/core/ui"
+
+classDef toneNeutral fill:#f8fafc,stroke:#334155,stroke-width:1.5px,color:#0f172a
+classDef toneBlue fill:#dbeafe,stroke:#2563eb,stroke-width:1.5px,color:#172554
+classDef toneAmber fill:#fef3c7,stroke:#d97706,stroke-width:1.5px,color:#78350f
+classDef toneMint fill:#dcfce7,stroke:#16a34a,stroke-width:1.5px,color:#14532d
+classDef toneRose fill:#ffe4e6,stroke:#e11d48,stroke-width:1.5px,color:#881337
+classDef toneIndigo fill:#e0e7ff,stroke:#4f46e5,stroke-width:1.5px,color:#312e81
+classDef toneTeal fill:#ccfbf1,stroke:#0f766e,stroke-width:1.5px,color:#134e4a
+class node_main,node_handler,node_processor,node_agentbrain,node_fastbrain,node_executor,node_user toneBlue
+class node_memory,node_ltm,node_behavior,node_rag,node_indexer toneAmber
+class node_voicein,node_hotkey,node_remote,node_tts,node_ui toneMint
+class node_tools,node_mcp,node_mobile toneRose
+class node_proactive,node_events,node_channels toneIndigo</pre>
+          <div class="mermaid-diagram"></div>
+          <div class="mermaid-fallback">
+            <pre><code></code></pre>
+          </div>
+        </div>
+        <figure class="screenshot-frame" style="display:none"></figure>
+        <p>Colors follow the code-level architecture: <strong>runtime</strong> in blue, <strong>memory</strong> in amber, <strong>voice and interfaces</strong> in mint, <strong>tools and integrations</strong> in rose, <strong>proactive services</strong> in indigo. Click any node to open its file on GitHub.</p>
         <div class="feedback-bar" data-feedback="architecture">
           <span class="feedback-label">Was this page helpful?</span>
           <button type="button" class="feedback-btn" data-value="yes"><span class="material-symbols-outlined">thumb_up</span><span>Yes</span></button>
@@ -4368,69 +4711,81 @@ TOOL_HANDLERS = {
           </div>
 <pre><code>Data/
 ├── jarvis_memory/
-│   ├── lifetime_graph.json          # LTM semantic graph
-│   ├── behavioral_patterns.jsonl    # Behavioral engine
-│   ├── chat_history.jsonl           # Last 2 days raw
-│   ├── daily_summaries.jsonl        # 3–15 days compressed
-│   ├── rag_chroma_db/               # Vector index
-│   ├── rag_hashes.json              # Change detection
-│   └── session_state.json           # Ephemeral state
+│   ├── lifetime_graph.json                # LTM (NetworkX MultiDiGraph)
+│   ├── behavioral_patterns.jsonl          # Behavioral engine
+│   ├── master_chat_history.jsonl          # Raw rolling history
+│   ├── master_chat_history.json           # Legacy format (auto-migrated)
+│   ├── daily_summaries.jsonl              # Compressed past days
+│   ├── extraction_retry_queue.jsonl       # Failed-extraction retry queue
+│   ├── rag_chroma_db/                     # Vector index
+│   └── rag_hashes.json                    # Change detection hashes
 ├── jarvis_indexer/
-│   ├── folders.json                 # Indexed folders
-│   ├── filters.json                 # Exclusion rules
-│   └── settings.json                # Indexer config
+│   ├── folders.json                       # Indexed folders
+│   ├── filters.json                       # Exclusion rules
+│   └── settings.json                      # Indexer config
 ├── sessions/
-│   ├── gmail_token.enc              # AES-encrypted
+│   ├── gmail_token.enc                    # AES-encrypted
 │   ├── calendar_token.enc
 │   └── telegram_bot_token.enc
 ├── cache/
-│   └── meta_cache.json              # Link preview metadata
+│   └── meta_cache.json                    # Link preview metadata
 ├── fonts/
 │   ├── english.ttf
 │   ├── devangri.ttf
 │   └── code.ttf
 ├── model/
-│   ├── azure/jarvis.table           # Wake word model
-│   └── vosk-model-small/            # Fallback
-├── typing_status.json               # File IPC
-├── tts_status.json
-├── tts_word_sync.json
-├── tts_command.json
-└── mcp_servers.json                 # MCP config</code></pre>
+│   ├── azure/jarvis.table                 # Wake word model
+│   └── vosk-model-small/                  # Fallback
+├── typing_status.json                     # Typing popup IPC
+├── tts_status.json                        # TTS IPC
+├── tts_word_sync.json                     # Word-sync IPC
+├── tts_command.json                       # TTS control IPC
+└── mcp_servers.json                       # MCP config</code></pre>
         </div>
 
         <h2 id="data-model-memory-graph">Memory graph schema</h2>
-        <p><code>jarvis_memory/lifetime_graph.json</code> is a NetworkX-serialized graph:</p>
+        <p><code>jarvis_memory/lifetime_graph.json</code> is a NetworkX <code>MultiDiGraph</code> serialized in node-link format. Note the field is <code>links</code>, not <code>edges</code>:</p>
         <div class="code-block">
           <div class="code-block-header">
             <span class="code-block-lang"><span class="material-symbols-outlined">description</span>structure</span>
             <button type="button" class="code-copy" data-copy-target>Copy</button>
           </div>
 <pre><code>{
+  "directed": true,
+  "multigraph": true,
+  "graph": {},
   "nodes": [
     {
-      "id": "Kaif",
-      "type": "person",
-      "embedding": [0.123, -0.456, ...],
-      "created_at": "2026-03-15T10:22:00Z",
-      "metadata": { "aliases": ["Kaif", "Kaif Ansari"] }
+      "id": "User",
+      "created_at": "2026-03-15T10:22:00Z"
+    },
+    {
+      "id": "Mumbai",
+      "created_at": "2026-03-15T10:22:00Z"
     }
   ],
-  "edges": [
+  "links": [
     {
-      "source": "Kaif",
-      "target": "JARVIS",
-      "relation": "CREATED",
-      "weight": 1.0,
-      "confidence": 0.95,
-      "source_message": "I built JARVIS on my old laptop",
-      "last_seen": "2026-10-01T14:30:00Z",
-      "decay_at": "2027-04-01T00:00:00Z"
+      "source": "User",
+      "target": "Mumbai",
+      "relation": "LIVES_IN",
+      "weight": 3,
+      "count": 3,
+      "first_seen": "2026-03-15",
+      "last_seen": "2026-10-20",
+      "archived": false,
+      "inverse_of": null,
+      "metadata": {
+        "confidence": 0.95,
+        "context": "User introduced themselves",
+        "source_message": "Mai Mumbai se hu"
+      }
     }
   ]
 }</code></pre>
         </div>
-        <p><strong>Weight decay:</strong> Edges older than 6 months auto-decay to 0.5× weight and eventually archive. Bump by re-mentioning the fact.</p>
+        <p><strong>Auto-archive:</strong> Edges not seen in over 365 days are marked <code>archived: true</code> and filtered from queries. Re-mention the fact to un-archive and boost <code>weight</code>.</p>
+        <p><strong>Singular relations</strong> (<code>LIVES_IN</code>, <code>WORKS_AT</code>, <code>HAS_PHONE</code>, etc.) supersede themselves — a new value archives the old one for the same <code>source</code> node.</p>
 
         <h2 id="data-model-behavioral">Behavioral patterns</h2>
         <p><code>jarvis_memory/behavioral_patterns.jsonl</code> — one JSON object per line:</p>
@@ -4440,19 +4795,26 @@ TOOL_HANDLERS = {
             <button type="button" class="code-copy" data-copy-target>Copy</button>
           </div>
 <pre><code>{
-  "id": "bp_2026_03_15_01",
   "type": "routine",
+  "domain": "scheduling",
+  "topic": "scheduling_timing",
   "raw_statement": "I go to the gym at 8 AM every morning",
   "meaning": "User typically goes to the gym at 8 AM daily",
-  "trigger_contexts": ["morning", "fitness", "schedule"],
+  "trigger_contexts": "morning fitness schedule gym workout",
   "confidence": 0.87,
   "evidence_count": 4,
-  "embedding": [0.234, -0.567, ...],
-  "first_mentioned": "2026-03-15",
-  "last_mentioned": "2026-10-20"
+  "active": true,
+  "first_mentioned": "2026-03-15T06:12:00",
+  "last_mentioned": "2026-10-20T07:45:00"
 }</code></pre>
         </div>
-        <p>Retrieved via cosine similarity against the current command + last 2 user turns. Top-K above threshold auto-injected into prompt.</p>
+        <ul class="bullets">
+          <li><strong>domain</strong> — one of <code>coding</code>, <code>scheduling</code>, <code>communication</code>, <code>ui_design</code>, <code>lifestyle</code></li>
+          <li><strong>topic</strong> — snake_case slot (e.g., <code>ui_theme</code>, <code>code_comments</code>, <code>communication_style</code>)</li>
+          <li><strong>active</strong> — <code>false</code> means candidate awaiting a second confirmation; promoted automatically on repeat or explicit permanent keyword</li>
+          <li><strong>evidence_count</strong> — incremented on each reinforcement; confidence scales with it</li>
+        </ul>
+        <p>Retrieved via cosine similarity against the current command + recent turns. Top-2 above threshold auto-injected into the prompt. Contradictions (dark↔light, morning↔night, short↔detailed, formal↔casual, modular↔monolithic) supersede the old pattern.</p>
 
         <h2 id="data-model-rag">RAG chunk metadata</h2>
         <p>ChromaDB chunks carry metadata for incremental reindexing:</p>
@@ -4475,7 +4837,7 @@ TOOL_HANDLERS = {
         <p><code>rag_hashes.json</code> stores <code>file_path</code> → <code>hash</code> mapping for incremental scans. If the model changes, hashes are compared against model-embedded markers and the index auto-purges.</p>
 
         <h2 id="data-model-history">Rolling history</h2>
-        <p><code>chat_history.jsonl</code> (raw, last 2 days):</p>
+        <p><code>master_chat_history.jsonl</code> (raw, recent days):</p>
         <div class="code-block">
           <div class="code-block-header">
             <span class="code-block-lang"><span class="material-symbols-outlined">description</span>entry</span>
@@ -4493,7 +4855,7 @@ TOOL_HANDLERS = {
   }
 }</code></pre>
         </div>
-        <p><code>daily_summaries.jsonl</code> (compressed, days 3–15):</p>
+        <p><code>daily_summaries.jsonl</code> (compressed older days):</p>
         <div class="code-block">
           <div class="code-block-header">
             <span class="code-block-lang"><span class="material-symbols-outlined">description</span>entry</span>
@@ -4502,10 +4864,26 @@ TOOL_HANDLERS = {
 <pre><code>{
   "date": "2026-10-25",
   "summary": "User built a SQLite CLI todo app and iterated on pytest failures...",
-  "keywords": ["python", "pytest", "sqlite"],
-  "message_count": 14
+  "message_count": 14,
+  "generated_at": "2026-10-26T02:00:00"
 }</code></pre>
         </div>
+        <h2 id="data-model-retry">Extraction retry queue</h2>
+        <p><code>jarvis_memory/extraction_retry_queue.jsonl</code> — failed memory-extraction attempts awaiting retry:</p>
+        <div class="code-block">
+          <div class="code-block-header">
+            <span class="code-block-lang"><span class="material-symbols-outlined">description</span>entry</span>
+            <button type="button" class="code-copy" data-copy-target>Copy</button>
+          </div>
+<pre><code>{
+  "message": "Mera new project Nova launch ho gaya",
+  "timestamp": "2026-11-07T17:32:11",
+  "last_attempt": "2026-11-07T17:42:15",
+  "attempts": 1,
+  "reason": "api_error: timeout"
+}</code></pre>
+        </div>
+        <p>A background drainer retries every 5 minutes. Entries drop after 3 failed attempts.</p>
 
         <h2 id="data-model-backup">Backup &amp; restore</h2>
         <h3>What to back up</h3>
@@ -4513,7 +4891,7 @@ TOOL_HANDLERS = {
           <table class="data-table">
             <thead><tr><th>Path</th><th>Priority</th><th>Notes</th></tr></thead>
             <tbody>
-              <tr><td><code>jarvis_memory/</code></td><td>🔥 Critical</td><td>All your memory, chat history, RAG index</td></tr>
+              <tr><td><code>jarvis_memory/</code></td><td>🔥 Critical</td><td>Memory graph, chat history, RAG index, retry queue</td></tr>
               <tr><td><code>sessions/*.enc</code></td><td>🔥 Critical</td><td>OAuth tokens — re-auth possible but painful</td></tr>
               <tr><td><code>model/</code></td><td>⚠️ Recommended</td><td>Wake word models — re-downloadable but slow</td></tr>
               <tr><td><code>mcp_servers.json</code></td><td>⚠️ Recommended</td><td>MCP configs with API keys</td></tr>

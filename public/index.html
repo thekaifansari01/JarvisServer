@@ -193,6 +193,14 @@
     },
     {
       "@type": "Question",
+      "name": "How do I update JARVIS?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Run 'jarvis update' or use the PowerShell update.ps1 one-liner. Both back up .env, the memory graph, and MCP config to your Desktop before touching any file. Use 'jarvis update --check' to see current status, 'jarvis update --rollback' to revert, and 'jarvis update --channel stable|edge|pinned' to switch release channels. Full guide at /documentation/update."
+      }
+    },
+    {
+      "@type": "Question",
       "name": "How do I uninstall JARVIS?",
       "acceptedAnswer": {
         "@type": "Answer",
@@ -2475,6 +2483,24 @@ h3 { font-size: clamp(1.15rem, 1.6vw, 1.4rem); letter-spacing: -0.02em; }
 <span class="kw">Set-ExecutionPolicy</span> Bypass -Scope Process -Force; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; &amp; ([scriptblock]::Create((Invoke-RestMethod -Uri 'https://github.com/thekaifansari01/Jarvis-OS-Agent/releases/latest/download/uninstall.ps1')))
         </div>
       </div>
+
+      <div class="code-block reveal" style="margin-top: 24px;">
+        <div class="code-header">
+          <div class="code-header-left">
+            <span class="material-symbols-outlined">system_update</span>
+            PowerShell (1-Click Updater)
+          </div>
+          <button class="copy-btn" data-copy="Set-ExecutionPolicy Bypass -Scope Process -Force; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; &amp; ([scriptblock]::Create((Invoke-RestMethod -Uri 'https://github.com/thekaifansari01/Jarvis-OS-Agent/releases/latest/download/update.ps1')))">
+            <span class="material-symbols-outlined">content_copy</span>
+            Copy
+          </button>
+        </div>
+        <div class="code-body">
+<span class="cmt"># Update to the latest release — backs up .env, memory graph, and MCP config first</span><br/>
+<span class="cmt"># Alternative CLI path: jarvis update  ·  jarvis update --check  ·  jarvis update --rollback</span><br/>
+<span class="kw">Set-ExecutionPolicy</span> Bypass -Scope Process -Force; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; &amp; ([scriptblock]::Create((Invoke-RestMethod -Uri 'https://github.com/thekaifansari01/Jarvis-OS-Agent/releases/latest/download/update.ps1')))
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -2539,6 +2565,10 @@ h3 { font-size: clamp(1.15rem, 1.6vw, 1.4rem); letter-spacing: -0.02em; }
       <details class="faq-item reveal">
         <summary>How is this different from ChatGPT or Claude?<span class="faq-icon"><span class="material-symbols-outlined">add</span></span></summary>
         <div class="faq-answer">Those are chat interfaces. JARVIS is an <em>agent</em> — it takes actions on your actual system, remembers you across months, corrects itself mid-task, and reaches out proactively. It doesn't just answer; it does.</div>
+      </details>
+      <details class="faq-item reveal">
+        <summary>How do I update JARVIS?<span class="faq-icon"><span class="material-symbols-outlined">add</span></span></summary>
+        <div class="faq-answer">Run <code>jarvis update</code> in a terminal — or use the PowerShell <code>update.ps1</code> one-liner. Both back up <code>.env</code>, the memory graph, and MCP config to your Desktop first, then update the code in place. Check status with <code>jarvis update --check</code>; revert with <code>jarvis update --rollback</code>. Full walkthrough in the <a href="/documentation/update">Update guide</a>.</div>
       </details>
       <details class="faq-item reveal">
         <summary>How do I uninstall JARVIS?<span class="faq-icon"><span class="material-symbols-outlined">add</span></span></summary>
@@ -2622,6 +2652,7 @@ h3 { font-size: clamp(1.15rem, 1.6vw, 1.4rem); letter-spacing: -0.02em; }
         <h5>Resources</h5>
         <ul>
           <li><a href="/documentation">Documentation</a></li>
+          <li><a href="/documentation/update">Update</a></li>
           <li><a href="/documentation/uninstall">Uninstall</a></li>
           <li><a href="/documentation#troubleshooting">Troubleshooting</a></li>
           <li><a href="/documentation#lifecycle-shutdown">Lifecycle &amp; Shutdown</a></li>

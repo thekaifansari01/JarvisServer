@@ -11,18 +11,69 @@
   try {
     var t = localStorage.getItem('jarvis-theme') || 'dark';
     document.documentElement.dataset.jarvisTheme = t;
+    if (t === 'light') {
+      var m = document.querySelector('meta[name="theme-color"]');
+      if (m) m.setAttribute('content', '#f4f4f9');
+    }
   } catch(e) {
     document.documentElement.dataset.jarvisTheme = 'dark';
   }
 })();
 </script>
+<link rel="canonical" href="https://jarvis-os-agent.vercel.app/faq" />
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%2300d4ff'/%3E%3Cstop offset='1' stop-color='%23a855f7'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='7' fill='url(%23g)'/%3E%3Cpath d='M9 10l7 8-7 4zm14 0l-7 8 7 4z' fill='%2305050a'/%3E%3C/svg%3E" />
 <meta property="og:title" content="FAQ — JARVIS OS Agent" />
 <meta property="og:description" content="Everything you need to know about setting up, running, and customizing JARVIS." />
 <meta property="og:type" content="website" />
+<meta property="og:url" content="https://jarvis-os-agent.vercel.app/faq" />
+<meta property="og:image" content="https://jarvis-os-agent.vercel.app/screenshots/agent_panel.PNG" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="JARVIS OS Agent — FAQ" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:site" content="@thekaifansari01" />
+<meta name="twitter:creator" content="@thekaifansari01" />
+<meta name="twitter:title" content="FAQ — JARVIS OS Agent" />
+<meta name="twitter:description" content="Everything you need to know about setting up, running, and customizing JARVIS." />
+<meta name="twitter:image" content="https://jarvis-os-agent.vercel.app/screenshots/agent_panel.PNG" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://jarvis-os-agent.vercel.app/" },
+        { "@type": "ListItem", "position": 2, "name": "FAQ", "item": "https://jarvis-os-agent.vercel.app/faq" }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        { "@type": "Question", "name": "Is JARVIS completely free to use?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, the core JARVIS software is 100% free and open-source under GPLv3. It can run entirely on local Ollama or LM Studio models for zero API cost. Cloud APIs may incur their own usage costs." } },
+        { "@type": "Question", "name": "Can I run JARVIS completely offline?", "acceptedAnswer": { "@type": "Answer", "text": "Absolutely. Point PRIMARY_BASE_URL and FALLBACK_BASE_URL at a local OpenAI-compatible endpoint such as Ollama or LM Studio for 100% offline inference." } },
+        { "@type": "Question", "name": "What hardware do I need to run JARVIS?", "acceptedAnswer": { "@type": "Answer", "text": "JARVIS was developed on an Intel i5-3210M (2012) with 4 GB RAM. No GPU is required because cloud LLM providers are used by default." } },
+        { "@type": "Question", "name": "What is Live Mid-Execution Correction?", "acceptedAnswer": { "@type": "Answer", "text": "The AgenticBrain loop is interruptible. Change your mind mid-task and JARVIS absorbs the correction, re-plans in place, and preserves completed steps — no restart." } },
+        { "@type": "Question", "name": "What is Mid-Task Agent Clarification (ask_user)?", "acceptedAnswer": { "@type": "Answer", "text": "When the agent hits a missing critical parameter, it pauses and asks via the Input Popup in Clarification Mode. Your answer is confirmed, background STT is muted, and the loop resumes from the same step." } },
+        { "@type": "Question", "name": "What is the Contributor License Agreement (CLA)?", "acceptedAnswer": { "@type": "Answer", "text": "By submitting a Pull Request you grant the maintainer the right to use your contribution under both GPLv3 and any future commercial licenses, keeping the project legally clean and sustainable." } },
+        { "@type": "Question", "name": "Does JARVIS work on Mac and Linux?", "acceptedAnswer": { "@type": "Answer", "text": "Currently Windows-only (Windows 10/11). GUI automation, PC monitor, and the Termux bridge assume Windows paths and APIs. Community ports are welcome." } },
+        { "@type": "Question", "name": "How does Android control work?", "acceptedAnswer": { "@type": "Answer", "text": "A persistent WebSocket bridge over local WiFi using Termux + Termux:API from F-Droid. Pair once via the Unified Portal at http://127.0.0.1:8000 and control flashlight, vibrate, camera, notifications, and apps." } },
+        { "@type": "Question", "name": "Will JARVIS accidentally delete my files?", "acceptedAnswer": { "@type": "Answer", "text": "JARVIS uses strict shlex tokenization and path canonicalization to block destructive commands on system paths. Irreversible actions require explicit Human-in-the-Loop consent first." } },
+        { "@type": "Question", "name": "Why are WhatsApp and Telegram separate systems?", "acceptedAnswer": { "@type": "Answer", "text": "WhatsApp uses Baileys (Node.js WebSocket bridge) and Telegram uses MTProto via Telethon. Both run as background services managed by ServiceWatchdog with auto-restart on crash." } },
+        { "@type": "Question", "name": "How does MCP integration work?", "acceptedAnswer": { "@type": "Answer", "text": "MCP lets JARVIS connect to 18,000+ community servers via jarvis mcp add or Data/mcp_servers.json. Servers hot-reload within 2 seconds with zero restart. Tools are namespaced as mcp__<server>__<tool>." } },
+        { "@type": "Question", "name": "Is my data safe with JARVIS?", "acceptedAnswer": { "@type": "Answer", "text": "Credentials are AES-encrypted locally. Conversation history and memory graphs stay on disk. Zero telemetry. Only LLM API calls leave your machine, and you can switch to local models entirely." } },
+        { "@type": "Question", "name": "How long does installation take?", "acceptedAnswer": { "@type": "Answer", "text": "Around 5–10 minutes on a warm connection. The 1-click installer auto-installs Git/Python/Node via winget, sets up environments, and registers the CLI." } },
+        { "@type": "Question", "name": "How do I update JARVIS?", "acceptedAnswer": { "@type": "Answer", "text": "Run jarvis update or use the PowerShell update.ps1 one-liner. Both back up .env, memory, and MCP config to the Desktop first. Use jarvis update --check for status, --rollback to revert, --channel to switch release channels. Full guide at /documentation/update." } },
+        { "@type": "Question", "name": "How do I completely uninstall JARVIS?", "acceptedAnswer": { "@type": "Answer", "text": "A single PowerShell command stops services, cleans the registry and PATH, removes the CLI, and deletes the install folder. A Desktop backup prompt fires first (default Yes). Full guide at /documentation/uninstall." } }
+      ]
+    }
+  ]
+}
+</script>
 <style>
 :root {
   --bg: #05050a;
@@ -809,6 +860,15 @@ h3 { font-size: clamp(1rem, 1.4vw, 1.1rem); }
     z-index: 99;
   }
   .nav.mobile-open .nav-links { display: flex; animation: navSlideIn 0.35s var(--ease-out); }
+  .nav.mobile-open::after {
+    content: '';
+    position: fixed;
+    top: var(--nav-h);
+    left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 98;
+    pointer-events: none;
+  }
   @keyframes navSlideIn {
     from { opacity: 0; transform: translateY(-8px); }
     to { opacity: 1; transform: translateY(0); }
@@ -855,6 +915,7 @@ h3 { font-size: clamp(1rem, 1.4vw, 1.1rem); }
 }
 
 @media (max-width: 480px) {
+  .search-wrap { padding: 0 16px; }
   .search-box { padding: 6px 6px 6px 16px; }
   .search-box input { font-size: 0.92rem; padding: 10px 0; }
   .categories { gap: 6px; }
@@ -1026,7 +1087,7 @@ h3 { font-size: clamp(1rem, 1.4vw, 1.1rem); }
 <div class="search-wrap reveal">
   <div class="search-box" id="searchBox">
     <span class="material-symbols-outlined">search</span>
-    <input type="text" id="searchInput" placeholder="Search questions, topics, keywords..." autocomplete="off" />
+    <input type="text" id="searchInput" placeholder="Search questions, topics, keywords..." autocomplete="off" aria-label="Search FAQ" />
     <button class="search-clear" id="searchClear" aria-label="Clear search">
       <span class="material-symbols-outlined">close</span>
     </button>
@@ -1246,6 +1307,22 @@ h3 { font-size: clamp(1rem, 1.4vw, 1.1rem); }
       </div>
     </details>
 
+    <details class="faq-item reveal" data-cat="setup" data-search="update upgrade rollback channel stable edge pinned version update.ps1">
+      <summary>
+        <span class="faq-q">
+          <span class="faq-q-icon"><span class="material-symbols-outlined">system_update</span></span>
+          How do I update JARVIS?
+        </span>
+        <span class="faq-chevron"><span class="material-symbols-outlined">expand_more</span></span>
+      </summary>
+      <div class="faq-answer">
+        <p>Run <code>jarvis update</code> in a terminal, or use the PowerShell <code>update.ps1</code> one-liner. Both back up <code>.env</code>, the memory graph, and MCP config to your Desktop <em>before</em> touching any file.</p>
+        <p><code>jarvis update --check</code> — see current status without changes.<br/>
+        <code>jarvis update --rollback</code> — revert to the previous working version.<br/>
+        <code>jarvis update --channel stable|edge|pinned</code> — switch release channel.</p>
+        <p>Full walkthrough: <a href="/documentation/update">Update &amp; Rollback documentation</a>.</p>
+      </div>
+    </details>
     <details class="faq-item reveal" data-cat="setup" data-search="uninstall remove delete cleanup reset factory completely wipe">
       <summary>
         <span class="faq-q">

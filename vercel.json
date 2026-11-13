@@ -158,6 +158,10 @@
       "destination": "/public/documentation/index.html"
     },
     {
+      "source": "/documentation/update",
+      "destination": "/public/documentation/index.html"
+    },
+    {
       "source": "/documentation/glossary",
       "destination": "/public/documentation/index.html"
     },
