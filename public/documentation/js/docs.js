@@ -1456,23 +1456,25 @@
         fontFamily: 'JetBrains Mono, monospace',
         flowchart: { useMaxWidth: true, htmlLabels: true, curve: 'basis' },
         themeVariables: isLight ? {
-          background: '#ffffff',
-          primaryColor: '#dbeafe',
+          background: 'transparent',
+          primaryColor: '#ffffff',
           primaryTextColor: '#0f172a',
-          primaryBorderColor: '#2563eb',
-          lineColor: '#475569',
-          secondaryColor: '#ede9fe',
-          tertiaryColor: '#e0f2fe',
-          fontSize: '13px'
-        } : {
-          background: '#0d0d16',
-          primaryColor: '#1e293b',
-          primaryTextColor: '#f0f0f5',
-          primaryBorderColor: '#475569',
+          primaryBorderColor: '#0088b3',
           lineColor: '#94a3b8',
-          secondaryColor: '#312e81',
-          tertiaryColor: '#164e63',
-          fontSize: '13px'
+          secondaryColor: '#f1f5f9',
+          tertiaryColor: '#e2e8f0',
+          fontSize: '14px',
+          fontFamily: 'JetBrains Mono, monospace'
+        } : {
+          background: 'transparent',
+          primaryColor: '#0d0d16',
+          primaryTextColor: '#f0f0f5',
+          primaryBorderColor: '#00d4ff',
+          lineColor: '#64748b',
+          secondaryColor: '#1e293b',
+          tertiaryColor: '#334155',
+          fontSize: '14px',
+          fontFamily: 'JetBrains Mono, monospace'
         }
       });
     } catch (initErr) {

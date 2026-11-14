@@ -2715,96 +2715,228 @@ details.faq .faq-body {
 
 .mermaid-wrapper {
   position: relative;
-  background: var(--bg-2);
+  background: linear-gradient(135deg, var(--bg-elev) 0%, var(--bg-2) 100%);
   border: 1px solid var(--border-strong);
-  border-radius: var(--radius);
+  border-radius: var(--radius-lg);
   overflow: hidden;
-  margin: 24px 0;
+  margin: 28px 0;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(255, 255, 255, 0.02) inset;
+  transition: border-color 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out);
+  isolation: isolate;
 }
+
+.mermaid-wrapper::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: 50%;
+  width: 700px;
+  height: 700px;
+  transform: translateX(-50%);
+  background: radial-gradient(circle, rgba(0, 212, 255, 0.1), transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+  transition: opacity 0.4s;
+}
+
+.mermaid-wrapper:hover {
+  border-color: rgba(0, 212, 255, 0.3);
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.45), 0 0 48px rgba(0, 212, 255, 0.08), 0 0 0 1px rgba(0, 212, 255, 0.08) inset;
+}
+
 .mermaid-toolbar {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 10px 14px;
-  background: rgba(255, 255, 255, 0.02);
+  padding: 13px 18px;
+  background: rgba(255, 255, 255, 0.025);
   border-bottom: 1px solid var(--border);
   flex-wrap: wrap;
+  position: relative;
+  z-index: 2;
 }
+
 .mermaid-label {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.72rem;
-  color: var(--text-muted);
+  font-size: 0.7rem;
+  color: var(--text-dim);
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.12em;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 9px;
   margin-right: auto;
+  font-weight: 500;
 }
-.mermaid-label .material-symbols-outlined { font-size: 16px; color: var(--accent); }
+
+.mermaid-label::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 10px var(--accent), 0 0 4px var(--accent);
+  animation: badgePulse 2.4s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
 .mermaid-btn {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
-  padding: 5px 12px;
+  gap: 6px;
+  padding: 6px 12px;
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.7rem;
   color: var(--text-dim);
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 6px;
-  transition: all 0.15s;
+  border-radius: 7px;
+  transition: color 0.2s, border-color 0.2s, background 0.2s, transform 0.2s var(--ease-out), box-shadow 0.2s;
   white-space: nowrap;
+  font-weight: 500;
+  position: relative;
+  z-index: 1;
 }
+
 .mermaid-btn:hover {
-  color: var(--text);
-  border-color: var(--border-strong);
-  background: var(--surface-hover);
+  color: var(--accent);
+  border-color: rgba(0, 212, 255, 0.4);
+  background: rgba(0, 212, 255, 0.08);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(0, 212, 255, 0.15);
 }
-.mermaid-btn .material-symbols-outlined { font-size: 14px; }
-.mermaid-src { display: none; }
+
+.mermaid-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(0, 212, 255, 0.1);
+}
+
+.mermaid-btn .material-symbols-outlined {
+  font-size: 14px;
+}
+
+.mermaid-src {
+  display: none;
+}
+
 .mermaid-diagram {
-  padding: 24px 16px;
+  padding: 44px 24px;
   overflow-x: auto;
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 200px;
+  min-height: 280px;
   scrollbar-width: thin;
+  scrollbar-color: var(--border-strong) transparent;
+  position: relative;
+  z-index: 1;
+  background-image:
+    linear-gradient(rgba(0, 212, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 212, 255, 0.03) 1px, transparent 1px);
+  background-size: 28px 28px;
+  background-position: center center;
 }
+
+.mermaid-diagram::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 70% 60% at center, transparent 0%, var(--bg-elev) 92%);
+  pointer-events: none;
+  z-index: 0;
+}
+
 .mermaid-diagram.is-fallback {
   display: none;
   min-height: 0;
   padding: 0;
+  background-image: none;
 }
-.mermaid-diagram::-webkit-scrollbar { height: 6px; }
-.mermaid-diagram::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 3px; }
+
+.mermaid-diagram.is-fallback::before {
+  display: none;
+}
+
+.mermaid-diagram::-webkit-scrollbar {
+  height: 8px;
+}
+
+.mermaid-diagram::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.mermaid-diagram::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 4px;
+}
+
+.mermaid-diagram::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 212, 255, 0.4);
+}
+
 .mermaid-diagram svg {
   max-width: 100%;
   height: auto;
   display: block;
+  position: relative;
+  z-index: 1;
+  filter: drop-shadow(0 8px 32px rgba(0, 0, 0, 0.25));
+  transition: filter 0.4s;
 }
+
+.mermaid-wrapper:hover .mermaid-diagram svg {
+  filter: drop-shadow(0 8px 32px rgba(0, 0, 0, 0.3)) drop-shadow(0 0 24px rgba(0, 212, 255, 0.08));
+}
+
 .mermaid-diagram .node rect,
 .mermaid-diagram .node polygon,
 .mermaid-diagram .node circle,
 .mermaid-diagram .node ellipse {
-  transition: filter 0.2s, stroke-width 0.2s;
+  transition: filter 0.25s var(--ease-out), stroke-width 0.25s var(--ease-out);
+  cursor: pointer;
 }
+
 .mermaid-diagram .node:hover rect,
 .mermaid-diagram .node:hover polygon,
 .mermaid-diagram .node:hover circle,
 .mermaid-diagram .node:hover ellipse {
-  filter: drop-shadow(0 0 8px rgba(0, 212, 255, 0.4));
-  stroke-width: 2px;
+  filter: drop-shadow(0 0 14px rgba(0, 212, 255, 0.55)) drop-shadow(0 4px 10px rgba(0, 0, 0, 0.3));
+  stroke-width: 2.5px;
 }
+
+.mermaid-diagram .edgePath path,
+.mermaid-diagram .flowchart-link {
+  transition: stroke-width 0.2s, opacity 0.2s;
+}
+
+.mermaid-diagram .edgePath:hover path {
+  stroke-width: 2.5px;
+}
+
 .mermaid-diagram .edgeLabel {
-  background: var(--bg-2) !important;
+  background: var(--bg-elev) !important;
   font-family: 'JetBrains Mono', monospace !important;
+  color: var(--text-dim) !important;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.75rem !important;
 }
-.mermaid-fallback { display: none; padding: 0; }
+
+.mermaid-diagram .edgeLabel rect {
+  fill: var(--bg-elev) !important;
+  opacity: 0.95 !important;
+}
+
+.mermaid-fallback {
+  display: none;
+  padding: 0;
+  position: relative;
+  z-index: 1;
+}
+
 .mermaid-fallback pre {
   margin: 0;
-  padding: 16px 18px;
+  padding: 18px 20px;
   overflow-x: auto;
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.78rem;
@@ -2814,18 +2946,136 @@ details.faq .faq-body {
   border-top: 1px solid var(--border);
   scrollbar-width: thin;
 }
-.mermaid-fallback pre::-webkit-scrollbar { height: 6px; }
-.mermaid-fallback pre::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 3px; }
-.mermaid-fallback code { color: inherit; background: none; border: none; padding: 0; }
-[data-jarvis-theme="light"] .mermaid-wrapper { background: #ffffff; }
-[data-jarvis-theme="light"] .mermaid-toolbar { background: rgba(0, 0, 0, 0.02); }
-[data-jarvis-theme="light"] .mermaid-fallback pre { background: #1a1a1f; color: #e0e0e0; }
+
+.mermaid-fallback pre::-webkit-scrollbar {
+  height: 6px;
+}
+
+.mermaid-fallback pre::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 3px;
+}
+
+.mermaid-fallback code {
+  color: inherit;
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+[data-jarvis-theme="light"] .mermaid-wrapper {
+  background: linear-gradient(135deg, #ffffff 0%, #f6f6f3 100%);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06), 0 0 0 1px rgba(0, 0, 0, 0.02) inset;
+}
+
+[data-jarvis-theme="light"] .mermaid-wrapper::before {
+  background: radial-gradient(circle, rgba(0, 136, 179, 0.07), transparent 60%);
+}
+
+[data-jarvis-theme="light"] .mermaid-wrapper:hover {
+  border-color: rgba(0, 136, 179, 0.35);
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.1), 0 0 48px rgba(0, 136, 179, 0.08);
+}
+
+[data-jarvis-theme="light"] .mermaid-toolbar {
+  background: rgba(0, 0, 0, 0.025);
+}
+
+[data-jarvis-theme="light"] .mermaid-label {
+  color: var(--text-muted);
+}
+
+[data-jarvis-theme="light"] .mermaid-btn:hover {
+  color: var(--accent);
+  border-color: rgba(0, 136, 179, 0.4);
+  background: rgba(0, 136, 179, 0.08);
+  box-shadow: 0 4px 14px rgba(0, 136, 179, 0.12);
+}
+
+[data-jarvis-theme="light"] .mermaid-diagram {
+  background-image:
+    linear-gradient(rgba(0, 136, 179, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 136, 179, 0.04) 1px, transparent 1px);
+}
+
+[data-jarvis-theme="light"] .mermaid-diagram::before {
+  background: radial-gradient(ellipse 70% 60% at center, transparent 0%, #ffffff 92%);
+}
+
+[data-jarvis-theme="light"] .mermaid-diagram svg {
+  filter: drop-shadow(0 8px 32px rgba(0, 0, 0, 0.06));
+}
+
+[data-jarvis-theme="light"] .mermaid-wrapper:hover .mermaid-diagram svg {
+  filter: drop-shadow(0 8px 32px rgba(0, 0, 0, 0.08)) drop-shadow(0 0 24px rgba(0, 136, 179, 0.06));
+}
+
+[data-jarvis-theme="light"] .mermaid-diagram .edgeLabel {
+  background: #ffffff !important;
+  color: #4a4a55 !important;
+}
+
+[data-jarvis-theme="light"] .mermaid-diagram .edgeLabel rect {
+  fill: #ffffff !important;
+}
+
+[data-jarvis-theme="light"] .mermaid-fallback pre {
+  background: #1a1a1f;
+  color: #e0e0e0;
+}
+
+@media (max-width: 900px) {
+  .mermaid-diagram {
+    padding: 32px 16px;
+    min-height: 240px;
+  }
+}
+
+@media (max-width: 640px) {
+  .mermaid-wrapper {
+    margin: 20px 0;
+    border-radius: var(--radius);
+  }
+  .mermaid-toolbar {
+    padding: 10px 14px;
+    gap: 6px;
+  }
+  .mermaid-btn {
+    padding: 5px 10px;
+    font-size: 0.65rem;
+  }
+  .mermaid-btn .material-symbols-outlined {
+    font-size: 13px;
+  }
+  .mermaid-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+  }
+  .mermaid-diagram {
+    padding: 24px 12px;
+    min-height: 200px;
+    background-size: 22px 22px;
+  }
+}
 
 @media print {
-  .mermaid-diagram { display: none !important; }
-  .mermaid-fallback { display: block !important; }
-  .mermaid-toolbar { display: none !important; }
-  .mermaid-wrapper { border: 1px solid #ccc !important; }
+  .mermaid-diagram {
+    display: none !important;
+  }
+  .mermaid-fallback {
+    display: block !important;
+  }
+  .mermaid-toolbar {
+    display: none !important;
+  }
+  .mermaid-wrapper {
+    border: 1px solid #ccc !important;
+    box-shadow: none !important;
+    background: #fff !important;
+  }
+  .mermaid-wrapper::before {
+    display: none !important;
+  }
   .mermaid-fallback pre {
     background: #f5f5f5 !important;
     color: #000 !important;
