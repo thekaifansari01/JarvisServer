@@ -2142,18 +2142,26 @@ click node_channels "https://github.com/thekaifansari01/jarvis-os-agent/tree/mai
 click node_tts "https://github.com/thekaifansari01/jarvis-os-agent/blob/main/core/voice/tts.py"
 click node_ui "https://github.com/thekaifansari01/jarvis-os-agent/tree/main/core/ui"
 
-classDef toneNeutral fill:#f8fafc,stroke:#334155,stroke-width:1.5px,color:#0f172a
-classDef toneBlue fill:#dbeafe,stroke:#2563eb,stroke-width:1.5px,color:#172554
-classDef toneAmber fill:#fef3c7,stroke:#d97706,stroke-width:1.5px,color:#78350f
-classDef toneMint fill:#dcfce7,stroke:#16a34a,stroke-width:1.5px,color:#14532d
-classDef toneRose fill:#ffe4e6,stroke:#e11d48,stroke-width:1.5px,color:#881337
-classDef toneIndigo fill:#e0e7ff,stroke:#4f46e5,stroke-width:1.5px,color:#312e81
-classDef toneTeal fill:#ccfbf1,stroke:#0f766e,stroke-width:1.5px,color:#134e4a
-class node_main,node_handler,node_processor,node_agentbrain,node_fastbrain,node_executor,node_user toneBlue
+classDef toneNeutral fill:#151924,stroke:#64748b,stroke-width:1.5px,color:#cbd5e1,rx:10,ry:10
+classDef toneBlue fill:#0b1930,stroke:#3b82f6,stroke-width:2px,color:#93c5fd,rx:10,ry:10
+classDef toneAmber fill:#241505,stroke:#f59e0b,stroke-width:2px,color:#fcd34d,rx:10,ry:10
+classDef toneMint fill:#05261e,stroke:#10b981,stroke-width:2px,color:#6ee7b7,rx:10,ry:10
+classDef toneRose fill:#240914,stroke:#f43f5e,stroke-width:2px,color:#fda4af,rx:10,ry:10
+classDef toneIndigo fill:#120f38,stroke:#818cf8,stroke-width:2px,color:#c7d2fe,rx:10,ry:10
+classDef toneTeal fill:#032820,stroke:#14b8a6,stroke-width:2px,color:#5eead4,rx:10,ry:10
+classDef toneUser fill:#1e3a8a,stroke:#60a5fa,stroke-width:2.5px,color:#e0e7ff
+class node_main,node_handler,node_processor,node_agentbrain,node_fastbrain,node_executor toneBlue
+class node_user toneUser
 class node_memory,node_ltm,node_behavior,node_rag,node_indexer toneAmber
 class node_voicein,node_hotkey,node_remote,node_tts,node_ui toneMint
 class node_tools,node_mcp,node_mobile toneRose
-class node_proactive,node_events,node_channels toneIndigo</pre>
+class node_proactive,node_events,node_channels toneIndigo
+
+style group_runtime fill:#3b82f61a,stroke:#3b82f666,stroke-width:1.5px,color:#93c5fd,rx:16,ry:16
+style group_memory fill:#f59e0b1a,stroke:#f59e0b66,stroke-width:1.5px,color:#fcd34d,rx:16,ry:16
+style group_voice fill:#10b9811a,stroke:#10b98166,stroke-width:1.5px,color:#6ee7b7,rx:16,ry:16
+style group_actions fill:#f43f5e1a,stroke:#f43f5e66,stroke-width:1.5px,color:#fda4af,rx:16,ry:16
+style group_proactive fill:#818cf81a,stroke:#818cf866,stroke-width:1.5px,color:#c7d2fe,rx:16,ry:16</pre>
           <div class="mermaid-diagram"></div>
           <div class="mermaid-fallback">
             <pre><code></code></pre>

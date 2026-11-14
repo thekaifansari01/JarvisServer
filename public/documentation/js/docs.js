@@ -1451,7 +1451,7 @@
     try {
       window.mermaid.initialize({
         startOnLoad: false,
-        theme: themeName,
+        theme: 'base',
         securityLevel: 'loose',
         fontFamily: 'JetBrains Mono, monospace',
         flowchart: { useMaxWidth: true, htmlLabels: true, curve: 'basis' },
